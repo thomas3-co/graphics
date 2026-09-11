@@ -320,11 +320,12 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
   <div class="wq-box">
     <div class="wq-tag" id="wqWeekTag">Weekly Check-In</div>
     <h3 id="wqQuestion">How did this week's lessons go?</h3>
-    <label for="wqAnswer" style="position:absolute;left:-9999px;">Your answer</label>
+    <div id="wqQuizBody"></div>
+    <label for="wqAnswer" id="wqAnswerLabel" style="display:block;font-size:12px;font-weight:700;margin-bottom:6px;">Your answer</label>
     <textarea id="wqAnswer" placeholder="Type a few sentences..."></textarea>
     <div class="wq-actions">
       <button class="wq-skip" id="wqSkip" type="button">Remind me later</button>
-      <button class="wq-submit" id="wqSubmit" type="button">Submit</button>
+      <button class="wq-submit" id="wqSubmit" type="button">Submit &amp; Send Report</button>
     </div>
   </div>
 </div>
@@ -356,7 +357,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
       <!-- ========== HOME ========== -->
       <section id="home" class="view active">
         <div class="hero">
-          <div class="hero-eyebrow">10-Week Studio Course</div>
+          <div class="hero-eyebrow">16-Week Studio Course</div>
           <h1>Master Photoshop — from blank canvas to portfolio-ready artistry.</h1>
           <p>Everything for the course lives here: the week-by-week curriculum, group projects, detailed reading notes, screencast recordings, and downloadable practice files — all in one workspace.</p>
           <div class="hero-actions">
@@ -365,8 +366,8 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
           </div>
         </div>
         <div class="stat-row">
-          <div class="stat"><b>10</b><span>Weeks of curriculum</span></div>
-          <div class="stat"><b>30</b><span>Daily lessons &amp; flip cards</span></div>
+          <div class="stat"><b>16</b><span>Weeks of curriculum</span></div>
+          <div class="stat"><b>48</b><span>Daily lessons &amp; flip cards</span></div>
           <div class="stat"><b>3</b><span>Group projects</span></div>
           <div class="stat"><b>23</b><span>Screencast recordings</span></div>
         </div>
@@ -378,7 +379,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
           </div>
           <div class="home-card" style="--accent:#ff7a2d" onclick="goTab('projects')" role="button" tabindex="0" onkeydown="if(event.key==='Enter')goTab('projects')">
             <h4>Group Projects</h4>
-            <p>The Gojo pop-out submission form, the phone/iPad mockup studio, and the Around the World brief.</p>
+            <p>Week 3's Around the World brief, Week 6's Phone/iPad mockup studio, and Week 9's Gojo pop-out submission.</p>
           </div>
           <div class="home-card" style="--accent:#8b5cf6" onclick="goTab('notes')" role="button" tabindex="0" onkeydown="if(event.key==='Enter')goTab('notes')">
             <h4>Read Me Notes</h4>
@@ -386,11 +387,11 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
           </div>
           <div class="home-card" style="--accent:#12a394" onclick="goTab('screencasts')" role="button" tabindex="0" onkeydown="if(event.key==='Enter')goTab('screencasts')">
             <h4>Screencasts</h4>
-            <p>Every recorded class walkthrough, ready to reopen from Google Drive.</p>
+            <p>Every recorded class walkthrough — plays right inside the card.</p>
           </div>
           <div class="home-card" style="--accent:#ef476f" onclick="goTab('practice')" role="button" tabindex="0" onkeydown="if(event.key==='Enter')goTab('practice')">
             <h4>Practice Files</h4>
-            <p>Downloadable source images and exercise files to practice each technique.</p>
+            <p>Downloadable source images and exercise files, previewed right inside the card.</p>
           </div>
         </div>
       </section>
@@ -399,12 +400,13 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
         <div class="view-head">
           <div>
             <h2>Curriculum</h2>
-            <p>Tap any card to flip it and mark that lesson complete. Progress is saved automatically.</p>
+            <p>Tap any card to flip it and mark that lesson complete. Progress is saved automatically. Finishing every day in a week pops up that week's check-in quiz.</p>
           </div>
           <div class="month-switch" id="monthSwitch">
             <button class="chip active" data-month="m1">Month One · Weeks 1–4</button>
             <button class="chip" data-month="m2">Month Two · Weeks 5–8</button>
-            <button class="chip" data-month="m3">Month Three · Weeks 9–10</button>
+            <button class="chip" data-month="m3">Month Three · Weeks 9–12</button>
+            <button class="chip" data-month="m4">Month Four · Weeks 13–16</button>
           </div>
         </div>
         <div class="week-nav" id="weekNav"></div>
@@ -465,7 +467,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
         </div></div></div>
         </div></div>
         <div class="week-card" id="week3">
-        <h2 class="wk">Week 3 — Photoshop Tools &amp; Practical Projects</h2>
+        <h2 class="wk">Week 3 — Around the World with a Twist (Project Week)</h2>
         <div class="day-grid">
         <div class="flip-card" data-day="3-1"><div class="flip-card-inner">
         <div class="flip-card-front"><h4>Day 1: Tools &amp; Panels</h4><p>Essential interface elements and tools.</p><span class="flip-hint">Tap to flip</span></div>
@@ -482,12 +484,12 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
         <span class="vocab" tabindex="0" data-def="Adjusts image size.">Crop Tool</span></p>
         <div class="big-ideas">Practice creating official ID photos using precise selection and background removal.</div>
         </div></div></div>
-        <div class="flip-card" data-day="3-3"><div class="flip-card-inner">
-        <div class="flip-card-front"><h4>Day 3: Face Retouching</h4><p>Non-destructive portrait retouching workflow.</p><span class="flip-hint">Tap to flip</span></div>
+        <div class="flip-card project-day" data-day="3-3"><div class="flip-card-inner">
+        <div class="flip-card-front"><div class="project-label">PROJECT DAY</div><h4>Day 3: Around the World with a Twist</h4><p>Group project — open the brief in Group Projects.</p><span class="flip-hint">Tap to flip</span></div>
         <div class="flip-card-back"><div class="vocab-title">Vocabulary</div>
         <p><span class="vocab" tabindex="0" data-def="Separates texture from tone.">Frequency Separation</span>,
         <span class="vocab" tabindex="0" data-def="Lighten/darken areas for depth.">Dodge &amp; Burn</span></p>
-        <div class="big-ideas">Work non-destructively and preserve natural skin texture.</div>
+        <div class="big-ideas">Work non-destructively and preserve natural skin texture. Full brief and per-group rubric: Group Projects tab → "Week 3 · Around the World with a Twist".</div>
         </div></div></div>
         </div></div>
         <div class="week-card" id="week4">
@@ -543,7 +545,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
           </div>
         </div>
         <div class="week-card" id="week6">
-          <h2 class="wk">Week 6 — Creative Mockups &amp; Photoshop Text Effects</h2>
+          <h2 class="wk">Week 6 — Phone / iPad Mockup (Project Week)</h2>
           <div class="day-grid">
             <div class="flip-card project-day" data-day="6-1"><div class="flip-card-inner">
               <div class="flip-card-front"><div class="project-label">PROJECT DAY</div><h4>Day 1: Mockup Project</h4><p>Create a mobile or poster mockup using smart objects.</p><span class="flip-hint">Tap to flip</span></div>
@@ -551,17 +553,18 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
               <ul><li>Import your design into a pre-made PSD mockup file.</li>
               <li>Use <strong>Smart Object</strong> layers to replace the placeholder.</li>
               <li>Adjust lighting and shadows using <strong>Levels</strong> and <strong>Drop Shadow</strong>.</li>
-              <li>Save as high-quality JPEG for presentation.</li></ul></div>
+              <li>Save as high-quality JPEG for presentation.</li></ul>
+              <div class="summary-text">Full brief: Group Projects tab → "Week 6 · Phone / iPad Mockup".</div></div>
             </div></div>
             <div class="flip-card practice-day" data-day="6-2"><div class="flip-card-inner">
               <div class="flip-card-front"><div class="practice-label">PRACTICE DAY</div><h4>Day 2: Practice Mockup Variations</h4><p>Practice multiple mockup types — device, packaging, poster.</p><span class="flip-hint">Tap to flip</span></div>
               <div class="flip-card-back"><p><strong>Objective:</strong> Strengthen mockup editing and smart object management skills.</p>
               <ul><li>Try 2–3 different mockup templates.</li><li>Refine placement and lighting adjustments.</li><li>Focus on realism and presentation balance.</li></ul></div>
             </div></div>
-            <div class="flip-card blue-border" data-day="6-3"><div class="flip-card-inner">
-              <div class="flip-card-front"><h4>Day 3: Photoshop Text Effects</h4><p>Create stylized text using Layer Styles and Blending Options.</p><span class="flip-hint">Tap to flip</span></div>
+            <div class="flip-card project-day" data-day="6-3"><div class="flip-card-inner">
+              <div class="flip-card-front"><div class="project-label">PROJECT DAY</div><h4>Day 3: Phone / iPad Mockup — Submission</h4><p>Finalize and submit your mockup.</p><span class="flip-hint">Tap to flip</span></div>
               <div class="flip-card-back"><p><strong>Objective:</strong> Learn to craft glowing, metallic, or embossed text effects using blending and texture overlays.</p>
-              <ul><li>Apply <strong>Bevel &amp; Emboss</strong>, <strong>Drop Shadow</strong>, and <strong>Gradient Overlay</strong>.</li><li>Use texture layers to enhance 3D realism.</li></ul></div>
+              <ul><li>Apply <strong>Bevel &amp; Emboss</strong>, <strong>Drop Shadow</strong>, and <strong>Gradient Overlay</strong>.</li><li>Submit via Group Projects tab → "Week 6 · Phone / iPad Mockup".</li></ul></div>
             </div></div>
           </div>
         </div>
@@ -626,7 +629,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
         <!-- ===== MONTH THREE ===== -->
         <div class="month-block" data-month="m3">
         <div class="week-card" id="week9">
-          <h2 class="wk">Week 9 — Neon &amp; Double Exposure Prep</h2>
+          <h2 class="wk">Week 9 — Gojo Pop-Out Project</h2>
           <div class="day-grid">
             <div class="flip-card project-day" data-day="9-1"><div class="flip-card-inner">
               <div class="flip-card-front"><div class="project-label">PROJECT DAY</div><h4>Day 1: Neon Text Effect</h4><p>Create glowing neon text with light blending.</p><span class="flip-hint">Tap to flip</span></div>
@@ -637,8 +640,8 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
               <div class="flip-card-back"><ul><li>Create metal frame</li><li>Add realistic wall texture</li><li>Use glow layers</li></ul></div>
             </div></div>
             <div class="flip-card project-day" data-day="9-3"><div class="flip-card-inner">
-              <div class="flip-card-front"><div class="project-label">PROJECT DAY</div><h4>Day 3: Neon Portrait Highlight</h4><p>Add neon lighting to portrait edges.</p><span class="flip-hint">Tap to flip</span></div>
-              <div class="flip-card-back"><ul><li>Brush glow edges</li><li>Blend mode lighten</li><li>Color dodge for highlights</li></ul></div>
+              <div class="flip-card-front"><div class="project-label">PROJECT DAY</div><h4>Day 3: Gojo Pop-Out Project — Submission</h4><p>Finalize ideas and submit your Gojo pop-out project.</p><span class="flip-hint">Tap to flip</span></div>
+              <div class="flip-card-back"><ul><li>Brush glow edges</li><li>Blend mode lighten</li><li>Color dodge for highlights</li><li>Submit via Group Projects tab → "Week 9 · Gojo Pop-Out Project".</li></ul></div>
             </div></div>
           </div>
         </div>
@@ -659,23 +662,341 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
             </div></div>
           </div>
         </div>
+        <div class="week-card" id="week11">
+          <h2 class="wk">Week 11 — Coming Soon</h2>
+          <div class="day-grid">
+            <div class="flip-card" data-day="11-1"><div class="flip-card-inner">
+              <div class="flip-card-front"><h4>Day 1: To be added</h4><p>Lesson content for this day hasn't been added yet.</p><span class="flip-hint">Tap to flip</span></div>
+              <div class="flip-card-back"><p class="summary-text">Placeholder — check back once this week's lesson is published.</p></div>
+            </div></div>
+            <div class="flip-card" data-day="11-2"><div class="flip-card-inner">
+              <div class="flip-card-front"><h4>Day 2: To be added</h4><p>Lesson content for this day hasn't been added yet.</p><span class="flip-hint">Tap to flip</span></div>
+              <div class="flip-card-back"><p class="summary-text">Placeholder — check back once this week's lesson is published.</p></div>
+            </div></div>
+            <div class="flip-card" data-day="11-3"><div class="flip-card-inner">
+              <div class="flip-card-front"><h4>Day 3: To be added</h4><p>Lesson content for this day hasn't been added yet.</p><span class="flip-hint">Tap to flip</span></div>
+              <div class="flip-card-back"><p class="summary-text">Placeholder — check back once this week's lesson is published.</p></div>
+            </div></div>
+          </div>
+        </div>
+        <div class="week-card" id="week12">
+          <h2 class="wk">Week 12 — Coming Soon</h2>
+          <div class="day-grid">
+            <div class="flip-card" data-day="12-1"><div class="flip-card-inner">
+              <div class="flip-card-front"><h4>Day 1: To be added</h4><p>Lesson content for this day hasn't been added yet.</p><span class="flip-hint">Tap to flip</span></div>
+              <div class="flip-card-back"><p class="summary-text">Placeholder — check back once this week's lesson is published.</p></div>
+            </div></div>
+            <div class="flip-card" data-day="12-2"><div class="flip-card-inner">
+              <div class="flip-card-front"><h4>Day 2: To be added</h4><p>Lesson content for this day hasn't been added yet.</p><span class="flip-hint">Tap to flip</span></div>
+              <div class="flip-card-back"><p class="summary-text">Placeholder — check back once this week's lesson is published.</p></div>
+            </div></div>
+            <div class="flip-card" data-day="12-3"><div class="flip-card-inner">
+              <div class="flip-card-front"><h4>Day 3: To be added</h4><p>Lesson content for this day hasn't been added yet.</p><span class="flip-hint">Tap to flip</span></div>
+              <div class="flip-card-back"><p class="summary-text">Placeholder — check back once this week's lesson is published.</p></div>
+            </div></div>
+          </div>
+        </div>
         </div><!-- /month-block m3 -->
+        <!-- ===== MONTH FOUR ===== -->
+        <div class="month-block" data-month="m4">
+        <div class="week-card" id="week13">
+          <h2 class="wk">Week 13 — Coming Soon</h2>
+          <div class="day-grid">
+            <div class="flip-card" data-day="13-1"><div class="flip-card-inner">
+              <div class="flip-card-front"><h4>Day 1: To be added</h4><p>Lesson content for this day hasn't been added yet.</p><span class="flip-hint">Tap to flip</span></div>
+              <div class="flip-card-back"><p class="summary-text">Placeholder — check back once this week's lesson is published.</p></div>
+            </div></div>
+            <div class="flip-card" data-day="13-2"><div class="flip-card-inner">
+              <div class="flip-card-front"><h4>Day 2: To be added</h4><p>Lesson content for this day hasn't been added yet.</p><span class="flip-hint">Tap to flip</span></div>
+              <div class="flip-card-back"><p class="summary-text">Placeholder — check back once this week's lesson is published.</p></div>
+            </div></div>
+            <div class="flip-card" data-day="13-3"><div class="flip-card-inner">
+              <div class="flip-card-front"><h4>Day 3: To be added</h4><p>Lesson content for this day hasn't been added yet.</p><span class="flip-hint">Tap to flip</span></div>
+              <div class="flip-card-back"><p class="summary-text">Placeholder — check back once this week's lesson is published.</p></div>
+            </div></div>
+          </div>
+        </div>
+        <div class="week-card" id="week14">
+          <h2 class="wk">Week 14 — Coming Soon</h2>
+          <div class="day-grid">
+            <div class="flip-card" data-day="14-1"><div class="flip-card-inner">
+              <div class="flip-card-front"><h4>Day 1: To be added</h4><p>Lesson content for this day hasn't been added yet.</p><span class="flip-hint">Tap to flip</span></div>
+              <div class="flip-card-back"><p class="summary-text">Placeholder — check back once this week's lesson is published.</p></div>
+            </div></div>
+            <div class="flip-card" data-day="14-2"><div class="flip-card-inner">
+              <div class="flip-card-front"><h4>Day 2: To be added</h4><p>Lesson content for this day hasn't been added yet.</p><span class="flip-hint">Tap to flip</span></div>
+              <div class="flip-card-back"><p class="summary-text">Placeholder — check back once this week's lesson is published.</p></div>
+            </div></div>
+            <div class="flip-card" data-day="14-3"><div class="flip-card-inner">
+              <div class="flip-card-front"><h4>Day 3: To be added</h4><p>Lesson content for this day hasn't been added yet.</p><span class="flip-hint">Tap to flip</span></div>
+              <div class="flip-card-back"><p class="summary-text">Placeholder — check back once this week's lesson is published.</p></div>
+            </div></div>
+          </div>
+        </div>
+        <div class="week-card" id="week15">
+          <h2 class="wk">Week 15 — Coming Soon</h2>
+          <div class="day-grid">
+            <div class="flip-card" data-day="15-1"><div class="flip-card-inner">
+              <div class="flip-card-front"><h4>Day 1: To be added</h4><p>Lesson content for this day hasn't been added yet.</p><span class="flip-hint">Tap to flip</span></div>
+              <div class="flip-card-back"><p class="summary-text">Placeholder — check back once this week's lesson is published.</p></div>
+            </div></div>
+            <div class="flip-card" data-day="15-2"><div class="flip-card-inner">
+              <div class="flip-card-front"><h4>Day 2: To be added</h4><p>Lesson content for this day hasn't been added yet.</p><span class="flip-hint">Tap to flip</span></div>
+              <div class="flip-card-back"><p class="summary-text">Placeholder — check back once this week's lesson is published.</p></div>
+            </div></div>
+            <div class="flip-card" data-day="15-3"><div class="flip-card-inner">
+              <div class="flip-card-front"><h4>Day 3: To be added</h4><p>Lesson content for this day hasn't been added yet.</p><span class="flip-hint">Tap to flip</span></div>
+              <div class="flip-card-back"><p class="summary-text">Placeholder — check back once this week's lesson is published.</p></div>
+            </div></div>
+          </div>
+        </div>
+        <div class="week-card" id="week16">
+          <h2 class="wk">Week 16 — Coming Soon</h2>
+          <div class="day-grid">
+            <div class="flip-card" data-day="16-1"><div class="flip-card-inner">
+              <div class="flip-card-front"><h4>Day 1: To be added</h4><p>Lesson content for this day hasn't been added yet.</p><span class="flip-hint">Tap to flip</span></div>
+              <div class="flip-card-back"><p class="summary-text">Placeholder — check back once this week's lesson is published.</p></div>
+            </div></div>
+            <div class="flip-card" data-day="16-2"><div class="flip-card-inner">
+              <div class="flip-card-front"><h4>Day 2: To be added</h4><p>Lesson content for this day hasn't been added yet.</p><span class="flip-hint">Tap to flip</span></div>
+              <div class="flip-card-back"><p class="summary-text">Placeholder — check back once this week's lesson is published.</p></div>
+            </div></div>
+            <div class="flip-card" data-day="16-3"><div class="flip-card-inner">
+              <div class="flip-card-front"><h4>Day 3: To be added — Final Project</h4><p>Lesson content for this day hasn't been added yet.</p><span class="flip-hint">Tap to flip</span></div>
+              <div class="flip-card-back"><p class="summary-text">Placeholder — check back once this week's lesson is published.</p></div>
+            </div></div>
+          </div>
+        </div>
+        </div><!-- /month-block m4 -->
       </section>
       <!-- ========== PROJECTS ========== -->
       <section id="projects" class="view">
         <div class="view-head">
           <div>
             <h2>Group Projects</h2>
-            <p>Three hands-on studio briefs. Pick a tab, follow the instructions, and submit to Google Classroom.</p>
+            <p>Three hands-on studio briefs. Pick a tab, follow the instructions, and submit your files to the class Google Drive folder.</p>
           </div>
         </div>
         <div class="subnav" id="projSubnav">
-          <button class="active" data-proj="gojo">Week 6 · Gojo Pop-Out Project</button>
-          <button data-proj="mockup">Phone / iPad Mockup Studio</button>
-          <button data-proj="world">Around the World with a Twist</button>
+          <button class="active" data-proj="world">Week 3 · Around the World with a Twist</button>
+          <button data-proj="mockup">Week 6 · Phone / iPad Mockup</button>
+          <button data-proj="gojo">Week 9 · Gojo Pop-Out Project</button>
         </div>
-        <!-- ---- PROJECT 1: GOJO ---- -->
-        <div class="proj-view active" id="proj-gojo">
+        <!-- ---- PROJECT 3: AROUND THE WORLD (now first / Week 3) ---- -->
+        <div class="proj-view active" id="proj-world">
+        <style>
+        .atw-scope{ --atw-accent:#ff8c42; font-family:'Inter',sans-serif; }
+        .atw-container{max-width:1100px;margin:0 auto;padding:4px;}
+        .atw-container header{display:flex;gap:16px;align-items:center;margin-bottom:18px;}
+        .atw-container h1{margin:0;font-size:21px;color:#e8630a;}
+        .atw-container p.lead{margin:4px 0 0;color:#6b6b6b;font-size:13.5px;}
+        .atw-main{display:grid;grid-template-columns:290px 1fr;gap:18px;}
+        .atw-side{position:sticky;top:75px;height:fit-content;max-height:calc(100vh - 100px);overflow:auto;padding:12px;background:linear-gradient(180deg,rgba(255,240,210,.7),rgba(255,255,255,.5));border-radius:14px;border:1px solid rgba(255,165,0,0.25);}
+        .atw-search{display:flex;padding:8px;border-radius:10px;background:rgba(255,255,255,.7);align-items:center;}
+        .atw-search input{border:0;background:transparent;outline:none;padding:6px;width:100%;font-size:13px;}
+        .atw-group-list{margin-top:12px;display:flex;flex-direction:column;gap:8px;}
+        .atw-group-item{padding:10px;border-radius:9px;background:rgba(255,255,255,.75);cursor:pointer;border:1px solid rgba(255,165,0,0.25);font-size:13px;transition:.2s;text-align:left;width:100%;font-family:inherit;color:inherit;}
+        .atw-group-item:hover{background:#ffe3b3;}
+        .atw-group-item.active{outline:2px solid #ffa64d;border-color:#ffa64d;background:#fff0d1;font-weight:600;}
+        .atw-content{padding:20px;background:linear-gradient(180deg,rgba(255,250,240,.8),rgba(255,255,255,.6));border-radius:14px;min-height:420px;border:1px solid rgba(255,165,0,0.2);}
+        .atw-hero{display:flex;gap:16px;align-items:center;flex-wrap:wrap;}
+        .atw-hero-left{flex:1;min-width:220px;}
+        .atw-hero-right{width:190px;height:110px;border-radius:10px;background:linear-gradient(135deg,var(--atw-accent),#ffd08a);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;box-shadow:0 3px 8px rgba(0,0,0,0.15);}
+        .atw-section-title{margin:12px 0;font-size:15px;color:#e8630a;}
+        .atw-card{background:rgba(255,255,255,.7);padding:14px;border-radius:10px;margin-bottom:12px;border:1px solid rgba(255,165,0,0.2);font-size:13.5px;}
+        .atw-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+        .atw-meta{font-size:13px;color:#6b6b6b;line-height:1.6;}
+        .atw-content details{background:transparent;padding:8px 0;border-radius:8px;}
+        .atw-content summary{cursor:pointer;font-weight:600;color:#e8630a;}
+        .atw-submit-list{list-style:none;padding:0;margin:8px 0;}
+        .atw-submit-list li{padding:8px 0;border-bottom:1px dashed rgba(0,0,0,0.08);font-size:13.5px;}
+        .atw-filename{font-family:monospace;background:rgba(255,165,0,0.2);padding:2px 6px;border-radius:6px;}
+        .atw-submit-btn{display:inline-flex;align-items:center;gap:8px;padding:11px 16px;border-radius:11px;background:var(--atw-accent);color:#fff;font-weight:700;border:none;cursor:pointer;text-decoration:none;font-size:13.5px;margin-top:10px;}
+        .atw-submit-btn:hover{opacity:.9;}
+        @media(max-width:900px){.atw-main{grid-template-columns:1fr;}.atw-side{position:static;max-height:none;}.atw-grid-2{grid-template-columns:1fr;}}
+        </style>
+        <div class="atw-scope">
+        <div class="atw-container">
+          <header>
+            <div>
+              <h1>Week 3 — Around the World with a Twist</h1>
+              <p class="lead">Clear instructions, per-group rubric, and submission checklist for Class of 2027.</p>
+            </div>
+          </header>
+          <div class="atw-main">
+            <nav class="atw-side" aria-label="Groups navigation">
+              <div class="atw-search"><label for="atwSearch" style="position:absolute;left:-9999px;">Search groups or keywords</label><input id="atwSearch" placeholder="Search groups or keywords"></div>
+              <div class="atw-group-list" id="atwGroupList"></div>
+            </nav>
+            <section class="atw-content">
+              <div class="atw-hero">
+                <div class="atw-hero-left">
+                  <h2 style="margin:0 0 8px;font-size:17px;">General Instructions for All Groups</h2>
+                  <p class="atw-meta">Pick a subject from your group members and take a high-resolution portrait photo. Replace the background with your assigned city, retouch the face naturally, and redesign the pattern of cloth to reflect that city's unique culture and style identity. Your final image should tell a visual story that merges your subject's personality with the atmosphere of the city.</p>
+                </div>
+                <div class="atw-hero-right">Class of 2027</div>
+              </div>
+              <div id="atwGroupContent"></div>
+              <div class="atw-card">
+                <h3 class="atw-section-title">Submission Format</h3>
+                <div class="atw-grid-2">
+                  <div>
+                    <h4 style="margin:0 0 6px;font-size:14px;">1. Final Photoshop File (.PSD)</h4>
+                    <ul class="atw-submit-list">
+                      <li>Include organized layers: background, subject, clothing, and retouching.</li>
+                      <li>Rename layers clearly (e.g., "Clothing Edit", "Face Retouch").</li>
+                      <li>Remove hidden or unnecessary layers for file cleanliness.</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h4 style="margin:0 0 6px;font-size:14px;">2. Final Image (.JPG or .PNG)</h4>
+                    <ul class="atw-submit-list">
+                      <li>High resolution (minimum 2000 px wide).</li>
+                      <li>Export at quality 10 or higher; avoid compression.</li>
+                      <li>Filename format: <span class="atw-filename">Group#_CityName_ClassOf2027.jpg</span></li>
+                    </ul>
+                  </div>
+                </div>
+                <div style="margin-top:12px">
+                  <h4 style="margin:0 0 6px;font-size:14px;">3. Short Creative Reflection (PDF, max 1 page)</h4>
+                  <ul class="atw-submit-list">
+                    <li>Title and one-paragraph concept summary.</li>
+                    <li>Tools used: Pen Tool, Clone Stamp, Dodge &amp; Burn, Gradient Map, etc.</li>
+                    <li>Design choices: color palette, lighting, clothing influence, composition.</li>
+                    <li>Include main challenges and lessons learned.</li>
+                  </ul>
+                </div>
+                <a class="atw-submit-btn" href="https://drive.google.com/drive/folders/10rRbwGYnjjTxAA4Q9PHvf9JrsA7kqzuw?usp=sharing" target="_blank" rel="noopener">Submit files to Class Drive Folder →</a>
+              </div>
+            </section>
+          </div>
+        </div>
+        </div>
+        </div>
+        <!-- ---- PROJECT 2: PHONE/IPAD MOCKUP (Week 6) ---- -->
+        <div class="proj-view" id="proj-mockup">
+        <style>
+        .sp-scope{ --sp-accent:#ff7a2d; --sp-accent2:#ff9b57; font-family:'Inter',sans-serif; }
+        .sp-project{max-width:1100px;margin:0 auto;padding:22px;background:linear-gradient(180deg,#fffaf7,#fff);border-radius:20px;box-shadow:var(--shadow);border:1px solid rgba(0,0,0,0.03);}
+        .sp-project .header{display:flex;gap:18px;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;}
+        .sp-project .title{display:flex;gap:14px;align-items:center;}
+        .sp-project .logo-badge{width:60px;height:60px;border-radius:12px;background:linear-gradient(135deg,var(--sp-accent),var(--sp-accent2));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:18px;box-shadow:0 6px 18px rgba(255,122,45,0.25);flex-shrink:0;}
+        .sp-project h1{font-size:19px;margin:0;}
+        .sp-project p.lead{margin:0;color:#6b6b6b;font-size:13px;}
+        .sp-project .layout{display:grid;grid-template-columns:400px 1fr;gap:18px;margin-top:18px;}
+        .sp-project .mockup-card{background:#fff;padding:16px;border-radius:14px;box-shadow:var(--shadow);border:1px solid rgba(0,0,0,0.02);}
+        .sp-project .device-switch{display:flex;gap:8px;margin-bottom:12px;align-items:center;}
+        .sp-project .device-switch button{background:transparent;border:1px solid rgba(0,0,0,0.08);padding:8px 10px;border-radius:10px;cursor:pointer;font-size:12.5px;}
+        .sp-project .device-switch button.active{background:linear-gradient(90deg,var(--sp-accent),var(--sp-accent2));color:#fff;border:none;}
+        .sp-project .device-stage{display:flex;justify-content:center;align-items:center;padding:10px;}
+        .sp-project .device{width:270px;height:560px;border-radius:38px;background:linear-gradient(180deg,#111,#222);box-shadow:0 12px 30px rgba(0,0,0,0.2);position:relative;padding:16px;display:flex;align-items:center;justify-content:center;}
+        .sp-project .device.ipad{width:380px;height:500px;border-radius:26px;padding:24px;}
+        .sp-project .device .screen{width:100%;height:100%;border-radius:26px;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+        .sp-project .carousel{width:92%;height:86%;background:#fff;border-radius:16px;overflow:hidden;display:flex;flex-direction:column;justify-content:center;align-items:center;box-shadow:inset 0 2px 12px rgba(0,0,0,0.06);}
+        .sp-project .carousel img{width:100%;height:100%;object-fit:cover;transition:opacity .3s ease;}
+        .sp-project .carousel-controls{display:flex;gap:10px;align-items:center;justify-content:center;margin-top:10px;}
+        .sp-project .btn{background:var(--sp-accent);color:#fff;border:none;padding:8px 14px;border-radius:10px;cursor:pointer;font-weight:600;font-size:13px;}
+        .sp-project .btn.ghost{background:transparent;color:#6b6b6b;border:1px solid rgba(0,0,0,0.08);}
+        .sp-project .thumbs{display:flex;gap:8px;padding:10px 4px 0;overflow:auto;max-width:280px;}
+        .sp-project .thumbs img{width:52px;height:52px;border-radius:8px;object-fit:cover;cursor:pointer;border:2px solid transparent;}
+        .sp-project .thumbs img.active{border-color:var(--sp-accent);}
+        .sp-project .info{background:linear-gradient(180deg,rgba(255,255,255,0.9),#fff);padding:18px;border-radius:14px;box-shadow:var(--shadow);}
+        .sp-project .section{margin-bottom:14px;}
+        .sp-project .section h3{margin:0 0 8px;font-size:15px;}
+        .sp-project ul.checklist{margin:0;padding-left:18px;color:#6b6b6b;font-size:13.5px;}
+        .sp-project .actions{display:flex;gap:10px;align-items:center;margin-top:8px;flex-wrap:wrap;}
+        .sp-project .note{font-size:12.5px;color:#6b6b6b;line-height:1.6;background:rgba(255,249,244,0.6);border-radius:8px;padding:10px;border:1px solid rgba(0,0,0,0.03);}
+        .sp-project .rubric-box{background:linear-gradient(90deg,#fff2ee,#fff9f6);border-left:4px solid var(--sp-accent);padding:10px 14px;border-radius:8px;font-size:12.5px;margin-top:8px;color:#6b6b6b;}
+        .sp-tips-modal{display:none;position:fixed;inset:0;background:rgba(10,10,10,.5);align-items:center;justify-content:center;z-index:2000;}
+        .sp-tips-modal.open{display:flex;}
+        .sp-tips-modal .box{background:#fff;padding:22px;border-radius:14px;max-width:340px;box-shadow:0 20px 50px rgba(0,0,0,.3);}
+        @media(max-width:900px){.sp-project .layout{grid-template-columns:1fr;}.sp-project .device.ipad{width:300px;height:400px;}.sp-project .device{width:240px;height:480px;}}
+        </style>
+        <div class="sp-scope">
+        <div class="sp-project">
+          <div class="header">
+            <div class="title">
+              <div class="logo-badge" aria-hidden="true">PM</div>
+              <div><h1>Week 6 — Phone / iPad Mockup Student Project</h1>
+              <p class="lead">Design your own mockup inspired by the images below. Let the visuals guide your creativity — focus on composition, lighting, and mood.</p></div>
+            </div>
+            <div style="text-align:right">
+              <div style="font-size:12px;color:#6b6b6b">Deadline: <strong>Follow weekly schedule</strong></div>
+              <div style="margin-top:8px"><a href="https://drive.google.com/drive/folders/10rRbwGYnjjTxAA4Q9PHvf9JrsA7kqzuw?usp=sharing" target="_blank" rel="noopener"><button class="btn" type="button">Submit to Class Drive Folder</button></a></div>
+            </div>
+          </div>
+          <div class="layout">
+            <div class="mockup-card">
+              <div class="device-switch">
+                <button id="sp-btn-phone" class="active" type="button" onclick="spSetDevice('phone')">Phone Mockup</button>
+                <button id="sp-btn-ipad" type="button" onclick="spSetDevice('ipad')">iPad Mockup</button>
+                <div style="flex:1"></div>
+                <button class="btn ghost" type="button" onclick="spOpenAllImages()">Open All</button>
+              </div>
+              <div class="device-stage">
+                <div id="sp-device" class="device"><div class="screen"><div class="carousel" id="sp-carousel"><img id="sp-main-image" src="" alt="Mockup inspiration image"></div></div></div>
+              </div>
+              <div class="carousel-controls" style="flex-direction:column;align-items:center">
+                <div style="display:flex;gap:10px">
+                  <button class="btn" type="button" onclick="spPrevImage()" aria-label="Previous image">◀</button>
+                  <button class="btn" type="button" onclick="spNextImage()" aria-label="Next image">▶</button>
+                  <button class="btn ghost" type="button" onclick="spShowTips()">Quick Tips</button>
+                </div>
+                <div class="thumbs" id="sp-thumbs"></div>
+              </div>
+            </div>
+            <div class="info">
+              <div class="section">
+                <h3>Instructions</h3>
+                <p class="note">
+                  1. Design a phone or iPad mockup using your own creative composition.<br>
+                  2. Let the carousel images inspire your pose, angle, or scene — don't copy, interpret creatively.<br>
+                  3. Ensure high resolution (≥1080px for phone, ≥2048px for iPad).<br>
+                  4. Use warm accents subtly to enhance mood.<br>
+                  5. Export your file as <code>Firstname_Lastname_PM.jpg</code>.<br>
+                  6. Click "Submit to Class Drive Folder" to upload your final work.
+                </p>
+                <div class="rubric-box"><strong>Mockup Note:</strong> A mockup is a visual prototype showing your design concept clearly.<br>
+                <strong>Rubric:</strong> Composition 40%, Lighting &amp; Mood 30%, Creativity 20%, Resolution &amp; Presentation 10%.</div>
+              </div>
+              <div class="section">
+                <h3>Creating a 3D Mockup and Composition</h3>
+                <p><strong>What:</strong> A 3D mockup is a digital visual showing your design applied on a realistic object like a phone, tablet, or poster. It helps visualize how your work looks in real life.</p>
+                <p><strong>Why:</strong> It gives your design depth and realism. 3D mockups make presentations professional, help with perspective accuracy, and make your work more engaging.</p>
+                <p><strong>When:</strong> After completing your main design (photo or layout), use Photoshop or an online tool like Photopea or Smartmockups to place your design inside a 3D frame or screen.</p>
+                <p><strong>How:</strong></p>
+                <ul class="checklist">
+                  <li>Prepare your final image or layout.</li>
+                  <li>Use a smart object or mockup template.</li>
+                  <li>Insert your design into the mockup layer.</li>
+                  <li>Adjust lighting, reflection, and perspective for realism.</li>
+                  <li>Align background color or blur to match your theme.</li>
+                  <li>Export the final composition as JPG or PNG.</li>
+                </ul>
+              </div>
+              <div class="actions">
+                <a id="sp-submit-link" href="https://drive.google.com/drive/folders/10rRbwGYnjjTxAA4Q9PHvf9JrsA7kqzuw?usp=sharing" target="_blank" rel="noopener"><button class="btn" type="button">Submit to Class Drive Folder</button></a>
+                <button class="btn ghost" type="button" onclick="spShowTips()">Quick Tips</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="sp-tips-modal" id="spTipsModal" role="dialog" aria-modal="true" aria-labelledby="spTipsHeading">
+          <div class="box">
+            <h4 id="spTipsHeading">Quick Tips</h4>
+            <ul style="padding-left:18px;color:#6b6b6b;margin:0 0 12px;">
+              <li>Use light and shadow to create depth.</li>
+              <li>Keep accents subtle but engaging.</li>
+              <li>Ensure clarity and composition.</li>
+              <li>Send your draft for subject-selection feedback.</li>
+            </ul>
+            <button class="btn ghost" type="button" onclick="spCloseTips()">Close</button>
+          </div>
+        </div>
+        </div>
+        </div>
+        <!-- ---- PROJECT 1: GOJO (Week 9) ---- -->
+        <div class="proj-view" id="proj-gojo">
         <style>
         .gj-scope{font-family:'Poppins',sans-serif;color:#081726;}
         .gj-scope .container{max-width:1100px;margin:0 auto;padding:0 0 24px;background:#fff8f0;border-radius:16px;box-shadow:var(--shadow);padding:24px;}
@@ -712,8 +1033,8 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
         <header>
           <div class="logo" aria-hidden="true">GJ</div>
           <div>
-            <h1>Week 6 — Pop-Out Animal + Text Effect (Group Project)</h1>
-            <p class="lead">Propose 3 design ideas and attach draft images. Submit your downloaded project PDF directly to Google Classroom to get the rubric.</p>
+            <h1>Week 9 — Gojo Pop-Out Project (Group Project)</h1>
+            <p class="lead">Propose 3 design ideas and attach draft images. Submit your files directly to the class Google Drive folder to get the rubric.</p>
           </div>
         </header>
         <form id="projectForm">
@@ -772,219 +1093,9 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
         <div class="card actions">
         <span class="pdf-status" id="gjPdfStatus" aria-live="polite"></span>
         <button type="button" class="btn" id="gjDownloadBtn">Download Project PDF</button>
-        <button type="button" class="btn" id="gjSubmitBtn">Submit to Classroom</button>
+        <button type="button" class="btn" id="gjSubmitBtn">Submit to Class Drive Folder</button>
         </div>
         </form>
-        </div>
-        </div>
-        </div>
-        <!-- ---- PROJECT 2: PHONE/IPAD MOCKUP ---- -->
-        <div class="proj-view" id="proj-mockup">
-        <style>
-        .sp-scope{ --sp-accent:#ff7a2d; --sp-accent2:#ff9b57; font-family:'Inter',sans-serif; }
-        .sp-project{max-width:1100px;margin:0 auto;padding:22px;background:linear-gradient(180deg,#fffaf7,#fff);border-radius:20px;box-shadow:var(--shadow);border:1px solid rgba(0,0,0,0.03);}
-        .sp-project .header{display:flex;gap:18px;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;}
-        .sp-project .title{display:flex;gap:14px;align-items:center;}
-        .sp-project .logo-badge{width:60px;height:60px;border-radius:12px;background:linear-gradient(135deg,var(--sp-accent),var(--sp-accent2));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:18px;box-shadow:0 6px 18px rgba(255,122,45,0.25);flex-shrink:0;}
-        .sp-project h1{font-size:19px;margin:0;}
-        .sp-project p.lead{margin:0;color:#6b6b6b;font-size:13px;}
-        .sp-project .layout{display:grid;grid-template-columns:400px 1fr;gap:18px;margin-top:18px;}
-        .sp-project .mockup-card{background:#fff;padding:16px;border-radius:14px;box-shadow:var(--shadow);border:1px solid rgba(0,0,0,0.02);}
-        .sp-project .device-switch{display:flex;gap:8px;margin-bottom:12px;align-items:center;}
-        .sp-project .device-switch button{background:transparent;border:1px solid rgba(0,0,0,0.08);padding:8px 10px;border-radius:10px;cursor:pointer;font-size:12.5px;}
-        .sp-project .device-switch button.active{background:linear-gradient(90deg,var(--sp-accent),var(--sp-accent2));color:#fff;border:none;}
-        .sp-project .device-stage{display:flex;justify-content:center;align-items:center;padding:10px;}
-        .sp-project .device{width:270px;height:560px;border-radius:38px;background:linear-gradient(180deg,#111,#222);box-shadow:0 12px 30px rgba(0,0,0,0.2);position:relative;padding:16px;display:flex;align-items:center;justify-content:center;}
-        .sp-project .device.ipad{width:380px;height:500px;border-radius:26px;padding:24px;}
-        .sp-project .device .screen{width:100%;height:100%;border-radius:26px;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;}
-        .sp-project .carousel{width:92%;height:86%;background:#fff;border-radius:16px;overflow:hidden;display:flex;flex-direction:column;justify-content:center;align-items:center;box-shadow:inset 0 2px 12px rgba(0,0,0,0.06);}
-        .sp-project .carousel img{width:100%;height:100%;object-fit:cover;transition:opacity .3s ease;}
-        .sp-project .carousel-controls{display:flex;gap:10px;align-items:center;justify-content:center;margin-top:10px;}
-        .sp-project .btn{background:var(--sp-accent);color:#fff;border:none;padding:8px 14px;border-radius:10px;cursor:pointer;font-weight:600;font-size:13px;}
-        .sp-project .btn.ghost{background:transparent;color:#6b6b6b;border:1px solid rgba(0,0,0,0.08);}
-        .sp-project .thumbs{display:flex;gap:8px;padding:10px 4px 0;overflow:auto;max-width:280px;}
-        .sp-project .thumbs img{width:52px;height:52px;border-radius:8px;object-fit:cover;cursor:pointer;border:2px solid transparent;}
-        .sp-project .thumbs img.active{border-color:var(--sp-accent);}
-        .sp-project .info{background:linear-gradient(180deg,rgba(255,255,255,0.9),#fff);padding:18px;border-radius:14px;box-shadow:var(--shadow);}
-        .sp-project .section{margin-bottom:14px;}
-        .sp-project .section h3{margin:0 0 8px;font-size:15px;}
-        .sp-project ul.checklist{margin:0;padding-left:18px;color:#6b6b6b;font-size:13.5px;}
-        .sp-project .actions{display:flex;gap:10px;align-items:center;margin-top:8px;flex-wrap:wrap;}
-        .sp-project .note{font-size:12.5px;color:#6b6b6b;line-height:1.6;background:rgba(255,249,244,0.6);border-radius:8px;padding:10px;border:1px solid rgba(0,0,0,0.03);}
-        .sp-project .rubric-box{background:linear-gradient(90deg,#fff2ee,#fff9f6);border-left:4px solid var(--sp-accent);padding:10px 14px;border-radius:8px;font-size:12.5px;margin-top:8px;color:#6b6b6b;}
-        .sp-tips-modal{display:none;position:fixed;inset:0;background:rgba(10,10,10,.5);align-items:center;justify-content:center;z-index:2000;}
-        .sp-tips-modal.open{display:flex;}
-        .sp-tips-modal .box{background:#fff;padding:22px;border-radius:14px;max-width:340px;box-shadow:0 20px 50px rgba(0,0,0,.3);}
-        @media(max-width:900px){.sp-project .layout{grid-template-columns:1fr;}.sp-project .device.ipad{width:300px;height:400px;}.sp-project .device{width:240px;height:480px;}}
-        </style>
-        <div class="sp-scope">
-        <div class="sp-project">
-          <div class="header">
-            <div class="title">
-              <div class="logo-badge" aria-hidden="true">PM</div>
-              <div><h1>Phone / iPad Mockup Student Project</h1>
-              <p class="lead">Design your own mockup inspired by the images below. Let the visuals guide your creativity — focus on composition, lighting, and mood.</p></div>
-            </div>
-            <div style="text-align:right">
-              <div style="font-size:12px;color:#6b6b6b">Deadline: <strong>Follow Classroom</strong></div>
-              <div style="margin-top:8px"><a href="https://classroom.google.com/c/ODAyMDgxNDEzOTkx/a/ODE4MTM3ODIyOTAw/details" target="_blank" rel="noopener"><button class="btn" type="button">Submit to Classroom</button></a></div>
-            </div>
-          </div>
-          <div class="layout">
-            <div class="mockup-card">
-              <div class="device-switch">
-                <button id="sp-btn-phone" class="active" type="button" onclick="spSetDevice('phone')">Phone Mockup</button>
-                <button id="sp-btn-ipad" type="button" onclick="spSetDevice('ipad')">iPad Mockup</button>
-                <div style="flex:1"></div>
-                <button class="btn ghost" type="button" onclick="spOpenAllImages()">Open All</button>
-              </div>
-              <div class="device-stage">
-                <div id="sp-device" class="device"><div class="screen"><div class="carousel" id="sp-carousel"><img id="sp-main-image" src="" alt="Mockup inspiration image"></div></div></div>
-              </div>
-              <div class="carousel-controls" style="flex-direction:column;align-items:center">
-                <div style="display:flex;gap:10px">
-                  <button class="btn" type="button" onclick="spPrevImage()" aria-label="Previous image">◀</button>
-                  <button class="btn" type="button" onclick="spNextImage()" aria-label="Next image">▶</button>
-                  <button class="btn ghost" type="button" onclick="spShowTips()">Quick Tips</button>
-                </div>
-                <div class="thumbs" id="sp-thumbs"></div>
-              </div>
-            </div>
-            <div class="info">
-              <div class="section">
-                <h3>Instructions</h3>
-                <p class="note">
-                  1. Design a phone or iPad mockup using your own creative composition.<br>
-                  2. Let the carousel images inspire your pose, angle, or scene — don't copy, interpret creatively.<br>
-                  3. Ensure high resolution (≥1080px for phone, ≥2048px for iPad).<br>
-                  4. Use warm accents subtly to enhance mood.<br>
-                  5. Export your file as <code>Firstname_Lastname_PM.jpg</code>.<br>
-                  6. Click "Submit to Classroom" to upload your final work.
-                </p>
-                <div class="rubric-box"><strong>Mockup Note:</strong> A mockup is a visual prototype showing your design concept clearly.<br>
-                <strong>Rubric:</strong> Composition 40%, Lighting &amp; Mood 30%, Creativity 20%, Resolution &amp; Presentation 10%.</div>
-              </div>
-              <div class="section">
-                <h3>Creating a 3D Mockup and Composition</h3>
-                <p><strong>What:</strong> A 3D mockup is a digital visual showing your design applied on a realistic object like a phone, tablet, or poster. It helps visualize how your work looks in real life.</p>
-                <p><strong>Why:</strong> It gives your design depth and realism. 3D mockups make presentations professional, help with perspective accuracy, and make your work more engaging.</p>
-                <p><strong>When:</strong> After completing your main design (photo or layout), use Photoshop or an online tool like Photopea or Smartmockups to place your design inside a 3D frame or screen.</p>
-                <p><strong>How:</strong></p>
-                <ul class="checklist">
-                  <li>Prepare your final image or layout.</li>
-                  <li>Use a smart object or mockup template.</li>
-                  <li>Insert your design into the mockup layer.</li>
-                  <li>Adjust lighting, reflection, and perspective for realism.</li>
-                  <li>Align background color or blur to match your theme.</li>
-                  <li>Export the final composition as JPG or PNG.</li>
-                </ul>
-              </div>
-              <div class="actions">
-                <a id="sp-submit-link" href="https://classroom.google.com/c/ODAyMDgxNDEzOTkx/a/ODE4MTM3ODIyOTAw/details" target="_blank" rel="noopener"><button class="btn" type="button">Submit to Classroom</button></a>
-                <button class="btn ghost" type="button" onclick="spShowTips()">Quick Tips</button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="sp-tips-modal" id="spTipsModal" role="dialog" aria-modal="true" aria-labelledby="spTipsHeading">
-          <div class="box">
-            <h4 id="spTipsHeading">Quick Tips</h4>
-            <ul style="padding-left:18px;color:#6b6b6b;margin:0 0 12px;">
-              <li>Use light and shadow to create depth.</li>
-              <li>Keep accents subtle but engaging.</li>
-              <li>Ensure clarity and composition.</li>
-              <li>Send your draft for subject-selection feedback.</li>
-            </ul>
-            <button class="btn ghost" type="button" onclick="spCloseTips()">Close</button>
-          </div>
-        </div>
-        </div>
-        </div>
-        <!-- ---- PROJECT 3: AROUND THE WORLD ---- -->
-        <div class="proj-view" id="proj-world">
-        <style>
-        .atw-scope{ --atw-accent:#ff8c42; font-family:'Inter',sans-serif; }
-        .atw-container{max-width:1100px;margin:0 auto;padding:4px;}
-        .atw-container header{display:flex;gap:16px;align-items:center;margin-bottom:18px;}
-        .atw-container h1{margin:0;font-size:21px;color:#e8630a;}
-        .atw-container p.lead{margin:4px 0 0;color:#6b6b6b;font-size:13.5px;}
-        .atw-main{display:grid;grid-template-columns:290px 1fr;gap:18px;}
-        .atw-side{position:sticky;top:75px;height:fit-content;max-height:calc(100vh - 100px);overflow:auto;padding:12px;background:linear-gradient(180deg,rgba(255,240,210,.7),rgba(255,255,255,.5));border-radius:14px;border:1px solid rgba(255,165,0,0.25);}
-        .atw-search{display:flex;padding:8px;border-radius:10px;background:rgba(255,255,255,.7);align-items:center;}
-        .atw-search input{border:0;background:transparent;outline:none;padding:6px;width:100%;font-size:13px;}
-        .atw-group-list{margin-top:12px;display:flex;flex-direction:column;gap:8px;}
-        .atw-group-item{padding:10px;border-radius:9px;background:rgba(255,255,255,.75);cursor:pointer;border:1px solid rgba(255,165,0,0.25);font-size:13px;transition:.2s;text-align:left;width:100%;font-family:inherit;color:inherit;}
-        .atw-group-item:hover{background:#ffe3b3;}
-        .atw-group-item.active{outline:2px solid #ffa64d;border-color:#ffa64d;background:#fff0d1;font-weight:600;}
-        .atw-content{padding:20px;background:linear-gradient(180deg,rgba(255,250,240,.8),rgba(255,255,255,.6));border-radius:14px;min-height:420px;border:1px solid rgba(255,165,0,0.2);}
-        .atw-hero{display:flex;gap:16px;align-items:center;flex-wrap:wrap;}
-        .atw-hero-left{flex:1;min-width:220px;}
-        .atw-hero-right{width:190px;height:110px;border-radius:10px;background:linear-gradient(135deg,var(--atw-accent),#ffd08a);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;box-shadow:0 3px 8px rgba(0,0,0,0.15);}
-        .atw-section-title{margin:12px 0;font-size:15px;color:#e8630a;}
-        .atw-card{background:rgba(255,255,255,.7);padding:14px;border-radius:10px;margin-bottom:12px;border:1px solid rgba(255,165,0,0.2);font-size:13.5px;}
-        .atw-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
-        .atw-meta{font-size:13px;color:#6b6b6b;line-height:1.6;}
-        .atw-content details{background:transparent;padding:8px 0;border-radius:8px;}
-        .atw-content summary{cursor:pointer;font-weight:600;color:#e8630a;}
-        .atw-submit-list{list-style:none;padding:0;margin:8px 0;}
-        .atw-submit-list li{padding:8px 0;border-bottom:1px dashed rgba(0,0,0,0.08);font-size:13.5px;}
-        .atw-filename{font-family:monospace;background:rgba(255,165,0,0.2);padding:2px 6px;border-radius:6px;}
-        @media(max-width:900px){.atw-main{grid-template-columns:1fr;}.atw-side{position:static;max-height:none;}.atw-grid-2{grid-template-columns:1fr;}}
-        </style>
-        <div class="atw-scope">
-        <div class="atw-container">
-          <header>
-            <div>
-              <h1>Photoshop Project — Around the World with a Twist</h1>
-              <p class="lead">Clear instructions, per-group rubric, and submission checklist for Class of 2027.</p>
-            </div>
-          </header>
-          <div class="atw-main">
-            <nav class="atw-side" aria-label="Groups navigation">
-              <div class="atw-search"><label for="atwSearch" style="position:absolute;left:-9999px;">Search groups or keywords</label><input id="atwSearch" placeholder="Search groups or keywords"></div>
-              <div class="atw-group-list" id="atwGroupList"></div>
-            </nav>
-            <section class="atw-content">
-              <div class="atw-hero">
-                <div class="atw-hero-left">
-                  <h2 style="margin:0 0 8px;font-size:17px;">General Instructions for All Groups</h2>
-                  <p class="atw-meta">Pick a subject from your group members and take a high-resolution portrait photo. Replace the background with your assigned city, retouch the face naturally, and redesign the pattern of cloth to reflect that city's unique culture and style identity. Your final image should tell a visual story that merges your subject's personality with the atmosphere of the city.</p>
-                </div>
-                <div class="atw-hero-right">Class of 2027</div>
-              </div>
-              <div id="atwGroupContent"></div>
-              <div class="atw-card">
-                <h3 class="atw-section-title">Submission Format</h3>
-                <div class="atw-grid-2">
-                  <div>
-                    <h4 style="margin:0 0 6px;font-size:14px;">1. Final Photoshop File (.PSD)</h4>
-                    <ul class="atw-submit-list">
-                      <li>Include organized layers: background, subject, clothing, and retouching.</li>
-                      <li>Rename layers clearly (e.g., "Clothing Edit", "Face Retouch").</li>
-                      <li>Remove hidden or unnecessary layers for file cleanliness.</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <h4 style="margin:0 0 6px;font-size:14px;">2. Final Image (.JPG or .PNG)</h4>
-                    <ul class="atw-submit-list">
-                      <li>High resolution (minimum 2000 px wide).</li>
-                      <li>Export at quality 10 or higher; avoid compression.</li>
-                      <li>Filename format: <span class="atw-filename">Group#_CityName_ClassOf2027.jpg</span></li>
-                    </ul>
-                  </div>
-                </div>
-                <div style="margin-top:12px">
-                  <h4 style="margin:0 0 6px;font-size:14px;">3. Short Creative Reflection (PDF, max 1 page)</h4>
-                  <ul class="atw-submit-list">
-                    <li>Title and one-paragraph concept summary.</li>
-                    <li>Tools used: Pen Tool, Clone Stamp, Dodge &amp; Burn, Gradient Map, etc.</li>
-                    <li>Design choices: color palette, lighting, clothing influence, composition.</li>
-                    <li>Include main challenges and lessons learned.</li>
-                  </ul>
-                </div>
-              </div>
-            </section>
-          </div>
         </div>
         </div>
         </div>
@@ -994,10 +1105,10 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
         <div class="view-head">
           <div>
             <h2>Read Me — Detailed Notes</h2>
-            <p>Step-by-step written lessons with tools, tips, and visual analogies. Each section can be downloaded on its own as a PDF.</p>
+            <p>Step-by-step written lessons with tools, tips, and visual analogies. Each section can be downloaded on its own as a PDF. Opening a section counts toward your weekly reading check.</p>
           </div>
         </div>
-        <div class="note-section" id="intro">
+        <div class="note-section" id="intro" data-reading="intro">
           <button class="note-dl" onclick="downloadSectionPDF('intro','Introduction to Graphic Design & Photoshop')">Download PDF</button>
           <h3>Introduction to Graphic Design &amp; Photoshop</h3>
           <p>Graphic Design communicates ideas visually using typography, images, colors, and layout. Photoshop is a digital workspace where imagination becomes tangible.</p>
@@ -1011,7 +1122,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
           <div class="note-tip"><strong>Tip:</strong> Always keep a "backup layer" for original images to prevent accidental mistakes.</div>
           <div class="note-visual"><strong>Visual Example:</strong> Imagine a blank canvas as a plate. Each layer is a separate ingredient. Masks are lids that cover parts of layers without deleting them. Smart Objects are frozen ingredients you can use later without changing the original taste.</div>
         </div>
-        <div class="note-section" id="rastervector">
+        <div class="note-section" id="rastervector" data-reading="rastervector">
           <button class="note-dl" onclick="downloadSectionPDF('rastervector','Raster vs Vector Graphics')">Download PDF</button>
           <h3>Raster vs Vector Graphics</h3>
           <p>Raster images are pixel-based, perfect for detailed photos. Vector graphics are path-based and scalable without losing quality.</p>
@@ -1026,7 +1137,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
           <div class="note-tip"><strong>Pro Tip:</strong> Combine raster &amp; vector: vector logos with raster textures for realism.</div>
           <div class="note-visual"><strong>Visual Example:</strong> Imagine a photo of a cat (raster) vs a cartoon cat outline (vector). Zoom the photo: pixels appear. Zoom the cartoon: it stays sharp, clean, and scalable.</div>
         </div>
-        <div class="note-section" id="photopea">
+        <div class="note-section" id="photopea" data-reading="photopea">
           <button class="note-dl" onclick="downloadSectionPDF('photopea','Photopea Overview')">Download PDF</button>
           <h3>Photopea Overview</h3>
           <p>Photopea is an online Photoshop alternative supporting layers, masks, smart objects, and adjustments.</p>
@@ -1041,7 +1152,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
           <div class="note-tip"><strong>Tip:</strong> Learn Photopea shortcuts; most match Photoshop for faster workflow.</div>
           <div class="note-visual"><strong>Visual Example:</strong> Picture carrying a small, foldable art studio in your laptop browser, with all brushes, layers, and panels ready.</div>
         </div>
-        <div class="note-section" id="removing-bg">
+        <div class="note-section" id="removing-bg" data-reading="removing-bg">
           <button class="note-dl" onclick="downloadSectionPDF('removing-bg','Removing Backgrounds and Subjects')">Download PDF</button>
           <h3>Removing Backgrounds and Subjects</h3>
           <p>Essential for product design, e-commerce, social media, and composites.</p>
@@ -1055,7 +1166,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
           <div class="note-tip"><strong>Tip:</strong> Check edges at 200% zoom for perfection.</div>
           <div class="note-visual"><strong>Visual Example:</strong> Imagine cutting a portrait out of a magazine but having invisible scissors that allow you to adjust edges after cutting.</div>
         </div>
-        <div class="note-section" id="passport">
+        <div class="note-section" id="passport" data-reading="passport">
           <button class="note-dl" onclick="downloadSectionPDF('passport','Passport Photo Editing')">Download PDF</button>
           <h3>Passport Size Photo</h3>
           <p>Precise cropping, clean background, and correct exposure are key.</p>
@@ -1069,7 +1180,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
           <div class="note-tip"><strong>Tip:</strong> Use soft brush edges for smooth background transitions.</div>
           <div class="note-visual"><strong>Visual Example:</strong> Picture a perfectly framed passport headshot on a white canvas, with soft shadows blending into the background.</div>
         </div>
-        <div class="note-section" id="retouch">
+        <div class="note-section" id="retouch" data-reading="retouch">
           <button class="note-dl" onclick="downloadSectionPDF('retouch','Face and Skin Retouching')">Download PDF</button>
           <h3>Face and Skin Retouching</h3>
           <p>Enhance portraits subtly while preserving texture.</p>
@@ -1083,7 +1194,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
           <div class="note-tip"><strong>Tip:</strong> Zoom at 100–200% to see true texture.</div>
           <div class="note-visual"><strong>Visual Example:</strong> Imagine painting small corrections over a face while keeping pores and skin details intact.</div>
         </div>
-        <div class="note-section" id="eyes">
+        <div class="note-section" id="eyes" data-reading="eyes">
           <button class="note-dl" onclick="downloadSectionPDF('eyes','Teeth and Eye Whitening, Reflection & Correction')">Download PDF</button>
           <h3>Teeth and Eye Whitening, Reflection &amp; Correction</h3>
           <p>Brighten eyes and teeth subtly while maintaining realism.</p>
@@ -1096,7 +1207,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
           <div class="note-tip"><strong>Tip:</strong> Keep whitening subtle to avoid a fake look.</div>
           <div class="note-visual"><strong>Visual Example:</strong> Visualize adding a soft highlight to the eyes like a sunbeam, without changing natural color.</div>
         </div>
-        <div class="note-section" id="mockup">
+        <div class="note-section" id="mockup" data-reading="mockup">
           <button class="note-dl" onclick="downloadSectionPDF('mockup','Posture Correction & Dress Mockups')">Download PDF</button>
           <h3>Posture Correction &amp; Dress Mockups</h3>
           <p>Adjust posture and garments for realistic presentation using Smart Objects.</p>
@@ -1110,7 +1221,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
           <div class="note-tip"><strong>Tip:</strong> Make small incremental adjustments to avoid unnatural distortion.</div>
           <div class="note-visual"><strong>Visual Example:</strong> Picture moving an arm slightly, like bending a paper doll, and the clothes following naturally with realistic folds.</div>
         </div>
-        <div class="note-section" id="reuse">
+        <div class="note-section" id="reuse" data-reading="reuse">
           <button class="note-dl" onclick="downloadSectionPDF('reuse','Tool Reuse & Project Application')">Download PDF</button>
           <h3>Tool Reuse &amp; Project Application</h3>
           <p>Skills compound — mastering one tool allows multiple creative applications.</p>
@@ -1127,7 +1238,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
       <!-- ========== SCREENCASTS ========== -->
       <section id="screencasts" class="view">
         <div class="view-head"><div><h2>Screencasts</h2>
-        <p>Recorded class walkthroughs — watch right here, or open the original in Google Drive.</p></div></div>
+        <p>Recorded class walkthroughs — tap a thumbnail to play the video right inside its card, no need to leave the page.</p></div></div>
         <div class="group-label">Recordings — Set 1</div>
         <div class="media-grid" id="screencastGrid1"></div>
         <div class="group-label">Recordings — Set 2</div>
@@ -1136,7 +1247,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
       <!-- ========== PRACTICE FILES ========== -->
       <section id="practice" class="view">
         <div class="view-head"><div><h2>Practice Files</h2>
-        <p>Downloadable source images and exercise files — preview right here, then download to practice.</p></div></div>
+        <p>Downloadable source images and exercise files — tap the thumbnail to preview right inside the card, then download to practice.</p></div></div>
         <div class="media-grid" id="practiceGrid"></div>
       </section>
     </main>
@@ -1152,7 +1263,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
       </div>
       <button class="lp-report-btn" id="lpReportBtn">✉ Send Progress Report</button>
       <button class="lp-signout" id="lpSignOutBtn">Sign out of this device</button>
-      <div class="lp-note">Every lesson card is a "layer." Flip a card in the Curriculum tab to mark that day's lesson complete — this panel fills in as you progress, just like opacity on a real layer. Weekly check-ins and lesson visits are logged automatically and included in your progress report to your instructor.</div>
+      <div class="lp-note">Every lesson card is a "layer." Flip a card in the Curriculum tab to mark that day's lesson complete — this panel fills in as you progress, just like opacity on a real layer. Finishing every day in a week automatically pops up that week's check-in quiz, which sends your progress report the moment you submit it.</div>
     </aside>
   </div>
   <footer class="appfoot">Graphic Design &amp; Photoshop — Class of 2027</footer>
@@ -1182,7 +1293,7 @@ document.getElementById('monthSwitch').addEventListener('click', e=>{
   buildWeekNav(chip.dataset.month);
 });
 /* Week pill nav, generated per month */
-const weeksByMonth = { m1:[1,2,3,4], m2:[5,6,7,8], m3:[9,10] };
+const weeksByMonth = { m1:[1,2,3,4], m2:[5,6,7,8], m3:[9,10,11,12], m4:[13,14,15,16] };
 function buildWeekNav(month){
   const nav = document.getElementById('weekNav');
   nav.innerHTML = '';
@@ -1205,19 +1316,27 @@ document.getElementById('projSubnav').addEventListener('click', e=>{
 });
 /* ================= PROGRESS / FLIP CARDS / LAYERS PANEL ================= */
 const weekMeta = {
-  1:'Interface & Layers', 2:'Non-Destructive Editing', 3:'Tools & Practical Projects',
-  4:'Advanced Portrait Editing', 5:'Color Adjustment & Matching', 6:'Mockups & Text Effects',
-  7:'Vanishing Point Text', 8:'Independent Study', 9:'Neon & Double Exposure Prep',
-  10:'Double Exposure & Poster Design'
+  1:'Interface & Layers', 2:'Non-Destructive Editing', 3:'Around the World with a Twist',
+  4:'Advanced Portrait Editing', 5:'Color Adjustment & Matching', 6:'Phone / iPad Mockup',
+  7:'Vanishing Point Text', 8:'Independent Study', 9:'Gojo Pop-Out Project',
+  10:'Double Exposure & Poster Design', 11:'Coming Soon', 12:'Coming Soon',
+  13:'Coming Soon', 14:'Coming Soon', 15:'Coming Soon', 16:'Coming Soon'
 };
+const TOTAL_WEEKS = 16;
 const cards = document.querySelectorAll('.flip-card[data-day]');
 let completed = [];
 try{ completed = JSON.parse(localStorage.getItem('completedDays')) || []; }catch(e){ completed = []; }
+function weekDayEls(w){ return document.querySelectorAll('.flip-card[data-day^="'+w+'-"]'); }
+function isWeekComplete(w){
+  const dayEls = weekDayEls(w);
+  if(!dayEls.length) return false;
+  return Array.from(dayEls).every(c => completed.includes(c.dataset.day));
+}
 function buildLayersPanel(){
   const rows = document.getElementById('lpRows');
   rows.innerHTML = '';
-  for(let w=1; w<=10; w++){
-    const dayEls = document.querySelectorAll('.flip-card[data-day^="'+w+'-"]');
+  for(let w=1; w<=TOTAL_WEEKS; w++){
+    const dayEls = weekDayEls(w);
     const total = dayEls.length;
     const done = Array.from(dayEls).filter(c => completed.includes(c.dataset.day)).length;
     const pct = total ? Math.round((done/total)*100) : 0;
@@ -1231,7 +1350,7 @@ function buildLayersPanel(){
       <span class="lp-label"><b>Week ${w}</b><small>${weekMeta[w]}</small></span>
       <span class="lp-pct">${pct}%</span>`;
     const jump = () => {
-      const monthOf = w<=4?'m1':(w<=8?'m2':'m3');
+      const monthOf = w<=4?'m1':(w<=8?'m2':(w<=12?'m3':'m4'));
       document.querySelector('.chip[data-month="'+monthOf+'"]').click();
       goTab('curriculum');
       setTimeout(()=>document.getElementById('week'+w).scrollIntoView({behavior:'smooth',block:'start'}), 80);
@@ -1254,7 +1373,10 @@ function toggleCardDone(card){
   if(!completed.includes(day)){
     completed.push(day);
     card.classList.add('done');
+    const week = day.split('-')[0];
+    const wasComplete = isWeekComplete(week);
     updateProgress();
+    if(wasComplete) maybeShowWeekQuiz(week);
   }
 }
 cards.forEach(card=>{
@@ -1285,7 +1407,7 @@ document.getElementById('lpToggle').addEventListener('click', function(){
   const collapsed = panel.classList.toggle('collapsed');
   this.setAttribute('aria-expanded', collapsed ? 'false':'true');
 });
-/* ================= NOTES: DOWNLOAD SECTION AS PDF ================= */
+/* ================= NOTES: DOWNLOAD SECTION AS PDF + READING TRACKING ================= */
 function downloadSectionPDF(sectionId, topic){
   const section = document.getElementById(sectionId);
   const printWindow = window.open('', '', 'width=800,height=900');
@@ -1299,7 +1421,321 @@ function downloadSectionPDF(sectionId, topic){
   printWindow.focus();
   printWindow.print();
 }
-/* ================= GOJO PROJECT FORM ================= */
+/* Track which reading sections a student has opened/viewed (50%+ visible for 2s) */
+const readingSeen = new Set();
+const noteObserver = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      const key = e.target.dataset.reading;
+      if(key && !readingSeen.has(key)){
+        setTimeout(()=>{
+          // confirm still intersecting-ish by re-checking bounding box roughly on screen
+          const rect = e.target.getBoundingClientRect();
+          if(rect.top < window.innerHeight && rect.bottom > 0){
+            readingSeen.add(key);
+            if(student){ student.readingSeen = Array.from(readingSeen); saveStudentRecord(student); }
+          }
+        }, 2000);
+      }
+    }
+  });
+},{threshold:0.5});
+document.querySelectorAll('.note-section[data-reading]').forEach(n=>noteObserver.observe(n));
+/* =====================================================================
+   SIGN-IN + DEVICE LOCK + WEEK-END QUIZ + GRADING + AUTO PROGRESS REPORT
+   =====================================================================
+   NOTE ON LIMITS (read this before relying on it):
+   - No server here. "Device lock" is enforced with localStorage in THIS
+     browser only — it stops casual re-enrollment with a different email
+     on the same browser, but clearing site data or a private window
+     resets it. Real enforcement needs a backend.
+   - Google Drive's embedded player is a different origin, so this page
+     genuinely cannot read how much of a video was played. "75%+ watched"
+     below is an honest proxy: the card must be open with the tab
+     visible for a minimum dwell time AND the student explicitly
+     confirms — it is not a hidden, unfakeable measurement.
+   - There's no email-sending backend, so "automatic" send means: the
+     instant the end-of-week quiz is submitted, the page immediately
+     opens a pre-filled, non-editable-by-the-page report addressed to
+     your instructor email with no extra click and no compose step
+     shown in this app — the only remaining step is whatever the
+     student's own mail app requires to actually transmit it.
+   ===================================================================== */
+const REPORT_EMAIL = 'thomas@hmacademy.org';
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+/* ---------- SIGN-IN / DEVICE LOCK ---------- */
+const gate = document.getElementById('signInGate');
+const siError = document.getElementById('siError');
+function siShowError(msg){ siError.textContent = msg; siError.classList.add('show'); }
+function siClearError(){ siError.classList.remove('show'); siError.textContent=''; }
+function getDeviceLock(){
+  try{ return JSON.parse(localStorage.getItem('hm_device_lock')||'null'); }catch(e){ return null; }
+}
+function getCurrentStudent(){
+  try{ return JSON.parse(localStorage.getItem('hm_current_student')||'null'); }catch(e){ return null; }
+}
+function setCurrentStudent(s){ localStorage.setItem('hm_current_student', JSON.stringify(s)); }
+function studentKey(email){ return 'hm_student_' + email.trim().toLowerCase(); }
+function loadStudentRecord(email){
+  try{
+    const raw = localStorage.getItem(studentKey(email));
+    if(raw){
+      const rec = JSON.parse(raw);
+      rec.weekQuizzes = rec.weekQuizzes || {};
+      rec.readingSeen = rec.readingSeen || [];
+      rec.vocabSeen = rec.vocabSeen || {};
+      rec.videoConfirmed = rec.videoConfirmed || {};
+      rec.seenScreencasts = rec.seenScreencasts || [];
+      rec.seenPractice = rec.seenPractice || [];
+      return rec;
+    }
+  }catch(e){}
+  return { name:'', email:email.trim().toLowerCase(), completed:[], weekQuizzes:{}, readingSeen:[], vocabSeen:{}, videoConfirmed:{}, seenScreencasts:[], seenPractice:[], signedInAt:new Date().toISOString() };
+}
+function saveStudentRecord(rec){ try{ localStorage.setItem(studentKey(rec.email), JSON.stringify(rec)); }catch(e){ console.error(e); } }
+let student = null; // active record for this session
+function attemptSignIn(){
+  siClearError();
+  const name = document.getElementById('siName').value.trim();
+  const email = document.getElementById('siEmail').value.trim().toLowerCase();
+  if(!name || !email || !EMAIL_RE.test(email)){
+    siShowError('Please enter your full name and a valid email address.');
+    return;
+  }
+  const lock = getDeviceLock();
+  if(lock && lock.email !== email){
+    siShowError(`This device is already enrolled to ${lock.email}. It can't be used to sign in or enroll with a different email. If this is a mistake, ask your instructor to reset this device.`);
+    return;
+  }
+  if(!lock){
+    localStorage.setItem('hm_device_lock', JSON.stringify({ email, name, ts:new Date().toISOString() }));
+  }
+  student = loadStudentRecord(email);
+  student.name = name;
+  saveStudentRecord(student);
+  setCurrentStudent({ name, email });
+  enterApp();
+}
+document.getElementById('siForm').addEventListener('submit', e=>{ e.preventDefault(); attemptSignIn(); });
+document.getElementById('lpSignOutBtn').addEventListener('click', ()=>{
+  if(!confirm('Sign out? Your progress stays saved on this device for your account, but you\'ll need to sign back in with the same email.')) return;
+  localStorage.removeItem('hm_current_student');
+  location.reload();
+});
+// Optional escape hatch for a teacher to free up a device: ?resetdevice=1
+if(new URLSearchParams(location.search).get('resetdevice') === '1'){
+  localStorage.removeItem('hm_device_lock');
+}
+function enterApp(){
+  gate.classList.add('hidden');
+  document.getElementById('studentBadge').style.display = 'flex';
+  document.getElementById('sbName').textContent = student.name;
+  let legacy = [];
+  try{ legacy = JSON.parse(localStorage.getItem('completedDays')) || []; }catch(e){}
+  legacy.forEach(d=>{ if(!student.completed.includes(d)) student.completed.push(d); });
+  completed = student.completed;
+  cards.forEach(card=>{ card.classList.toggle('done', completed.includes(card.dataset.day)); });
+  (student.readingSeen||[]).forEach(k=>readingSeen.add(k));
+  updateProgress();
+  updateGrade();
+}
+(function initAuth(){
+  const cur = getCurrentStudent();
+  if(cur){
+    student = loadStudentRecord(cur.email);
+    student.name = cur.name;
+    enterApp();
+  }
+})();
+/* ---------- persist completion to the signed-in student's record ---------- */
+const _origUpdateProgress = updateProgress;
+updateProgress = function(){
+  _origUpdateProgress();
+  if(student){
+    student.completed = completed;
+    saveStudentRecord(student);
+    updateGrade();
+  }
+};
+/* ---------- VOCAB CHECK TRACKING (per week) ---------- */
+const vocabPool = []; // {term, def, week}
+document.querySelectorAll('.flip-card[data-day] .vocab').forEach(v=>{
+  const card = v.closest('.flip-card[data-day]');
+  const week = card ? card.dataset.day.split('-')[0] : null;
+  if(!week) return;
+  vocabPool.push({ term: v.textContent.trim(), def: v.getAttribute('data-def')||'', week });
+  const mark = ()=>{
+    if(!student) return;
+    student.vocabSeen[week] = student.vocabSeen[week] || [];
+    const term = v.textContent.trim();
+    if(!student.vocabSeen[week].includes(term)){
+      student.vocabSeen[week].push(term);
+      saveStudentRecord(student);
+    }
+  };
+  v.addEventListener('mouseenter', mark);
+  v.addEventListener('focus', mark);
+  v.addEventListener('click', mark);
+});
+/* ---------- WEEK-END QUIZ (auto pop-out when all days in a week are done) ---------- */
+function buildWeekQuiz(week){
+  const pool = vocabPool.filter(v=>v.week===week);
+  if(pool.length < 2) return []; // not enough vocab this week (e.g. placeholder weeks) -> reflection-only
+  const shuffled = pool.slice().sort(()=>Math.random()-0.5).slice(0,3);
+  return shuffled.map(item=>{
+    const distractorPool = vocabPool.filter(v=>v.def && v.def!==item.def);
+    const distractors = distractorPool.sort(()=>Math.random()-0.5).slice(0,3).map(d=>d.def);
+    const options = [item.def, ...distractors].sort(()=>Math.random()-0.5);
+    return { term:item.term, correct:item.def, options };
+  });
+}
+function maybeShowWeekQuiz(week){
+  if(!student) return;
+  if(student.weekQuizzes[week]) return; // already completed this week's quiz
+  const quiz = buildWeekQuiz(week);
+  const modal = document.getElementById('wqModal');
+  const body = document.getElementById('wqQuizBody');
+  const answerLabel = document.getElementById('wqAnswerLabel');
+  const answerBox = document.getElementById('wqAnswer');
+  const skipBtn = document.getElementById('wqSkip');
+  document.getElementById('wqWeekTag').textContent = `Week ${week} Check-In — ${weekMeta[week]||''}`;
+  document.getElementById('wqQuestion').textContent = quiz.length
+    ? `Nice work finishing Week ${week}! Quick vocabulary check before you move on:`
+    : `Nice work finishing Week ${week}! Tell your instructor how it went:`;
+  body.innerHTML = '';
+  if(quiz.length){
+    quiz.forEach((q,i)=>{
+      const wrap = document.createElement('div');
+      wrap.style.marginBottom = '12px';
+      wrap.innerHTML = `<div style="font-size:13px;font-weight:700;margin-bottom:6px;">${i+1}. What does "${q.term}" mean?</div>` +
+        q.options.map((opt,oi)=>`<label style="display:block;font-size:13px;margin:4px 0;cursor:pointer;">
+          <input type="radio" name="wqq${i}" value="${oi}" data-correct="${opt===q.correct?'1':'0'}"> ${opt}
+        </label>`).join('');
+      body.appendChild(wrap);
+    });
+    answerLabel.textContent = 'Anything else you want your instructor to know? (optional)';
+  } else {
+    answerLabel.textContent = 'Your answer';
+  }
+  answerBox.value = '';
+  skipBtn.style.display = quiz.length ? 'none' : ''; // mandatory once there's an actual quiz — just submit
+  modal.dataset.week = week;
+  modal.dataset.hasQuiz = quiz.length ? '1' : '0';
+  modal.classList.add('open');
+  (quiz.length ? body.querySelector('input') : answerBox)?.focus();
+}
+document.getElementById('wqSkip').addEventListener('click', ()=>{
+  document.getElementById('wqModal').classList.remove('open');
+});
+document.getElementById('wqSubmit').addEventListener('click', ()=>{
+  if(!student) return;
+  const modal = document.getElementById('wqModal');
+  const week = modal.dataset.week;
+  const hasQuiz = modal.dataset.hasQuiz === '1';
+  let score = 0, total = 0, answers = [];
+  if(hasQuiz){
+    const groups = {};
+    document.querySelectorAll('#wqQuizBody input[type=radio]').forEach(r=>{ groups[r.name] = groups[r.name]||[]; groups[r.name].push(r); });
+    const names = Object.keys(groups);
+    total = names.length;
+    for(const name of names){
+      const checked = groups[name].find(r=>r.checked);
+      if(!checked){ alert('Please answer every question before submitting.'); return; }
+      const correct = checked.dataset.correct === '1';
+      if(correct) score++;
+      answers.push({ question:name, correct });
+    }
+  }
+  const reflection = document.getElementById('wqAnswer').value.trim();
+  // lock inputs — not editable once submitted
+  document.querySelectorAll('#wqQuizBody input').forEach(i=>i.disabled=true);
+  document.getElementById('wqAnswer').disabled = true;
+  document.getElementById('wqSubmit').disabled = true;
+  student.weekQuizzes[week] = { score, total, reflection, completedAt:new Date().toISOString() };
+  saveStudentRecord(student);
+  updateGrade();
+  sendProgressReport(`Week ${week} check-in complete`);
+  setTimeout(()=>{
+    modal.classList.remove('open');
+    document.querySelectorAll('#wqQuizBody input').forEach(i=>i.disabled=false);
+    document.getElementById('wqAnswer').disabled = false;
+    document.getElementById('wqSubmit').disabled = false;
+  }, 900);
+});
+document.getElementById('wqModal').addEventListener('keydown', e=>{
+  if(e.key==='Escape' && document.getElementById('wqSkip').style.display!=='none') document.getElementById('wqSkip').click();
+});
+/* ---------- GRADING ---------- */
+function computeGrade(){
+  if(!student) return { pct:0, letter:'—', detail:'Sign in to start tracking.' };
+  const totalLessons = cards.length;
+  const completionPct = totalLessons ? (student.completed.length/totalLessons)*100 : 0;
+  const quizzesTaken = Object.keys(student.weekQuizzes).length;
+  const quizPctSum = Object.values(student.weekQuizzes).reduce((s,q)=> s + (q.total ? (q.score/q.total)*100 : 100), 0);
+  const quizAvg = quizzesTaken ? quizPctSum/quizzesTaken : 0;
+  const readingPct = Math.min(100, (student.readingSeen.length/10)*100);
+  const videoIds = Object.keys(student.videoConfirmed).filter(id=>student.videoConfirmed[id]);
+  const videoPct = Math.min(100, (videoIds.length/23)*100);
+  const overall = completionPct*0.45 + quizAvg*0.25 + readingPct*0.15 + videoPct*0.15;
+  let letter = 'F';
+  if(overall>=90) letter='A'; else if(overall>=80) letter='B'; else if(overall>=70) letter='C'; else if(overall>=60) letter='D';
+  return { pct: Math.round(overall), letter, detail:`${Math.round(completionPct)}% lessons · ${quizzesTaken} week quizzes` };
+}
+function updateGrade(){
+  const g = computeGrade();
+  const letterEl = document.getElementById('lpGradeLetter');
+  const detailEl = document.getElementById('lpGradeDetail');
+  if(letterEl){ letterEl.textContent = student ? `${g.letter}  (${g.pct}%)` : '—'; }
+  if(detailEl){ detailEl.textContent = g.detail; }
+  const sbGrade = document.getElementById('sbGrade');
+  if(sbGrade) sbGrade.textContent = student ? `${g.letter} · ${g.pct}%` : '—';
+}
+/* ---------- PROGRESS REPORT → EMAIL (auto-fires on week-quiz submit; also manual button) ---------- */
+function buildReportBody(trigger){
+  const g = computeGrade();
+  const lines = [];
+  lines.push(`Progress report for ${student.name} (${student.email})`);
+  if(trigger) lines.push(`Trigger: ${trigger}`);
+  lines.push(`Overall grade: ${g.letter} (${g.pct}%)`);
+  lines.push(`Lessons completed: ${student.completed.length} of ${cards.length}`);
+  lines.push('');
+  lines.push('Week-end quizzes:');
+  const wkKeys = Object.keys(student.weekQuizzes).sort((a,b)=>Number(a)-Number(b));
+  if(wkKeys.length===0){ lines.push('  (none completed yet)'); }
+  wkKeys.forEach(wk=>{
+    const q = student.weekQuizzes[wk];
+    lines.push(`  Week ${wk}: ${q.total ? `${q.score}/${q.total} vocabulary correct` : 'reflection only (no vocab this week)'}${q.reflection ? ' — "'+q.reflection.replace(/\s+/g,' ').slice(0,200)+'"' : ''}`);
+  });
+  lines.push('');
+  lines.push('Reading material opened (Read Me sections viewed 2s+):');
+  lines.push(`  ${student.readingSeen.length} of 10 sections — ${student.readingSeen.join(', ')||'none yet'}`);
+  lines.push('');
+  lines.push('Vocabulary check (terms opened per week):');
+  const vocabWeeks = Object.keys(student.vocabSeen).sort((a,b)=>Number(a)-Number(b));
+  if(vocabWeeks.length===0){ lines.push('  (none yet)'); }
+  vocabWeeks.forEach(wk=>{ lines.push(`  Week ${wk}: ${student.vocabSeen[wk].length} terms — ${student.vocabSeen[wk].join(', ')}`); });
+  lines.push('');
+  lines.push('Screencasts confirmed watched 75%+ (student self-confirmed after minimum dwell time — see note in report footer):');
+  const watched = Object.keys(student.videoConfirmed).filter(id=>student.videoConfirmed[id]);
+  lines.push(`  ${watched.length} of 23 recordings confirmed`);
+  lines.push('');
+  lines.push('Practice files opened:');
+  lines.push(`  ${student.seenPractice.length} files`);
+  lines.push('');
+  lines.push('NOTE: "75%+ watched" is a self-confirmed estimate (minimum on-screen dwell time + explicit student confirmation), not a measurement read from the video player — Google Drive\'s embedded player does not expose playback progress to this page.');
+  return lines.join('\n');
+}
+function sendProgressReport(trigger){
+  if(!student) return;
+  const subject = encodeURIComponent(`Progress Report — ${student.name} (${student.email})`);
+  const body = encodeURIComponent(buildReportBody(trigger));
+  window.location.href = `mailto:${REPORT_EMAIL}?subject=${subject}&body=${body}`;
+}
+document.getElementById('lpReportBtn').addEventListener('click', ()=>{
+  if(!student){ alert('Sign in first.'); return; }
+  sendProgressReport('Manual send from Layers panel');
+});
+/* ---------- GOJO PROJECT FORM ---------- */
 document.getElementById('gjAddMemberBtn').addEventListener('click', gjAddMember);
 function gjAddMember(){
   const list=document.getElementById('membersList');
@@ -1311,7 +1747,7 @@ function gjAddMember(){
 }
 function gjRemoveMember(btn){
   const list=document.getElementById('membersList');
-  if(list.children.length<=1) return; // keep at least one row
+  if(list.children.length<=1) return;
   btn.parentElement.remove();
 }
 document.querySelectorAll('.ideaUpload').forEach(inp=>{
@@ -1367,7 +1803,7 @@ async function gjGeneratePDF(data){
   const drawBackground = ()=>{ doc.setFillColor(255, 235, 204); doc.rect(0,0,pageWidth,pageHeight,'F'); };
   let y=40;
   doc.setFontSize(22); doc.setTextColor(8,23,38); drawBackground();
-  doc.text(`Week 6 — ${data.groupName}`,40,y); y+=30;
+  doc.text(`Week 9 — ${data.groupName}`,40,y); y+=30;
   doc.setFontSize(18); doc.text(`1. Group Details`,40,y); y+=20;
   doc.setFontSize(16); doc.text(`1.1 Symbolic Animal: ${data.animal}`,50,y); y+=20;
   doc.text(`1.2 Members:`,50,y); y+=18;
@@ -1400,10 +1836,10 @@ document.getElementById('gjDownloadBtn').addEventListener('click', async ()=>{
   const btn = document.getElementById('gjDownloadBtn');
   const status = document.getElementById('gjPdfStatus');
   btn.disabled = true;
-  status.textContent = 'Building your PDF…';
+  status.textContent = 'Building your PDF...';
   try{
     const pdf=await gjGeneratePDF(data);
-    pdf.save(`${data.groupName||'week6'}-project.pdf`);
+    pdf.save(`${data.groupName||'week9'}-project.pdf`);
     status.textContent = 'PDF downloaded.';
   }catch(err){
     console.error(err);
@@ -1413,8 +1849,8 @@ document.getElementById('gjDownloadBtn').addEventListener('click', async ()=>{
   }
 });
 document.getElementById('gjSubmitBtn').addEventListener('click', ()=>{
-  alert("You will now be redirected to Google Classroom to submit your project.");
-  window.open("https://classroom.google.com/c/ODAyMDgxNDEzOTkx/a/ODIyMzQ5NjA3NTA2/details","_blank","noopener");
+  alert("You will now be redirected to the class Google Drive folder to upload your project files.");
+  window.open("https://drive.google.com/drive/folders/10rRbwGYnjjTxAA4Q9PHvf9JrsA7kqzuw?usp=sharing","_blank","noopener");
 });
 /* ================= PHONE / IPAD MOCKUP CAROUSEL ================= */
 const spImages=[
@@ -1560,248 +1996,10 @@ document.getElementById('atwSearch').addEventListener('input', e=>{
 });
 atwMakeGroupList();
 atwSelectGroup(1);
-/* =====================================================================
-   SIGN-IN + DEVICE LOCK + SCREENCAST/PRACTICE EMBEDS + WEEKLY
-   CHECK-INS + GRADING + PROGRESS-REPORT EMAIL
-   =====================================================================
-   NOTE ON LIMITS (read this before relying on it):
-   - This page has no server. "Device lock" below is enforced with
-     localStorage in THIS browser only. It stops casual re-enrollment
-     with a different email on the same browser/profile, but it is
-     NOT secure: clearing site data, using a private window, or a
-     different browser resets it. Real enforcement needs a backend
-     (accounts + database) — ask your instructor/developer for that
-     if it's required.
-   - "Report to thomas@hmacademy.org" below opens a pre-filled email
-     via mailto: for the student to send with one click — this works
-     immediately with no setup. Fully silent/automatic sending (no
-     click) needs an email API (e.g. EmailJS) wired up with real
-     credentials, which isn't something that can be faked here.
-   ===================================================================== */
-const REPORT_EMAIL = 'thomas@hmacademy.org';
-const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-/* ---------- SIGN-IN / DEVICE LOCK ---------- */
-const gate = document.getElementById('signInGate');
-const siError = document.getElementById('siError');
-function siShowError(msg){ siError.textContent = msg; siError.classList.add('show'); }
-function siClearError(){ siError.classList.remove('show'); siError.textContent=''; }
-function getDeviceLock(){
-  try{ return JSON.parse(localStorage.getItem('hm_device_lock')||'null'); }catch(e){ return null; }
-}
-function getCurrentStudent(){
-  try{ return JSON.parse(localStorage.getItem('hm_current_student')||'null'); }catch(e){ return null; }
-}
-function setCurrentStudent(s){ localStorage.setItem('hm_current_student', JSON.stringify(s)); }
-function studentKey(email){ return 'hm_student_' + email.trim().toLowerCase(); }
-function loadStudentRecord(email){
-  try{
-    const raw = localStorage.getItem(studentKey(email));
-    if(raw) return JSON.parse(raw);
-  }catch(e){}
-  return { name:'', email:email.trim().toLowerCase(), completed:[], weeklyAnswers:{}, weeklyChecks:{}, signedInAt:new Date().toISOString() };
-}
-function saveStudentRecord(rec){ try{ localStorage.setItem(studentKey(rec.email), JSON.stringify(rec)); }catch(e){ console.error(e); } }
-let student = null; // active record for this session
-function attemptSignIn(){
-  siClearError();
-  const name = document.getElementById('siName').value.trim();
-  const email = document.getElementById('siEmail').value.trim().toLowerCase();
-  if(!name || !email || !EMAIL_RE.test(email)){
-    siShowError('Please enter your full name and a valid email address.');
-    return;
-  }
-  const lock = getDeviceLock();
-  if(lock && lock.email !== email){
-    siShowError(`This device is already enrolled to ${lock.email}. It can't be used to sign in or enroll with a different email. If this is a mistake, ask your instructor to reset this device.`);
-    return;
-  }
-  if(!lock){
-    localStorage.setItem('hm_device_lock', JSON.stringify({ email, name, ts:new Date().toISOString() }));
-  }
-  student = loadStudentRecord(email);
-  student.name = name;
-  saveStudentRecord(student);
-  setCurrentStudent({ name, email });
-  enterApp();
-}
-document.getElementById('siForm').addEventListener('submit', e=>{ e.preventDefault(); attemptSignIn(); });
-document.getElementById('lpSignOutBtn').addEventListener('click', ()=>{
-  if(!confirm('Sign out? Your progress stays saved on this device for your account, but you\'ll need to sign back in with the same email.')) return;
-  localStorage.removeItem('hm_current_student');
-  location.reload();
-});
-// Optional escape hatch for a teacher to free up a device: ?resetdevice=1
-if(new URLSearchParams(location.search).get('resetdevice') === '1'){
-  localStorage.removeItem('hm_device_lock');
-}
-function enterApp(){
-  gate.classList.add('hidden');
-  document.getElementById('studentBadge').style.display = 'flex';
-  document.getElementById('sbName').textContent = student.name;
-  // merge saved completed-days (legacy key) into student's record once
-  let legacy = [];
-  try{ legacy = JSON.parse(localStorage.getItem('completedDays')) || []; }catch(e){}
-  legacy.forEach(d=>{ if(!student.completed.includes(d)) student.completed.push(d); });
-  completed = student.completed;
-  cards.forEach(card=>{
-    card.classList.toggle('done', completed.includes(card.dataset.day));
-  });
-  updateProgress();
-  updateGrade();
-  maybeShowWeeklyQuestion();
-}
-(function initAuth(){
-  const cur = getCurrentStudent();
-  if(cur){
-    student = loadStudentRecord(cur.email);
-    student.name = cur.name;
-    enterApp();
-  }
-  // otherwise the sign-in gate stays visible (default state)
-})();
-/* ---------- persist completion to the signed-in student's record ---------- */
-const _origUpdateProgress = updateProgress;
-updateProgress = function(){
-  _origUpdateProgress();
-  if(student){
-    student.completed = completed;
-    saveStudentRecord(student);
-    updateGrade();
-  }
-};
-/* ---------- SILENT WEEKLY LESSON-CHECK TRACKING ---------- */
-function isoWeekKey(d){
-  const date = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
-  const dayNum = (date.getUTCDay() + 6) % 7;
-  date.setUTCDate(date.getUTCDate() - dayNum + 3);
-  const firstThursday = new Date(Date.UTC(date.getUTCFullYear(),0,4));
-  const weekNum = 1 + Math.round(((date - firstThursday) / 86400000 - 3 + ((firstThursday.getUTCDay()+6)%7)) / 7);
-  return `${date.getUTCFullYear()}-W${weekNum}`;
-}
-function logWeeklyCheck(courseWeek){
-  if(!student) return;
-  const wk = isoWeekKey(new Date());
-  if(!student.weeklyChecks[wk]) student.weeklyChecks[wk] = [];
-  if(!student.weeklyChecks[wk].includes(courseWeek)){
-    student.weeklyChecks[wk].push(courseWeek);
-    saveStudentRecord(student);
-    updateGrade();
-  }
-}
-const weekCardObserver = new IntersectionObserver(entries=>{
-  entries.forEach(e=>{
-    if(e.isIntersecting){
-      const wkNum = e.target.id.replace('week','');
-      logWeeklyCheck(wkNum);
-    }
-  });
-},{threshold:0.4});
-document.querySelectorAll('.week-card').forEach(wc=>weekCardObserver.observe(wc));
-/* ---------- WEEKLY CHECK-IN QUESTION (once per calendar week) ---------- */
-const weeklyQuestions = [
-  "What was the trickiest tool or technique this week, and how did you work through it?",
-  "Which lesson from this week are you most confident about — and why?",
-  "What's one thing you'd like more practice on before next week?",
-  "Describe one edit you made this week in your own words, step by step.",
-  "What's a mistake you caught yourself making this week, and what did you learn from it?"
-];
-function currentCourseWeek(){
-  for(let w=10; w>=1; w--){
-    const dayEls = document.querySelectorAll('.flip-card[data-day^="'+w+'-"]');
-    if(Array.from(dayEls).some(c=>completed.includes(c.dataset.day))) return w;
-  }
-  return 1;
-}
-function maybeShowWeeklyQuestion(){
-  if(!student) return;
-  const wk = isoWeekKey(new Date());
-  if(student.weeklyAnswers[wk]) return; // already answered this week
-  const snoozedFor = sessionStorage.getItem('wq_snoozed');
-  if(snoozedFor === wk) return; // asked once already this session
-  const courseWeek = currentCourseWeek();
-  const q = weeklyQuestions[(courseWeek-1) % weeklyQuestions.length];
-  document.getElementById('wqWeekTag').textContent = `Weekly Check-In · Week ${courseWeek}`;
-  document.getElementById('wqQuestion').textContent = q;
-  document.getElementById('wqAnswer').value = '';
-  document.getElementById('wqModal').classList.add('open');
-  document.getElementById('wqModal').dataset.wk = wk;
-  document.getElementById('wqModal').dataset.q = q;
-  document.getElementById('wqAnswer').focus();
-}
-document.getElementById('wqSkip').addEventListener('click', ()=>{
-  sessionStorage.setItem('wq_snoozed', document.getElementById('wqModal').dataset.wk);
-  document.getElementById('wqModal').classList.remove('open');
-});
-document.getElementById('wqSubmit').addEventListener('click', ()=>{
-  if(!student) return;
-  const modal = document.getElementById('wqModal');
-  const wk = modal.dataset.wk, q = modal.dataset.q;
-  const answer = document.getElementById('wqAnswer').value.trim();
-  if(!answer){ alert('Add a few words before submitting — or use "Remind me later".'); return; }
-  student.weeklyAnswers[wk] = { question:q, answer, answeredAt:new Date().toISOString() };
-  saveStudentRecord(student);
-  modal.classList.remove('open');
-  updateGrade();
-});
-document.getElementById('wqModal').addEventListener('keydown', e=>{
-  if(e.key==='Escape') document.getElementById('wqSkip').click();
-});
-/* ---------- GRADING ---------- */
-function computeGrade(){
-  if(!student) return { pct:0, letter:'—', detail:'Sign in to start tracking.' };
-  const totalLessons = cards.length;
-  const completionPct = totalLessons ? (student.completed.length/totalLessons)*100 : 0;
-  const weeksAnswered = Object.keys(student.weeklyAnswers).length;
-  const weeksPossible = Math.max(1, Object.keys(student.weeklyChecks).length || 1);
-  const checkinPct = Math.min(100, (weeksAnswered / weeksPossible) * 100);
-  const weeksEngaged = Object.values(student.weeklyChecks).reduce((s,arr)=>s+arr.length,0);
-  const engagementPct = Math.min(100, (weeksEngaged / 10) * 100);
-  const overall = completionPct*0.6 + checkinPct*0.2 + engagementPct*0.2;
-  let letter = 'F';
-  if(overall>=90) letter='A'; else if(overall>=80) letter='B'; else if(overall>=70) letter='C'; else if(overall>=60) letter='D';
-  return { pct: Math.round(overall), letter, detail:`${Math.round(completionPct)}% lessons · ${weeksAnswered} check-ins answered` };
-}
-function updateGrade(){
-  const g = computeGrade();
-  const letterEl = document.getElementById('lpGradeLetter');
-  const detailEl = document.getElementById('lpGradeDetail');
-  if(letterEl){ letterEl.textContent = student ? `${g.letter}  (${g.pct}%)` : '—'; }
-  if(detailEl){ detailEl.textContent = g.detail; }
-  const sbGrade = document.getElementById('sbGrade');
-  if(sbGrade) sbGrade.textContent = student ? `${g.letter} · ${g.pct}%` : '—';
-}
-/* ---------- PROGRESS REPORT → EMAIL ---------- */
-function buildReportBody(){
-  const g = computeGrade();
-  const lines = [];
-  lines.push(`Progress report for ${student.name} (${student.email})`);
-  lines.push(`Overall grade: ${g.letter} (${g.pct}%)`);
-  lines.push(`Lessons completed: ${student.completed.length} of ${cards.length}`);
-  lines.push('');
-  lines.push('Weekly check-in answers:');
-  const wkKeys = Object.keys(student.weeklyAnswers).sort();
-  if(wkKeys.length===0){ lines.push('  (none yet)'); }
-  wkKeys.forEach(wk=>{
-    const a = student.weeklyAnswers[wk];
-    lines.push(`  [${wk}] Q: ${a.question}`);
-    lines.push(`  A: ${a.answer}`);
-  });
-  lines.push('');
-  lines.push('Weeks with at least one lesson opened, by calendar week:');
-  const chkKeys = Object.keys(student.weeklyChecks).sort();
-  if(chkKeys.length===0){ lines.push('  (none yet)'); }
-  chkKeys.forEach(wk=>{ lines.push(`  [${wk}] Course weeks visited: ${student.weeklyChecks[wk].join(', ')}`); });
-  return lines.join('\n');
-}
-document.getElementById('lpReportBtn').addEventListener('click', ()=>{
-  if(!student){ alert('Sign in first.'); return; }
-  const subject = encodeURIComponent(`Progress Report — ${student.name} (${student.email})`);
-  const body = encodeURIComponent(buildReportBody());
-  window.location.href = `mailto:${REPORT_EMAIL}?subject=${subject}&body=${body}`;
-});
-/* ---------- SCREENCASTS & PRACTICE FILES: FITTED CARDS WITH INLINE PREVIEW ---------- */
+/* ---------- SCREENCASTS & PRACTICE FILES: FITTED CARDS, THUMBNAIL, PLAYS INSIDE CARD ---------- */
 function driveEmbedUrl(id){ return `https://drive.google.com/file/d/${id}/preview`; }
 function driveViewUrl(id){ return `https://drive.google.com/file/d/${id}/view?usp=drive_link`; }
+const VIDEO_WATCH_THRESHOLD_MS = 45000; // dwell required before "mark watched" becomes available
 function renderMediaCard({ id, label, kind, accent }){
   const card = document.createElement('div');
   card.className = 'media-card';
@@ -1817,13 +2015,18 @@ function renderMediaCard({ id, label, kind, accent }){
     </div>
     <div class="media-body">
       <div class="mb-top"><b>${label}</b><span class="chk" data-role="chk">not opened</span></div>
+      ${kind==='video' ? '<button type="button" class="chk" data-role="watchbtn" style="cursor:pointer;display:none;">Mark watched 75%+</button>' : ''}
       <a href="${driveViewUrl(id)}" target="_blank" rel="noopener">Open in Google Drive →</a>
     </div>`;
   const thumb = card.querySelector('.media-thumb');
   const poster = card.querySelector('.thumb-poster');
   const chk = card.querySelector('[data-role="chk"]');
+  const watchBtn = card.querySelector('[data-role="watchbtn"]');
+  if(student && student.videoConfirmed && student.videoConfirmed[id]){
+    if(chk){ chk.textContent='watched 75%+ ✓'; chk.classList.add('seen'); }
+  }
   poster.addEventListener('click', ()=>{
-    thumb.innerHTML = '<div class="thumb-poster" style="cursor:default;"><div class="thumb-spinner" aria-hidden="true"></div><span class="lbl">Loading…</span></div>';
+    thumb.innerHTML = '<div class="thumb-poster" style="cursor:default;"><div class="thumb-spinner" aria-hidden="true"></div><span class="lbl">Loading...</span></div>';
     const iframe = document.createElement('iframe');
     iframe.src = driveEmbedUrl(id);
     iframe.title = label;
@@ -1831,7 +2034,6 @@ function renderMediaCard({ id, label, kind, accent }){
     iframe.setAttribute('allow','autoplay');
     iframe.setAttribute('allowfullscreen','true');
     iframe.addEventListener('load', ()=>{ thumb.innerHTML=''; thumb.appendChild(iframe); }, { once:true });
-    // Fallback: swap immediately if the load event doesn't fire in time (some browsers delay it)
     setTimeout(()=>{ if(!thumb.contains(iframe)){ thumb.innerHTML=''; thumb.appendChild(iframe); } }, 600);
     chk.textContent = 'opened ✓';
     chk.classList.add('seen');
@@ -1840,7 +2042,26 @@ function renderMediaCard({ id, label, kind, accent }){
       student[seenKey] = student[seenKey] || [];
       if(!student[seenKey].includes(id)){ student[seenKey].push(id); saveStudentRecord(student); }
     }
+    if(kind==='video'){
+      setTimeout(()=>{
+        if(watchBtn && !(student && student.videoConfirmed && student.videoConfirmed[id])){
+          watchBtn.style.display = 'inline-block';
+        }
+      }, VIDEO_WATCH_THRESHOLD_MS);
+    }
   }, { once:true });
+  if(watchBtn){
+    watchBtn.addEventListener('click', ()=>{
+      if(!student){ alert('Sign in first.'); return; }
+      student.videoConfirmed = student.videoConfirmed || {};
+      student.videoConfirmed[id] = true;
+      saveStudentRecord(student);
+      updateGrade();
+      chk.textContent = 'watched 75%+ ✓';
+      chk.classList.add('seen');
+      watchBtn.style.display = 'none';
+    });
+  }
   return card;
 }
 const screencastIds = [
