@@ -1,0 +1,1868 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Photoshop &amp; Graphic Design — Class of 2027</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --chrome:#15171d;
+  --chrome-2:#1e2129;
+  --canvas:#f3f5f8;
+  --panel:#ffffff;
+  --ink:#1a1d24;
+  --muted:#5b6270;
+  --line:#e3e7ee;
+  --c-curriculum:#2f6fed;
+  --c-projects:#ff7a2d;
+  --c-notes:#8b5cf6;
+  --c-screen:#12a394;
+  --c-practice:#ef476f;
+  --radius:16px;
+  --shadow:0 10px 30px rgba(15,17,23,0.10);
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;
+  font-family:'Inter',sans-serif;
+  background:var(--canvas);
+  color:var(--ink);
+}
+h1,h2,h3,h4,.display{font-family:'Poppins',sans-serif;}
+a{color:inherit;}
+button{font-family:inherit;}
+/* ===== APP SHELL ===== */
+.app{min-height:100vh;display:flex;flex-direction:column;}
+.topbar{
+  background:var(--chrome);
+  color:#fff;
+  display:flex;
+  align-items:center;
+  gap:22px;
+  padding:0 22px;
+  position:sticky;top:0;z-index:1000;
+  box-shadow:0 2px 14px rgba(0,0,0,.25);
+}
+.brand{display:flex;align-items:center;gap:10px;padding:14px 0;white-space:nowrap;}
+.brand .mark{
+  width:34px;height:34px;border-radius:9px;
+  background:linear-gradient(135deg,#2f6fed,#8b5cf6);
+  display:flex;align-items:center;justify-content:center;
+  font-weight:800;font-size:13px;color:#fff;letter-spacing:.5px;
+}
+.brand .name{font-weight:700;font-size:15px;}
+.brand .sub{font-size:11px;color:#9aa2b1;font-weight:500;}
+.tabs{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;flex:1;}
+.tabs::-webkit-scrollbar{display:none;}
+.tab{
+  background:transparent;border:none;color:#c7cbd4;
+  padding:18px 16px;font-size:13.5px;font-weight:600;
+  cursor:pointer;border-bottom:3px solid transparent;
+  white-space:nowrap;transition:.2s;
+}
+.tab:hover{color:#fff;background:rgba(255,255,255,.05);}
+.tab.active{color:#fff;border-bottom-color:var(--tab-accent,#2f6fed);}
+.tab[data-tab="home"]{--tab-accent:#ffffff;}
+.tab[data-tab="curriculum"]{--tab-accent:var(--c-curriculum);}
+.tab[data-tab="projects"]{--tab-accent:var(--c-projects);}
+.tab[data-tab="notes"]{--tab-accent:var(--c-notes);}
+.tab[data-tab="screencasts"]{--tab-accent:var(--c-screen);}
+.tab[data-tab="practice"]{--tab-accent:var(--c-practice);}
+.panel-toggle{
+  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);color:#fff;
+  border-radius:9px;padding:8px 12px;font-size:12px;font-weight:600;cursor:pointer;
+  display:flex;align-items:center;gap:6px;
+}
+.panel-toggle:hover{background:rgba(255,255,255,.16);}
+/* ===== WORKSPACE ===== */
+.workspace{display:flex;flex:1;max-width:1400px;margin:0 auto;width:100%;}
+.canvas{flex:1;min-width:0;padding:34px 26px 80px;}
+.view{display:none;animation:fade .4s ease;}
+.view.active{display:block;}
+@keyframes fade{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+/* ===== LAYERS PANEL (signature progress widget) ===== */
+.layers-panel{
+  width:280px;flex-shrink:0;background:var(--chrome-2);color:#dfe2ea;
+  border-left:1px solid rgba(255,255,255,.06);
+  position:sticky;top:57px;height:calc(100vh - 57px);overflow-y:auto;
+  padding:16px 14px 40px;order:2;
+}
+.layers-panel.collapsed{display:none;}
+.lp-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px;}
+.lp-head h3{margin:0;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:#8f96a6;}
+.lp-total{font-size:22px;font-weight:800;font-family:'Poppins',sans-serif;color:#fff;}
+.lp-total span{font-size:12px;color:#8f96a6;font-weight:500;}
+.lp-bar{height:6px;border-radius:6px;background:#2a2e38;margin:10px 0 18px;overflow:hidden;}
+.lp-bar i{display:block;height:100%;background:linear-gradient(90deg,#2f6fed,#8b5cf6);width:0%;transition:width .5s ease;}
+.lp-row{
+  display:flex;align-items:center;gap:10px;padding:8px 8px;border-radius:8px;cursor:pointer;
+  transition:.15s;
+}
+.lp-row:hover{background:rgba(255,255,255,.06);}
+.lp-eye{width:16px;text-align:center;color:#7d8494;font-size:12px;}
+.lp-thumb{
+  width:34px;height:26px;border-radius:5px;background:#12141a;border:1px solid #333844;
+  position:relative;overflow:hidden;flex-shrink:0;
+}
+.lp-thumb i{position:absolute;left:0;bottom:0;width:100%;background:linear-gradient(180deg,#2f6fed,#8b5cf6);transition:height .5s ease;}
+.lp-label{flex:1;min-width:0;}
+.lp-label b{display:block;font-size:12px;font-weight:600;color:#eef0f4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.lp-label small{font-size:10.5px;color:#7d8494;}
+.lp-pct{font-size:11px;color:#9aa2b1;font-weight:600;width:32px;text-align:right;}
+.lp-note{font-size:11px;color:#6d7488;margin-top:16px;line-height:1.5;border-top:1px solid rgba(255,255,255,.08);padding-top:14px;}
+/* ===== HERO / HOME ===== */
+.hero{
+  background:linear-gradient(135deg,#1c2030,#2f6fed 140%);
+  color:#fff;border-radius:22px;padding:56px 44px;position:relative;overflow:hidden;
+  box-shadow:var(--shadow);
+}
+.hero::before{
+  content:"";position:absolute;right:-60px;top:-60px;width:280px;height:280px;border-radius:50%;
+  background:radial-gradient(circle,rgba(139,92,246,.45),transparent 70%);
+}
+.hero-eyebrow{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#b9c6ff;font-weight:700;}
+.hero h1{font-size:2.6rem;margin:10px 0 12px;font-weight:800;max-width:640px;}
+.hero p{font-size:1.05rem;color:#d7ddf5;max-width:560px;line-height:1.6;margin:0 0 26px;}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap;}
+.hbtn{padding:12px 20px;border-radius:11px;font-weight:700;font-size:14px;text-decoration:none;cursor:pointer;border:none;}
+.hbtn.primary{background:#fff;color:#1c2030;}
+.hbtn.ghost{background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.3);}
+.stat-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:16px;margin-top:34px;}
+.stat{background:#fff;border-radius:14px;padding:18px;box-shadow:var(--shadow);}
+.stat b{display:block;font-size:1.6rem;font-family:'Poppins',sans-serif;}
+.stat span{font-size:12.5px;color:var(--muted);}
+.home-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px;margin-top:26px;}
+.home-card{
+  background:var(--panel);border-radius:16px;padding:22px;box-shadow:var(--shadow);
+  border-top:4px solid var(--accent,#2f6fed);cursor:pointer;transition:.2s;
+}
+.home-card:hover{transform:translateY(-4px);}
+.home-card h4{margin:0 0 6px;font-size:16px;}
+.home-card p{margin:0;font-size:13px;color:var(--muted);line-height:1.5;}
+.section-heading{margin:44px 0 6px;font-size:1.05rem;color:var(--muted);font-weight:700;letter-spacing:.4px;text-transform:uppercase;}
+/* ===== CURRICULUM ===== */
+.view-head{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;margin-bottom:18px;}
+.view-head h2{margin:0;font-size:1.6rem;}
+.view-head p{margin:4px 0 0;color:var(--muted);font-size:13.5px;}
+.month-switch{display:flex;gap:8px;flex-wrap:wrap;}
+.chip{
+  border:1px solid var(--line);background:#fff;padding:8px 14px;border-radius:999px;
+  font-size:12.5px;font-weight:600;cursor:pointer;color:var(--muted);
+}
+.chip.active{background:var(--c-curriculum);border-color:var(--c-curriculum);color:#fff;}
+.week-nav{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0 8px;}
+.week-pill{
+  border:1px solid var(--line);background:#fff;padding:7px 13px;border-radius:10px;font-size:12px;font-weight:700;
+  cursor:pointer;color:var(--muted);
+}
+.week-pill.active{background:var(--ink);color:#fff;border-color:var(--ink);}
+.month-block{display:none;}
+.month-block.active{display:block;}
+.week-card{margin:34px 0 10px;scroll-margin-top:75px;}
+.week-card h2.wk{font-size:1.35rem;margin-bottom:16px;color:var(--c-curriculum);display:flex;align-items:center;gap:10px;}
+.week-card h2.wk::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--c-curriculum);}
+.day-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;}
+.flip-card{background:transparent;width:100%;height:340px;perspective:1200px;opacity:0;transform:translateY(30px);transition:all .6s ease-out;}
+.flip-card.visible{opacity:1;transform:translateY(0);}
+.flip-card.done .flip-card-inner{box-shadow:0 0 0 2px var(--c-curriculum),0 12px 24px rgba(47,111,237,.18);}
+.flip-card-inner{position:relative;width:100%;height:100%;text-align:center;transition:transform .7s ease;transform-style:preserve-3d;border-radius:14px;cursor:pointer;box-shadow:0 8px 20px rgba(15,17,23,.10);}
+.flip-card:hover .flip-card-inner,.flip-card.flipped .flip-card-inner{transform:rotateY(180deg) translateY(-4px);}
+.flip-card-front,.flip-card-back{position:absolute;width:100%;height:100%;backface-visibility:hidden;border-radius:14px;padding:20px;font-size:.92rem;display:flex;flex-direction:column;justify-content:center;}
+.flip-card-front{background:#fff;border-left:5px solid var(--c-curriculum);}
+.flip-card-front h4{margin:0 0 8px;font-size:1rem;}
+.flip-card-front p{margin:0;color:var(--muted);}
+.flip-card-back{background:#eef3ff;transform:rotateY(180deg);border-left:5px solid #3f51b5;overflow-y:auto;text-align:left;}
+.flip-card-back ul{margin:6px 0 0;padding-left:18px;}
+.flip-card-quiz-front{background:linear-gradient(135deg,#ff9800,#ff7a2d);border-left:5px solid #ff9800;color:#fff;}
+.flip-card-quiz-front p{color:rgba(255,255,255,.9);}
+.vocab-title{margin-bottom:5px;font-weight:700;color:#3f51b5;font-size:.78rem;text-transform:uppercase;letter-spacing:.5px;}
+.vocab{position:relative;cursor:help;font-weight:600;color:var(--c-curriculum);border-bottom:1px dotted var(--c-curriculum);}
+.vocab:hover::after,.vocab:focus::after{content:attr(data-def);position:absolute;bottom:120%;left:50%;transform:translateX(-50%);background:rgba(15,17,23,.92);color:#fff;padding:7px 10px;border-radius:7px;font-size:.72rem;width:180px;z-index:5;}
+.big-ideas{margin-top:10px;font-size:.83rem;font-style:italic;color:#555;}
+.summary-text{font-weight:600;color:#333;margin-top:8px;font-size:.85rem;}
+.project-day .flip-card-front,.project-day .flip-card-back{border:3px solid var(--c-projects);}
+.practice-day .flip-card-front,.practice-day .flip-card-back{border:3px solid #2e9e5b;}
+.project-label,.practice-label{color:#fff;font-weight:700;padding:4px 10px;border-radius:7px;position:absolute;top:14px;left:14px;font-size:.7rem;letter-spacing:.5px;}
+.project-label{background:var(--c-projects);}
+.practice-label{background:#2e9e5b;}
+.blue-border .flip-card-front,.blue-border .flip-card-back{border:3px solid var(--c-curriculum);}
+.flip-hint{position:absolute;bottom:10px;right:14px;font-size:10px;color:var(--muted);opacity:.6;letter-spacing:.3px;}
+/* ===== PROJECTS ===== */
+.subnav{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0 28px;}
+.subnav button{
+  border:1px solid var(--line);background:#fff;padding:10px 16px;border-radius:11px;font-size:13px;font-weight:700;cursor:pointer;color:var(--muted);
+}
+.subnav button.active{background:var(--c-projects);border-color:var(--c-projects);color:#fff;}
+.proj-view{display:none;}
+.proj-view.active{display:block;animation:fade .4s ease;}
+/* ===== NOTES ===== */
+.note-section{background:#fff;border-radius:16px;box-shadow:var(--shadow);margin-bottom:20px;padding:24px;position:relative;}
+.note-section h3{color:var(--c-notes);margin-top:0;font-size:1.15rem;}
+.note-dl{position:absolute;top:20px;right:20px;background:var(--c-notes);color:#fff;border:none;border-radius:9px;padding:8px 14px;font-size:12.5px;font-weight:700;cursor:pointer;}
+.note-dl:hover{opacity:.88;}
+.note-tool,.note-tip,.note-visual{border-left:4px solid var(--c-notes);padding:.8rem 1rem;border-radius:8px;margin:1rem 0;background:#f5f2ff;font-size:.92rem;}
+.note-tip{border-left-color:var(--c-projects);background:#fff5ec;}
+.note-visual{border-left-color:#f59e0b;background:#fffaf0;}
+.note-steps{background:#f5f2ff;border-left:4px solid var(--c-notes);padding:.9rem 1.1rem;border-radius:8px;margin:0.4rem 0;}
+/* ===== SCREENCASTS / PRACTICE ===== */
+.media-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px;margin-top:18px;}
+.media-icon{width:38px;height:38px;border-radius:10px;background:var(--card-accent,var(--c-screen));color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;}
+.group-label{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;margin:26px 0 4px;}
+footer.appfoot{text-align:center;color:var(--muted);font-size:12px;padding:30px 20px 46px;}
+/* ===== MEDIA CARD THUMBNAILS (screencasts + practice files) ===== */
+.media-card{background:#fff;border-radius:14px;box-shadow:var(--shadow);display:flex;flex-direction:column;
+  border-top:4px solid var(--card-accent,var(--c-screen));padding:0;overflow:hidden;}
+.media-card .media-thumb{
+  position:relative;width:100%;aspect-ratio:16/10;background:#0e1015;overflow:hidden;flex-shrink:0;
+}
+.media-card .media-thumb iframe{position:absolute;inset:0;width:100%;height:100%;border:0;}
+.media-card .media-thumb .thumb-poster{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;
+  background:linear-gradient(135deg,rgba(0,0,0,.35),rgba(0,0,0,.15)),var(--card-accent,var(--c-screen));
+  color:#fff;cursor:pointer;transition:.2s;border:0;width:100%;
+}
+.media-card .media-thumb .thumb-poster:hover,.media-card .media-thumb .thumb-poster:focus-visible{filter:brightness(1.08);}
+.media-card .media-thumb .thumb-poster .play-badge{
+  width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.92);color:var(--card-accent,var(--c-screen));
+  display:flex;align-items:center;justify-content:center;font-size:16px;box-shadow:0 6px 16px rgba(0,0,0,.3);
+}
+.media-card .media-thumb .thumb-poster span.lbl{font-size:11.5px;font-weight:700;letter-spacing:.3px;opacity:.95;}
+.media-card .media-thumb .thumb-spinner{width:26px;height:26px;border-radius:50%;border:3px solid rgba(255,255,255,.35);border-top-color:#fff;animation:spin .8s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.media-card .media-body{padding:14px 16px 16px;display:flex;flex-direction:column;gap:8px;}
+.media-card .media-body .mb-top{display:flex;align-items:center;gap:8px;justify-content:space-between;}
+.media-card .media-body b{font-size:13.5px;}
+.media-card .media-body .chk{
+  font-size:10.5px;font-weight:700;color:var(--card-accent,var(--c-screen));border:1px solid currentColor;
+  border-radius:999px;padding:2px 8px;opacity:.55;transition:.2s;
+}
+.media-card .media-body .chk.seen{opacity:1;background:var(--card-accent,var(--c-screen));color:#fff;}
+.media-card .media-body a{margin-top:2px;text-decoration:none;font-weight:700;font-size:12px;color:var(--card-accent,var(--c-screen));display:flex;align-items:center;gap:6px;}
+/* ===== SIGN-IN GATE ===== */
+#signInGate{position:fixed;inset:0;z-index:5000;background:linear-gradient(135deg,#1c2030,#2f6fed 160%);display:flex;align-items:center;justify-content:center;padding:20px;}
+#signInGate.hidden{display:none;}
+.si-card{background:#fff;border-radius:20px;padding:34px 30px;max-width:400px;width:100%;box-shadow:0 30px 70px rgba(0,0,0,.4);}
+.si-card .si-mark{width:46px;height:46px;border-radius:12px;background:linear-gradient(135deg,#2f6fed,#8b5cf6);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:16px;margin-bottom:14px;}
+.si-card h2{margin:0 0 6px;font-size:1.3rem;}
+.si-card p{margin:0 0 20px;color:var(--muted);font-size:13.5px;line-height:1.5;}
+.si-card label{display:block;font-size:12.5px;font-weight:700;margin-bottom:6px;color:var(--ink);}
+.si-card input{width:100%;padding:11px 12px;border-radius:10px;border:1px solid var(--line);font-size:13.5px;margin-bottom:14px;font-family:inherit;}
+.si-card input:focus{outline:2px solid var(--c-curriculum);border-color:var(--c-curriculum);}
+.si-btn{width:100%;padding:12px;border-radius:11px;border:none;background:var(--c-curriculum);color:#fff;font-weight:700;font-size:14px;cursor:pointer;}
+.si-btn:hover{opacity:.92;}
+.si-btn:disabled{opacity:.55;cursor:not-allowed;}
+.si-error{background:#fff1f2;border:1px solid #fecdd3;color:#be123c;font-size:12.5px;padding:10px 12px;border-radius:10px;margin-bottom:14px;display:none;line-height:1.5;}
+.si-error.show{display:block;}
+.si-fine{font-size:11px;color:#9aa2b1;margin-top:14px;line-height:1.5;}
+/* ===== STUDENT BADGE / GRADE (topbar) ===== */
+.student-badge{display:flex;align-items:center;gap:10px;color:#fff;font-size:12px;white-space:nowrap;}
+.student-badge .sb-grade{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:9px;padding:6px 10px;font-weight:800;font-family:'Poppins',sans-serif;}
+.student-badge .sb-name{opacity:.85;}
+/* ===== WEEKLY QUESTION MODAL ===== */
+.wq-modal{position:fixed;inset:0;z-index:4000;background:rgba(10,10,15,.55);display:none;align-items:center;justify-content:center;padding:20px;}
+.wq-modal.open{display:flex;}
+.wq-box{background:#fff;border-radius:18px;padding:28px;max-width:420px;width:100%;box-shadow:0 30px 70px rgba(0,0,0,.35);}
+.wq-box .wq-tag{font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--c-curriculum);}
+.wq-box h3{margin:8px 0 14px;font-size:1.1rem;}
+.wq-box textarea{width:100%;min-height:90px;border-radius:10px;border:1px solid var(--line);padding:10px 12px;font-family:inherit;font-size:13.5px;resize:vertical;margin-bottom:12px;}
+.wq-box .wq-actions{display:flex;gap:10px;justify-content:flex-end;}
+.wq-box button{border:none;border-radius:10px;padding:10px 16px;font-weight:700;font-size:13px;cursor:pointer;}
+.wq-box .wq-skip{background:transparent;color:var(--muted);}
+.wq-box .wq-submit{background:var(--c-curriculum);color:#fff;}
+/* ===== PROGRESS REPORT PANEL EXTRAS ===== */
+.lp-grade{margin-top:14px;padding:12px;border-radius:10px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);}
+.lp-grade b{display:block;font-size:1.4rem;font-family:'Poppins',sans-serif;color:#fff;}
+.lp-grade span{font-size:11px;color:#8f96a6;}
+.lp-report-btn{width:100%;margin-top:12px;padding:10px;border-radius:9px;border:none;background:linear-gradient(90deg,#2f6fed,#8b5cf6);color:#fff;font-weight:700;font-size:12.5px;cursor:pointer;}
+.lp-report-btn:hover{opacity:.92;}
+.lp-signout{width:100%;margin-top:8px;padding:8px;border-radius:9px;border:1px solid rgba(255,255,255,.15);background:transparent;color:#9aa2b1;font-weight:600;font-size:11.5px;cursor:pointer;}
+.skip-link{position:absolute;left:-999px;top:auto;background:#fff;color:#1a1d24;padding:10px 16px;border-radius:0 0 8px 0;z-index:6000;font-weight:700;font-size:13px;}
+.skip-link:focus{left:0;top:0;}
+a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible,[tabindex]:focus-visible{outline:2px solid #2f6fed;outline-offset:2px;}
+@media(prefers-reduced-motion:reduce){
+  *{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important;scroll-behavior:auto !important;}
+}
+@media(max-width:980px){
+  .layers-panel{position:fixed;right:0;top:57px;z-index:900;box-shadow:-8px 0 26px rgba(0,0,0,.3);}
+}
+@media(max-width:640px){
+  .hero{padding:36px 22px;}
+  .hero h1{font-size:1.9rem;}
+  .canvas{padding:22px 14px 60px;}
+  .layers-panel{width:88vw;max-width:320px;}
+}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#mainContent">Skip to content</a>
+<!-- ========== SIGN-IN GATE ========== -->
+<div id="signInGate" role="dialog" aria-modal="true" aria-labelledby="siHeading">
+  <div class="si-card">
+    <div class="si-mark" aria-hidden="true">Ps</div>
+    <h2 id="siHeading">Sign in to start</h2>
+    <p>Enter your name and the email your instructor has on file. Your progress, weekly check-ins, and grade are tracked under this account for Class of 2027.</p>
+    <div class="si-error" id="siError" role="alert"></div>
+    <form id="siForm" novalidate>
+      <label for="siName">Full name</label>
+      <input id="siName" name="name" type="text" placeholder="e.g. Selam Tesfaye" autocomplete="name" required>
+      <label for="siEmail">Student email</label>
+      <input id="siEmail" name="email" type="email" placeholder="you@example.com" autocomplete="email" required>
+      <button class="si-btn" id="siSubmit" type="submit">Sign In</button>
+    </form>
+    <div class="si-fine">This device remembers one student account at a time. Once you're signed in here, this browser won't let a different email enroll — sign out first if you need to switch. (This is a browser-level check, not account security — clearing browser data resets it.)</div>
+  </div>
+</div>
+<!-- ========== WEEKLY CHECK-IN MODAL ========== -->
+<div class="wq-modal" id="wqModal" role="dialog" aria-modal="true" aria-labelledby="wqQuestion">
+  <div class="wq-box">
+    <div class="wq-tag" id="wqWeekTag">Weekly Check-In</div>
+    <h3 id="wqQuestion">How did this week's lessons go?</h3>
+    <label for="wqAnswer" style="position:absolute;left:-9999px;">Your answer</label>
+    <textarea id="wqAnswer" placeholder="Type a few sentences..."></textarea>
+    <div class="wq-actions">
+      <button class="wq-skip" id="wqSkip" type="button">Remind me later</button>
+      <button class="wq-submit" id="wqSubmit" type="button">Submit</button>
+    </div>
+  </div>
+</div>
+<div class="app">
+  <header class="topbar">
+    <div class="brand">
+      <div class="mark" aria-hidden="true">Ps</div>
+      <div>
+        <div class="name">Graphic Design &amp; Photoshop</div>
+        <div class="sub">Class of 2027</div>
+      </div>
+    </div>
+    <nav class="tabs" id="mainTabs" aria-label="Main sections">
+      <button class="tab active" data-tab="home" role="tab" aria-selected="true">Home</button>
+      <button class="tab" data-tab="curriculum" role="tab" aria-selected="false">Curriculum</button>
+      <button class="tab" data-tab="projects" role="tab" aria-selected="false">Group Projects</button>
+      <button class="tab" data-tab="notes" role="tab" aria-selected="false">Read Me</button>
+      <button class="tab" data-tab="screencasts" role="tab" aria-selected="false">Screencasts</button>
+      <button class="tab" data-tab="practice" role="tab" aria-selected="false">Practice Files</button>
+    </nav>
+    <div class="student-badge" id="studentBadge" style="display:none;">
+      <span class="sb-name" id="sbName"></span>
+      <span class="sb-grade" id="sbGrade">—</span>
+    </div>
+    <button class="panel-toggle" id="lpToggle" aria-expanded="true" aria-controls="layersPanel">Layers ▾</button>
+  </header>
+  <div class="workspace">
+    <main class="canvas" id="mainContent">
+      <!-- ========== HOME ========== -->
+      <section id="home" class="view active">
+        <div class="hero">
+          <div class="hero-eyebrow">10-Week Studio Course</div>
+          <h1>Master Photoshop — from blank canvas to portfolio-ready artistry.</h1>
+          <p>Everything for the course lives here: the week-by-week curriculum, group projects, detailed reading notes, screencast recordings, and downloadable practice files — all in one workspace.</p>
+          <div class="hero-actions">
+            <button class="hbtn primary" onclick="goTab('curriculum')">Start Week 1</button>
+            <button class="hbtn ghost" onclick="goTab('notes')">Open Read Me Notes</button>
+          </div>
+        </div>
+        <div class="stat-row">
+          <div class="stat"><b>10</b><span>Weeks of curriculum</span></div>
+          <div class="stat"><b>30</b><span>Daily lessons &amp; flip cards</span></div>
+          <div class="stat"><b>3</b><span>Group projects</span></div>
+          <div class="stat"><b>23</b><span>Screencast recordings</span></div>
+        </div>
+        <div class="section-heading">Jump to a section</div>
+        <div class="home-grid">
+          <div class="home-card" style="--accent:#2f6fed" onclick="goTab('curriculum')" role="button" tabindex="0" onkeydown="if(event.key==='Enter')goTab('curriculum')">
+            <h4>Curriculum</h4>
+            <p>Flip through every week — interface basics to 3D pop-out effects and double exposure posters.</p>
+          </div>
+          <div class="home-card" style="--accent:#ff7a2d" onclick="goTab('projects')" role="button" tabindex="0" onkeydown="if(event.key==='Enter')goTab('projects')">
+            <h4>Group Projects</h4>
+            <p>The Gojo pop-out submission form, the phone/iPad mockup studio, and the Around the World brief.</p>
+          </div>
+          <div class="home-card" style="--accent:#8b5cf6" onclick="goTab('notes')" role="button" tabindex="0" onkeydown="if(event.key==='Enter')goTab('notes')">
+            <h4>Read Me Notes</h4>
+            <p>Deep-dive written lessons with tools, tips, analogies and step-by-step instructions — downloadable as PDF.</p>
+          </div>
+          <div class="home-card" style="--accent:#12a394" onclick="goTab('screencasts')" role="button" tabindex="0" onkeydown="if(event.key==='Enter')goTab('screencasts')">
+            <h4>Screencasts</h4>
+            <p>Every recorded class walkthrough, ready to reopen from Google Drive.</p>
+          </div>
+          <div class="home-card" style="--accent:#ef476f" onclick="goTab('practice')" role="button" tabindex="0" onkeydown="if(event.key==='Enter')goTab('practice')">
+            <h4>Practice Files</h4>
+            <p>Downloadable source images and exercise files to practice each technique.</p>
+          </div>
+        </div>
+      </section>
+      <!-- ========== CURRICULUM ========== -->
+      <section id="curriculum" class="view">
+        <div class="view-head">
+          <div>
+            <h2>Curriculum</h2>
+            <p>Tap any card to flip it and mark that lesson complete. Progress is saved automatically.</p>
+          </div>
+          <div class="month-switch" id="monthSwitch">
+            <button class="chip active" data-month="m1">Month One · Weeks 1–4</button>
+            <button class="chip" data-month="m2">Month Two · Weeks 5–8</button>
+            <button class="chip" data-month="m3">Month Three · Weeks 9–10</button>
+          </div>
+        </div>
+        <div class="week-nav" id="weekNav"></div>
+        <!-- ===== MONTH ONE ===== -->
+        <div class="month-block active" data-month="m1">
+        <div class="week-card" id="week1">
+        <h2 class="wk">Week 1 — Interface &amp; Layers</h2>
+        <div class="day-grid">
+        <div class="flip-card" data-day="1-1"><div class="flip-card-inner">
+        <div class="flip-card-front"><h4>Day 1: Photoshop Interface</h4><p>Intro to workspace, panels &amp; tools.</p><span class="flip-hint">Tap to flip</span></div>
+        <div class="flip-card-back"><div class="vocab-title">Vocabulary</div>
+        <p><span class="vocab" tabindex="0" data-def="The arrangement of menus, panels, and tools.">Workspace</span>,
+        <span class="vocab" tabindex="0" data-def="Dockable panels like Layers, History, etc.">Panels</span>,
+        <span class="vocab" tabindex="0" data-def="Main editing tools.">Toolbar</span></p>
+        <div class="big-ideas">Understanding the Photoshop interface helps you navigate efficiently.</div>
+        </div></div></div>
+        <div class="flip-card" data-day="1-2"><div class="flip-card-inner">
+        <div class="flip-card-front"><h4>Day 2: Raster vs Vector</h4><p>Differences between pixel and math-based graphics.</p><span class="flip-hint">Tap to flip</span></div>
+        <div class="flip-card-back"><div class="vocab-title">Vocabulary</div>
+        <p><span class="vocab" tabindex="0" data-def="Images made of pixels.">Raster</span>,
+        <span class="vocab" tabindex="0" data-def="Scalable shapes defined by math.">Vector</span>,
+        <span class="vocab" tabindex="0" data-def="Squares that make up raster images.">Pixel</span></p>
+        <div class="big-ideas">Raster is detail-rich but not scalable; vector is scalable without losing quality.</div>
+        </div></div></div>
+        <div class="flip-card" data-day="1-3"><div class="flip-card-inner">
+        <div class="flip-card-front"><h4>Day 3: Layers</h4><p>Working with Photoshop's most essential feature.</p><span class="flip-hint">Tap to flip</span></div>
+        <div class="flip-card-back"><div class="vocab-title">Vocabulary</div>
+        <p><span class="vocab" tabindex="0" data-def="Photoshop's building blocks.">Layer</span>,
+        <span class="vocab" tabindex="0" data-def="Adjust visibility of a layer.">Opacity</span>,
+        <span class="vocab" tabindex="0" data-def="Organize multiple layers.">Group</span></p>
+        <div class="big-ideas">Layers allow non-linear editing and flexibility in projects.</div>
+        </div></div></div>
+        </div></div>
+        <div class="week-card" id="week2">
+        <h2 class="wk">Week 2 — Non-Destructive Editing</h2>
+        <div class="day-grid">
+        <div class="flip-card" data-day="2-1"><div class="flip-card-inner">
+        <div class="flip-card-front"><h4>Day 1: Adjustment Layers</h4><p>Edit colors and tones without harm.</p><span class="flip-hint">Tap to flip</span></div>
+        <div class="flip-card-back"><div class="vocab-title">Vocabulary</div>
+        <p><span class="vocab" tabindex="0" data-def="Special layers that apply edits non-destructively.">Adjustment Layer</span>,
+        <span class="vocab" tabindex="0" data-def="Brightness/darkness levels of an image.">Levels</span>,
+        <span class="vocab" tabindex="0" data-def="Tone curve editor.">Curves</span></p>
+        <div class="big-ideas">Adjustment layers preserve original pixels while applying edits.</div>
+        </div></div></div>
+        <div class="flip-card" data-day="2-2"><div class="flip-card-inner">
+        <div class="flip-card-front"><h4>Day 2: Smart Objects</h4><p>Protecting image quality while transforming.</p><span class="flip-hint">Tap to flip</span></div>
+        <div class="flip-card-back"><div class="vocab-title">Vocabulary</div>
+        <p><span class="vocab" tabindex="0" data-def="Container preserving source data.">Smart Object</span>,
+        <span class="vocab" tabindex="0" data-def="Image scaling or resizing.">Transform</span></p>
+        <div class="big-ideas">Smart Objects maintain full resolution during edits.</div>
+        </div></div></div>
+        <div class="flip-card" data-day="2-3"><div class="flip-card-inner">
+        <div class="flip-card-front"><h4>Day 3: Masks</h4><p>Hide or reveal without erasing pixels.</p><span class="flip-hint">Tap to flip</span></div>
+        <div class="flip-card-back"><div class="vocab-title">Vocabulary</div>
+        <p><span class="vocab" tabindex="0" data-def="Controls visibility of parts of a layer.">Mask</span>,
+        <span class="vocab" tabindex="0" data-def="Soft edge transition.">Feather</span></p>
+        <div class="big-ideas">Masks allow selective editing and reversibility.</div>
+        </div></div></div>
+        </div></div>
+        <div class="week-card" id="week3">
+        <h2 class="wk">Week 3 — Photoshop Tools &amp; Practical Projects</h2>
+        <div class="day-grid">
+        <div class="flip-card" data-day="3-1"><div class="flip-card-inner">
+        <div class="flip-card-front"><h4>Day 1: Tools &amp; Panels</h4><p>Essential interface elements and tools.</p><span class="flip-hint">Tap to flip</span></div>
+        <div class="flip-card-back"><div class="vocab-title">Vocabulary</div>
+        <p><span class="vocab" tabindex="0" data-def="Displays info about document and tools.">Status Bar</span>,
+        <span class="vocab" tabindex="0" data-def="Access all commands.">Menu Bar</span>,
+        <span class="vocab" tabindex="0" data-def="Top bar that shows tool options.">Options Bar</span></p>
+        <div class="big-ideas">Learn the layout and function of each interface element.</div>
+        </div></div></div>
+        <div class="flip-card" data-day="3-2"><div class="flip-card-inner">
+        <div class="flip-card-front"><h4>Day 2: ID &amp; Passport Photos</h4><p>Create professional passport or ID photos.</p><span class="flip-hint">Tap to flip</span></div>
+        <div class="flip-card-back"><div class="vocab-title">Vocabulary</div>
+        <p><span class="vocab" tabindex="0" data-def="Removes unwanted background.">Background Remover</span>,
+        <span class="vocab" tabindex="0" data-def="Adjusts image size.">Crop Tool</span></p>
+        <div class="big-ideas">Practice creating official ID photos using precise selection and background removal.</div>
+        </div></div></div>
+        <div class="flip-card" data-day="3-3"><div class="flip-card-inner">
+        <div class="flip-card-front"><h4>Day 3: Face Retouching</h4><p>Non-destructive portrait retouching workflow.</p><span class="flip-hint">Tap to flip</span></div>
+        <div class="flip-card-back"><div class="vocab-title">Vocabulary</div>
+        <p><span class="vocab" tabindex="0" data-def="Separates texture from tone.">Frequency Separation</span>,
+        <span class="vocab" tabindex="0" data-def="Lighten/darken areas for depth.">Dodge &amp; Burn</span></p>
+        <div class="big-ideas">Work non-destructively and preserve natural skin texture.</div>
+        </div></div></div>
+        </div></div>
+        <div class="week-card" id="week4">
+        <h2 class="wk">Week 4 — Advanced Portrait Editing</h2>
+        <div class="day-grid">
+        <div class="flip-card" data-day="4-1"><div class="flip-card-inner">
+        <div class="flip-card-front"><h4>Day 1: Lips, Teeth &amp; Eye Reflection</h4><p>Enhance portrait details for realism.</p><span class="flip-hint">Tap to flip</span></div>
+        <div class="flip-card-back"><div class="vocab-title">Vocabulary</div>
+        <p><span class="vocab" tabindex="0" data-def="Brighten teeth naturally.">Teeth Whitening</span>,
+        <span class="vocab" tabindex="0" data-def="Adjust lip tone & color.">Lip Enhancement</span>,
+        <span class="vocab" tabindex="0" data-def="Add subtle highlights to eyes.">Eye Reflection</span></p>
+        <div class="vocab-title">Big Ideas</div>
+        <p class="big-ideas">Focus on subtle realism, use separate layers and masks for flexibility.</p>
+        </div></div></div>
+        <div class="flip-card" data-day="4-2"><div class="flip-card-inner">
+        <div class="flip-card-front"><h4>Day 2: Puppet Warp &amp; Dress Change</h4><p>Advanced portrait manipulation.</p><span class="flip-hint">Tap to flip</span></div>
+        <div class="flip-card-back"><div class="vocab-title">Vocabulary</div>
+        <p><span class="vocab" tabindex="0" data-def="Pin-based tool for flexible distortion.">Puppet Warp</span>,
+        <span class="vocab" tabindex="0" data-def="Altering clothing colors/patterns.">Dress Change</span>,
+        <span class="vocab" tabindex="0" data-def="Mesh overlay used in puppet warp.">Control Points</span></p>
+        <div class="vocab-title">Big Ideas</div>
+        <p class="big-ideas">Use Puppet Warp for realistic body or cloth repositioning; maintain proportions and natural folds.</p>
+        </div></div></div>
+        <div class="flip-card" data-day="4-3"><div class="flip-card-inner">
+        <div class="flip-card-front flip-card-quiz-front"><h4>Day 3: Final Project</h4><p>Apply all skills from Week 1–4.</p><span class="flip-hint" style="color:rgba(255,255,255,.75)">Tap to flip</span></div>
+        <div class="flip-card-back"><div class="vocab-title">Vocabulary</div>
+        <p><span class="vocab" tabindex="0" data-def="Combining learned techniques into one design.">Integration</span>,
+        <span class="vocab" tabindex="0" data-def="Applying advanced retouching and compositing.">Final Composition</span></p>
+        <div class="vocab-title">Big Ideas</div>
+        <p class="big-ideas">Create a polished portrait project using techniques from previous weeks.</p>
+        </div></div></div>
+        </div></div>
+        </div><!-- /month-block m1 -->
+        <!-- ===== MONTH TWO ===== -->
+        <div class="month-block" data-month="m2">
+        <div class="week-card" id="week5">
+          <h2 class="wk">Week 5 — Advanced Color Adjustment &amp; Matching</h2>
+          <div class="day-grid">
+            <div class="flip-card project-day" data-day="5-1"><div class="flip-card-inner">
+              <div class="flip-card-front"><div class="project-label">PROJECT DAY</div><h4>Day 1: Color Fill for Clothing Change</h4><p>Use Color Fill Adjustment Layer to change outfit color naturally.</p><span class="flip-hint">Tap to flip</span></div>
+              <div class="flip-card-back"><p><strong>Objective:</strong> Practice using Color Fill layers to recolor garments realistically while maintaining texture and shadows.</p>
+              <ul><li>Use <strong>Quick Selection Tool</strong> or <strong>Pen Tool</strong> to select clothing area.</li>
+              <li>Apply <strong>Solid Color Fill Layer</strong> with blending mode <strong>Color</strong> or <strong>Soft Light</strong>.</li></ul></div>
+            </div></div>
+            <div class="flip-card project-day" data-day="5-2"><div class="flip-card-inner">
+              <div class="flip-card-front"><div class="project-label">PROJECT DAY</div><h4>Day 2: Color Fill &amp; Curve Control II</h4><p>Refine clothing recolor and master curve balancing.</p><span class="flip-hint">Tap to flip</span></div>
+              <div class="flip-card-back"><p>Deepen control over tonal balance using <strong>Curves Adjustment Layer</strong>.</p></div>
+            </div></div>
+            <div class="flip-card project-day" data-day="5-3"><div class="flip-card-inner">
+              <div class="flip-card-front"><div class="project-label">PROJECT DAY</div><h4>Day 3: Match Subject with Background</h4><p>Blend subject and background tones seamlessly.</p><span class="flip-hint">Tap to flip</span></div>
+              <div class="flip-card-back"><p>Focus on visual harmony using <strong>Curves</strong> and <strong>Color Balance</strong>.</p></div>
+            </div></div>
+          </div>
+        </div>
+        <div class="week-card" id="week6">
+          <h2 class="wk">Week 6 — Creative Mockups &amp; Photoshop Text Effects</h2>
+          <div class="day-grid">
+            <div class="flip-card project-day" data-day="6-1"><div class="flip-card-inner">
+              <div class="flip-card-front"><div class="project-label">PROJECT DAY</div><h4>Day 1: Mockup Project</h4><p>Create a mobile or poster mockup using smart objects.</p><span class="flip-hint">Tap to flip</span></div>
+              <div class="flip-card-back"><p><strong>Objective:</strong> Build a professional presentation mockup using smart objects.</p>
+              <ul><li>Import your design into a pre-made PSD mockup file.</li>
+              <li>Use <strong>Smart Object</strong> layers to replace the placeholder.</li>
+              <li>Adjust lighting and shadows using <strong>Levels</strong> and <strong>Drop Shadow</strong>.</li>
+              <li>Save as high-quality JPEG for presentation.</li></ul></div>
+            </div></div>
+            <div class="flip-card practice-day" data-day="6-2"><div class="flip-card-inner">
+              <div class="flip-card-front"><div class="practice-label">PRACTICE DAY</div><h4>Day 2: Practice Mockup Variations</h4><p>Practice multiple mockup types — device, packaging, poster.</p><span class="flip-hint">Tap to flip</span></div>
+              <div class="flip-card-back"><p><strong>Objective:</strong> Strengthen mockup editing and smart object management skills.</p>
+              <ul><li>Try 2–3 different mockup templates.</li><li>Refine placement and lighting adjustments.</li><li>Focus on realism and presentation balance.</li></ul></div>
+            </div></div>
+            <div class="flip-card blue-border" data-day="6-3"><div class="flip-card-inner">
+              <div class="flip-card-front"><h4>Day 3: Photoshop Text Effects</h4><p>Create stylized text using Layer Styles and Blending Options.</p><span class="flip-hint">Tap to flip</span></div>
+              <div class="flip-card-back"><p><strong>Objective:</strong> Learn to craft glowing, metallic, or embossed text effects using blending and texture overlays.</p>
+              <ul><li>Apply <strong>Bevel &amp; Emboss</strong>, <strong>Drop Shadow</strong>, and <strong>Gradient Overlay</strong>.</li><li>Use texture layers to enhance 3D realism.</li></ul></div>
+            </div></div>
+          </div>
+        </div>
+        <div class="week-card" id="week7">
+          <h2 class="wk">Week 7 — Text on Any Surface with Vanishing Point</h2>
+          <div class="day-grid">
+            <div class="flip-card blue-border" data-day="7-1"><div class="flip-card-inner">
+              <div class="flip-card-front"><h4>Day 1: Text on Any Surface (Vanishing Point)</h4><p>Apply realistic text on walls, floors, or objects using the Vanishing Point filter.</p><span class="flip-hint">Tap to flip</span></div>
+              <div class="flip-card-back"><p><strong>Objective:</strong> Learn to map and blend text realistically to perspective planes.</p>
+              <ul><li>Open your background image and create a new layer for text.</li>
+              <li>Go to <strong>Filter → Vanishing Point</strong> and define perspective grids.</li>
+              <li>Paste or drag your text layer into the vanishing point plane.</li>
+              <li>Adjust lighting, opacity, and blending mode (<strong>Multiply</strong> or <strong>Overlay</strong>).</li></ul></div>
+            </div></div>
+            <div class="flip-card blue-border" data-day="7-2"><div class="flip-card-inner">
+              <div class="flip-card-front"><h4>Day 2: Continue from Day 1</h4><p>Enhance your Vanishing Point text with lighting and texture integration.</p><span class="flip-hint">Tap to flip</span></div>
+              <div class="flip-card-back"><p><strong>Objective:</strong> Refine realism and texture blending from Day 1.</p>
+              <ul><li>Use <strong>Clone Stamp Tool</strong> or <strong>Healing Brush</strong> to merge edges.</li>
+              <li>Match lighting using <strong>Curves</strong> and <strong>Hue/Saturation</strong>.</li>
+              <li>Add <strong>Noise</strong> or <strong>Blur</strong> for realism.</li></ul></div>
+            </div></div>
+            <div class="flip-card project-day" data-day="7-3"><div class="flip-card-inner">
+              <div class="flip-card-front"><div class="project-label">PROJECT DAY</div><h4>Day 3: 3D Text &amp; Image Pop-Out Effect</h4><p>Create an illusion of objects or text popping out of the image frame.</p><span class="flip-hint">Tap to flip</span></div>
+              <div class="flip-card-back"><p><strong>Objective:</strong> Combine layer masking and 3D perspective to make subjects break out of the photo boundaries.</p>
+              <ul><li>Import an image and add a white frame around it using <strong>Rectangle Tool</strong>.</li>
+              <li>Duplicate the image layer and mask parts that should appear outside the frame.</li>
+              <li>Add <strong>Drop Shadows</strong> to enhance depth and realism.</li>
+              <li>Use <strong>3D Text</strong> with <strong>Bevel &amp; Emboss</strong> to complement the effect.</li></ul>
+              <p class="summary-text">Final look: your subject or text appears to pop out from the image into real space.</p></div>
+            </div></div>
+          </div>
+        </div>
+        <div class="week-card" id="week8">
+          <h2 class="wk">Week 8 — Independent Study &amp; Project Refinement</h2>
+          <div class="day-grid">
+            <div class="flip-card" data-day="8-1"><div class="flip-card-inner">
+              <div class="flip-card-front"><h4>Day 1: Independent Study &amp; Practice</h4><p>Spend today refining your previous Photoshop projects.</p><span class="flip-hint">Tap to flip</span></div>
+              <div class="flip-card-back"><p><strong>Focus Areas:</strong></p>
+              <ul><li>Revisit your Week 4, 5, 6 and 7 projects.</li><li>Enhance details, lighting, and text alignment.</li>
+              <li>Experiment with extra effects: <strong>Outer Glow</strong>, <strong>Color Balance</strong>, or <strong>Gradient Maps</strong>.</li></ul>
+              <p class="summary-text">Self-paced session for mastery and creativity.</p></div>
+            </div></div>
+            <div class="flip-card" data-day="8-2"><div class="flip-card-inner">
+              <div class="flip-card-front"><h4>Day 2: Independent Study &amp; Practice</h4><p>Spend today refining your previous Photoshop projects.</p><span class="flip-hint">Tap to flip</span></div>
+              <div class="flip-card-back"><p><strong>Focus Areas:</strong></p>
+              <ul><li>Revisit your Week 4, 5, 6 and 7 projects.</li><li>Enhance details, lighting, and text alignment.</li>
+              <li>Experiment with extra effects: <strong>Outer Glow</strong>, <strong>Color Balance</strong>, or <strong>Gradient Maps</strong>.</li></ul>
+              <p class="summary-text">Self-paced session for mastery and creativity.</p></div>
+            </div></div>
+            <div class="flip-card" data-day="8-3"><div class="flip-card-inner">
+              <div class="flip-card-front"><h4>Day 3: Vintage Photo Editing</h4><p>Today, explore how to give your photos a timeless, vintage feel.</p><span class="flip-hint">Tap to flip</span></div>
+              <div class="flip-card-back"><p><strong>Focus Areas:</strong></p>
+              <ul><li>Apply sepia tones and faded color effects.</li>
+              <li>Use <strong>Film Grain</strong> or <strong>Noise</strong> filters for an aged texture.</li>
+              <li>Experiment with <strong>Vignette</strong> and <strong>Curves Adjustment</strong> for mood enhancement.</li>
+              <li>Try blending overlays like <strong>Dust &amp; Scratches</strong> for authenticity.</li></ul>
+              <p class="summary-text">Bring a nostalgic aesthetic to your modern photos through creative vintage effects.</p></div>
+            </div></div>
+          </div>
+        </div>
+        </div><!-- /month-block m2 -->
+        <!-- ===== MONTH THREE ===== -->
+        <div class="month-block" data-month="m3">
+        <div class="week-card" id="week9">
+          <h2 class="wk">Week 9 — Neon &amp; Double Exposure Prep</h2>
+          <div class="day-grid">
+            <div class="flip-card project-day" data-day="9-1"><div class="flip-card-inner">
+              <div class="flip-card-front"><div class="project-label">PROJECT DAY</div><h4>Day 1: Neon Text Effect</h4><p>Create glowing neon text with light blending.</p><span class="flip-hint">Tap to flip</span></div>
+              <div class="flip-card-back"><p><strong>Objective:</strong> Glow, contrast, color blending.</p></div>
+            </div></div>
+            <div class="flip-card project-day" data-day="9-2"><div class="flip-card-inner">
+              <div class="flip-card-front"><div class="project-label">PROJECT DAY</div><h4>Day 2: Neon Sign + Wall Effect</h4><p>Make a realistic glowing wall-mounted neon sign.</p><span class="flip-hint">Tap to flip</span></div>
+              <div class="flip-card-back"><ul><li>Create metal frame</li><li>Add realistic wall texture</li><li>Use glow layers</li></ul></div>
+            </div></div>
+            <div class="flip-card project-day" data-day="9-3"><div class="flip-card-inner">
+              <div class="flip-card-front"><div class="project-label">PROJECT DAY</div><h4>Day 3: Neon Portrait Highlight</h4><p>Add neon lighting to portrait edges.</p><span class="flip-hint">Tap to flip</span></div>
+              <div class="flip-card-back"><ul><li>Brush glow edges</li><li>Blend mode lighten</li><li>Color dodge for highlights</li></ul></div>
+            </div></div>
+          </div>
+        </div>
+        <div class="week-card" id="week10">
+          <h2 class="wk">Week 10 — Double Exposure &amp; Poster Design</h2>
+          <div class="day-grid">
+            <div class="flip-card project-day" data-day="10-1"><div class="flip-card-inner">
+              <div class="flip-card-front"><div class="project-label">PROJECT DAY</div><h4>Day 1: Double Exposure – Basics</h4><p>Learn how to merge two images creatively.</p><span class="flip-hint">Tap to flip</span></div>
+              <div class="flip-card-back"><ul><li>Use layer masks</li><li>Soft brushes</li><li>Black/white balance</li></ul></div>
+            </div></div>
+            <div class="flip-card project-day" data-day="10-2"><div class="flip-card-inner">
+              <div class="flip-card-front"><div class="project-label">PROJECT DAY</div><h4>Day 2: Advanced Double Exposure</h4><p>Combine shapes, forests, cities, portraits.</p><span class="flip-hint">Tap to flip</span></div>
+              <div class="flip-card-back"><ul><li>Gradient mask control</li><li>Blend multiple textures</li><li>Color grading</li></ul></div>
+            </div></div>
+            <div class="flip-card project-day" data-day="10-3"><div class="flip-card-inner">
+              <div class="flip-card-front"><div class="project-label">PROJECT DAY</div><h4>Day 3: Poster Design with Double Exposure</h4><p>Full poster blending photography + typography.</p><span class="flip-hint">Tap to flip</span></div>
+              <div class="flip-card-back"><ul><li>Cinematic color grading</li><li>Strong layout</li><li>Title placement rules</li></ul></div>
+            </div></div>
+          </div>
+        </div>
+        </div><!-- /month-block m3 -->
+      </section>
+      <!-- ========== PROJECTS ========== -->
+      <section id="projects" class="view">
+        <div class="view-head">
+          <div>
+            <h2>Group Projects</h2>
+            <p>Three hands-on studio briefs. Pick a tab, follow the instructions, and submit to Google Classroom.</p>
+          </div>
+        </div>
+        <div class="subnav" id="projSubnav">
+          <button class="active" data-proj="gojo">Week 6 · Gojo Pop-Out Project</button>
+          <button data-proj="mockup">Phone / iPad Mockup Studio</button>
+          <button data-proj="world">Around the World with a Twist</button>
+        </div>
+        <!-- ---- PROJECT 1: GOJO ---- -->
+        <div class="proj-view active" id="proj-gojo">
+        <style>
+        .gj-scope{font-family:'Poppins',sans-serif;color:#081726;}
+        .gj-scope .container{max-width:1100px;margin:0 auto;padding:0 0 24px;background:#fff8f0;border-radius:16px;box-shadow:var(--shadow);padding:24px;}
+        .gj-scope header{display:flex;gap:16px;align-items:center;margin-bottom:24px;}
+        .gj-scope .logo{width:64px;height:64px;border-radius:12px;background:#ff7f50;display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;font-size:24px;flex-shrink:0;}
+        .gj-scope h1{font-size:22px;margin:0;color:#081726;}
+        .gj-scope h2{font-size:19px;margin-top:0;color:#081726;}
+        .gj-scope h3{font-size:16px;margin-top:12px;color:#081726;}
+        .gj-scope p.lead{margin:8px 0 0;font-size:14px;color:#4a4a4a;}
+        .gj-scope .card{background:#ffd699;padding:20px;border-radius:16px;margin-bottom:20px;box-shadow:0 4px 15px rgba(0,0,0,0.08);}
+        .gj-scope label{display:block;font-size:13px;margin-bottom:6px;font-weight:600;}
+        .gj-scope input[type=text],.gj-scope select,.gj-scope textarea,.gj-scope input[type=file]{width:100%;padding:11px;border-radius:10px;border:1px solid #ff7f50;background:#fff3e6;color:#081726;font-size:13.5px;margin-bottom:10px;}
+        .gj-scope textarea{min-height:80px;resize:vertical;}
+        .gj-scope .row{display:flex;gap:16px;flex-wrap:wrap;}
+        .gj-scope .col{flex:1;min-width:200px;}
+        .gj-scope .members{display:grid;gap:12px;}
+        .gj-scope .member-row{display:flex;gap:12px;align-items:center;flex-wrap:wrap;}
+        .gj-scope .btn{display:inline-flex;align-items:center;gap:8px;padding:11px 16px;border-radius:11px;background:#ff7f50;color:#fff;font-weight:700;border:none;cursor:pointer;transition:0.2s;font-size:13.5px;}
+        .gj-scope .btn:hover{opacity:0.86;}
+        .gj-scope .btn:disabled{opacity:.5;cursor:not-allowed;}
+        .gj-scope .btn.ghost{background:transparent;border:1px solid #ff7f50;color:#ff7f50;}
+        .gj-scope .small{padding:8px 12px;font-size:12.5px;}
+        .gj-scope .ideas{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;}
+        .gj-scope .idea{padding:16px;border-radius:12px;background:#ffe0b3;box-shadow:0 4px 12px rgba(0,0,0,0.05);}
+        .gj-scope .uploads{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px;}
+        .gj-scope .thumb{width:100px;height:70px;border-radius:10px;background:#ffcc99;display:flex;align-items:center;justify-content:center;overflow:hidden;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,0.1);}
+        .gj-scope .actions{display:flex;gap:14px;justify-content:flex-end;flex-wrap:wrap;}
+        .gj-scope .field-error{color:#c1121f;font-size:12px;margin:-6px 0 8px;display:none;}
+        .gj-scope .field-error.show{display:block;}
+        .gj-scope .pdf-status{font-size:12.5px;color:#4a4a4a;align-self:center;}
+        </style>
+        <div class="gj-scope">
+        <div class="container">
+        <header>
+          <div class="logo" aria-hidden="true">GJ</div>
+          <div>
+            <h1>Week 6 — Pop-Out Animal + Text Effect (Group Project)</h1>
+            <p class="lead">Propose 3 design ideas and attach draft images. Submit your downloaded project PDF directly to Google Classroom to get the rubric.</p>
+          </div>
+        </header>
+        <form id="projectForm">
+        <div class="card">
+        <h2>Group Details</h2>
+        <div class="row" style="align-items:center">
+        <div class="col"><label for="groupName">Gojo / Group Name</label><input type="text" id="groupName" placeholder="e.g. Gojo Black Lions" required>
+        <div class="field-error" id="groupNameError">Enter a group name.</div></div>
+        <div style="width:220px"><label for="animal">Symbolic Animal</label>
+        <select id="animal"><option>Black Lions</option><option>Abyssinian Long Claw</option><option>Walia</option><option>Menelik's Bushbuck</option><option>Ethiopian Wolf</option><option>Nyalas</option></select></div>
+        </div>
+        <div style="margin-top:12px">
+        <label id="membersLabel">Group Members (up to 8)</label>
+        <div class="members" id="membersList" role="group" aria-labelledby="membersLabel">
+          <div class="member-row">
+            <input type="text" placeholder="Full name" class="memberName" required aria-label="Member full name">
+            <input type="text" placeholder="Role (designer/lead)" class="memberRole" style="width:160px" required aria-label="Member role">
+            <button type="button" class="btn ghost small" onclick="gjRemoveMember(this)">Remove</button>
+          </div>
+        </div>
+        <button type="button" class="btn small" id="gjAddMemberBtn">+ Add member</button>
+        </div>
+        </div>
+        <div class="card">
+        <h2>Propose 3 Design Ideas</h2>
+        <div class="ideas">
+          <div class="idea" id="idea1"><h3>Idea 1</h3>
+            <label for="idea1Title">Title</label><input type="text" id="idea1Title" class="ideaTitle" required>
+            <label for="idea1Desc">Description</label><textarea id="idea1Desc" class="ideaDesc" required></textarea>
+            <label for="idea1Effect">Text Effect</label><select id="idea1Effect" class="ideaTextEffect"><option>Metallic</option><option>Glass</option><option>Stone</option><option>Neon</option><option>Smoke</option></select>
+            <label for="idea1Dir">3D Direction</label><select id="idea1Dir" class="ideaDir"><option>Forward</option><option>Upward</option><option>Left</option><option>Right</option><option>Diagonal</option></select>
+            <label for="idea1Colors">Color Scheme</label><input type="text" id="idea1Colors" class="ideaColors">
+            <label for="idea1Upload">Draft Image</label><input type="file" id="idea1Upload" class="ideaUpload" accept="image/*" multiple>
+            <div class="uploads" data-target="idea1"></div>
+          </div>
+          <div class="idea" id="idea2"><h3>Idea 2</h3>
+            <label for="idea2Title">Title</label><input type="text" id="idea2Title" class="ideaTitle" required>
+            <label for="idea2Desc">Description</label><textarea id="idea2Desc" class="ideaDesc" required></textarea>
+            <label for="idea2Effect">Text Effect</label><select id="idea2Effect" class="ideaTextEffect"><option>Metallic</option><option>Glass</option><option>Stone</option><option>Neon</option><option>Smoke</option></select>
+            <label for="idea2Dir">3D Direction</label><select id="idea2Dir" class="ideaDir"><option>Forward</option><option>Upward</option><option>Left</option><option>Right</option><option>Diagonal</option></select>
+            <label for="idea2Colors">Color Scheme</label><input type="text" id="idea2Colors" class="ideaColors">
+            <label for="idea2Upload">Draft Image</label><input type="file" id="idea2Upload" class="ideaUpload" accept="image/*" multiple>
+            <div class="uploads" data-target="idea2"></div>
+          </div>
+          <div class="idea" id="idea3"><h3>Idea 3</h3>
+            <label for="idea3Title">Title</label><input type="text" id="idea3Title" class="ideaTitle" required>
+            <label for="idea3Desc">Description</label><textarea id="idea3Desc" class="ideaDesc" required></textarea>
+            <label for="idea3Effect">Text Effect</label><select id="idea3Effect" class="ideaTextEffect"><option>Metallic</option><option>Glass</option><option>Stone</option><option>Neon</option><option>Smoke</option></select>
+            <label for="idea3Dir">3D Direction</label><select id="idea3Dir" class="ideaDir"><option>Forward</option><option>Upward</option><option>Left</option><option>Right</option><option>Diagonal</option></select>
+            <label for="idea3Colors">Color Scheme</label><input type="text" id="idea3Colors" class="ideaColors">
+            <label for="idea3Upload">Draft Image</label><input type="file" id="idea3Upload" class="ideaUpload" accept="image/*" multiple>
+            <div class="uploads" data-target="idea3"></div>
+          </div>
+        </div>
+        </div>
+        <div class="card actions">
+        <span class="pdf-status" id="gjPdfStatus" aria-live="polite"></span>
+        <button type="button" class="btn" id="gjDownloadBtn">Download Project PDF</button>
+        <button type="button" class="btn" id="gjSubmitBtn">Submit to Classroom</button>
+        </div>
+        </form>
+        </div>
+        </div>
+        </div>
+        <!-- ---- PROJECT 2: PHONE/IPAD MOCKUP ---- -->
+        <div class="proj-view" id="proj-mockup">
+        <style>
+        .sp-scope{ --sp-accent:#ff7a2d; --sp-accent2:#ff9b57; font-family:'Inter',sans-serif; }
+        .sp-project{max-width:1100px;margin:0 auto;padding:22px;background:linear-gradient(180deg,#fffaf7,#fff);border-radius:20px;box-shadow:var(--shadow);border:1px solid rgba(0,0,0,0.03);}
+        .sp-project .header{display:flex;gap:18px;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;}
+        .sp-project .title{display:flex;gap:14px;align-items:center;}
+        .sp-project .logo-badge{width:60px;height:60px;border-radius:12px;background:linear-gradient(135deg,var(--sp-accent),var(--sp-accent2));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:18px;box-shadow:0 6px 18px rgba(255,122,45,0.25);flex-shrink:0;}
+        .sp-project h1{font-size:19px;margin:0;}
+        .sp-project p.lead{margin:0;color:#6b6b6b;font-size:13px;}
+        .sp-project .layout{display:grid;grid-template-columns:400px 1fr;gap:18px;margin-top:18px;}
+        .sp-project .mockup-card{background:#fff;padding:16px;border-radius:14px;box-shadow:var(--shadow);border:1px solid rgba(0,0,0,0.02);}
+        .sp-project .device-switch{display:flex;gap:8px;margin-bottom:12px;align-items:center;}
+        .sp-project .device-switch button{background:transparent;border:1px solid rgba(0,0,0,0.08);padding:8px 10px;border-radius:10px;cursor:pointer;font-size:12.5px;}
+        .sp-project .device-switch button.active{background:linear-gradient(90deg,var(--sp-accent),var(--sp-accent2));color:#fff;border:none;}
+        .sp-project .device-stage{display:flex;justify-content:center;align-items:center;padding:10px;}
+        .sp-project .device{width:270px;height:560px;border-radius:38px;background:linear-gradient(180deg,#111,#222);box-shadow:0 12px 30px rgba(0,0,0,0.2);position:relative;padding:16px;display:flex;align-items:center;justify-content:center;}
+        .sp-project .device.ipad{width:380px;height:500px;border-radius:26px;padding:24px;}
+        .sp-project .device .screen{width:100%;height:100%;border-radius:26px;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+        .sp-project .carousel{width:92%;height:86%;background:#fff;border-radius:16px;overflow:hidden;display:flex;flex-direction:column;justify-content:center;align-items:center;box-shadow:inset 0 2px 12px rgba(0,0,0,0.06);}
+        .sp-project .carousel img{width:100%;height:100%;object-fit:cover;transition:opacity .3s ease;}
+        .sp-project .carousel-controls{display:flex;gap:10px;align-items:center;justify-content:center;margin-top:10px;}
+        .sp-project .btn{background:var(--sp-accent);color:#fff;border:none;padding:8px 14px;border-radius:10px;cursor:pointer;font-weight:600;font-size:13px;}
+        .sp-project .btn.ghost{background:transparent;color:#6b6b6b;border:1px solid rgba(0,0,0,0.08);}
+        .sp-project .thumbs{display:flex;gap:8px;padding:10px 4px 0;overflow:auto;max-width:280px;}
+        .sp-project .thumbs img{width:52px;height:52px;border-radius:8px;object-fit:cover;cursor:pointer;border:2px solid transparent;}
+        .sp-project .thumbs img.active{border-color:var(--sp-accent);}
+        .sp-project .info{background:linear-gradient(180deg,rgba(255,255,255,0.9),#fff);padding:18px;border-radius:14px;box-shadow:var(--shadow);}
+        .sp-project .section{margin-bottom:14px;}
+        .sp-project .section h3{margin:0 0 8px;font-size:15px;}
+        .sp-project ul.checklist{margin:0;padding-left:18px;color:#6b6b6b;font-size:13.5px;}
+        .sp-project .actions{display:flex;gap:10px;align-items:center;margin-top:8px;flex-wrap:wrap;}
+        .sp-project .note{font-size:12.5px;color:#6b6b6b;line-height:1.6;background:rgba(255,249,244,0.6);border-radius:8px;padding:10px;border:1px solid rgba(0,0,0,0.03);}
+        .sp-project .rubric-box{background:linear-gradient(90deg,#fff2ee,#fff9f6);border-left:4px solid var(--sp-accent);padding:10px 14px;border-radius:8px;font-size:12.5px;margin-top:8px;color:#6b6b6b;}
+        .sp-tips-modal{display:none;position:fixed;inset:0;background:rgba(10,10,10,.5);align-items:center;justify-content:center;z-index:2000;}
+        .sp-tips-modal.open{display:flex;}
+        .sp-tips-modal .box{background:#fff;padding:22px;border-radius:14px;max-width:340px;box-shadow:0 20px 50px rgba(0,0,0,.3);}
+        @media(max-width:900px){.sp-project .layout{grid-template-columns:1fr;}.sp-project .device.ipad{width:300px;height:400px;}.sp-project .device{width:240px;height:480px;}}
+        </style>
+        <div class="sp-scope">
+        <div class="sp-project">
+          <div class="header">
+            <div class="title">
+              <div class="logo-badge" aria-hidden="true">PM</div>
+              <div><h1>Phone / iPad Mockup Student Project</h1>
+              <p class="lead">Design your own mockup inspired by the images below. Let the visuals guide your creativity — focus on composition, lighting, and mood.</p></div>
+            </div>
+            <div style="text-align:right">
+              <div style="font-size:12px;color:#6b6b6b">Deadline: <strong>Follow Classroom</strong></div>
+              <div style="margin-top:8px"><a href="https://classroom.google.com/c/ODAyMDgxNDEzOTkx/a/ODE4MTM3ODIyOTAw/details" target="_blank" rel="noopener"><button class="btn" type="button">Submit to Classroom</button></a></div>
+            </div>
+          </div>
+          <div class="layout">
+            <div class="mockup-card">
+              <div class="device-switch">
+                <button id="sp-btn-phone" class="active" type="button" onclick="spSetDevice('phone')">Phone Mockup</button>
+                <button id="sp-btn-ipad" type="button" onclick="spSetDevice('ipad')">iPad Mockup</button>
+                <div style="flex:1"></div>
+                <button class="btn ghost" type="button" onclick="spOpenAllImages()">Open All</button>
+              </div>
+              <div class="device-stage">
+                <div id="sp-device" class="device"><div class="screen"><div class="carousel" id="sp-carousel"><img id="sp-main-image" src="" alt="Mockup inspiration image"></div></div></div>
+              </div>
+              <div class="carousel-controls" style="flex-direction:column;align-items:center">
+                <div style="display:flex;gap:10px">
+                  <button class="btn" type="button" onclick="spPrevImage()" aria-label="Previous image">◀</button>
+                  <button class="btn" type="button" onclick="spNextImage()" aria-label="Next image">▶</button>
+                  <button class="btn ghost" type="button" onclick="spShowTips()">Quick Tips</button>
+                </div>
+                <div class="thumbs" id="sp-thumbs"></div>
+              </div>
+            </div>
+            <div class="info">
+              <div class="section">
+                <h3>Instructions</h3>
+                <p class="note">
+                  1. Design a phone or iPad mockup using your own creative composition.<br>
+                  2. Let the carousel images inspire your pose, angle, or scene — don't copy, interpret creatively.<br>
+                  3. Ensure high resolution (≥1080px for phone, ≥2048px for iPad).<br>
+                  4. Use warm accents subtly to enhance mood.<br>
+                  5. Export your file as <code>Firstname_Lastname_PM.jpg</code>.<br>
+                  6. Click "Submit to Classroom" to upload your final work.
+                </p>
+                <div class="rubric-box"><strong>Mockup Note:</strong> A mockup is a visual prototype showing your design concept clearly.<br>
+                <strong>Rubric:</strong> Composition 40%, Lighting &amp; Mood 30%, Creativity 20%, Resolution &amp; Presentation 10%.</div>
+              </div>
+              <div class="section">
+                <h3>Creating a 3D Mockup and Composition</h3>
+                <p><strong>What:</strong> A 3D mockup is a digital visual showing your design applied on a realistic object like a phone, tablet, or poster. It helps visualize how your work looks in real life.</p>
+                <p><strong>Why:</strong> It gives your design depth and realism. 3D mockups make presentations professional, help with perspective accuracy, and make your work more engaging.</p>
+                <p><strong>When:</strong> After completing your main design (photo or layout), use Photoshop or an online tool like Photopea or Smartmockups to place your design inside a 3D frame or screen.</p>
+                <p><strong>How:</strong></p>
+                <ul class="checklist">
+                  <li>Prepare your final image or layout.</li>
+                  <li>Use a smart object or mockup template.</li>
+                  <li>Insert your design into the mockup layer.</li>
+                  <li>Adjust lighting, reflection, and perspective for realism.</li>
+                  <li>Align background color or blur to match your theme.</li>
+                  <li>Export the final composition as JPG or PNG.</li>
+                </ul>
+              </div>
+              <div class="actions">
+                <a id="sp-submit-link" href="https://classroom.google.com/c/ODAyMDgxNDEzOTkx/a/ODE4MTM3ODIyOTAw/details" target="_blank" rel="noopener"><button class="btn" type="button">Submit to Classroom</button></a>
+                <button class="btn ghost" type="button" onclick="spShowTips()">Quick Tips</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="sp-tips-modal" id="spTipsModal" role="dialog" aria-modal="true" aria-labelledby="spTipsHeading">
+          <div class="box">
+            <h4 id="spTipsHeading">Quick Tips</h4>
+            <ul style="padding-left:18px;color:#6b6b6b;margin:0 0 12px;">
+              <li>Use light and shadow to create depth.</li>
+              <li>Keep accents subtle but engaging.</li>
+              <li>Ensure clarity and composition.</li>
+              <li>Send your draft for subject-selection feedback.</li>
+            </ul>
+            <button class="btn ghost" type="button" onclick="spCloseTips()">Close</button>
+          </div>
+        </div>
+        </div>
+        </div>
+        <!-- ---- PROJECT 3: AROUND THE WORLD ---- -->
+        <div class="proj-view" id="proj-world">
+        <style>
+        .atw-scope{ --atw-accent:#ff8c42; font-family:'Inter',sans-serif; }
+        .atw-container{max-width:1100px;margin:0 auto;padding:4px;}
+        .atw-container header{display:flex;gap:16px;align-items:center;margin-bottom:18px;}
+        .atw-container h1{margin:0;font-size:21px;color:#e8630a;}
+        .atw-container p.lead{margin:4px 0 0;color:#6b6b6b;font-size:13.5px;}
+        .atw-main{display:grid;grid-template-columns:290px 1fr;gap:18px;}
+        .atw-side{position:sticky;top:75px;height:fit-content;max-height:calc(100vh - 100px);overflow:auto;padding:12px;background:linear-gradient(180deg,rgba(255,240,210,.7),rgba(255,255,255,.5));border-radius:14px;border:1px solid rgba(255,165,0,0.25);}
+        .atw-search{display:flex;padding:8px;border-radius:10px;background:rgba(255,255,255,.7);align-items:center;}
+        .atw-search input{border:0;background:transparent;outline:none;padding:6px;width:100%;font-size:13px;}
+        .atw-group-list{margin-top:12px;display:flex;flex-direction:column;gap:8px;}
+        .atw-group-item{padding:10px;border-radius:9px;background:rgba(255,255,255,.75);cursor:pointer;border:1px solid rgba(255,165,0,0.25);font-size:13px;transition:.2s;text-align:left;width:100%;font-family:inherit;color:inherit;}
+        .atw-group-item:hover{background:#ffe3b3;}
+        .atw-group-item.active{outline:2px solid #ffa64d;border-color:#ffa64d;background:#fff0d1;font-weight:600;}
+        .atw-content{padding:20px;background:linear-gradient(180deg,rgba(255,250,240,.8),rgba(255,255,255,.6));border-radius:14px;min-height:420px;border:1px solid rgba(255,165,0,0.2);}
+        .atw-hero{display:flex;gap:16px;align-items:center;flex-wrap:wrap;}
+        .atw-hero-left{flex:1;min-width:220px;}
+        .atw-hero-right{width:190px;height:110px;border-radius:10px;background:linear-gradient(135deg,var(--atw-accent),#ffd08a);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;box-shadow:0 3px 8px rgba(0,0,0,0.15);}
+        .atw-section-title{margin:12px 0;font-size:15px;color:#e8630a;}
+        .atw-card{background:rgba(255,255,255,.7);padding:14px;border-radius:10px;margin-bottom:12px;border:1px solid rgba(255,165,0,0.2);font-size:13.5px;}
+        .atw-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+        .atw-meta{font-size:13px;color:#6b6b6b;line-height:1.6;}
+        .atw-content details{background:transparent;padding:8px 0;border-radius:8px;}
+        .atw-content summary{cursor:pointer;font-weight:600;color:#e8630a;}
+        .atw-submit-list{list-style:none;padding:0;margin:8px 0;}
+        .atw-submit-list li{padding:8px 0;border-bottom:1px dashed rgba(0,0,0,0.08);font-size:13.5px;}
+        .atw-filename{font-family:monospace;background:rgba(255,165,0,0.2);padding:2px 6px;border-radius:6px;}
+        @media(max-width:900px){.atw-main{grid-template-columns:1fr;}.atw-side{position:static;max-height:none;}.atw-grid-2{grid-template-columns:1fr;}}
+        </style>
+        <div class="atw-scope">
+        <div class="atw-container">
+          <header>
+            <div>
+              <h1>Photoshop Project — Around the World with a Twist</h1>
+              <p class="lead">Clear instructions, per-group rubric, and submission checklist for Class of 2027.</p>
+            </div>
+          </header>
+          <div class="atw-main">
+            <nav class="atw-side" aria-label="Groups navigation">
+              <div class="atw-search"><label for="atwSearch" style="position:absolute;left:-9999px;">Search groups or keywords</label><input id="atwSearch" placeholder="Search groups or keywords"></div>
+              <div class="atw-group-list" id="atwGroupList"></div>
+            </nav>
+            <section class="atw-content">
+              <div class="atw-hero">
+                <div class="atw-hero-left">
+                  <h2 style="margin:0 0 8px;font-size:17px;">General Instructions for All Groups</h2>
+                  <p class="atw-meta">Pick a subject from your group members and take a high-resolution portrait photo. Replace the background with your assigned city, retouch the face naturally, and redesign the pattern of cloth to reflect that city's unique culture and style identity. Your final image should tell a visual story that merges your subject's personality with the atmosphere of the city.</p>
+                </div>
+                <div class="atw-hero-right">Class of 2027</div>
+              </div>
+              <div id="atwGroupContent"></div>
+              <div class="atw-card">
+                <h3 class="atw-section-title">Submission Format</h3>
+                <div class="atw-grid-2">
+                  <div>
+                    <h4 style="margin:0 0 6px;font-size:14px;">1. Final Photoshop File (.PSD)</h4>
+                    <ul class="atw-submit-list">
+                      <li>Include organized layers: background, subject, clothing, and retouching.</li>
+                      <li>Rename layers clearly (e.g., "Clothing Edit", "Face Retouch").</li>
+                      <li>Remove hidden or unnecessary layers for file cleanliness.</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h4 style="margin:0 0 6px;font-size:14px;">2. Final Image (.JPG or .PNG)</h4>
+                    <ul class="atw-submit-list">
+                      <li>High resolution (minimum 2000 px wide).</li>
+                      <li>Export at quality 10 or higher; avoid compression.</li>
+                      <li>Filename format: <span class="atw-filename">Group#_CityName_ClassOf2027.jpg</span></li>
+                    </ul>
+                  </div>
+                </div>
+                <div style="margin-top:12px">
+                  <h4 style="margin:0 0 6px;font-size:14px;">3. Short Creative Reflection (PDF, max 1 page)</h4>
+                  <ul class="atw-submit-list">
+                    <li>Title and one-paragraph concept summary.</li>
+                    <li>Tools used: Pen Tool, Clone Stamp, Dodge &amp; Burn, Gradient Map, etc.</li>
+                    <li>Design choices: color palette, lighting, clothing influence, composition.</li>
+                    <li>Include main challenges and lessons learned.</li>
+                  </ul>
+                </div>
+              </div>
+            </section>
+          </div>
+        </div>
+        </div>
+        </div>
+      </section>
+      <!-- ========== NOTES / READ ME ========== -->
+      <section id="notes" class="view">
+        <div class="view-head">
+          <div>
+            <h2>Read Me — Detailed Notes</h2>
+            <p>Step-by-step written lessons with tools, tips, and visual analogies. Each section can be downloaded on its own as a PDF.</p>
+          </div>
+        </div>
+        <div class="note-section" id="intro">
+          <button class="note-dl" onclick="downloadSectionPDF('intro','Introduction to Graphic Design & Photoshop')">Download PDF</button>
+          <h3>Introduction to Graphic Design &amp; Photoshop</h3>
+          <p>Graphic Design communicates ideas visually using typography, images, colors, and layout. Photoshop is a digital workspace where imagination becomes tangible.</p>
+          <ol class="note-steps">
+            <li>Open Photoshop and explore the workspace: Menu Bar, Toolbar, Panels, Options Bar.</li>
+            <li>Familiarize yourself with essential panels: <strong>Layers</strong>, <strong>Adjustments</strong>, <strong>Properties</strong>, <strong>History</strong>.</li>
+            <li>Learn non-destructive editing: use <strong>Layer Masks</strong>, <strong>Smart Objects</strong>, and <strong>Adjustment Layers</strong>.</li>
+            <li>Practice: Draw simple shapes and apply color fills to understand layer stacking.</li>
+          </ol>
+          <div class="note-tool"><strong>Analogy:</strong> Photoshop is like a designer's kitchen: brushes are spices, layers are ingredients, masks are containers, and smart objects are reusable recipes.</div>
+          <div class="note-tip"><strong>Tip:</strong> Always keep a "backup layer" for original images to prevent accidental mistakes.</div>
+          <div class="note-visual"><strong>Visual Example:</strong> Imagine a blank canvas as a plate. Each layer is a separate ingredient. Masks are lids that cover parts of layers without deleting them. Smart Objects are frozen ingredients you can use later without changing the original taste.</div>
+        </div>
+        <div class="note-section" id="rastervector">
+          <button class="note-dl" onclick="downloadSectionPDF('rastervector','Raster vs Vector Graphics')">Download PDF</button>
+          <h3>Raster vs Vector Graphics</h3>
+          <p>Raster images are pixel-based, perfect for detailed photos. Vector graphics are path-based and scalable without losing quality.</p>
+          <ul><li><strong>Raster:</strong> Photos, textures, paintings.</li><li><strong>Vector:</strong> Logos, icons, illustrations requiring scalability.</li></ul>
+          <ol class="note-steps">
+            <li>Open a raster image, zoom in — notice pixels when enlarged.</li>
+            <li>Draw a shape with the <strong>Pen Tool</strong> — crisp at any zoom.</li>
+            <li>Save raster as JPG/PNG, vector as SVG/AI.</li>
+            <li>Practice: Trace a raster logo into a vector path.</li>
+          </ol>
+          <div class="note-tool"><strong>Pen Tool:</strong> Precise path creation.<br><strong>Analogy:</strong> Tracing a logo on tracing paper for clean outlines.</div>
+          <div class="note-tip"><strong>Pro Tip:</strong> Combine raster &amp; vector: vector logos with raster textures for realism.</div>
+          <div class="note-visual"><strong>Visual Example:</strong> Imagine a photo of a cat (raster) vs a cartoon cat outline (vector). Zoom the photo: pixels appear. Zoom the cartoon: it stays sharp, clean, and scalable.</div>
+        </div>
+        <div class="note-section" id="photopea">
+          <button class="note-dl" onclick="downloadSectionPDF('photopea','Photopea Overview')">Download PDF</button>
+          <h3>Photopea Overview</h3>
+          <p>Photopea is an online Photoshop alternative supporting layers, masks, smart objects, and adjustments.</p>
+          <ol class="note-steps">
+            <li>Visit <a href="https://www.photopea.com" target="_blank" rel="noopener">photopea.com</a>.</li>
+            <li>Open or drag an image.</li>
+            <li>Use Move, Brush, Clone Stamp, and Adjustment Layers.</li>
+            <li>Save as PSD for future edits or export as PNG/JPG.</li>
+            <li>Practice: Open a Photoshop PSD in Photopea and observe layer compatibility.</li>
+          </ol>
+          <div class="note-tool"><strong>Analogy:</strong> Photopea is a pocket Photoshop — light and ready anywhere.</div>
+          <div class="note-tip"><strong>Tip:</strong> Learn Photopea shortcuts; most match Photoshop for faster workflow.</div>
+          <div class="note-visual"><strong>Visual Example:</strong> Picture carrying a small, foldable art studio in your laptop browser, with all brushes, layers, and panels ready.</div>
+        </div>
+        <div class="note-section" id="removing-bg">
+          <button class="note-dl" onclick="downloadSectionPDF('removing-bg','Removing Backgrounds and Subjects')">Download PDF</button>
+          <h3>Removing Backgrounds and Subjects</h3>
+          <p>Essential for product design, e-commerce, social media, and composites.</p>
+          <ol class="note-steps">
+            <li>Select the subject using <strong>Quick Selection Tool</strong> or <strong>Select Subject</strong>.</li>
+            <li>Refine edges using <strong>Select and Mask</strong>.</li>
+            <li>Apply <strong>Layer Mask</strong> to hide the background non-destructively.</li>
+            <li>Use <strong>Refine Edge Brush</strong> for hair or intricate details.</li>
+          </ol>
+          <div class="note-tool"><strong>Analogy:</strong> Digital scissors that are reversible.</div>
+          <div class="note-tip"><strong>Tip:</strong> Check edges at 200% zoom for perfection.</div>
+          <div class="note-visual"><strong>Visual Example:</strong> Imagine cutting a portrait out of a magazine but having invisible scissors that allow you to adjust edges after cutting.</div>
+        </div>
+        <div class="note-section" id="passport">
+          <button class="note-dl" onclick="downloadSectionPDF('passport','Passport Photo Editing')">Download PDF</button>
+          <h3>Passport Size Photo</h3>
+          <p>Precise cropping, clean background, and correct exposure are key.</p>
+          <ol class="note-steps">
+            <li>Crop to 2x2 inches using <strong>Crop Tool</strong>.</li>
+            <li>Adjust background with <strong>Solid Color Fill</strong> or <strong>Brush Tool</strong>.</li>
+            <li>Dodge &amp; Burn to balance skin tone.</li>
+            <li>Save at 300 dpi.</li>
+          </ol>
+          <div class="note-tool"><strong>Analogy:</strong> Trimming a printed photo to fit exactly into a passport window.</div>
+          <div class="note-tip"><strong>Tip:</strong> Use soft brush edges for smooth background transitions.</div>
+          <div class="note-visual"><strong>Visual Example:</strong> Picture a perfectly framed passport headshot on a white canvas, with soft shadows blending into the background.</div>
+        </div>
+        <div class="note-section" id="retouch">
+          <button class="note-dl" onclick="downloadSectionPDF('retouch','Face and Skin Retouching')">Download PDF</button>
+          <h3>Face and Skin Retouching</h3>
+          <p>Enhance portraits subtly while preserving texture.</p>
+          <ol class="note-steps">
+            <li>Duplicate the original layer.</li>
+            <li>Spot Healing Brush for blemishes.</li>
+            <li>Frequency Separation: separate color &amp; texture for precise edits.</li>
+            <li>Dodge &amp; Burn for highlights and contours.</li>
+          </ol>
+          <div class="note-tool"><strong>Healing Brush:</strong> Digital makeup without destroying skin texture.</div>
+          <div class="note-tip"><strong>Tip:</strong> Zoom at 100–200% to see true texture.</div>
+          <div class="note-visual"><strong>Visual Example:</strong> Imagine painting small corrections over a face while keeping pores and skin details intact.</div>
+        </div>
+        <div class="note-section" id="eyes">
+          <button class="note-dl" onclick="downloadSectionPDF('eyes','Teeth and Eye Whitening, Reflection & Correction')">Download PDF</button>
+          <h3>Teeth and Eye Whitening, Reflection &amp; Correction</h3>
+          <p>Brighten eyes and teeth subtly while maintaining realism.</p>
+          <ol class="note-steps">
+            <li>Dodge Tool 10–15% exposure for brightening.</li>
+            <li>Add reflections with Overlay layers.</li>
+            <li>Liquify Tool for small alignment fixes.</li>
+          </ol>
+          <div class="note-tool"><strong>Liquify Tool:</strong> Gentle reshaping like soft clay.</div>
+          <div class="note-tip"><strong>Tip:</strong> Keep whitening subtle to avoid a fake look.</div>
+          <div class="note-visual"><strong>Visual Example:</strong> Visualize adding a soft highlight to the eyes like a sunbeam, without changing natural color.</div>
+        </div>
+        <div class="note-section" id="mockup">
+          <button class="note-dl" onclick="downloadSectionPDF('mockup','Posture Correction & Dress Mockups')">Download PDF</button>
+          <h3>Posture Correction &amp; Dress Mockups</h3>
+          <p>Adjust posture and garments for realistic presentation using Smart Objects.</p>
+          <ol class="note-steps">
+            <li>Puppet Warp for subtle posture corrections.</li>
+            <li>Convert garments to Smart Objects.</li>
+            <li>Warp Transform for folds and fabric flow.</li>
+            <li>Adjust shadows and highlights for realism.</li>
+          </ol>
+          <div class="note-tool"><strong>Puppet Warp:</strong> Controlled string movement like a puppet.</div>
+          <div class="note-tip"><strong>Tip:</strong> Make small incremental adjustments to avoid unnatural distortion.</div>
+          <div class="note-visual"><strong>Visual Example:</strong> Picture moving an arm slightly, like bending a paper doll, and the clothes following naturally with realistic folds.</div>
+        </div>
+        <div class="note-section" id="reuse">
+          <button class="note-dl" onclick="downloadSectionPDF('reuse','Tool Reuse & Project Application')">Download PDF</button>
+          <h3>Tool Reuse &amp; Project Application</h3>
+          <p>Skills compound — mastering one tool allows multiple creative applications.</p>
+          <ul>
+            <li><strong>Healing Brush:</strong> Polishing portraits &amp; products.</li>
+            <li><strong>Pen Tool:</strong> Clean logos &amp; scalable shapes.</li>
+            <li><strong>Liquify:</strong> Fashion edits &amp; symmetry correction.</li>
+            <li><strong>Smart Objects:</strong> Reusable templates, non-destructive scaling.</li>
+          </ul>
+          <div class="note-tip"><strong>Tip:</strong> Always name layers &amp; groups. Reusable workflows depend on organization.</div>
+          <div class="note-visual"><strong>Visual Example:</strong> Imagine a toolbox where each tool can be picked and reused in multiple projects — nothing is wasted, everything is reusable.</div>
+        </div>
+      </section>
+      <!-- ========== SCREENCASTS ========== -->
+      <section id="screencasts" class="view">
+        <div class="view-head"><div><h2>Screencasts</h2>
+        <p>Recorded class walkthroughs — watch right here, or open the original in Google Drive.</p></div></div>
+        <div class="group-label">Recordings — Set 1</div>
+        <div class="media-grid" id="screencastGrid1"></div>
+        <div class="group-label">Recordings — Set 2</div>
+        <div class="media-grid" id="screencastGrid2"></div>
+      </section>
+      <!-- ========== PRACTICE FILES ========== -->
+      <section id="practice" class="view">
+        <div class="view-head"><div><h2>Practice Files</h2>
+        <p>Downloadable source images and exercise files — preview right here, then download to practice.</p></div></div>
+        <div class="media-grid" id="practiceGrid"></div>
+      </section>
+    </main>
+    <aside class="layers-panel" id="layersPanel">
+      <div class="lp-head"><h3>Layers — Progress</h3></div>
+      <div class="lp-total" id="lpTotalPct">0%<span> complete</span></div>
+      <div class="lp-bar"><i id="lpBar"></i></div>
+      <div id="lpRows"></div>
+      <div class="lp-grade">
+        <span>Overall Grade</span>
+        <b id="lpGradeLetter">—</b>
+        <span id="lpGradeDetail">Sign in to start tracking.</span>
+      </div>
+      <button class="lp-report-btn" id="lpReportBtn">✉ Send Progress Report</button>
+      <button class="lp-signout" id="lpSignOutBtn">Sign out of this device</button>
+      <div class="lp-note">Every lesson card is a "layer." Flip a card in the Curriculum tab to mark that day's lesson complete — this panel fills in as you progress, just like opacity on a real layer. Weekly check-ins and lesson visits are logged automatically and included in your progress report to your instructor.</div>
+    </aside>
+  </div>
+  <footer class="appfoot">Graphic Design &amp; Photoshop — Class of 2027</footer>
+</div><script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+/* ================= TAB NAVIGATION ================= */
+function goTab(name){
+  document.querySelectorAll('.tab').forEach(t=>{
+    const active = t.dataset.tab===name;
+    t.classList.toggle('active', active);
+    t.setAttribute('aria-selected', active ? 'true':'false');
+  });
+  document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active', v.id===name));
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+document.getElementById('mainTabs').addEventListener('click', e=>{
+  const btn = e.target.closest('.tab');
+  if(!btn) return;
+  goTab(btn.dataset.tab);
+});
+/* Month switch (curriculum) */
+document.getElementById('monthSwitch').addEventListener('click', e=>{
+  const chip = e.target.closest('.chip');
+  if(!chip) return;
+  document.querySelectorAll('#monthSwitch .chip').forEach(c=>c.classList.toggle('active', c===chip));
+  document.querySelectorAll('.month-block').forEach(m=>m.classList.toggle('active', m.dataset.month===chip.dataset.month));
+  buildWeekNav(chip.dataset.month);
+});
+/* Week pill nav, generated per month */
+const weeksByMonth = { m1:[1,2,3,4], m2:[5,6,7,8], m3:[9,10] };
+function buildWeekNav(month){
+  const nav = document.getElementById('weekNav');
+  nav.innerHTML = '';
+  weeksByMonth[month].forEach(w=>{
+    const b = document.createElement('button');
+    b.className = 'week-pill';
+    b.type = 'button';
+    b.textContent = 'Week ' + w;
+    b.onclick = () => document.getElementById('week'+w).scrollIntoView({behavior:'smooth', block:'start'});
+    nav.appendChild(b);
+  });
+}
+buildWeekNav('m1');
+/* Projects sub-nav */
+document.getElementById('projSubnav').addEventListener('click', e=>{
+  const btn = e.target.closest('button');
+  if(!btn) return;
+  document.querySelectorAll('#projSubnav button').forEach(b=>b.classList.toggle('active', b===btn));
+  document.querySelectorAll('.proj-view').forEach(v=>v.classList.toggle('active', v.id==='proj-'+btn.dataset.proj));
+});
+/* ================= PROGRESS / FLIP CARDS / LAYERS PANEL ================= */
+const weekMeta = {
+  1:'Interface & Layers', 2:'Non-Destructive Editing', 3:'Tools & Practical Projects',
+  4:'Advanced Portrait Editing', 5:'Color Adjustment & Matching', 6:'Mockups & Text Effects',
+  7:'Vanishing Point Text', 8:'Independent Study', 9:'Neon & Double Exposure Prep',
+  10:'Double Exposure & Poster Design'
+};
+const cards = document.querySelectorAll('.flip-card[data-day]');
+let completed = [];
+try{ completed = JSON.parse(localStorage.getItem('completedDays')) || []; }catch(e){ completed = []; }
+function buildLayersPanel(){
+  const rows = document.getElementById('lpRows');
+  rows.innerHTML = '';
+  for(let w=1; w<=10; w++){
+    const dayEls = document.querySelectorAll('.flip-card[data-day^="'+w+'-"]');
+    const total = dayEls.length;
+    const done = Array.from(dayEls).filter(c => completed.includes(c.dataset.day)).length;
+    const pct = total ? Math.round((done/total)*100) : 0;
+    const row = document.createElement('div');
+    row.className = 'lp-row';
+    row.setAttribute('role','button');
+    row.setAttribute('tabindex','0');
+    row.setAttribute('aria-label', `Week ${w}: ${weekMeta[w]}, ${pct}% complete`);
+    row.innerHTML = `<span class="lp-eye" aria-hidden="true">${pct===100?'●':'○'}</span>
+      <span class="lp-thumb"><i style="height:${pct}%"></i></span>
+      <span class="lp-label"><b>Week ${w}</b><small>${weekMeta[w]}</small></span>
+      <span class="lp-pct">${pct}%</span>`;
+    const jump = () => {
+      const monthOf = w<=4?'m1':(w<=8?'m2':'m3');
+      document.querySelector('.chip[data-month="'+monthOf+'"]').click();
+      goTab('curriculum');
+      setTimeout(()=>document.getElementById('week'+w).scrollIntoView({behavior:'smooth',block:'start'}), 80);
+    };
+    row.onclick = jump;
+    row.onkeydown = (e)=>{ if(e.key==='Enter' || e.key===' '){ e.preventDefault(); jump(); } };
+    rows.appendChild(row);
+  }
+}
+function updateProgress(){
+  const total = cards.length;
+  const pct = total ? Math.round((completed.length/total)*100) : 0;
+  document.getElementById('lpBar').style.width = pct+'%';
+  document.getElementById('lpTotalPct').innerHTML = pct+'%<span> complete</span>';
+  try{ localStorage.setItem('completedDays', JSON.stringify(completed)); }catch(e){}
+  buildLayersPanel();
+}
+function toggleCardDone(card){
+  const day = card.dataset.day;
+  if(!completed.includes(day)){
+    completed.push(day);
+    card.classList.add('done');
+    updateProgress();
+  }
+}
+cards.forEach(card=>{
+  if(completed.includes(card.dataset.day)) card.classList.add('done');
+  card.setAttribute('role','button');
+  card.setAttribute('tabindex','0');
+  card.setAttribute('aria-label','Lesson card, tap to flip and mark complete');
+  // Touch/click devices don't support :hover reliably — toggle a flipped class explicitly.
+  card.addEventListener('click', ()=>{
+    card.classList.toggle('flipped');
+    toggleCardDone(card);
+  });
+  card.addEventListener('keydown', e=>{
+    if(e.key==='Enter' || e.key===' '){
+      e.preventDefault();
+      card.classList.toggle('flipped');
+      toggleCardDone(card);
+    }
+  });
+});
+const cardObserver = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('visible'); });
+},{threshold:0.15});
+cards.forEach(c=>cardObserver.observe(c));
+updateProgress();
+document.getElementById('lpToggle').addEventListener('click', function(){
+  const panel = document.getElementById('layersPanel');
+  const collapsed = panel.classList.toggle('collapsed');
+  this.setAttribute('aria-expanded', collapsed ? 'false':'true');
+});
+/* ================= NOTES: DOWNLOAD SECTION AS PDF ================= */
+function downloadSectionPDF(sectionId, topic){
+  const section = document.getElementById(sectionId);
+  const printWindow = window.open('', '', 'width=800,height=900');
+  if(!printWindow){ alert('Your browser blocked the print window. Please allow pop-ups for this site and try again.'); return; }
+  const esc = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  printWindow.document.write(`<!DOCTYPE html><html><head><title>${esc(topic)} - Class of 2027</title><style>body{font-family:Poppins,sans-serif;margin:40px;line-height:1.6;}h1{color:#1e3a8a;}footer{text-align:center;font-size:0.8rem;opacity:0.6;} .watermark{position:fixed;bottom:20px;right:20px;opacity:0.2;font-size:2rem;color:#1e3a8a;}</style></head><body>`);
+  printWindow.document.write(`<h1>${esc(topic)}</h1>`);
+  printWindow.document.write(section.innerHTML);
+  printWindow.document.write('<div class="watermark">CLASS OF 2027</div><footer>Graphic Design &amp; Photoshop</footer></body></html>');
+  printWindow.document.close();
+  printWindow.focus();
+  printWindow.print();
+}
+/* ================= GOJO PROJECT FORM ================= */
+document.getElementById('gjAddMemberBtn').addEventListener('click', gjAddMember);
+function gjAddMember(){
+  const list=document.getElementById('membersList');
+  if(list.children.length>=8) return alert('Max 8 members');
+  const div=document.createElement('div');
+  div.className='member-row';
+  div.innerHTML='<input type="text" placeholder="Full name" class="memberName" required aria-label="Member full name"> <input type="text" placeholder="Role" class="memberRole" style="width:160px" required aria-label="Member role"> <button type="button" class="btn ghost small" onclick="gjRemoveMember(this)">Remove</button>';
+  list.appendChild(div);
+}
+function gjRemoveMember(btn){
+  const list=document.getElementById('membersList');
+  if(list.children.length<=1) return; // keep at least one row
+  btn.parentElement.remove();
+}
+document.querySelectorAll('.ideaUpload').forEach(inp=>{
+  inp.addEventListener('change', e=>{
+    const parent=e.target.nextElementSibling;
+    parent.innerHTML='';
+    Array.from(e.target.files).forEach(file=>{
+      const url=URL.createObjectURL(file);
+      const box=document.createElement('div');
+      box.className='thumb';
+      box.innerHTML=`<img src="${url}" alt="${file.name}" style="width:100%;height:100%;object-fit:cover">`;
+      parent.appendChild(box);
+    });
+  });
+});
+function gjCollectForm(){
+  return {
+    groupName:document.getElementById('groupName').value.trim(),
+    animal:document.getElementById('animal').value,
+    members:Array.from(document.querySelectorAll('.member-row')).map(r=>({name:r.querySelector('.memberName').value.trim(), role:r.querySelector('.memberRole').value.trim()})).filter(m=>m.name),
+    ideas:Array.from(document.querySelectorAll('.idea')).map(idea=>({
+      title:idea.querySelector('.ideaTitle').value.trim(),
+      desc:idea.querySelector('.ideaDesc').value.trim(),
+      textEffect:idea.querySelector('.ideaTextEffect').value,
+      dir:idea.querySelector('.ideaDir').value,
+      colors:idea.querySelector('.ideaColors').value.trim(),
+      images:Array.from(idea.querySelectorAll('.ideaUpload')).map(inp=>Array.from(inp.files)).flat()
+    }))
+  };
+}
+function gjValidateForm(data){
+  let ok = true;
+  const groupNameError = document.getElementById('groupNameError');
+  if(!data.groupName){ groupNameError.classList.add('show'); ok = false; } else { groupNameError.classList.remove('show'); }
+  if(data.members.length===0){ alert('Add at least one group member.'); ok = false; }
+  const missingIdea = data.ideas.find(i=>!i.title || !i.desc);
+  if(missingIdea){ alert('Each of the 3 ideas needs a title and a description.'); ok = false; }
+  return ok;
+}
+function gjFileToDataURL(file){
+  return new Promise((resolve,reject)=>{
+    const reader=new FileReader();
+    reader.onload=e=>resolve(e.target.result);
+    reader.onerror=()=>reject(new Error('Could not read '+file.name));
+    reader.readAsDataURL(file);
+  });
+}
+async function gjGeneratePDF(data){
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({unit:'pt', format:'a4'});
+  const pageWidth = doc.internal.pageSize.getWidth();
+  const pageHeight = doc.internal.pageSize.getHeight();
+  const drawBackground = ()=>{ doc.setFillColor(255, 235, 204); doc.rect(0,0,pageWidth,pageHeight,'F'); };
+  let y=40;
+  doc.setFontSize(22); doc.setTextColor(8,23,38); drawBackground();
+  doc.text(`Week 6 — ${data.groupName}`,40,y); y+=30;
+  doc.setFontSize(18); doc.text(`1. Group Details`,40,y); y+=20;
+  doc.setFontSize(16); doc.text(`1.1 Symbolic Animal: ${data.animal}`,50,y); y+=20;
+  doc.text(`1.2 Members:`,50,y); y+=18;
+  doc.setFontSize(14);
+  data.members.forEach(m=>{ doc.text(`- ${m.name} (${m.role||'member'})`,70,y); y+=16; });
+  for(const [i,idea] of data.ideas.entries()){
+    y+=10;
+    if(y>pageHeight-250){ doc.addPage(); drawBackground(); y=40; }
+    doc.setFontSize(18); doc.text(`2.${i+1} Idea: ${idea.title||'Untitled'}`,40,y); y+=20;
+    doc.setFontSize(16); doc.text(`2.${i+1}.1 Description`,50,y); y+=16;
+    const descLines = doc.splitTextToSize(idea.desc||'', pageWidth-100);
+    doc.setFontSize(14); doc.text(descLines,60,y); y+=descLines.length*16 + 5;
+    doc.setFontSize(16);
+    doc.text(`2.${i+1}.2 Text Effect: ${idea.textEffect}`,50,y); y+=18;
+    doc.text(`2.${i+1}.3 3D Direction: ${idea.dir}`,50,y); y+=18;
+    doc.text(`2.${i+1}.4 Color Scheme: ${idea.colors||'—'}`,50,y); y+=20;
+    for(const file of idea.images){
+      try{
+        const imgData = await gjFileToDataURL(file);
+        if(y+220>pageHeight-40){ doc.addPage(); drawBackground(); y=40; }
+        doc.addImage(imgData,'JPEG',40,y,pageWidth-80,200); y+=220;
+      }catch(err){ console.error(err); }
+    }
+  }
+  return doc;
+}
+document.getElementById('gjDownloadBtn').addEventListener('click', async ()=>{
+  const data=gjCollectForm();
+  if(!gjValidateForm(data)) return;
+  const btn = document.getElementById('gjDownloadBtn');
+  const status = document.getElementById('gjPdfStatus');
+  btn.disabled = true;
+  status.textContent = 'Building your PDF…';
+  try{
+    const pdf=await gjGeneratePDF(data);
+    pdf.save(`${data.groupName||'week6'}-project.pdf`);
+    status.textContent = 'PDF downloaded.';
+  }catch(err){
+    console.error(err);
+    status.textContent = 'Something went wrong generating the PDF — please try again.';
+  }finally{
+    btn.disabled = false;
+  }
+});
+document.getElementById('gjSubmitBtn').addEventListener('click', ()=>{
+  alert("You will now be redirected to Google Classroom to submit your project.");
+  window.open("https://classroom.google.com/c/ODAyMDgxNDEzOTkx/a/ODIyMzQ5NjA3NTA2/details","_blank","noopener");
+});
+/* ================= PHONE / IPAD MOCKUP CAROUSEL ================= */
+const spImages=[
+"https://i.pinimg.com/736x/36/7e/b8/367eb88fdeb093c7a09787ce9ee03353.jpg",
+"https://i.pinimg.com/1200x/97/96/a9/9796a98eace10fcef85b7e3fa56db035.jpg",
+"https://i.pinimg.com/736x/25/1a/f0/251af0cd38eb86d950898d090f50f162.jpg",
+"https://i.pinimg.com/736x/75/c2/2e/75c22e994254add30dc02fafe9dc53db.jpg",
+"https://i.pinimg.com/1200x/49/0d/f8/490df83914427fcd9050c9a768f9217e.jpg",
+"https://i.pinimg.com/1200x/6e/55/84/6e558447ea3c30efaf0e4d9309b233cc.jpg",
+"https://i.pinimg.com/1200x/90/86/fe/9086fe733eb11289674abc35a26559a2.jpg",
+"https://i.pinimg.com/1200x/7e/72/c1/7e72c1553c566a2465c94116cef851d3.jpg",
+"https://i.pinimg.com/1200x/e9/d8/bb/e9d8bb6090fce9b9133951865f588e82.jpg"];
+let spIdx=0;
+const spMain=document.getElementById("sp-main-image"), spThumbs=document.getElementById("sp-thumbs");
+function spRenderThumbs(){
+  spThumbs.innerHTML="";
+  spImages.forEach((src,i)=>{
+    const t=document.createElement("img"); t.src=src; t.alt=`Mockup inspiration thumbnail ${i+1}`; t.tabIndex=0;
+    t.onclick=()=>{ spIdx=i; spUpdateMain(); };
+    t.onkeydown=(e)=>{ if(e.key==='Enter'){ spIdx=i; spUpdateMain(); } };
+    if(i===spIdx) t.classList.add("active");
+    spThumbs.appendChild(t);
+  });
+}
+function spUpdateMain(){
+  spMain.style.opacity=0;
+  setTimeout(()=>{
+    spMain.src=spImages[spIdx];
+    spMain.alt=`Mockup inspiration image ${spIdx+1}`;
+    [...spThumbs.children].forEach((t,i)=>t.classList.toggle("active", i===spIdx));
+    spMain.style.opacity=1;
+  },180);
+}
+function spPrevImage(){ spIdx=(spIdx-1+spImages.length)%spImages.length; spUpdateMain(); }
+function spNextImage(){ spIdx=(spIdx+1)%spImages.length; spUpdateMain(); }
+function spOpenAllImages(){ spImages.forEach(src=>window.open(src,"_blank","noopener")); }
+function spSetDevice(d){
+  const dev=document.getElementById("sp-device");
+  const p=document.getElementById("sp-btn-phone"), i=document.getElementById("sp-btn-ipad");
+  if(d==='ipad'){ dev.classList.add('ipad'); p.classList.remove('active'); i.classList.add('active'); }
+  else{ dev.classList.remove('ipad'); i.classList.remove('active'); p.classList.add('active'); }
+}
+function spShowTips(){ document.getElementById('spTipsModal').classList.add('open'); }
+function spCloseTips(){ document.getElementById('spTipsModal').classList.remove('open'); }
+spRenderThumbs(); spUpdateMain();
+document.addEventListener('keydown', e=>{
+  if(!document.getElementById('proj-mockup').classList.contains('active')) return;
+  if(e.key==='ArrowLeft') spPrevImage();
+  if(e.key==='ArrowRight') spNextImage();
+  if(e.key==='Escape') spCloseTips();
+});
+/* ================= AROUND THE WORLD GROUP EXPLORER ================= */
+const atwGroups = [
+  {id:1, city:'Paris, France', theme:'Fashion-forward elegance', instructions:[
+    'Choose a Paris cityscape (Eiffel Tower, Champs-Élysées).',
+    'Edit clothing to reflect Parisian fashion: chic, minimalist, haute couture.',
+    'Apply subtle magazine-style face retouching.']},
+  {id:2, city:'Tokyo, Japan', theme:'Futuristic neon energy', instructions:[
+    'Use night-time Shibuya Crossing or Akihabara images with neon signs.',
+    'Create tech-inspired or cyberpunk clothing patterns.',
+    'Apply futuristic color grading to the whole image.']},
+  {id:3, city:'New York City, USA', theme:'Urban cool', instructions:[
+    'Use Times Square or skyline scenes.',
+    'Change clothing to NYC street style: bold prints and pop-culture patterns.',
+    'Retouch face naturally for an editorial look.']},
+  {id:4, city:'Cairo, Egypt', theme:'History meets modern style', instructions:[
+    'Use Pyramids, the Citadel, or desert backdrops.',
+    'Incorporate Egyptian patterns: gold accents, linen textures, hieroglyphic motifs.',
+    'Use warm tones and soft retouching.']},
+  {id:5, city:'Rio de Janeiro, Brazil', theme:'Vibrant and tropical', instructions:[
+    'Use Christ the Redeemer, Copacabana or Sambadrome backdrops.',
+    'Design carnival-inspired clothing with bright colors and feathers.',
+    'Enhance skin with a sun-kissed glow.']},
+  {id:6, city:'London, UK', theme:'Classic and moody', instructions:[
+    'Use Big Ben, Tower Bridge or rainy street scenes.',
+    'Use British fashion cues: trench coats, plaid, tailoring.',
+    'Consider low saturation or cinematic grading.']},
+  {id:7, city:'Istanbul, Turkey', theme:'East meets West', instructions:[
+    'Use Hagia Sophia, Blue Mosque or bazaar scenes.',
+    'Add Ottoman-inspired patterns and mosaics to clothing.',
+    'Use golden light tones and soft retouching.']},
+  {id:8, city:'Sydney, Australia', theme:'Bright and natural', instructions:[
+    'Use the Opera House, Harbour Bridge or beach scenes.',
+    'Incorporate surf or nature-inspired patterns.',
+    'Apply fresh lighting and natural retouching.']},
+  {id:9, city:'Moscow, Russia', theme:'Winter elegance', instructions:[
+    'Use St. Basil\u2019s, Red Square or snowy scenes.',
+    'Design clothing with fur textures and rich embroidery.',
+    'Apply cool color tones and subtle face retouching.']},
+  {id:10, city:'Cape Town, South Africa', theme:'Nature meets urban', instructions:[
+    'Use Table Mountain, Bo-Kaap or coastal scenes.',
+    'Use African prints and earthy color palettes.',
+    'Use vibrant color grading and natural lighting.']}
+];
+const atwGroupList=document.getElementById('atwGroupList');
+const atwGroupContent=document.getElementById('atwGroupContent');
+function atwMakeGroupList(){
+  atwGroups.forEach(g=>{
+    const item=document.createElement('button');
+    item.type='button';
+    item.className='atw-group-item';
+    item.innerHTML=`<strong>Group ${g.id}</strong> — ${g.city}`;
+    item.onclick=()=>atwSelectGroup(g.id);
+    atwGroupList.appendChild(item);
+  });
+}
+function atwSelectGroup(id){
+  document.querySelectorAll('.atw-group-item').forEach(el=>el.classList.remove('active'));
+  const active=[...document.querySelectorAll('.atw-group-item')][id-1];
+  if(active) active.classList.add('active');
+  const g=atwGroups.find(x=>x.id===id);
+  atwRenderGroup(g);
+}
+function atwRenderGroup(g){
+  atwGroupContent.innerHTML='';
+  const wrapper=document.createElement('div');
+  wrapper.className='atw-card';
+  wrapper.innerHTML=`
+    <h3 style="margin:0 0 6px;font-size:15px;">${g.city} — ${g.theme}</h3>
+    <p class="atw-meta">Project instructions for Group ${g.id}.</p>
+    <div style="margin-top:10px"><h4 style="margin:0 0 6px;font-size:13.5px;">Instructions</h4>
+    <ul>${g.instructions.map(i=>`<li>${i}</li>`).join('')}</ul></div>
+    <details style="margin-top:10px">
+      <summary>Rubric (7 pts)</summary>
+      <ul class="atw-submit-list">
+        <li><strong>Subject Cutout (1 pt):</strong> Precision of selection, clean edges, no halos or leftover background pixels.</li>
+        <li><strong>Background Integration (1 pt):</strong> Lighting, color harmony, and perspective blending with chosen city.</li>
+        <li><strong>Face Retouching (2 pts):</strong> Natural improvement of skin tone, clarity, and detail without over-smoothing.</li>
+        <li><strong>Clothing Pattern Change (1 pt):</strong> Realistic pattern placement, texture consistency, and creativity.</li>
+        <li><strong>Theme Execution (1 pt):</strong> Alignment with city identity, storytelling clarity, and overall visual impact.</li>
+        <li><strong>File Organization (Bonus 1 pt):</strong> Proper layer naming, grouping, and structure in the PSD.</li>
+      </ul>
+    </details>`;
+  atwGroupContent.appendChild(wrapper);
+}
+document.getElementById('atwSearch').addEventListener('input', e=>{
+  const q=e.target.value.toLowerCase().trim();
+  document.querySelectorAll('.atw-group-item').forEach((el,idx)=>{
+    const g=atwGroups[idx];
+    const text=`${g.city} ${g.theme}`.toLowerCase();
+    el.style.display=text.includes(q)?'':'none';
+  });
+});
+atwMakeGroupList();
+atwSelectGroup(1);
+/* =====================================================================
+   SIGN-IN + DEVICE LOCK + SCREENCAST/PRACTICE EMBEDS + WEEKLY
+   CHECK-INS + GRADING + PROGRESS-REPORT EMAIL
+   =====================================================================
+   NOTE ON LIMITS (read this before relying on it):
+   - This page has no server. "Device lock" below is enforced with
+     localStorage in THIS browser only. It stops casual re-enrollment
+     with a different email on the same browser/profile, but it is
+     NOT secure: clearing site data, using a private window, or a
+     different browser resets it. Real enforcement needs a backend
+     (accounts + database) — ask your instructor/developer for that
+     if it's required.
+   - "Report to thomas@hmacademy.org" below opens a pre-filled email
+     via mailto: for the student to send with one click — this works
+     immediately with no setup. Fully silent/automatic sending (no
+     click) needs an email API (e.g. EmailJS) wired up with real
+     credentials, which isn't something that can be faked here.
+   ===================================================================== */
+const REPORT_EMAIL = 'thomas@hmacademy.org';
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+/* ---------- SIGN-IN / DEVICE LOCK ---------- */
+const gate = document.getElementById('signInGate');
+const siError = document.getElementById('siError');
+function siShowError(msg){ siError.textContent = msg; siError.classList.add('show'); }
+function siClearError(){ siError.classList.remove('show'); siError.textContent=''; }
+function getDeviceLock(){
+  try{ return JSON.parse(localStorage.getItem('hm_device_lock')||'null'); }catch(e){ return null; }
+}
+function getCurrentStudent(){
+  try{ return JSON.parse(localStorage.getItem('hm_current_student')||'null'); }catch(e){ return null; }
+}
+function setCurrentStudent(s){ localStorage.setItem('hm_current_student', JSON.stringify(s)); }
+function studentKey(email){ return 'hm_student_' + email.trim().toLowerCase(); }
+function loadStudentRecord(email){
+  try{
+    const raw = localStorage.getItem(studentKey(email));
+    if(raw) return JSON.parse(raw);
+  }catch(e){}
+  return { name:'', email:email.trim().toLowerCase(), completed:[], weeklyAnswers:{}, weeklyChecks:{}, signedInAt:new Date().toISOString() };
+}
+function saveStudentRecord(rec){ try{ localStorage.setItem(studentKey(rec.email), JSON.stringify(rec)); }catch(e){ console.error(e); } }
+let student = null; // active record for this session
+function attemptSignIn(){
+  siClearError();
+  const name = document.getElementById('siName').value.trim();
+  const email = document.getElementById('siEmail').value.trim().toLowerCase();
+  if(!name || !email || !EMAIL_RE.test(email)){
+    siShowError('Please enter your full name and a valid email address.');
+    return;
+  }
+  const lock = getDeviceLock();
+  if(lock && lock.email !== email){
+    siShowError(`This device is already enrolled to ${lock.email}. It can't be used to sign in or enroll with a different email. If this is a mistake, ask your instructor to reset this device.`);
+    return;
+  }
+  if(!lock){
+    localStorage.setItem('hm_device_lock', JSON.stringify({ email, name, ts:new Date().toISOString() }));
+  }
+  student = loadStudentRecord(email);
+  student.name = name;
+  saveStudentRecord(student);
+  setCurrentStudent({ name, email });
+  enterApp();
+}
+document.getElementById('siForm').addEventListener('submit', e=>{ e.preventDefault(); attemptSignIn(); });
+document.getElementById('lpSignOutBtn').addEventListener('click', ()=>{
+  if(!confirm('Sign out? Your progress stays saved on this device for your account, but you\'ll need to sign back in with the same email.')) return;
+  localStorage.removeItem('hm_current_student');
+  location.reload();
+});
+// Optional escape hatch for a teacher to free up a device: ?resetdevice=1
+if(new URLSearchParams(location.search).get('resetdevice') === '1'){
+  localStorage.removeItem('hm_device_lock');
+}
+function enterApp(){
+  gate.classList.add('hidden');
+  document.getElementById('studentBadge').style.display = 'flex';
+  document.getElementById('sbName').textContent = student.name;
+  // merge saved completed-days (legacy key) into student's record once
+  let legacy = [];
+  try{ legacy = JSON.parse(localStorage.getItem('completedDays')) || []; }catch(e){}
+  legacy.forEach(d=>{ if(!student.completed.includes(d)) student.completed.push(d); });
+  completed = student.completed;
+  cards.forEach(card=>{
+    card.classList.toggle('done', completed.includes(card.dataset.day));
+  });
+  updateProgress();
+  updateGrade();
+  maybeShowWeeklyQuestion();
+}
+(function initAuth(){
+  const cur = getCurrentStudent();
+  if(cur){
+    student = loadStudentRecord(cur.email);
+    student.name = cur.name;
+    enterApp();
+  }
+  // otherwise the sign-in gate stays visible (default state)
+})();
+/* ---------- persist completion to the signed-in student's record ---------- */
+const _origUpdateProgress = updateProgress;
+updateProgress = function(){
+  _origUpdateProgress();
+  if(student){
+    student.completed = completed;
+    saveStudentRecord(student);
+    updateGrade();
+  }
+};
+/* ---------- SILENT WEEKLY LESSON-CHECK TRACKING ---------- */
+function isoWeekKey(d){
+  const date = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+  const dayNum = (date.getUTCDay() + 6) % 7;
+  date.setUTCDate(date.getUTCDate() - dayNum + 3);
+  const firstThursday = new Date(Date.UTC(date.getUTCFullYear(),0,4));
+  const weekNum = 1 + Math.round(((date - firstThursday) / 86400000 - 3 + ((firstThursday.getUTCDay()+6)%7)) / 7);
+  return `${date.getUTCFullYear()}-W${weekNum}`;
+}
+function logWeeklyCheck(courseWeek){
+  if(!student) return;
+  const wk = isoWeekKey(new Date());
+  if(!student.weeklyChecks[wk]) student.weeklyChecks[wk] = [];
+  if(!student.weeklyChecks[wk].includes(courseWeek)){
+    student.weeklyChecks[wk].push(courseWeek);
+    saveStudentRecord(student);
+    updateGrade();
+  }
+}
+const weekCardObserver = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      const wkNum = e.target.id.replace('week','');
+      logWeeklyCheck(wkNum);
+    }
+  });
+},{threshold:0.4});
+document.querySelectorAll('.week-card').forEach(wc=>weekCardObserver.observe(wc));
+/* ---------- WEEKLY CHECK-IN QUESTION (once per calendar week) ---------- */
+const weeklyQuestions = [
+  "What was the trickiest tool or technique this week, and how did you work through it?",
+  "Which lesson from this week are you most confident about — and why?",
+  "What's one thing you'd like more practice on before next week?",
+  "Describe one edit you made this week in your own words, step by step.",
+  "What's a mistake you caught yourself making this week, and what did you learn from it?"
+];
+function currentCourseWeek(){
+  for(let w=10; w>=1; w--){
+    const dayEls = document.querySelectorAll('.flip-card[data-day^="'+w+'-"]');
+    if(Array.from(dayEls).some(c=>completed.includes(c.dataset.day))) return w;
+  }
+  return 1;
+}
+function maybeShowWeeklyQuestion(){
+  if(!student) return;
+  const wk = isoWeekKey(new Date());
+  if(student.weeklyAnswers[wk]) return; // already answered this week
+  const snoozedFor = sessionStorage.getItem('wq_snoozed');
+  if(snoozedFor === wk) return; // asked once already this session
+  const courseWeek = currentCourseWeek();
+  const q = weeklyQuestions[(courseWeek-1) % weeklyQuestions.length];
+  document.getElementById('wqWeekTag').textContent = `Weekly Check-In · Week ${courseWeek}`;
+  document.getElementById('wqQuestion').textContent = q;
+  document.getElementById('wqAnswer').value = '';
+  document.getElementById('wqModal').classList.add('open');
+  document.getElementById('wqModal').dataset.wk = wk;
+  document.getElementById('wqModal').dataset.q = q;
+  document.getElementById('wqAnswer').focus();
+}
+document.getElementById('wqSkip').addEventListener('click', ()=>{
+  sessionStorage.setItem('wq_snoozed', document.getElementById('wqModal').dataset.wk);
+  document.getElementById('wqModal').classList.remove('open');
+});
+document.getElementById('wqSubmit').addEventListener('click', ()=>{
+  if(!student) return;
+  const modal = document.getElementById('wqModal');
+  const wk = modal.dataset.wk, q = modal.dataset.q;
+  const answer = document.getElementById('wqAnswer').value.trim();
+  if(!answer){ alert('Add a few words before submitting — or use "Remind me later".'); return; }
+  student.weeklyAnswers[wk] = { question:q, answer, answeredAt:new Date().toISOString() };
+  saveStudentRecord(student);
+  modal.classList.remove('open');
+  updateGrade();
+});
+document.getElementById('wqModal').addEventListener('keydown', e=>{
+  if(e.key==='Escape') document.getElementById('wqSkip').click();
+});
+/* ---------- GRADING ---------- */
+function computeGrade(){
+  if(!student) return { pct:0, letter:'—', detail:'Sign in to start tracking.' };
+  const totalLessons = cards.length;
+  const completionPct = totalLessons ? (student.completed.length/totalLessons)*100 : 0;
+  const weeksAnswered = Object.keys(student.weeklyAnswers).length;
+  const weeksPossible = Math.max(1, Object.keys(student.weeklyChecks).length || 1);
+  const checkinPct = Math.min(100, (weeksAnswered / weeksPossible) * 100);
+  const weeksEngaged = Object.values(student.weeklyChecks).reduce((s,arr)=>s+arr.length,0);
+  const engagementPct = Math.min(100, (weeksEngaged / 10) * 100);
+  const overall = completionPct*0.6 + checkinPct*0.2 + engagementPct*0.2;
+  let letter = 'F';
+  if(overall>=90) letter='A'; else if(overall>=80) letter='B'; else if(overall>=70) letter='C'; else if(overall>=60) letter='D';
+  return { pct: Math.round(overall), letter, detail:`${Math.round(completionPct)}% lessons · ${weeksAnswered} check-ins answered` };
+}
+function updateGrade(){
+  const g = computeGrade();
+  const letterEl = document.getElementById('lpGradeLetter');
+  const detailEl = document.getElementById('lpGradeDetail');
+  if(letterEl){ letterEl.textContent = student ? `${g.letter}  (${g.pct}%)` : '—'; }
+  if(detailEl){ detailEl.textContent = g.detail; }
+  const sbGrade = document.getElementById('sbGrade');
+  if(sbGrade) sbGrade.textContent = student ? `${g.letter} · ${g.pct}%` : '—';
+}
+/* ---------- PROGRESS REPORT → EMAIL ---------- */
+function buildReportBody(){
+  const g = computeGrade();
+  const lines = [];
+  lines.push(`Progress report for ${student.name} (${student.email})`);
+  lines.push(`Overall grade: ${g.letter} (${g.pct}%)`);
+  lines.push(`Lessons completed: ${student.completed.length} of ${cards.length}`);
+  lines.push('');
+  lines.push('Weekly check-in answers:');
+  const wkKeys = Object.keys(student.weeklyAnswers).sort();
+  if(wkKeys.length===0){ lines.push('  (none yet)'); }
+  wkKeys.forEach(wk=>{
+    const a = student.weeklyAnswers[wk];
+    lines.push(`  [${wk}] Q: ${a.question}`);
+    lines.push(`  A: ${a.answer}`);
+  });
+  lines.push('');
+  lines.push('Weeks with at least one lesson opened, by calendar week:');
+  const chkKeys = Object.keys(student.weeklyChecks).sort();
+  if(chkKeys.length===0){ lines.push('  (none yet)'); }
+  chkKeys.forEach(wk=>{ lines.push(`  [${wk}] Course weeks visited: ${student.weeklyChecks[wk].join(', ')}`); });
+  return lines.join('\n');
+}
+document.getElementById('lpReportBtn').addEventListener('click', ()=>{
+  if(!student){ alert('Sign in first.'); return; }
+  const subject = encodeURIComponent(`Progress Report — ${student.name} (${student.email})`);
+  const body = encodeURIComponent(buildReportBody());
+  window.location.href = `mailto:${REPORT_EMAIL}?subject=${subject}&body=${body}`;
+});
+/* ---------- SCREENCASTS & PRACTICE FILES: FITTED CARDS WITH INLINE PREVIEW ---------- */
+function driveEmbedUrl(id){ return `https://drive.google.com/file/d/${id}/preview`; }
+function driveViewUrl(id){ return `https://drive.google.com/file/d/${id}/view?usp=drive_link`; }
+function renderMediaCard({ id, label, kind, accent }){
+  const card = document.createElement('div');
+  card.className = 'media-card';
+  card.style.setProperty('--card-accent', accent);
+  const icon = kind === 'video' ? '▶' : '⭳';
+  const posterLabel = kind === 'video' ? 'Play in card' : 'Preview file';
+  card.innerHTML = `
+    <div class="media-thumb">
+      <button type="button" class="thumb-poster" aria-label="${posterLabel}: ${label}">
+        <div class="play-badge" aria-hidden="true">${icon}</div>
+        <span class="lbl">${posterLabel}</span>
+      </button>
+    </div>
+    <div class="media-body">
+      <div class="mb-top"><b>${label}</b><span class="chk" data-role="chk">not opened</span></div>
+      <a href="${driveViewUrl(id)}" target="_blank" rel="noopener">Open in Google Drive →</a>
+    </div>`;
+  const thumb = card.querySelector('.media-thumb');
+  const poster = card.querySelector('.thumb-poster');
+  const chk = card.querySelector('[data-role="chk"]');
+  poster.addEventListener('click', ()=>{
+    thumb.innerHTML = '<div class="thumb-poster" style="cursor:default;"><div class="thumb-spinner" aria-hidden="true"></div><span class="lbl">Loading…</span></div>';
+    const iframe = document.createElement('iframe');
+    iframe.src = driveEmbedUrl(id);
+    iframe.title = label;
+    iframe.loading = 'lazy';
+    iframe.setAttribute('allow','autoplay');
+    iframe.setAttribute('allowfullscreen','true');
+    iframe.addEventListener('load', ()=>{ thumb.innerHTML=''; thumb.appendChild(iframe); }, { once:true });
+    // Fallback: swap immediately if the load event doesn't fire in time (some browsers delay it)
+    setTimeout(()=>{ if(!thumb.contains(iframe)){ thumb.innerHTML=''; thumb.appendChild(iframe); } }, 600);
+    chk.textContent = 'opened ✓';
+    chk.classList.add('seen');
+    if(student){
+      const seenKey = kind==='video' ? 'seenScreencasts' : 'seenPractice';
+      student[seenKey] = student[seenKey] || [];
+      if(!student[seenKey].includes(id)){ student[seenKey].push(id); saveStudentRecord(student); }
+    }
+  }, { once:true });
+  return card;
+}
+const screencastIds = [
+  '1atg0WcM04qpfIUYZt8wgvX-Qpc3LEmUQ','1_pM7IvWThwsEz6bhnioMrSWEuDws-8EX','1QQA6LEBWIn7iPkLY5Jfk81BVNUzl4qm6',
+  '1T5-Q5M56LtTljcvAnAjURpwmWguRN80o','1bTuJ8yUYKXAOakIObT6kz_vh8NehMEiD','1FQby71jwqu5vc3ZFLa551cwsL2-Fr1JL',
+  '1S2IWx1R1whsPW53Bth8fsEP7I0fkbsMK','10IGHEvSRSe2bnd2LXC1wwh3MXu8wmg1g','1Gp2uTObLUigJkqLkvbweigLd6Yj-lf1f',
+  '1I2VJv2bLE7w0t_2ITY8XMzHBSGR1-UCg','1u3xzfCcBGat9p5z7Vk08Pye5pVdoXowM','1EsXq8eZ_IXs79tvvjKxfozooqOwCUQeT',
+  '1khSdxt8enMJ7NW60dp-gLxFGEKmbOzOJ','1MuJkKq7MsJtB-WRZ_8oHmi5X-f0up7h5','1Y1kl-zMa5cMcTAysIrRK-1kwhfe93sW1',
+  '1Pc0NNb3xMy_vXsri7keAP28856xXsEP5','1GPnPtOIV2Sgb3uyPIpb2wnTt8riCEXTo','1V0DwbaQaJsRiGsmrPIjk5k4evZ8Xrbmj',
+  '169tqSKyd_TyYctbJE6Iq2mMHr0quyX29','17AFMI2mDOhpH-geevQRCJfCK7R4sjrQh'
+];
+const screencastIdsSet2 = ['1y13t7n5nTN_3oppd_Nx7AJ1Yfd7nSwdE','10WmX1xYIRWtgzbLgUDJJb3E9fZ8rKh25','10xSYahhd1fEb6YO4ckW_6hq7rhZ2YWdE'];
+const practiceIds = [
+  '1G-7HQ02DKWNB0KV1Zig_ewB3Oi4X6yNZ','1y81quAh0_axcnbufcti7XqVps5Kupsno','1VZeqFzGAZtBjfNYGg8lClM1NT8bwhKnO',
+  '1BwweNQo0GDjqttZUC37MjRgrNh268SmK','1BSSMMfhW0RcZevkiNXt4zbv4b2RefSwE','1pEeilJNCas3ak8A4oVkdOTE7991-Spfz'
+];
+const grid1 = document.getElementById('screencastGrid1');
+const grid2 = document.getElementById('screencastGrid2');
+const pgrid = document.getElementById('practiceGrid');
+screencastIds.forEach((id,i)=>grid1.appendChild(renderMediaCard({id, label:`Screencast ${i+1}`, kind:'video', accent:'#12a394'})));
+screencastIdsSet2.forEach((id,i)=>grid2.appendChild(renderMediaCard({id, label:`Screencast ${21+i}`, kind:'video', accent:'#12a394'})));
+practiceIds.forEach((id,i)=>pgrid.appendChild(renderMediaCard({id, label:`Practice File ${i+1}`, kind:'file', accent:'#ef476f'})));
+</script>
+</body>
+</html>
