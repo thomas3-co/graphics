@@ -351,7 +351,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
     <p>Enter your name and the email your instructor has on file. Your progress, weekly check-ins, and grade are tracked under this account for Class of 2028.</p>
     <div class="si-error" id="siError" role="alert"></div>
     <form id="siForm" novalidate>
-      <label for="siName">Full name</label>
+      <label for="siName">First Name</label>
       <input id="siName" name="name" type="text" placeholder="e.g. Mamush " autocomplete="name" required>
       <label for="siEmail">Student email</label>
       <input id="siEmail" name="email" type="email" placeholder="You@hmacademy.org" autocomplete="email" required>
@@ -1105,7 +1105,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
         <label id="membersLabel">Group Members (up to 8)</label>
         <div class="members" id="membersList" role="group" aria-labelledby="membersLabel">
           <div class="member-row">
-            <input type="text" placeholder="Full name" class="memberName" required aria-label="Member full name">
+            <input type="text" placeholder="First Name" class="memberName" required aria-label="Member First Name">
             <input type="text" placeholder="Role (designer/lead)" class="memberRole" style="width:160px" required aria-label="Member role">
             <button type="button" class="btn ghost small" onclick="gjRemoveMember(this)">Remove</button>
           </div>
@@ -1614,7 +1614,7 @@ function attemptSignIn(){
   const name = document.getElementById('siName').value.trim();
   const email = document.getElementById('siEmail').value.trim().toLowerCase();
   if(!name || !email || !EMAIL_RE.test(email)){
-    siShowError('Please enter your full name and a valid email address.');
+    siShowError('Please enter your First Name and a valid email address.');
     return;
   }
   const lock = getDeviceLock();
@@ -1959,7 +1959,7 @@ function gjAddMember(){
   if(list.children.length>=8) return alert('Max 8 members');
   const div=document.createElement('div');
   div.className='member-row';
-  div.innerHTML='<input type="text" placeholder="Full name" class="memberName" required aria-label="Member full name"> <input type="text" placeholder="Role" class="memberRole" style="width:160px" required aria-label="Member role"> <button type="button" class="btn ghost small" onclick="gjRemoveMember(this)">Remove</button>';
+  div.innerHTML='<input type="text" placeholder="First Name" class="memberName" required aria-label="Member First Name"> <input type="text" placeholder="Role" class="memberRole" style="width:160px" required aria-label="Member role"> <button type="button" class="btn ghost small" onclick="gjRemoveMember(this)">Remove</button>';
   list.appendChild(div);
 }
 function gjRemoveMember(btn){
