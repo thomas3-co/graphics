@@ -392,7 +392,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
       <button class="tab" data-tab="practice" role="tab" aria-selected="false">Practice Files</button>
       <button class="tab" data-tab="materials" role="tab" aria-selected="false">Additional Materials</button>
     </nav>
-    <button class="progress-nav-btn" id="progressNavBtn" type="button">📊 My Progress</button>
+    <button class="progress-nav-btn" id="progressNavBtn" type="button">My Progress</button>
     <div class="student-badge" id="studentBadge" style="display:none;">
       <span class="sb-name" id="sbName"></span>
       <span class="sb-grade" id="sbGrade">—</span>
@@ -1333,7 +1333,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
       </div>
       <button class="lp-report-btn" id="lpReportBtn">✉ Send Progress Report</button>
       <button class="lp-signout" id="lpSignOutBtn">Sign out of this device</button>
-      <div class="lp-note">Every lesson card is a "layer." Flip a card in the Curriculum tab to mark that day's lesson complete — this panel fills in as you progress, just like opacity on a real layer. Finishing every day in a week automatically pops up that week's check-in quiz, which sends your progress report the moment you submit it.</div>
+      <div class="lp-note">Every lesson card is a "layer." Flip a card in the Curriculum tab to mark that day's lesson complete — this panel fills in as you progress, just like opacity on a real layer. Finishing every day in a week automatically submits that week's check-in quiz report, and a full progress report is also sent automatically every 2 weeks (Sept 14 = Week 1) to your instructor.</div>
     </aside>
   </div>
   <footer class="appfoot">
@@ -1537,8 +1537,45 @@ document.querySelectorAll('.note-section[data-reading]').forEach(n=>noteObserver
      your instructor email with no extra click and no compose step
      shown in this app — the only remaining step is whatever the
      student's own mail app requires to actually transmit it.
+   - UPDATE: reports are now sent via a silent background submission
+     to a Google Form (see GOOGLE_FORM_ACTION_URL below) instead of a
+     mailto: link. This is deliberate — a mailto: link opens the
+     student's own email compose window, where the pre-filled text is
+     just a starting draft they could edit before hitting send. A
+     silent form submission is never shown to the student and never
+     opens anything on their screen, so there is nothing for them to
+     alter before it reaches you. Turn on Google Form's built-in
+     "Get email notifications for new responses" (Responses tab in
+     Form Editor → the three-dot menu) so thomas@hmacademy.org gets
+     an email automatically the moment each report lands — with zero
+     editable step in between.
+   - SETUP REQUIRED (one-time, ~2 minutes): this only works once you
+     plug in your own form's details below. Steps:
+       1. Go to forms.google.com → create a new form.
+       2. Add one question, type "Paragraph", titled e.g. "Report".
+       3. Click the three-dot menu → "Get response link" is NOT what
+          you need — instead, click "Send", pick the link icon, copy
+          the URL. It looks like:
+          https://docs.google.com/forms/d/e/XXXXXXXX/viewform
+          Replace "viewform" with "formResponse" — that's your
+          GOOGLE_FORM_ACTION_URL below.
+       4. To find the entry ID: open that viewform link, right-click
+          the paragraph question → Inspect, and find the <textarea>
+          or <input> tag's "name" attribute — it looks like
+          "entry.1234567890". That whole string is your
+          GOOGLE_FORM_ENTRY_ID below.
+       5. In the Form's Responses tab, click the three-dot menu and
+          turn on "Get email notifications for new responses" and
+          make sure the form (or your Google account) sends to
+          thomas@hmacademy.org.
+     Until these two constants are filled in, reports fall back to
+     opening a mailto: draft (the old, editable behavior) so nothing
+     silently fails with no visible result.
    ===================================================================== */
 const REPORT_EMAIL = 'thomas@hmacademy.org';
+const GOOGLE_FORM_ACTION_URL = ''; // e.g. 'https://docs.google.com/forms/d/e/XXXXXXXX/formResponse'
+const GOOGLE_FORM_ENTRY_ID = '';   // e.g. 'entry.1234567890'
+const COURSE_START_DATE = new Date('2026-09-14T00:00:00'); // Sept 14 = Week 1, Day 1
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 /* ---------- SIGN-IN / DEVICE LOCK ---------- */
 const gate = document.getElementById('signInGate');
@@ -1564,10 +1601,11 @@ function loadStudentRecord(email){
       rec.videoConfirmed = rec.videoConfirmed || {};
       rec.seenScreencasts = rec.seenScreencasts || [];
       rec.seenPractice = rec.seenPractice || [];
+      rec.biweeklySent = rec.biweeklySent || {};
       return rec;
     }
   }catch(e){}
-  return { name:'', email:email.trim().toLowerCase(), completed:[], weekQuizzes:{}, readingSeen:[], vocabSeen:{}, videoConfirmed:{}, seenScreencasts:[], seenPractice:[], signedInAt:new Date().toISOString() };
+  return { name:'', email:email.trim().toLowerCase(), completed:[], weekQuizzes:{}, readingSeen:[], vocabSeen:{}, videoConfirmed:{}, seenScreencasts:[], seenPractice:[], biweeklySent:{}, signedInAt:new Date().toISOString() };
 }
 function saveStudentRecord(rec){ try{ localStorage.setItem(studentKey(rec.email), JSON.stringify(rec)); }catch(e){ console.error(e); } }
 let student = null; // active record for this session
@@ -1615,6 +1653,7 @@ function enterApp(){
   (student.readingSeen||[]).forEach(k=>readingSeen.add(k));
   updateProgress();
   updateGrade();
+  checkBiweeklyReport();
 }
 (function initAuth(){
   const cur = getCurrentStudent();
@@ -1745,7 +1784,7 @@ document.getElementById('wqSubmit').addEventListener('click', ()=>{
   student.weekQuizzes[week] = { score, total, reflection, completedAt:new Date().toISOString() };
   saveStudentRecord(student);
   updateGrade();
-  sendProgressReport(`Week ${week} check-in complete`);
+  submitReportSilently(`Week ${week} check-in complete`);
   setTimeout(()=>{
     modal.classList.remove('open');
     document.querySelectorAll('#wqQuizBody input').forEach(i=>i.disabled=false);
@@ -1866,16 +1905,53 @@ function buildReportBody(trigger){
   lines.push('NOTE: "75%+ watched" is a self-confirmed estimate (minimum on-screen dwell time + explicit student confirmation), not a measurement read from the video player — Google Drive\'s embedded player does not expose playback progress to this page.');
   return lines.join('\n');
 }
-function sendProgressReport(trigger){
+/* ---------- SILENT, NON-EDITABLE SUBMISSION ---------- */
+/* Submits straight to your Google Form in the background — the student never sees
+   a compose window, so there is no draft for them to alter before it sends. If the
+   form isn't configured yet (see setup notes above), this falls back to opening an
+   editable mailto: draft so the report doesn't just silently disappear with no
+   visible result while you're still setting things up. */
+function submitReportSilently(trigger){
   if(!student) return;
-  const subject = encodeURIComponent(`Progress Report — ${student.name} (${student.email})`);
-  const body = encodeURIComponent(buildReportBody(trigger));
-  window.location.href = `mailto:${REPORT_EMAIL}?subject=${subject}&body=${body}`;
+  const reportText = `[${trigger}]\n\n` + buildReportBody(trigger);
+  if(GOOGLE_FORM_ACTION_URL && GOOGLE_FORM_ENTRY_ID){
+    const formData = new URLSearchParams();
+    formData.append(GOOGLE_FORM_ENTRY_ID, reportText);
+    fetch(GOOGLE_FORM_ACTION_URL, { method:'POST', mode:'no-cors', body: formData })
+      .catch(()=>{ /* no-cors means we can't read the response either way; nothing more to do */ });
+  } else {
+    // Fallback only — remove once GOOGLE_FORM_ACTION_URL / GOOGLE_FORM_ENTRY_ID are set above.
+    const subject = encodeURIComponent(`Progress Report — ${student.name} (${student.email})`);
+    const body = encodeURIComponent(reportText);
+    window.location.href = `mailto:${REPORT_EMAIL}?subject=${subject}&body=${body}`;
+  }
 }
 document.getElementById('lpReportBtn').addEventListener('click', ()=>{
   if(!student){ alert('Sign in first.'); return; }
-  sendProgressReport('Manual send from Layers panel');
+  submitReportSilently('Manual send from Layers panel');
 });
+/* ---------- CALENDAR-BASED BIWEEKLY AUTO-REPORT (Sept 14 = Week 1) ---------- */
+const BIWEEKLY_PERIODS = Math.ceil(TOTAL_WEEKS/2); // 16 weeks -> 8 two-week periods
+function courseWeekNumber(date){
+  const diffDays = Math.floor((date - COURSE_START_DATE) / 86400000);
+  return Math.floor(diffDays/7) + 1; // 1-indexed; <=0 means before the course starts
+}
+function checkBiweeklyReport(){
+  if(!student) return;
+  student.biweeklySent = student.biweeklySent || {};
+  const now = new Date();
+  for(let p=1; p<=BIWEEKLY_PERIODS; p++){
+    const periodEndsAfterWeek = Math.min(p*2, TOTAL_WEEKS);
+    const dueDate = new Date(COURSE_START_DATE.getTime() + periodEndsAfterWeek*7*86400000);
+    if(now >= dueDate && !student.biweeklySent[p]){
+      const weekLo = p*2-1, weekHi = periodEndsAfterWeek;
+      submitReportSilently(`Biweekly report — Weeks ${weekLo}-${weekHi}`);
+      student.biweeklySent[p] = new Date().toISOString();
+      saveStudentRecord(student);
+    }
+  }
+}
+document.addEventListener('visibilitychange', ()=>{ if(document.visibilityState==='visible') checkBiweeklyReport(); });
 /* ---------- GOJO PROJECT FORM ---------- */
 document.getElementById('gjAddMemberBtn').addEventListener('click', gjAddMember);
 function gjAddMember(){
