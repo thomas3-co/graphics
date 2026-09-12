@@ -86,6 +86,12 @@ button{font-family:inherit;}
   display:flex;align-items:center;gap:6px;
 }
 .panel-toggle:hover{background:rgba(255,255,255,.16);}
+.progress-nav-btn{
+  flex-shrink:0;background:linear-gradient(90deg,#2f6fed,#8b5cf6);color:#fff;border:none;
+  border-radius:9px;padding:9px 14px;font-size:12.5px;font-weight:700;cursor:pointer;white-space:nowrap;
+}
+.progress-nav-btn:hover{opacity:.9;}
+.progress-nav-btn.active{box-shadow:0 0 0 2px #fff inset;}
 /* ===== WORKSPACE ===== */
 .workspace{display:flex;flex:1;max-width:1400px;margin:0 auto;width:100%;}
 .canvas{flex:1;min-width:0;padding:34px 26px 80px;}
@@ -385,8 +391,8 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
       <button class="tab" data-tab="screencasts" role="tab" aria-selected="false">Screencasts</button>
       <button class="tab" data-tab="practice" role="tab" aria-selected="false">Practice Files</button>
       <button class="tab" data-tab="materials" role="tab" aria-selected="false">Additional Materials</button>
-      <button class="tab" data-tab="progress" role="tab" aria-selected="false">My Progress</button>
     </nav>
+    <button class="progress-nav-btn" id="progressNavBtn" type="button">📊 My Progress</button>
     <div class="student-badge" id="studentBadge" style="display:none;">
       <span class="sb-name" id="sbName"></span>
       <span class="sb-grade" id="sbGrade">—</span>
@@ -437,6 +443,10 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
           <div class="home-card" style="--accent:#5b6270" onclick="goTab('materials')" role="button" tabindex="0" onkeydown="if(event.key==='Enter')goTab('materials')">
             <h4>Additional Materials</h4>
             <p>Extra resources your instructor adds over the course — check back here.</p>
+          </div>
+          <div class="home-card" style="--accent:#2f6fed" onclick="goTab('progress')" role="button" tabindex="0" onkeydown="if(event.key==='Enter')goTab('progress')">
+            <h4>My Progress</h4>
+            <p>Your grade, completed lessons, week quizzes, reading, and screencasts — all in one place.</p>
           </div>
         </div>
       </section>
@@ -1339,6 +1349,8 @@ function goTab(name){
     t.classList.toggle('active', active);
     t.setAttribute('aria-selected', active ? 'true':'false');
   });
+  const progBtn = document.getElementById('progressNavBtn');
+  if(progBtn) progBtn.classList.toggle('active', name==='progress');
   document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active', v.id===name));
   window.scrollTo({top:0,behavior:'smooth'});
 }
@@ -1348,6 +1360,7 @@ document.getElementById('mainTabs').addEventListener('click', e=>{
   goTab(btn.dataset.tab);
 });
 document.getElementById('brandHomeBtn').addEventListener('click', ()=>goTab('home'));
+document.getElementById('progressNavBtn').addEventListener('click', ()=>goTab('progress'));
 /* Month switch (curriculum) */
 document.getElementById('monthSwitch').addEventListener('click', e=>{
   const chip = e.target.closest('.chip');
