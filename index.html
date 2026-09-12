@@ -46,15 +46,24 @@ button{font-family:inherit;}
   position:sticky;top:0;z-index:1000;
   box-shadow:0 2px 14px rgba(0,0,0,.25);
 }
-.brand{display:flex;align-items:center;gap:10px;padding:14px 0;white-space:nowrap;}
+.brand{display:flex;align-items:center;gap:10px;padding:14px 0;white-space:nowrap;background:transparent;border:none;cursor:pointer;color:#fff;text-align:left;border-radius:9px;}
+.brand:hover{opacity:.88;}
+.brand:focus-visible{outline:2px solid #fff;outline-offset:3px;}
 .brand .mark{
-  width:34px;height:34px;border-radius:9px;
+  width:36px;height:36px;border-radius:9px;flex-shrink:0;
   background:linear-gradient(135deg,#2f6fed,#8b5cf6);
-  display:flex;align-items:center;justify-content:center;
+  display:flex;align-items:center;justify-content:center;overflow:hidden;
   font-weight:800;font-size:13px;color:#fff;letter-spacing:.5px;
+  box-shadow:0 2px 8px rgba(0,0,0,.25);
 }
+.brand .mark img{width:100%;height:100%;object-fit:cover;display:block;}
 .brand .name{font-weight:700;font-size:15px;}
 .brand .sub{font-size:11px;color:#9aa2b1;font-weight:500;}
+.contact-link{
+  color:#c7cbd4;font-size:12px;font-weight:600;text-decoration:none;white-space:nowrap;
+  display:flex;align-items:center;gap:6px;padding:8px 10px;border-radius:9px;
+}
+.contact-link:hover{color:#fff;background:rgba(255,255,255,.08);}
 .tabs{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;flex:1;}
 .tabs::-webkit-scrollbar{display:none;}
 .tab{
@@ -165,22 +174,23 @@ button{font-family:inherit;}
 .week-card h2.wk{font-size:1.35rem;margin-bottom:16px;color:var(--c-curriculum);display:flex;align-items:center;gap:10px;}
 .week-card h2.wk::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--c-curriculum);}
 .day-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;}
-.flip-card{background:transparent;width:100%;height:340px;perspective:1200px;opacity:0;transform:translateY(30px);transition:all .6s ease-out;}
+.flip-card{background:transparent;width:100%;height:380px;perspective:1200px;opacity:0;transform:translateY(30px);transition:all .6s ease-out;}
 .flip-card.visible{opacity:1;transform:translateY(0);}
 .flip-card.done .flip-card-inner{box-shadow:0 0 0 2px var(--c-curriculum),0 12px 24px rgba(47,111,237,.18);}
 .flip-card-inner{position:relative;width:100%;height:100%;text-align:center;transition:transform .7s ease;transform-style:preserve-3d;border-radius:14px;cursor:pointer;box-shadow:0 8px 20px rgba(15,17,23,.10);}
 .flip-card:hover .flip-card-inner,.flip-card.flipped .flip-card-inner{transform:rotateY(180deg) translateY(-4px);}
-.flip-card-front,.flip-card-back{position:absolute;width:100%;height:100%;backface-visibility:hidden;border-radius:14px;padding:20px;font-size:.92rem;display:flex;flex-direction:column;justify-content:center;}
+.flip-card-front,.flip-card-back{position:absolute;width:100%;height:100%;backface-visibility:hidden;border-radius:14px;padding:18px 20px;font-size:.92rem;display:flex;flex-direction:column;justify-content:center;box-sizing:border-box;}
 .flip-card-front{background:#fff;border-left:5px solid var(--c-curriculum);}
 .flip-card-front h4{margin:0 0 8px;font-size:1rem;}
 .flip-card-front p{margin:0;color:var(--muted);}
-.flip-card-back{background:#eef3ff;transform:rotateY(180deg);border-left:5px solid #3f51b5;overflow-y:auto;text-align:left;}
+.flip-card-back{background:#eef3ff;transform:rotateY(180deg);border-left:5px solid #3f51b5;overflow-y:auto;overflow-x:hidden;text-align:left;justify-content:flex-start;}
 .flip-card-back ul{margin:6px 0 0;padding-left:18px;}
 .flip-card-quiz-front{background:linear-gradient(135deg,#ff9800,#ff7a2d);border-left:5px solid #ff9800;color:#fff;}
 .flip-card-quiz-front p{color:rgba(255,255,255,.9);}
 .vocab-title{margin-bottom:5px;font-weight:700;color:#3f51b5;font-size:.78rem;text-transform:uppercase;letter-spacing:.5px;}
-.vocab{position:relative;cursor:help;font-weight:600;color:var(--c-curriculum);border-bottom:1px dotted var(--c-curriculum);}
-.vocab:hover::after,.vocab:focus::after{content:attr(data-def);position:absolute;bottom:120%;left:50%;transform:translateX(-50%);background:rgba(15,17,23,.92);color:#fff;padding:7px 10px;border-radius:7px;font-size:.72rem;width:180px;z-index:5;}
+.vocab{font-weight:600;color:var(--c-curriculum);border-bottom:1px dotted var(--c-curriculum);cursor:pointer;}
+.vocab-def{font-weight:400;font-style:italic;color:#4a4f5c;font-size:.86rem;}
+.flip-card-back p{line-height:1.5;word-wrap:break-word;overflow-wrap:break-word;}
 .big-ideas{margin-top:10px;font-size:.83rem;font-style:italic;color:#555;}
 .summary-text{font-weight:600;color:#333;margin-top:8px;font-size:.85rem;}
 .project-day .flip-card-front,.project-day .flip-card-back{border:3px solid var(--c-projects);}
@@ -216,14 +226,20 @@ footer.appfoot{text-align:center;color:var(--muted);font-size:12px;padding:30px 
 .media-card{background:#fff;border-radius:14px;box-shadow:var(--shadow);display:flex;flex-direction:column;
   border-top:4px solid var(--card-accent,var(--c-screen));padding:0;overflow:hidden;}
 .media-card .media-thumb{
-  position:relative;width:100%;aspect-ratio:16/10;background:#0e1015;overflow:hidden;flex-shrink:0;
+  position:relative;width:100%;min-height:150px;aspect-ratio:16/10;background:#0e1015;overflow:hidden;flex-shrink:0;
 }
-.media-card .media-thumb iframe{position:absolute;inset:0;width:100%;height:100%;border:0;}
+.media-card .media-thumb iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block;}
 .media-card .media-thumb .thumb-poster{
   position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;
   background:linear-gradient(135deg,rgba(0,0,0,.35),rgba(0,0,0,.15)),var(--card-accent,var(--c-screen));
+  background-size:cover;background-position:center;
   color:#fff;cursor:pointer;transition:.2s;border:0;width:100%;
 }
+.media-card .media-thumb .thumb-poster img.thumb-preview{
+  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;
+}
+.media-card .media-thumb .thumb-poster .play-badge,
+.media-card .media-thumb .thumb-poster span.lbl{position:relative;z-index:1;}
 .media-card .media-thumb .thumb-poster:hover,.media-card .media-thumb .thumb-poster:focus-visible{filter:brightness(1.08);}
 .media-card .media-thumb .thumb-poster .play-badge{
   width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.92);color:var(--card-accent,var(--c-screen));
@@ -312,7 +328,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
       <input id="siEmail" name="email" type="email" placeholder="you@example.com" autocomplete="email" required>
       <button class="si-btn" id="siSubmit" type="submit">Sign In</button>
     </form>
-    <div class="si-fine">This device remembers one student account at a time. Once you're signed in here, this browser won't let a different email enroll — sign out first if you need to switch. (This is a browser-level check, not account security — clearing browser data resets it.)</div>
+    <div class="si-fine">This device remembers one student account at a time. Once you're signed in here, this browser won't let a different email enroll — sign out first if you need to switch. (This is a browser-level check, not account security — clearing browser data resets it.) Signing back in with the same email picks up exactly where you left off. Questions? <a href="mailto:thomas@hmacademy.org" style="color:#2f6fed;font-weight:700;">thomas@hmacademy.org</a></div>
   </div>
 </div>
 <!-- ========== WEEKLY CHECK-IN MODAL ========== -->
@@ -331,13 +347,13 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
 </div>
 <div class="app">
   <header class="topbar">
-    <div class="brand">
-      <div class="mark" aria-hidden="true">Ps</div>
+    <button class="brand" id="brandHomeBtn" type="button" aria-label="Go to Home">
+      <div class="mark" aria-hidden="true"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0RkxWcSE339V2s3bEVYqs0SY1AWHud05NRkHhVxVa8w&s=10" alt=""></div>
       <div>
         <div class="name">Graphic Design &amp; Photoshop</div>
         <div class="sub">Class of 2027</div>
       </div>
-    </div>
+    </button>
     <nav class="tabs" id="mainTabs" aria-label="Main sections">
       <button class="tab active" data-tab="home" role="tab" aria-selected="true">Home</button>
       <button class="tab" data-tab="curriculum" role="tab" aria-selected="false">Curriculum</button>
@@ -345,7 +361,9 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
       <button class="tab" data-tab="notes" role="tab" aria-selected="false">Read Me</button>
       <button class="tab" data-tab="screencasts" role="tab" aria-selected="false">Screencasts</button>
       <button class="tab" data-tab="practice" role="tab" aria-selected="false">Practice Files</button>
+      <button class="tab" data-tab="materials" role="tab" aria-selected="false">Additional Materials</button>
     </nav>
+    <a class="contact-link" href="mailto:thomas@hmacademy.org" title="Contact your instructor">✉ thomas@hmacademy.org</a>
     <div class="student-badge" id="studentBadge" style="display:none;">
       <span class="sb-name" id="sbName"></span>
       <span class="sb-grade" id="sbGrade">—</span>
@@ -393,6 +411,10 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
             <h4>Practice Files</h4>
             <p>Downloadable source images and exercise files, previewed right inside the card.</p>
           </div>
+          <div class="home-card" style="--accent:#5b6270" onclick="goTab('materials')" role="button" tabindex="0" onkeydown="if(event.key==='Enter')goTab('materials')">
+            <h4>Additional Materials</h4>
+            <p>Extra resources your instructor adds over the course — check back here.</p>
+          </div>
         </div>
       </section>
       <!-- ========== CURRICULUM ========== -->
@@ -418,25 +440,25 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
         <div class="flip-card" data-day="1-1"><div class="flip-card-inner">
         <div class="flip-card-front"><h4>Day 1: Photoshop Interface</h4><p>Intro to workspace, panels &amp; tools.</p><span class="flip-hint">Tap to flip</span></div>
         <div class="flip-card-back"><div class="vocab-title">Vocabulary</div>
-        <p><span class="vocab" tabindex="0" data-def="The arrangement of menus, panels, and tools.">Workspace</span>,
-        <span class="vocab" tabindex="0" data-def="Dockable panels like Layers, History, etc.">Panels</span>,
-        <span class="vocab" tabindex="0" data-def="Main editing tools.">Toolbar</span></p>
+        <p><span class="vocab" tabindex="0" data-def="The arrangement of menus, panels, and tools.">Workspace</span><span class="vocab-def"> — The arrangement of menus, panels, and tools.</span>,
+        <span class="vocab" tabindex="0" data-def="Dockable panels like Layers, History, etc.">Panels</span><span class="vocab-def"> — Dockable panels like Layers, History, etc.</span>,
+        <span class="vocab" tabindex="0" data-def="Main editing tools.">Toolbar</span><span class="vocab-def"> — Main editing tools.</span></p>
         <div class="big-ideas">Understanding the Photoshop interface helps you navigate efficiently.</div>
         </div></div></div>
         <div class="flip-card" data-day="1-2"><div class="flip-card-inner">
         <div class="flip-card-front"><h4>Day 2: Raster vs Vector</h4><p>Differences between pixel and math-based graphics.</p><span class="flip-hint">Tap to flip</span></div>
         <div class="flip-card-back"><div class="vocab-title">Vocabulary</div>
-        <p><span class="vocab" tabindex="0" data-def="Images made of pixels.">Raster</span>,
-        <span class="vocab" tabindex="0" data-def="Scalable shapes defined by math.">Vector</span>,
-        <span class="vocab" tabindex="0" data-def="Squares that make up raster images.">Pixel</span></p>
+        <p><span class="vocab" tabindex="0" data-def="Images made of pixels.">Raster</span><span class="vocab-def"> — Images made of pixels.</span>,
+        <span class="vocab" tabindex="0" data-def="Scalable shapes defined by math.">Vector</span><span class="vocab-def"> — Scalable shapes defined by math.</span>,
+        <span class="vocab" tabindex="0" data-def="Squares that make up raster images.">Pixel</span><span class="vocab-def"> — Squares that make up raster images.</span></p>
         <div class="big-ideas">Raster is detail-rich but not scalable; vector is scalable without losing quality.</div>
         </div></div></div>
         <div class="flip-card" data-day="1-3"><div class="flip-card-inner">
         <div class="flip-card-front"><h4>Day 3: Layers</h4><p>Working with Photoshop's most essential feature.</p><span class="flip-hint">Tap to flip</span></div>
         <div class="flip-card-back"><div class="vocab-title">Vocabulary</div>
-        <p><span class="vocab" tabindex="0" data-def="Photoshop's building blocks.">Layer</span>,
-        <span class="vocab" tabindex="0" data-def="Adjust visibility of a layer.">Opacity</span>,
-        <span class="vocab" tabindex="0" data-def="Organize multiple layers.">Group</span></p>
+        <p><span class="vocab" tabindex="0" data-def="Photoshop's building blocks.">Layer</span><span class="vocab-def"> — Photoshop's building blocks.</span>,
+        <span class="vocab" tabindex="0" data-def="Adjust visibility of a layer.">Opacity</span><span class="vocab-def"> — Adjust visibility of a layer.</span>,
+        <span class="vocab" tabindex="0" data-def="Organize multiple layers.">Group</span><span class="vocab-def"> — Organize multiple layers.</span></p>
         <div class="big-ideas">Layers allow non-linear editing and flexibility in projects.</div>
         </div></div></div>
         </div></div>
@@ -446,23 +468,23 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
         <div class="flip-card" data-day="2-1"><div class="flip-card-inner">
         <div class="flip-card-front"><h4>Day 1: Adjustment Layers</h4><p>Edit colors and tones without harm.</p><span class="flip-hint">Tap to flip</span></div>
         <div class="flip-card-back"><div class="vocab-title">Vocabulary</div>
-        <p><span class="vocab" tabindex="0" data-def="Special layers that apply edits non-destructively.">Adjustment Layer</span>,
-        <span class="vocab" tabindex="0" data-def="Brightness/darkness levels of an image.">Levels</span>,
-        <span class="vocab" tabindex="0" data-def="Tone curve editor.">Curves</span></p>
+        <p><span class="vocab" tabindex="0" data-def="Special layers that apply edits non-destructively.">Adjustment Layer</span><span class="vocab-def"> — Special layers that apply edits non-destructively.</span>,
+        <span class="vocab" tabindex="0" data-def="Brightness/darkness levels of an image.">Levels</span><span class="vocab-def"> — Brightness/darkness levels of an image.</span>,
+        <span class="vocab" tabindex="0" data-def="Tone curve editor.">Curves</span><span class="vocab-def"> — Tone curve editor.</span></p>
         <div class="big-ideas">Adjustment layers preserve original pixels while applying edits.</div>
         </div></div></div>
         <div class="flip-card" data-day="2-2"><div class="flip-card-inner">
         <div class="flip-card-front"><h4>Day 2: Smart Objects</h4><p>Protecting image quality while transforming.</p><span class="flip-hint">Tap to flip</span></div>
         <div class="flip-card-back"><div class="vocab-title">Vocabulary</div>
-        <p><span class="vocab" tabindex="0" data-def="Container preserving source data.">Smart Object</span>,
-        <span class="vocab" tabindex="0" data-def="Image scaling or resizing.">Transform</span></p>
+        <p><span class="vocab" tabindex="0" data-def="Container preserving source data.">Smart Object</span><span class="vocab-def"> — Container preserving source data.</span>,
+        <span class="vocab" tabindex="0" data-def="Image scaling or resizing.">Transform</span><span class="vocab-def"> — Image scaling or resizing.</span></p>
         <div class="big-ideas">Smart Objects maintain full resolution during edits.</div>
         </div></div></div>
         <div class="flip-card" data-day="2-3"><div class="flip-card-inner">
         <div class="flip-card-front"><h4>Day 3: Masks</h4><p>Hide or reveal without erasing pixels.</p><span class="flip-hint">Tap to flip</span></div>
         <div class="flip-card-back"><div class="vocab-title">Vocabulary</div>
-        <p><span class="vocab" tabindex="0" data-def="Controls visibility of parts of a layer.">Mask</span>,
-        <span class="vocab" tabindex="0" data-def="Soft edge transition.">Feather</span></p>
+        <p><span class="vocab" tabindex="0" data-def="Controls visibility of parts of a layer.">Mask</span><span class="vocab-def"> — Controls visibility of parts of a layer.</span>,
+        <span class="vocab" tabindex="0" data-def="Soft edge transition.">Feather</span><span class="vocab-def"> — Soft edge transition.</span></p>
         <div class="big-ideas">Masks allow selective editing and reversibility.</div>
         </div></div></div>
         </div></div>
@@ -472,23 +494,23 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
         <div class="flip-card" data-day="3-1"><div class="flip-card-inner">
         <div class="flip-card-front"><h4>Day 1: Tools &amp; Panels</h4><p>Essential interface elements and tools.</p><span class="flip-hint">Tap to flip</span></div>
         <div class="flip-card-back"><div class="vocab-title">Vocabulary</div>
-        <p><span class="vocab" tabindex="0" data-def="Displays info about document and tools.">Status Bar</span>,
-        <span class="vocab" tabindex="0" data-def="Access all commands.">Menu Bar</span>,
-        <span class="vocab" tabindex="0" data-def="Top bar that shows tool options.">Options Bar</span></p>
+        <p><span class="vocab" tabindex="0" data-def="Displays info about document and tools.">Status Bar</span><span class="vocab-def"> — Displays info about document and tools.</span>,
+        <span class="vocab" tabindex="0" data-def="Access all commands.">Menu Bar</span><span class="vocab-def"> — Access all commands.</span>,
+        <span class="vocab" tabindex="0" data-def="Top bar that shows tool options.">Options Bar</span><span class="vocab-def"> — Top bar that shows tool options.</span></p>
         <div class="big-ideas">Learn the layout and function of each interface element.</div>
         </div></div></div>
         <div class="flip-card" data-day="3-2"><div class="flip-card-inner">
         <div class="flip-card-front"><h4>Day 2: ID &amp; Passport Photos</h4><p>Create professional passport or ID photos.</p><span class="flip-hint">Tap to flip</span></div>
         <div class="flip-card-back"><div class="vocab-title">Vocabulary</div>
-        <p><span class="vocab" tabindex="0" data-def="Removes unwanted background.">Background Remover</span>,
-        <span class="vocab" tabindex="0" data-def="Adjusts image size.">Crop Tool</span></p>
+        <p><span class="vocab" tabindex="0" data-def="Removes unwanted background.">Background Remover</span><span class="vocab-def"> — Removes unwanted background.</span>,
+        <span class="vocab" tabindex="0" data-def="Adjusts image size.">Crop Tool</span><span class="vocab-def"> — Adjusts image size.</span></p>
         <div class="big-ideas">Practice creating official ID photos using precise selection and background removal.</div>
         </div></div></div>
         <div class="flip-card project-day" data-day="3-3"><div class="flip-card-inner">
         <div class="flip-card-front"><div class="project-label">PROJECT DAY</div><h4>Day 3: Around the World with a Twist</h4><p>Group project — open the brief in Group Projects.</p><span class="flip-hint">Tap to flip</span></div>
         <div class="flip-card-back"><div class="vocab-title">Vocabulary</div>
-        <p><span class="vocab" tabindex="0" data-def="Separates texture from tone.">Frequency Separation</span>,
-        <span class="vocab" tabindex="0" data-def="Lighten/darken areas for depth.">Dodge &amp; Burn</span></p>
+        <p><span class="vocab" tabindex="0" data-def="Separates texture from tone.">Frequency Separation</span><span class="vocab-def"> — Separates texture from tone.</span>,
+        <span class="vocab" tabindex="0" data-def="Lighten/darken areas for depth.">Dodge &amp; Burn</span><span class="vocab-def"> — Lighten/darken areas for depth.</span></p>
         <div class="big-ideas">Work non-destructively and preserve natural skin texture. Full brief and per-group rubric: Group Projects tab → "Week 3 · Around the World with a Twist".</div>
         </div></div></div>
         </div></div>
@@ -498,26 +520,26 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
         <div class="flip-card" data-day="4-1"><div class="flip-card-inner">
         <div class="flip-card-front"><h4>Day 1: Lips, Teeth &amp; Eye Reflection</h4><p>Enhance portrait details for realism.</p><span class="flip-hint">Tap to flip</span></div>
         <div class="flip-card-back"><div class="vocab-title">Vocabulary</div>
-        <p><span class="vocab" tabindex="0" data-def="Brighten teeth naturally.">Teeth Whitening</span>,
-        <span class="vocab" tabindex="0" data-def="Adjust lip tone & color.">Lip Enhancement</span>,
-        <span class="vocab" tabindex="0" data-def="Add subtle highlights to eyes.">Eye Reflection</span></p>
+        <p><span class="vocab" tabindex="0" data-def="Brighten teeth naturally.">Teeth Whitening</span><span class="vocab-def"> — Brighten teeth naturally.</span>,
+        <span class="vocab" tabindex="0" data-def="Adjust lip tone & color.">Lip Enhancement</span><span class="vocab-def"> — Adjust lip tone & color.</span>,
+        <span class="vocab" tabindex="0" data-def="Add subtle highlights to eyes.">Eye Reflection</span><span class="vocab-def"> — Add subtle highlights to eyes.</span></p>
         <div class="vocab-title">Big Ideas</div>
         <p class="big-ideas">Focus on subtle realism, use separate layers and masks for flexibility.</p>
         </div></div></div>
         <div class="flip-card" data-day="4-2"><div class="flip-card-inner">
         <div class="flip-card-front"><h4>Day 2: Puppet Warp &amp; Dress Change</h4><p>Advanced portrait manipulation.</p><span class="flip-hint">Tap to flip</span></div>
         <div class="flip-card-back"><div class="vocab-title">Vocabulary</div>
-        <p><span class="vocab" tabindex="0" data-def="Pin-based tool for flexible distortion.">Puppet Warp</span>,
-        <span class="vocab" tabindex="0" data-def="Altering clothing colors/patterns.">Dress Change</span>,
-        <span class="vocab" tabindex="0" data-def="Mesh overlay used in puppet warp.">Control Points</span></p>
+        <p><span class="vocab" tabindex="0" data-def="Pin-based tool for flexible distortion.">Puppet Warp</span><span class="vocab-def"> — Pin-based tool for flexible distortion.</span>,
+        <span class="vocab" tabindex="0" data-def="Altering clothing colors/patterns.">Dress Change</span><span class="vocab-def"> — Altering clothing colors/patterns.</span>,
+        <span class="vocab" tabindex="0" data-def="Mesh overlay used in puppet warp.">Control Points</span><span class="vocab-def"> — Mesh overlay used in puppet warp.</span></p>
         <div class="vocab-title">Big Ideas</div>
         <p class="big-ideas">Use Puppet Warp for realistic body or cloth repositioning; maintain proportions and natural folds.</p>
         </div></div></div>
         <div class="flip-card" data-day="4-3"><div class="flip-card-inner">
         <div class="flip-card-front flip-card-quiz-front"><h4>Day 3: Final Project</h4><p>Apply all skills from Week 1–4.</p><span class="flip-hint" style="color:rgba(255,255,255,.75)">Tap to flip</span></div>
         <div class="flip-card-back"><div class="vocab-title">Vocabulary</div>
-        <p><span class="vocab" tabindex="0" data-def="Combining learned techniques into one design.">Integration</span>,
-        <span class="vocab" tabindex="0" data-def="Applying advanced retouching and compositing.">Final Composition</span></p>
+        <p><span class="vocab" tabindex="0" data-def="Combining learned techniques into one design.">Integration</span><span class="vocab-def"> — Combining learned techniques into one design.</span>,
+        <span class="vocab" tabindex="0" data-def="Applying advanced retouching and compositing.">Final Composition</span><span class="vocab-def"> — Applying advanced retouching and compositing.</span></p>
         <div class="vocab-title">Big Ideas</div>
         <p class="big-ideas">Create a polished portrait project using techniques from previous weeks.</p>
         </div></div></div>
@@ -1250,6 +1272,15 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
         <p>Downloadable source images and exercise files — tap the thumbnail to preview right inside the card, then download to practice.</p></div></div>
         <div class="media-grid" id="practiceGrid"></div>
       </section>
+      <!-- ========== ADDITIONAL MATERIALS (placeholder) ========== -->
+      <section id="materials" class="view">
+        <div class="view-head"><div><h2>Additional Materials</h2>
+        <p>Extra resources for this course will be added here.</p></div></div>
+        <div class="note-section" style="text-align:center;padding:50px 24px;">
+          <h3 style="margin-top:0;">Coming soon</h3>
+          <p style="color:var(--muted);max-width:480px;margin:0 auto;">This section is a placeholder — your instructor will add extra readings, templates, fonts, brushes, or reference files here. Check back soon, or reach out with questions: <a href="mailto:thomas@hmacademy.org" style="color:var(--c-notes);font-weight:700;">thomas@hmacademy.org</a>.</p>
+        </div>
+      </section>
     </main>
     <aside class="layers-panel" id="layersPanel">
       <div class="lp-head"><h3>Layers — Progress</h3></div>
@@ -1266,7 +1297,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
       <div class="lp-note">Every lesson card is a "layer." Flip a card in the Curriculum tab to mark that day's lesson complete — this panel fills in as you progress, just like opacity on a real layer. Finishing every day in a week automatically pops up that week's check-in quiz, which sends your progress report the moment you submit it.</div>
     </aside>
   </div>
-  <footer class="appfoot">Graphic Design &amp; Photoshop — Class of 2027</footer>
+  <footer class="appfoot">Graphic Design &amp; Photoshop — Class of 2027 · Questions? Contact <a href="mailto:thomas@hmacademy.org" style="color:var(--c-curriculum);font-weight:700;">thomas@hmacademy.org</a></footer>
 </div><script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
 /* ================= TAB NAVIGATION ================= */
@@ -1284,6 +1315,7 @@ document.getElementById('mainTabs').addEventListener('click', e=>{
   if(!btn) return;
   goTab(btn.dataset.tab);
 });
+document.getElementById('brandHomeBtn').addEventListener('click', ()=>goTab('home'));
 /* Month switch (curriculum) */
 document.getElementById('monthSwitch').addEventListener('click', e=>{
   const chip = e.target.closest('.chip');
@@ -1545,6 +1577,20 @@ function enterApp(){
     student = loadStudentRecord(cur.email);
     student.name = cur.name;
     enterApp();
+    return;
+  }
+  // Not currently signed in on this device — if it's already enrolled to someone,
+  // pre-fill their details so continuing is a one-click resume, not re-typing everything.
+  const lock = getDeviceLock();
+  if(lock){
+    const nameField = document.getElementById('siName');
+    const emailField = document.getElementById('siEmail');
+    if(nameField) nameField.value = lock.name || '';
+    if(emailField) emailField.value = lock.email || '';
+    const heading = document.getElementById('siHeading');
+    if(heading) heading.textContent = 'Welcome back';
+    const gateP = document.querySelector('.si-card p');
+    if(gateP) gateP.textContent = `Confirm your details to pick up right where you left off, ${lock.name||'there'}.`;
   }
 })();
 /* ---------- persist completion to the signed-in student's record ---------- */
@@ -1999,6 +2045,7 @@ atwSelectGroup(1);
 /* ---------- SCREENCASTS & PRACTICE FILES: FITTED CARDS, THUMBNAIL, PLAYS INSIDE CARD ---------- */
 function driveEmbedUrl(id){ return `https://drive.google.com/file/d/${id}/preview`; }
 function driveViewUrl(id){ return `https://drive.google.com/file/d/${id}/view?usp=drive_link`; }
+function driveThumbUrl(id){ return `https://drive.google.com/thumbnail?id=${id}&sz=w640`; }
 const VIDEO_WATCH_THRESHOLD_MS = 45000; // dwell required before "mark watched" becomes available
 function renderMediaCard({ id, label, kind, accent }){
   const card = document.createElement('div');
@@ -2009,6 +2056,7 @@ function renderMediaCard({ id, label, kind, accent }){
   card.innerHTML = `
     <div class="media-thumb">
       <button type="button" class="thumb-poster" aria-label="${posterLabel}: ${label}">
+        <img class="thumb-preview" src="${driveThumbUrl(id)}" alt="" loading="lazy" onerror="this.remove()">
         <div class="play-badge" aria-hidden="true">${icon}</div>
         <span class="lbl">${posterLabel}</span>
       </button>
