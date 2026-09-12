@@ -221,7 +221,30 @@ button{font-family:inherit;}
 .media-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px;margin-top:18px;}
 .media-icon{width:38px;height:38px;border-radius:10px;background:var(--card-accent,var(--c-screen));color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;}
 .group-label{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;margin:26px 0 4px;}
-footer.appfoot{text-align:center;color:var(--muted);font-size:12px;padding:30px 20px 46px;}
+footer.appfoot{text-align:center;color:var(--muted);font-size:13px;padding:26px 20px;background:#fff;border-top:1px solid var(--line);}
+footer.appfoot .foot-contact{display:inline-flex;align-items:center;gap:8px;margin-top:6px;font-weight:700;}
+footer.appfoot .foot-contact a{color:var(--c-curriculum);text-decoration:none;}
+footer.appfoot .foot-contact a:hover{text-decoration:underline;}
+/* ===== PROGRESS PAGE ===== */
+.progress-hero{background:linear-gradient(135deg,#1c2030,#2f6fed 150%);color:#fff;border-radius:20px;padding:30px 32px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;box-shadow:var(--shadow);}
+.progress-hero .ph-grade b{font-size:2.4rem;font-family:'Poppins',sans-serif;display:block;}
+.progress-hero .ph-grade span{font-size:12.5px;color:#c9d3f5;}
+.progress-hero .ph-bar-wrap{flex:1;min-width:220px;}
+.progress-hero .ph-bar{height:10px;border-radius:8px;background:rgba(255,255,255,.18);overflow:hidden;margin-top:8px;}
+.progress-hero .ph-bar i{display:block;height:100%;background:#fff;width:0%;transition:width .5s ease;}
+.progress-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px;margin-top:22px;}
+.progress-card{background:#fff;border-radius:14px;padding:18px;box-shadow:var(--shadow);border-top:4px solid var(--pc-accent,#2f6fed);}
+.progress-card h4{margin:0 0 10px;font-size:14px;}
+.progress-card .pc-big{font-size:1.7rem;font-family:'Poppins',sans-serif;font-weight:800;}
+.progress-card .pc-sub{font-size:12px;color:var(--muted);}
+.progress-week-table{width:100%;border-collapse:collapse;margin-top:10px;font-size:13px;}
+.progress-week-table th,.progress-week-table td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);}
+.progress-week-table th{color:var(--muted);font-weight:700;font-size:11.5px;text-transform:uppercase;letter-spacing:.4px;}
+.pw-badge{display:inline-block;padding:2px 9px;border-radius:999px;font-size:11px;font-weight:700;}
+.pw-badge.done{background:#e7f6ee;color:#1a8a52;}
+.pw-badge.partial{background:#fff4e0;color:#b3720c;}
+.pw-badge.notstarted{background:#f1f2f5;color:#8a90a0;}
+.progress-signedout{text-align:center;padding:60px 24px;color:var(--muted);}
 /* ===== MEDIA CARD THUMBNAILS (screencasts + practice files) ===== */
 .media-card{background:#fff;border-radius:14px;box-shadow:var(--shadow);display:flex;flex-direction:column;
   border-top:4px solid var(--card-accent,var(--c-screen));padding:0;overflow:hidden;}
@@ -362,8 +385,8 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
       <button class="tab" data-tab="screencasts" role="tab" aria-selected="false">Screencasts</button>
       <button class="tab" data-tab="practice" role="tab" aria-selected="false">Practice Files</button>
       <button class="tab" data-tab="materials" role="tab" aria-selected="false">Additional Materials</button>
+      <button class="tab" data-tab="progress" role="tab" aria-selected="false">My Progress</button>
     </nav>
-    <a class="contact-link" href="mailto:thomas@hmacademy.org" title="Contact your instructor">✉ thomas@hmacademy.org</a>
     <div class="student-badge" id="studentBadge" style="display:none;">
       <span class="sb-name" id="sbName"></span>
       <span class="sb-grade" id="sbGrade">—</span>
@@ -1281,6 +1304,12 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
           <p style="color:var(--muted);max-width:480px;margin:0 auto;">This section is a placeholder — your instructor will add extra readings, templates, fonts, brushes, or reference files here. Check back soon, or reach out with questions: <a href="mailto:thomas@hmacademy.org" style="color:var(--c-notes);font-weight:700;">thomas@hmacademy.org</a>.</p>
         </div>
       </section>
+      <!-- ========== MY PROGRESS ========== -->
+      <section id="progress" class="view">
+        <div class="view-head"><div><h2>My Progress</h2>
+        <p>Everything tracked toward your grade — lessons, week-end quizzes, reading, vocabulary, and screencasts.</p></div></div>
+        <div id="progressBody"></div>
+      </section>
     </main>
     <aside class="layers-panel" id="layersPanel">
       <div class="lp-head"><h3>Layers — Progress</h3></div>
@@ -1297,7 +1326,10 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
       <div class="lp-note">Every lesson card is a "layer." Flip a card in the Curriculum tab to mark that day's lesson complete — this panel fills in as you progress, just like opacity on a real layer. Finishing every day in a week automatically pops up that week's check-in quiz, which sends your progress report the moment you submit it.</div>
     </aside>
   </div>
-  <footer class="appfoot">Graphic Design &amp; Photoshop — Class of 2027 · Questions? Contact <a href="mailto:thomas@hmacademy.org" style="color:var(--c-curriculum);font-weight:700;">thomas@hmacademy.org</a></footer>
+  <footer class="appfoot">
+    Graphic Design &amp; Photoshop — Class of 2027
+    <div class="foot-contact">✉ <a href="mailto:thomas@hmacademy.org">thomas@hmacademy.org</a></div>
+  </footer>
 </div><script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
 /* ================= TAB NAVIGATION ================= */
@@ -1735,6 +1767,56 @@ function updateGrade(){
   if(detailEl){ detailEl.textContent = g.detail; }
   const sbGrade = document.getElementById('sbGrade');
   if(sbGrade) sbGrade.textContent = student ? `${g.letter} · ${g.pct}%` : '—';
+  renderProgressView();
+}
+function weekStatus(w){
+  const dayEls = weekDayEls(w);
+  const total = dayEls.length;
+  const done = student ? Array.from(dayEls).filter(c=>student.completed.includes(c.dataset.day)).length : 0;
+  return { total, done, pct: total ? Math.round((done/total)*100) : 0 };
+}
+function renderProgressView(){
+  const body = document.getElementById('progressBody');
+  if(!body) return;
+  if(!student){
+    body.innerHTML = `<div class="progress-signedout"><h3>Sign in to see your progress</h3><p>Once you're signed in, this page tracks your lessons, quizzes, reading, vocabulary, and screencasts automatically.</p></div>`;
+    return;
+  }
+  const g = computeGrade();
+  const quizzesTaken = Object.keys(student.weekQuizzes).length;
+  const videosConfirmed = Object.keys(student.videoConfirmed).filter(id=>student.videoConfirmed[id]).length;
+  let rows = '';
+  for(let w=1; w<=TOTAL_WEEKS; w++){
+    const st = weekStatus(w);
+    const quiz = student.weekQuizzes[w];
+    let badgeClass = 'notstarted', badgeText = 'Not started';
+    if(st.pct===100){ badgeClass='done'; badgeText='Complete'; }
+    else if(st.pct>0){ badgeClass='partial'; badgeText='In progress'; }
+    const quizText = quiz ? (quiz.total ? `${quiz.score}/${quiz.total} correct` : 'Reflection submitted') : '—';
+    rows += `<tr><td>Week ${w}</td><td>${weekMeta[w]||''}</td><td>${st.done}/${st.total} days</td><td><span class="pw-badge ${badgeClass}">${badgeText}</span></td><td>${quizText}</td></tr>`;
+  }
+  body.innerHTML = `
+    <div class="progress-hero">
+      <div class="ph-grade"><b>${g.letter} · ${g.pct}%</b><span>Overall grade</span></div>
+      <div class="ph-bar-wrap"><span style="font-size:12.5px;color:#c9d3f5;">${student.completed.length} of ${cards.length} lessons complete</span>
+        <div class="ph-bar"><i style="width:${cards.length ? Math.round((student.completed.length/cards.length)*100) : 0}%"></i></div>
+      </div>
+    </div>
+    <div class="progress-grid">
+      <div class="progress-card" style="--pc-accent:#2f6fed"><h4>Lessons Completed</h4><div class="pc-big">${student.completed.length}/${cards.length}</div><div class="pc-sub">across ${TOTAL_WEEKS} weeks</div></div>
+      <div class="progress-card" style="--pc-accent:#ff7a2d"><h4>Week Quizzes</h4><div class="pc-big">${quizzesTaken}/${TOTAL_WEEKS}</div><div class="pc-sub">completed automatically at week end</div></div>
+      <div class="progress-card" style="--pc-accent:#8b5cf6"><h4>Reading Opened</h4><div class="pc-big">${student.readingSeen.length}/10</div><div class="pc-sub">Read Me sections viewed</div></div>
+      <div class="progress-card" style="--pc-accent:#12a394"><h4>Screencasts Watched</h4><div class="pc-big">${videosConfirmed}/23</div><div class="pc-sub">confirmed 75%+ (self-reported)</div></div>
+      <div class="progress-card" style="--pc-accent:#ef476f"><h4>Practice Files Opened</h4><div class="pc-big">${student.seenPractice.length}/6</div><div class="pc-sub">exercise files previewed</div></div>
+    </div>
+    <div class="note-section" style="margin-top:22px;">
+      <h3 style="margin-top:0;">Week-by-week breakdown</h3>
+      <div style="overflow-x:auto;"><table class="progress-week-table">
+        <thead><tr><th>Week</th><th>Topic</th><th>Days done</th><th>Status</th><th>Quiz</th></tr></thead>
+        <tbody>${rows}</tbody>
+      </table></div>
+    </div>
+  `;
 }
 /* ---------- PROGRESS REPORT → EMAIL (auto-fires on week-quiz submit; also manual button) ---------- */
 function buildReportBody(trigger){
@@ -2132,6 +2214,7 @@ const pgrid = document.getElementById('practiceGrid');
 screencastIds.forEach((id,i)=>grid1.appendChild(renderMediaCard({id, label:`Screencast ${i+1}`, kind:'video', accent:'#12a394'})));
 screencastIdsSet2.forEach((id,i)=>grid2.appendChild(renderMediaCard({id, label:`Screencast ${21+i}`, kind:'video', accent:'#12a394'})));
 practiceIds.forEach((id,i)=>pgrid.appendChild(renderMediaCard({id, label:`Practice File ${i+1}`, kind:'file', accent:'#ef476f'})));
+renderProgressView();
 </script>
 </body>
 </html>
