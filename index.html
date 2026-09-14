@@ -299,14 +299,15 @@ footer.appfoot .foot-contact a:hover{text-decoration:underline;}
 .theater-item{display:flex;gap:10px;align-items:center;background:#fff;border:2px solid transparent;border-radius:10px;padding:6px;cursor:pointer;text-align:left;box-shadow:0 2px 8px rgba(15,17,23,.06);}
 .theater-item:hover{background:#eef3ff;}
 .theater-item.active{border-color:var(--c-screen);background:#eafaf7;}
-.theater-item img{width:96px;height:60px;object-fit:cover;border-radius:7px;background:#0e1015;flex-shrink:0;}
+.theater-item .ti-thumb{position:relative;width:96px;height:60px;border-radius:7px;overflow:hidden;flex-shrink:0;background:linear-gradient(135deg,#12a394,#0a5c52);display:flex;align-items:center;justify-content:center;color:#fff;font-size:15px;}
+.theater-item .ti-thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
 .theater-item .ti-label{font-size:12.5px;font-weight:600;line-height:1.35;}
 .theater-item .ti-watched{display:block;font-size:10.5px;color:var(--c-screen);font-weight:700;margin-top:2px;}
 @media(max-width:900px){
   .theater{flex-direction:column;}
   .theater-side{width:100%;max-height:none;flex-direction:row;overflow-x:auto;overflow-y:hidden;}
   .theater-item{flex-direction:column;width:150px;flex-shrink:0;}
-  .theater-item img{width:100%;height:84px;}
+  .theater-item .ti-thumb{width:100%;height:84px;}
 }
 /* ===== SIGN-IN GATE ===== */
 #signInGate{position:fixed;inset:0;z-index:5000;background:linear-gradient(135deg,#1c2030,#2f6fed 160%);display:flex;align-items:center;justify-content:center;padding:20px;}
@@ -1615,7 +1616,7 @@ function enterApp(){
   checkBiweeklyReport();
   theaterRenderSide();
 }
-(function initAuth(){
+function initAuth(){
   const cur = getCurrentStudent();
   if(cur){
     student = loadStudentRecord(cur.email);
@@ -1636,7 +1637,15 @@ function enterApp(){
     const gateP = document.querySelector('.si-card p');
     if(gateP) gateP.textContent = `Confirm your details to pick up right where you left off, ${lock.name||'there'}.`;
   }
-})();
+}
+/* NOTE: initAuth() is *called* at the very bottom of this script, not here.
+   enterApp() (triggered by initAuth when a student is already signed in on
+   this device) renders the screencast theater and practice-file grid, so it
+   must not run until every const/function those depend on — driveThumbUrl,
+   renderMediaCard, allScreencasts, theaterRenderSide, etc. — has already
+   been defined further down this file. Calling it this early on a returning
+   visit was throwing a silent error and leaving the side list, the video
+   thumbnail, and the practice-file thumbnails all blank. */
 /* ---------- persist completion to the signed-in student's record ---------- */
 const _origUpdateProgress = updateProgress;
 updateProgress = function(){
@@ -2277,7 +2286,7 @@ function theaterRenderSide(){
     item.type = 'button';
     item.className = 'theater-item' + (theaterCurrentId===v.id ? ' active' : '');
     item.setAttribute('aria-label', `Play ${v.label}`);
-    item.innerHTML = `<img src="${driveThumbUrl(v.id)}" alt="" loading="lazy" onerror="this.remove()">
+    item.innerHTML = `<div class="ti-thumb"><span aria-hidden="true">▶</span><img src="${driveThumbUrl(v.id)}" alt="" loading="lazy" onerror="this.style.display='none'"></div>
       <span class="ti-label">${v.label}${watched ? '<span class="ti-watched">watched 75%+ ✓</span>' : ''}</span>`;
     item.addEventListener('click', ()=>theaterPlay(v.id, v.label));
     side.appendChild(item);
@@ -2343,6 +2352,11 @@ if(allScreencasts.length){
 }
 theaterRenderSide();
 renderProgressView();
+/* Everything above this line (driveThumbUrl, renderMediaCard, allScreencasts,
+   theaterRenderSide, etc.) must exist before initAuth() runs, since a
+   returning student triggers enterApp() -> theaterRenderSide() immediately.
+   That's why the actual call happens here, last. */
+initAuth();
 </script>
 </body>
 </html>
