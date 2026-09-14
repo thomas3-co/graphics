@@ -479,7 +479,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
           </div>
           <div class="home-card" style="--accent:#5b6270" onclick="goTab('materials')" role="button" tabindex="0" onkeydown="if(event.key==='Enter')goTab('materials')">
             <h4>Additional Materials</h4>
-            <p>24 extra resources from your instructor, previewed right inside the card.</p>
+            <p>23 extra resources from your instructor, previewed right inside the card.</p>
           </div>
           <div class="home-card" style="--accent:#2f6fed" onclick="goTab('progress')" role="button" tabindex="0" onkeydown="if(event.key==='Enter')goTab('progress')">
             <h4>My Progress</h4>
@@ -1848,7 +1848,7 @@ function renderProgressView(){
       <div class="progress-card" style="--pc-accent:#8b5cf6"><h4>Reading Opened</h4><div class="pc-big">${student.readingSeen.length}/10</div><div class="pc-sub">Read Me sections viewed</div></div>
       <div class="progress-card" style="--pc-accent:#12a394"><h4>Screencasts Watched</h4><div class="pc-big">${videosConfirmed}/23</div><div class="pc-sub">confirmed 50%+ (self-reported)</div></div>
       <div class="progress-card" style="--pc-accent:#ef476f"><h4>Practice Files Opened</h4><div class="pc-big">${student.seenPractice.length}/6</div><div class="pc-sub">exercise files previewed</div></div>
-      <div class="progress-card" style="--pc-accent:#5b6270"><h4>Materials Opened</h4><div class="pc-big">${(student.seenMaterials||[]).length}/24</div><div class="pc-sub">additional resources previewed</div></div>
+      <div class="progress-card" style="--pc-accent:#5b6270"><h4>Materials Opened</h4><div class="pc-big">${(student.seenMaterials||[]).length}/23</div><div class="pc-sub">additional resources previewed</div></div>
     </div>
     <div class="note-section" style="margin-top:22px;">
       <h3 style="margin-top:0;">Week-by-week breakdown</h3>
@@ -2297,7 +2297,7 @@ const materialIds = [
   '1TkwEEQTn_sGIyd5DePCmEUm0YQnroQW2','1oou-duyFUwuhZ5jqBUCKMhT4PWghdxTu','111AGUhs84b-G4LKsV6cDcxSH-ISP-ndX',
   '1SmHILtt0RT0EzfHEk7rTtoClb6xbN8ui','1syb9ETDgoS-SixGAkCiFF6SpSnScdFkI','10IokWwGGXFLUTVbtSAq2OFdID0Ym3o7j',
   '1npxc1qVAcnLyxdwVcw1EJ_qxKd10ylnn','1qQfchvrfdKWP-Fs9ZnLacXeU0tmlme-f','1Ih7HXo1Z8778Knh9ammfl2PBjsbrYDBD',
-  '16wtWHWwyAqW7psHgRKRtN1LCDDPV_pF5','1uX8OsswuJCUguVjUzHRuFPdEHFqJtcC0','1AVx463Sasy8EdZydYoecppUQI-Rio4Tf'
+  '16wtWHWwyAqW7psHgRKRtN1LCDDPV_pF5','1uX8OsswuJCUguVjUzHRuFPdEHFqJtcC0'
 ];
 const mgrid = document.getElementById('materialsGrid');
 materialIds.forEach((id,i)=>mgrid.appendChild(renderMediaCard({id, label:`Material ${i+1}`, kind:'file', accent:'#5b6270', trackKey:'seenMaterials'})));
