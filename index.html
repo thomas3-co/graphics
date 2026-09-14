@@ -286,6 +286,28 @@ footer.appfoot .foot-contact a:hover{text-decoration:underline;}
 }
 .media-card .media-body .chk.seen{opacity:1;background:var(--card-accent,var(--c-screen));color:#fff;}
 .media-card .media-body a{margin-top:2px;text-decoration:none;font-weight:700;font-size:12px;color:var(--card-accent,var(--c-screen));display:flex;align-items:center;gap:6px;}
+/* ===== CINEMATIC THEATER PLAYER (Screencasts) ===== */
+.theater{display:flex;gap:18px;margin-top:18px;align-items:flex-start;}
+.theater-main{flex:1;min-width:0;}
+.theater-player{width:100%;aspect-ratio:16/9;background:#0e1015;border-radius:14px;overflow:hidden;position:relative;box-shadow:var(--shadow);}
+.theater-player iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block;}
+.theater-player .thumb-poster{position:absolute;inset:0;width:100%;}
+.theater-info{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:12px;padding:14px 16px;background:#fff;border-radius:12px;box-shadow:var(--shadow);}
+.theater-info b{font-size:14.5px;flex:1;min-width:120px;}
+.theater-info a{text-decoration:none;font-weight:700;font-size:12.5px;color:var(--c-screen);}
+.theater-side{width:320px;flex-shrink:0;max-height:640px;overflow-y:auto;display:flex;flex-direction:column;gap:8px;padding-right:2px;}
+.theater-item{display:flex;gap:10px;align-items:center;background:#fff;border:2px solid transparent;border-radius:10px;padding:6px;cursor:pointer;text-align:left;box-shadow:0 2px 8px rgba(15,17,23,.06);}
+.theater-item:hover{background:#eef3ff;}
+.theater-item.active{border-color:var(--c-screen);background:#eafaf7;}
+.theater-item img{width:96px;height:60px;object-fit:cover;border-radius:7px;background:#0e1015;flex-shrink:0;}
+.theater-item .ti-label{font-size:12.5px;font-weight:600;line-height:1.35;}
+.theater-item .ti-watched{display:block;font-size:10.5px;color:var(--c-screen);font-weight:700;margin-top:2px;}
+@media(max-width:900px){
+  .theater{flex-direction:column;}
+  .theater-side{width:100%;max-height:none;flex-direction:row;overflow-x:auto;overflow-y:hidden;}
+  .theater-item{flex-direction:column;width:150px;flex-shrink:0;}
+  .theater-item img{width:100%;height:84px;}
+}
 /* ===== SIGN-IN GATE ===== */
 #signInGate{position:fixed;inset:0;z-index:5000;background:linear-gradient(135deg,#1c2030,#2f6fed 160%);display:flex;align-items:center;justify-content:center;padding:20px;}
 #signInGate.hidden{display:none;}
@@ -404,7 +426,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
       <!-- ========== HOME ========== -->
       <section id="home" class="view active">
         <div class="hero">
-          <div class="hero-eyebrow">16-Week Studio Course</div>
+          <div class="hero-eyebrow">16-Week Studio Course · Meets 2 Days a Week</div>
           <h1>Master Photoshop — from blank canvas to portfolio-ready artistry.</h1>
           <p>Everything for the course lives here: the week-by-week curriculum, group projects, detailed reading notes, screencast recordings, and downloadable practice files — all in one workspace.</p>
           <div class="hero-actions">
@@ -414,7 +436,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
         </div>
         <div class="stat-row">
           <div class="stat"><b>16</b><span>Weeks of curriculum</span></div>
-          <div class="stat"><b>48</b><span>Daily lessons &amp; flip cards</span></div>
+          <div class="stat"><b>32</b><span>Daily lessons &amp; flip cards</span></div>
           <div class="stat"><b>3</b><span>Group projects</span></div>
           <div class="stat"><b>23</b><span>Screencast recordings</span></div>
         </div>
@@ -434,7 +456,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
           </div>
           <div class="home-card" style="--accent:#12a394" onclick="goTab('screencasts')" role="button" tabindex="0" onkeydown="if(event.key==='Enter')goTab('screencasts')">
             <h4>Screencasts</h4>
-            <p>Every recorded class walkthrough — plays right inside the card.</p>
+            <p>Every recorded class walkthrough — plays right inside the page in a cinema-style player.</p>
           </div>
           <div class="home-card" style="--accent:#ef476f" onclick="goTab('practice')" role="button" tabindex="0" onkeydown="if(event.key==='Enter')goTab('practice')">
             <h4>Practice Files</h4>
@@ -455,7 +477,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
         <div class="view-head">
           <div>
             <h2>Curriculum</h2>
-            <p>Tap any card to flip it and mark that lesson complete. Progress is saved automatically. Finishing every day in a week pops up that week's check-in quiz.</p>
+            <p>Class meets 2 days per week. Tap any card to flip it and mark that lesson complete. Progress is saved automatically. Finishing both days in a week pops up that week's check-in quiz.</p>
           </div>
           <div class="month-switch" id="monthSwitch">
             <button class="chip active" data-month="m1">Month One · Weeks 1–4</button>
@@ -479,20 +501,15 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
         <div class="big-ideas">Understanding the Photoshop interface helps you navigate efficiently.</div>
         </div></div></div>
         <div class="flip-card" data-day="1-2"><div class="flip-card-inner">
-        <div class="flip-card-front"><h4>Day 2: Raster vs Vector</h4><p>Differences between pixel and math-based graphics.</p><span class="flip-hint">Tap to flip</span></div>
+        <div class="flip-card-front"><h4>Day 2: Raster vs Vector &amp; Layers</h4><p>Pixel vs math-based graphics, plus Photoshop's most essential feature.</p><span class="flip-hint">Tap to flip</span></div>
         <div class="flip-card-back"><div class="vocab-title">Vocabulary</div>
         <p><span class="vocab" tabindex="0" data-def="Images made of pixels.">Raster</span><span class="vocab-def"> — Images made of pixels.</span>,
         <span class="vocab" tabindex="0" data-def="Scalable shapes defined by math.">Vector</span><span class="vocab-def"> — Scalable shapes defined by math.</span>,
-        <span class="vocab" tabindex="0" data-def="Squares that make up raster images.">Pixel</span><span class="vocab-def"> — Squares that make up raster images.</span></p>
-        <div class="big-ideas">Raster is detail-rich but not scalable; vector is scalable without losing quality.</div>
-        </div></div></div>
-        <div class="flip-card" data-day="1-3"><div class="flip-card-inner">
-        <div class="flip-card-front"><h4>Day 3: Layers</h4><p>Working with Photoshop's most essential feature.</p><span class="flip-hint">Tap to flip</span></div>
-        <div class="flip-card-back"><div class="vocab-title">Vocabulary</div>
-        <p><span class="vocab" tabindex="0" data-def="Photoshop's building blocks.">Layer</span><span class="vocab-def"> — Photoshop's building blocks.</span>,
+        <span class="vocab" tabindex="0" data-def="Squares that make up raster images.">Pixel</span><span class="vocab-def"> — Squares that make up raster images.</span>,
+        <span class="vocab" tabindex="0" data-def="Photoshop's building blocks.">Layer</span><span class="vocab-def"> — Photoshop's building blocks.</span>,
         <span class="vocab" tabindex="0" data-def="Adjust visibility of a layer.">Opacity</span><span class="vocab-def"> — Adjust visibility of a layer.</span>,
         <span class="vocab" tabindex="0" data-def="Organize multiple layers.">Group</span><span class="vocab-def"> — Organize multiple layers.</span></p>
-        <div class="big-ideas">Layers allow non-linear editing and flexibility in projects.</div>
+        <div class="big-ideas">Raster is detail-rich but not scalable; vector is scalable without losing quality. Layers allow non-linear editing and flexibility in projects.</div>
         </div></div></div>
         </div></div>
         <div class="week-card" id="week2">
@@ -507,18 +524,13 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
         <div class="big-ideas">Adjustment layers preserve original pixels while applying edits.</div>
         </div></div></div>
         <div class="flip-card" data-day="2-2"><div class="flip-card-inner">
-        <div class="flip-card-front"><h4>Day 2: Smart Objects</h4><p>Protecting image quality while transforming.</p><span class="flip-hint">Tap to flip</span></div>
+        <div class="flip-card-front"><h4>Day 2: Smart Objects &amp; Masks</h4><p>Protecting image quality while transforming, and hiding or revealing without erasing pixels.</p><span class="flip-hint">Tap to flip</span></div>
         <div class="flip-card-back"><div class="vocab-title">Vocabulary</div>
         <p><span class="vocab" tabindex="0" data-def="Container preserving source data.">Smart Object</span><span class="vocab-def"> — Container preserving source data.</span>,
-        <span class="vocab" tabindex="0" data-def="Image scaling or resizing.">Transform</span><span class="vocab-def"> — Image scaling or resizing.</span></p>
-        <div class="big-ideas">Smart Objects maintain full resolution during edits.</div>
-        </div></div></div>
-        <div class="flip-card" data-day="2-3"><div class="flip-card-inner">
-        <div class="flip-card-front"><h4>Day 3: Masks</h4><p>Hide or reveal without erasing pixels.</p><span class="flip-hint">Tap to flip</span></div>
-        <div class="flip-card-back"><div class="vocab-title">Vocabulary</div>
-        <p><span class="vocab" tabindex="0" data-def="Controls visibility of parts of a layer.">Mask</span><span class="vocab-def"> — Controls visibility of parts of a layer.</span>,
+        <span class="vocab" tabindex="0" data-def="Image scaling or resizing.">Transform</span><span class="vocab-def"> — Image scaling or resizing.</span>,
+        <span class="vocab" tabindex="0" data-def="Controls visibility of parts of a layer.">Mask</span><span class="vocab-def"> — Controls visibility of parts of a layer.</span>,
         <span class="vocab" tabindex="0" data-def="Soft edge transition.">Feather</span><span class="vocab-def"> — Soft edge transition.</span></p>
-        <div class="big-ideas">Masks allow selective editing and reversibility.</div>
+        <div class="big-ideas">Smart Objects maintain full resolution during edits. Masks allow selective editing and reversibility.</div>
         </div></div></div>
         </div></div>
         <div class="week-card" id="week3">
@@ -532,19 +544,14 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
         <span class="vocab" tabindex="0" data-def="Top bar that shows tool options.">Options Bar</span><span class="vocab-def"> — Top bar that shows tool options.</span></p>
         <div class="big-ideas">Learn the layout and function of each interface element.</div>
         </div></div></div>
-        <div class="flip-card" data-day="3-2"><div class="flip-card-inner">
-        <div class="flip-card-front"><h4>Day 2: ID &amp; Passport Photos</h4><p>Create professional passport or ID photos.</p><span class="flip-hint">Tap to flip</span></div>
+        <div class="flip-card project-day" data-day="3-2"><div class="flip-card-inner">
+        <div class="flip-card-front"><div class="project-label">PROJECT DAY</div><h4>Day 2: ID/Passport Photos &amp; Around the World with a Twist</h4><p>Create professional ID photos, then dive into the group project — open the brief in Group Projects.</p><span class="flip-hint">Tap to flip</span></div>
         <div class="flip-card-back"><div class="vocab-title">Vocabulary</div>
         <p><span class="vocab" tabindex="0" data-def="Removes unwanted background.">Background Remover</span><span class="vocab-def"> — Removes unwanted background.</span>,
-        <span class="vocab" tabindex="0" data-def="Adjusts image size.">Crop Tool</span><span class="vocab-def"> — Adjusts image size.</span></p>
-        <div class="big-ideas">Practice creating official ID photos using precise selection and background removal.</div>
-        </div></div></div>
-        <div class="flip-card project-day" data-day="3-3"><div class="flip-card-inner">
-        <div class="flip-card-front"><div class="project-label">PROJECT DAY</div><h4>Day 3: Around the World with a Twist</h4><p>Group project — open the brief in Group Projects.</p><span class="flip-hint">Tap to flip</span></div>
-        <div class="flip-card-back"><div class="vocab-title">Vocabulary</div>
-        <p><span class="vocab" tabindex="0" data-def="Separates texture from tone.">Frequency Separation</span><span class="vocab-def"> — Separates texture from tone.</span>,
+        <span class="vocab" tabindex="0" data-def="Adjusts image size.">Crop Tool</span><span class="vocab-def"> — Adjusts image size.</span>,
+        <span class="vocab" tabindex="0" data-def="Separates texture from tone.">Frequency Separation</span><span class="vocab-def"> — Separates texture from tone.</span>,
         <span class="vocab" tabindex="0" data-def="Lighten/darken areas for depth.">Dodge &amp; Burn</span><span class="vocab-def"> — Lighten/darken areas for depth.</span></p>
-        <div class="big-ideas">Work non-destructively and preserve natural skin texture. Full brief and per-group rubric: Group Projects tab → "Week 3 · Around the World with a Twist".</div>
+        <div class="big-ideas">Practice creating official ID photos using precise selection and background removal. For the group project, work non-destructively and preserve natural skin texture. Full brief and per-group rubric: Group Projects tab → "Week 3 · Around the World with a Twist".</div>
         </div></div></div>
         </div></div>
         <div class="week-card" id="week4">
@@ -560,21 +567,15 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
         <p class="big-ideas">Focus on subtle realism, use separate layers and masks for flexibility.</p>
         </div></div></div>
         <div class="flip-card" data-day="4-2"><div class="flip-card-inner">
-        <div class="flip-card-front"><h4>Day 2: Puppet Warp &amp; Dress Change</h4><p>Advanced portrait manipulation.</p><span class="flip-hint">Tap to flip</span></div>
+        <div class="flip-card-front flip-card-quiz-front"><h4>Day 2: Puppet Warp, Dress Change &amp; Final Project</h4><p>Advanced portrait manipulation, then apply all skills from Week 1–4.</p><span class="flip-hint" style="color:rgba(255,255,255,.75)">Tap to flip</span></div>
         <div class="flip-card-back"><div class="vocab-title">Vocabulary</div>
         <p><span class="vocab" tabindex="0" data-def="Pin-based tool for flexible distortion.">Puppet Warp</span><span class="vocab-def"> — Pin-based tool for flexible distortion.</span>,
         <span class="vocab" tabindex="0" data-def="Altering clothing colors/patterns.">Dress Change</span><span class="vocab-def"> — Altering clothing colors/patterns.</span>,
-        <span class="vocab" tabindex="0" data-def="Mesh overlay used in puppet warp.">Control Points</span><span class="vocab-def"> — Mesh overlay used in puppet warp.</span></p>
-        <div class="vocab-title">Big Ideas</div>
-        <p class="big-ideas">Use Puppet Warp for realistic body or cloth repositioning; maintain proportions and natural folds.</p>
-        </div></div></div>
-        <div class="flip-card" data-day="4-3"><div class="flip-card-inner">
-        <div class="flip-card-front flip-card-quiz-front"><h4>Day 3: Final Project</h4><p>Apply all skills from Week 1–4.</p><span class="flip-hint" style="color:rgba(255,255,255,.75)">Tap to flip</span></div>
-        <div class="flip-card-back"><div class="vocab-title">Vocabulary</div>
-        <p><span class="vocab" tabindex="0" data-def="Combining learned techniques into one design.">Integration</span><span class="vocab-def"> — Combining learned techniques into one design.</span>,
+        <span class="vocab" tabindex="0" data-def="Mesh overlay used in puppet warp.">Control Points</span><span class="vocab-def"> — Mesh overlay used in puppet warp.</span>,
+        <span class="vocab" tabindex="0" data-def="Combining learned techniques into one design.">Integration</span><span class="vocab-def"> — Combining learned techniques into one design.</span>,
         <span class="vocab" tabindex="0" data-def="Applying advanced retouching and compositing.">Final Composition</span><span class="vocab-def"> — Applying advanced retouching and compositing.</span></p>
         <div class="vocab-title">Big Ideas</div>
-        <p class="big-ideas">Create a polished portrait project using techniques from previous weeks.</p>
+        <p class="big-ideas">Use Puppet Warp for realistic body or cloth repositioning; maintain proportions and natural folds. Create a polished portrait project using techniques from previous weeks.</p>
         </div></div></div>
         </div></div>
         </div><!-- /month-block m1 -->
@@ -590,12 +591,9 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
               <li>Apply <strong>Solid Color Fill Layer</strong> with blending mode <strong>Color</strong> or <strong>Soft Light</strong>.</li></ul></div>
             </div></div>
             <div class="flip-card project-day" data-day="5-2"><div class="flip-card-inner">
-              <div class="flip-card-front"><div class="project-label">PROJECT DAY</div><h4>Day 2: Color Fill &amp; Curve Control II</h4><p>Refine clothing recolor and master curve balancing.</p><span class="flip-hint">Tap to flip</span></div>
-              <div class="flip-card-back"><p>Deepen control over tonal balance using <strong>Curves Adjustment Layer</strong>.</p></div>
-            </div></div>
-            <div class="flip-card project-day" data-day="5-3"><div class="flip-card-inner">
-              <div class="flip-card-front"><div class="project-label">PROJECT DAY</div><h4>Day 3: Match Subject with Background</h4><p>Blend subject and background tones seamlessly.</p><span class="flip-hint">Tap to flip</span></div>
-              <div class="flip-card-back"><p>Focus on visual harmony using <strong>Curves</strong> and <strong>Color Balance</strong>.</p></div>
+              <div class="flip-card-front"><div class="project-label">PROJECT DAY</div><h4>Day 2: Curve Control II &amp; Match Subject with Background</h4><p>Refine clothing recolor, master curve balancing, and blend subject/background tones seamlessly.</p><span class="flip-hint">Tap to flip</span></div>
+              <div class="flip-card-back"><p>Deepen control over tonal balance using <strong>Curves Adjustment Layer</strong>.</p>
+              <p>Focus on visual harmony between subject and background using <strong>Curves</strong> and <strong>Color Balance</strong>.</p></div>
             </div></div>
           </div>
         </div>
@@ -611,15 +609,12 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
               <li>Save as high-quality JPEG for presentation.</li></ul>
               <div class="summary-text">Full brief: Group Projects tab → "Week 6 · Phone / iPad Mockup".</div></div>
             </div></div>
-            <div class="flip-card practice-day" data-day="6-2"><div class="flip-card-inner">
-              <div class="flip-card-front"><div class="practice-label">PRACTICE DAY</div><h4>Day 2: Practice Mockup Variations</h4><p>Practice multiple mockup types — device, packaging, poster.</p><span class="flip-hint">Tap to flip</span></div>
-              <div class="flip-card-back"><p><strong>Objective:</strong> Strengthen mockup editing and smart object management skills.</p>
-              <ul><li>Try 2–3 different mockup templates.</li><li>Refine placement and lighting adjustments.</li><li>Focus on realism and presentation balance.</li></ul></div>
-            </div></div>
-            <div class="flip-card project-day" data-day="6-3"><div class="flip-card-inner">
-              <div class="flip-card-front"><div class="project-label">PROJECT DAY</div><h4>Day 3: Phone / iPad Mockup — Submission</h4><p>Finalize and submit your mockup.</p><span class="flip-hint">Tap to flip</span></div>
-              <div class="flip-card-back"><p><strong>Objective:</strong> Learn to craft glowing, metallic, or embossed text effects using blending and texture overlays.</p>
-              <ul><li>Apply <strong>Bevel &amp; Emboss</strong>, <strong>Drop Shadow</strong>, and <strong>Gradient Overlay</strong>.</li><li>Submit via Group Projects tab → "Week 6 · Phone / iPad Mockup".</li></ul></div>
+            <div class="flip-card project-day" data-day="6-2"><div class="flip-card-inner">
+              <div class="flip-card-front"><div class="project-label">PROJECT DAY</div><h4>Day 2: Practice Variations &amp; Mockup Submission</h4><p>Practice extra mockup types, then finalize and submit your mockup.</p><span class="flip-hint">Tap to flip</span></div>
+              <div class="flip-card-back"><p><strong>Objective:</strong> Strengthen mockup editing skills, then craft glowing, metallic, or embossed text effects using blending and texture overlays.</p>
+              <ul><li>Try 2–3 different mockup templates; refine placement and lighting.</li>
+              <li>Apply <strong>Bevel &amp; Emboss</strong>, <strong>Drop Shadow</strong>, and <strong>Gradient Overlay</strong>.</li>
+              <li>Submit via Group Projects tab → "Week 6 · Phone / iPad Mockup".</li></ul></div>
             </div></div>
           </div>
         </div>
@@ -634,19 +629,12 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
               <li>Paste or drag your text layer into the vanishing point plane.</li>
               <li>Adjust lighting, opacity, and blending mode (<strong>Multiply</strong> or <strong>Overlay</strong>).</li></ul></div>
             </div></div>
-            <div class="flip-card blue-border" data-day="7-2"><div class="flip-card-inner">
-              <div class="flip-card-front"><h4>Day 2: Continue from Day 1</h4><p>Enhance your Vanishing Point text with lighting and texture integration.</p><span class="flip-hint">Tap to flip</span></div>
-              <div class="flip-card-back"><p><strong>Objective:</strong> Refine realism and texture blending from Day 1.</p>
-              <ul><li>Use <strong>Clone Stamp Tool</strong> or <strong>Healing Brush</strong> to merge edges.</li>
-              <li>Match lighting using <strong>Curves</strong> and <strong>Hue/Saturation</strong>.</li>
-              <li>Add <strong>Noise</strong> or <strong>Blur</strong> for realism.</li></ul></div>
-            </div></div>
-            <div class="flip-card project-day" data-day="7-3"><div class="flip-card-inner">
-              <div class="flip-card-front"><div class="project-label">PROJECT DAY</div><h4>Day 3: 3D Text &amp; Image Pop-Out Effect</h4><p>Create an illusion of objects or text popping out of the image frame.</p><span class="flip-hint">Tap to flip</span></div>
-              <div class="flip-card-back"><p><strong>Objective:</strong> Combine layer masking and 3D perspective to make subjects break out of the photo boundaries.</p>
-              <ul><li>Import an image and add a white frame around it using <strong>Rectangle Tool</strong>.</li>
-              <li>Duplicate the image layer and mask parts that should appear outside the frame.</li>
-              <li>Add <strong>Drop Shadows</strong> to enhance depth and realism.</li>
+            <div class="flip-card project-day" data-day="7-2"><div class="flip-card-inner">
+              <div class="flip-card-front"><div class="project-label">PROJECT DAY</div><h4>Day 2: Refine Vanishing Point Text &amp; 3D Pop-Out Effect</h4><p>Refine lighting and texture, then create an illusion of objects or text popping out of the frame.</p><span class="flip-hint">Tap to flip</span></div>
+              <div class="flip-card-back"><p><strong>Objective:</strong> Refine realism from Day 1, then combine layer masking and 3D perspective to make subjects break out of the photo boundaries.</p>
+              <ul><li>Use <strong>Clone Stamp Tool</strong> or <strong>Healing Brush</strong> to merge edges; match lighting with <strong>Curves</strong> and <strong>Hue/Saturation</strong>.</li>
+              <li>Import an image and add a white frame around it using <strong>Rectangle Tool</strong>.</li>
+              <li>Duplicate the image layer and mask parts that should appear outside the frame; add <strong>Drop Shadows</strong> for depth.</li>
               <li>Use <strong>3D Text</strong> with <strong>Bevel &amp; Emboss</strong> to complement the effect.</li></ul>
               <p class="summary-text">Final look: your subject or text appears to pop out from the image into real space.</p></div>
             </div></div>
@@ -663,16 +651,10 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
               <p class="summary-text">Self-paced session for mastery and creativity.</p></div>
             </div></div>
             <div class="flip-card" data-day="8-2"><div class="flip-card-inner">
-              <div class="flip-card-front"><h4>Day 2: Independent Study &amp; Practice</h4><p>Spend today refining your previous Photoshop projects.</p><span class="flip-hint">Tap to flip</span></div>
+              <div class="flip-card-front"><h4>Day 2: More Independent Study &amp; Vintage Photo Editing</h4><p>Keep refining projects, then explore how to give your photos a timeless, vintage feel.</p><span class="flip-hint">Tap to flip</span></div>
               <div class="flip-card-back"><p><strong>Focus Areas:</strong></p>
-              <ul><li>Revisit your Week 4, 5, 6 and 7 projects.</li><li>Enhance details, lighting, and text alignment.</li>
-              <li>Experiment with extra effects: <strong>Outer Glow</strong>, <strong>Color Balance</strong>, or <strong>Gradient Maps</strong>.</li></ul>
-              <p class="summary-text">Self-paced session for mastery and creativity.</p></div>
-            </div></div>
-            <div class="flip-card" data-day="8-3"><div class="flip-card-inner">
-              <div class="flip-card-front"><h4>Day 3: Vintage Photo Editing</h4><p>Today, explore how to give your photos a timeless, vintage feel.</p><span class="flip-hint">Tap to flip</span></div>
-              <div class="flip-card-back"><p><strong>Focus Areas:</strong></p>
-              <ul><li>Apply sepia tones and faded color effects.</li>
+              <ul><li>Continue polishing Week 4–7 projects: details, lighting, text alignment.</li>
+              <li>Apply sepia tones and faded color effects.</li>
               <li>Use <strong>Film Grain</strong> or <strong>Noise</strong> filters for an aged texture.</li>
               <li>Experiment with <strong>Vignette</strong> and <strong>Curves Adjustment</strong> for mood enhancement.</li>
               <li>Try blending overlays like <strong>Dust &amp; Scratches</strong> for authenticity.</li></ul>
@@ -691,12 +673,8 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
               <div class="flip-card-back"><p><strong>Objective:</strong> Glow, contrast, color blending.</p></div>
             </div></div>
             <div class="flip-card project-day" data-day="9-2"><div class="flip-card-inner">
-              <div class="flip-card-front"><div class="project-label">PROJECT DAY</div><h4>Day 2: Neon Sign + Wall Effect</h4><p>Make a realistic glowing wall-mounted neon sign.</p><span class="flip-hint">Tap to flip</span></div>
-              <div class="flip-card-back"><ul><li>Create metal frame</li><li>Add realistic wall texture</li><li>Use glow layers</li></ul></div>
-            </div></div>
-            <div class="flip-card project-day" data-day="9-3"><div class="flip-card-inner">
-              <div class="flip-card-front"><div class="project-label">PROJECT DAY</div><h4>Day 3: Gojo Pop-Out Project — Submission</h4><p>Finalize ideas and submit your Gojo pop-out project.</p><span class="flip-hint">Tap to flip</span></div>
-              <div class="flip-card-back"><ul><li>Brush glow edges</li><li>Blend mode lighten</li><li>Color dodge for highlights</li><li>Submit via Group Projects tab → "Week 9 · Gojo Pop-Out Project".</li></ul></div>
+              <div class="flip-card-front"><div class="project-label">PROJECT DAY</div><h4>Day 2: Neon Sign + Wall Effect &amp; Submission</h4><p>Make a realistic glowing wall-mounted neon sign, then finalize and submit your Gojo pop-out project.</p><span class="flip-hint">Tap to flip</span></div>
+              <div class="flip-card-back"><ul><li>Create metal frame; add realistic wall texture; use glow layers.</li><li>Brush glow edges; blend mode lighten; color dodge for highlights.</li><li>Submit via Group Projects tab → "Week 9 · Gojo Pop-Out Project".</li></ul></div>
             </div></div>
           </div>
         </div>
@@ -708,12 +686,8 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
               <div class="flip-card-back"><ul><li>Use layer masks</li><li>Soft brushes</li><li>Black/white balance</li></ul></div>
             </div></div>
             <div class="flip-card project-day" data-day="10-2"><div class="flip-card-inner">
-              <div class="flip-card-front"><div class="project-label">PROJECT DAY</div><h4>Day 2: Advanced Double Exposure</h4><p>Combine shapes, forests, cities, portraits.</p><span class="flip-hint">Tap to flip</span></div>
-              <div class="flip-card-back"><ul><li>Gradient mask control</li><li>Blend multiple textures</li><li>Color grading</li></ul></div>
-            </div></div>
-            <div class="flip-card project-day" data-day="10-3"><div class="flip-card-inner">
-              <div class="flip-card-front"><div class="project-label">PROJECT DAY</div><h4>Day 3: Poster Design with Double Exposure</h4><p>Full poster blending photography + typography.</p><span class="flip-hint">Tap to flip</span></div>
-              <div class="flip-card-back"><ul><li>Cinematic color grading</li><li>Strong layout</li><li>Title placement rules</li></ul></div>
+              <div class="flip-card-front"><div class="project-label">PROJECT DAY</div><h4>Day 2: Advanced Double Exposure &amp; Poster Design</h4><p>Combine shapes, forests, cities, portraits, then build a full poster blending photography + typography.</p><span class="flip-hint">Tap to flip</span></div>
+              <div class="flip-card-back"><ul><li>Gradient mask control; blend multiple textures; color grading.</li><li>Cinematic color grading; strong layout; title placement rules.</li></ul></div>
             </div></div>
           </div>
         </div>
@@ -728,10 +702,6 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
               <div class="flip-card-front"><h4>Day 2: To be added</h4><p>Lesson content for this day hasn't been added yet.</p><span class="flip-hint">Tap to flip</span></div>
               <div class="flip-card-back"><p class="summary-text">Placeholder — check back once this week's lesson is published.</p></div>
             </div></div>
-            <div class="flip-card" data-day="11-3"><div class="flip-card-inner">
-              <div class="flip-card-front"><h4>Day 3: To be added</h4><p>Lesson content for this day hasn't been added yet.</p><span class="flip-hint">Tap to flip</span></div>
-              <div class="flip-card-back"><p class="summary-text">Placeholder — check back once this week's lesson is published.</p></div>
-            </div></div>
           </div>
         </div>
         <div class="week-card" id="week12">
@@ -743,10 +713,6 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
             </div></div>
             <div class="flip-card" data-day="12-2"><div class="flip-card-inner">
               <div class="flip-card-front"><h4>Day 2: To be added</h4><p>Lesson content for this day hasn't been added yet.</p><span class="flip-hint">Tap to flip</span></div>
-              <div class="flip-card-back"><p class="summary-text">Placeholder — check back once this week's lesson is published.</p></div>
-            </div></div>
-            <div class="flip-card" data-day="12-3"><div class="flip-card-inner">
-              <div class="flip-card-front"><h4>Day 3: To be added</h4><p>Lesson content for this day hasn't been added yet.</p><span class="flip-hint">Tap to flip</span></div>
               <div class="flip-card-back"><p class="summary-text">Placeholder — check back once this week's lesson is published.</p></div>
             </div></div>
           </div>
@@ -765,10 +731,6 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
               <div class="flip-card-front"><h4>Day 2: To be added</h4><p>Lesson content for this day hasn't been added yet.</p><span class="flip-hint">Tap to flip</span></div>
               <div class="flip-card-back"><p class="summary-text">Placeholder — check back once this week's lesson is published.</p></div>
             </div></div>
-            <div class="flip-card" data-day="13-3"><div class="flip-card-inner">
-              <div class="flip-card-front"><h4>Day 3: To be added</h4><p>Lesson content for this day hasn't been added yet.</p><span class="flip-hint">Tap to flip</span></div>
-              <div class="flip-card-back"><p class="summary-text">Placeholder — check back once this week's lesson is published.</p></div>
-            </div></div>
           </div>
         </div>
         <div class="week-card" id="week14">
@@ -780,10 +742,6 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
             </div></div>
             <div class="flip-card" data-day="14-2"><div class="flip-card-inner">
               <div class="flip-card-front"><h4>Day 2: To be added</h4><p>Lesson content for this day hasn't been added yet.</p><span class="flip-hint">Tap to flip</span></div>
-              <div class="flip-card-back"><p class="summary-text">Placeholder — check back once this week's lesson is published.</p></div>
-            </div></div>
-            <div class="flip-card" data-day="14-3"><div class="flip-card-inner">
-              <div class="flip-card-front"><h4>Day 3: To be added</h4><p>Lesson content for this day hasn't been added yet.</p><span class="flip-hint">Tap to flip</span></div>
               <div class="flip-card-back"><p class="summary-text">Placeholder — check back once this week's lesson is published.</p></div>
             </div></div>
           </div>
@@ -799,10 +757,6 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
               <div class="flip-card-front"><h4>Day 2: To be added</h4><p>Lesson content for this day hasn't been added yet.</p><span class="flip-hint">Tap to flip</span></div>
               <div class="flip-card-back"><p class="summary-text">Placeholder — check back once this week's lesson is published.</p></div>
             </div></div>
-            <div class="flip-card" data-day="15-3"><div class="flip-card-inner">
-              <div class="flip-card-front"><h4>Day 3: To be added</h4><p>Lesson content for this day hasn't been added yet.</p><span class="flip-hint">Tap to flip</span></div>
-              <div class="flip-card-back"><p class="summary-text">Placeholder — check back once this week's lesson is published.</p></div>
-            </div></div>
           </div>
         </div>
         <div class="week-card" id="week16">
@@ -813,11 +767,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
               <div class="flip-card-back"><p class="summary-text">Placeholder — check back once this week's lesson is published.</p></div>
             </div></div>
             <div class="flip-card" data-day="16-2"><div class="flip-card-inner">
-              <div class="flip-card-front"><h4>Day 2: To be added</h4><p>Lesson content for this day hasn't been added yet.</p><span class="flip-hint">Tap to flip</span></div>
-              <div class="flip-card-back"><p class="summary-text">Placeholder — check back once this week's lesson is published.</p></div>
-            </div></div>
-            <div class="flip-card" data-day="16-3"><div class="flip-card-inner">
-              <div class="flip-card-front"><h4>Day 3: To be added — Final Project</h4><p>Lesson content for this day hasn't been added yet.</p><span class="flip-hint">Tap to flip</span></div>
+              <div class="flip-card-front"><h4>Day 2: To be added — Final Project</h4><p>Lesson content for this day hasn't been added yet.</p><span class="flip-hint">Tap to flip</span></div>
               <div class="flip-card-back"><p class="summary-text">Placeholder — check back once this week's lesson is published.</p></div>
             </div></div>
           </div>
@@ -1290,14 +1240,22 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
           <div class="note-visual"><strong>Visual Example:</strong> Imagine a toolbox where each tool can be picked and reused in multiple projects — nothing is wasted, everything is reusable.</div>
         </div>
       </section>
-      <!-- ========== SCREENCASTS ========== -->
+      <!-- ========== SCREENCASTS (CINEMATIC THEATER PLAYER) ========== -->
       <section id="screencasts" class="view">
         <div class="view-head"><div><h2>Screencasts</h2>
-        <p>Recorded class walkthroughs — tap a thumbnail to play the video right inside its card, no need to leave the page.</p></div></div>
-        <div class="group-label">Recordings — Set 1</div>
-        <div class="media-grid" id="screencastGrid1"></div>
-        <div class="group-label">Recordings — Set 2</div>
-        <div class="media-grid" id="screencastGrid2"></div>
+        <p>Recorded class walkthroughs. Pick any recording on the right and it plays large on the left, cinema-style — just like a YouTube watch page.</p></div></div>
+        <div class="theater" id="screencastTheater">
+          <div class="theater-main">
+            <div class="theater-player" id="theaterPlayerWrap"></div>
+            <div class="theater-info">
+              <b id="theaterTitle">Select a recording</b>
+              <span class="chk" id="theaterChk" data-role="chk">not opened</span>
+              <button type="button" class="chk" id="theaterWatchBtn" style="cursor:pointer;display:none;">Mark watched 75%+</button>
+              <a id="theaterOpenDrive" href="#" target="_blank" rel="noopener">Open in Google Drive →</a>
+            </div>
+          </div>
+          <div class="theater-side" id="theaterSide"></div>
+        </div>
       </section>
       <!-- ========== PRACTICE FILES ========== -->
       <section id="practice" class="view">
@@ -1333,7 +1291,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
       </div>
       <button class="lp-report-btn" id="lpReportBtn">✉ Send Progress Report</button>
       <button class="lp-signout" id="lpSignOutBtn">Sign out of this device</button>
-      <div class="lp-note">Every lesson card is a "layer." Flip a card in the Curriculum tab to mark that day's lesson complete — this panel fills in as you progress, just like opacity on a real layer. Finishing every day in a week automatically submits that week's check-in quiz report, and a full progress report is also sent automatically every 2 weeks (Sept 14 = Week 1) to your instructor.</div>
+      <div class="lp-note">Every lesson card is a "layer." Flip a card in the Curriculum tab to mark that day's lesson complete — this panel fills in as you progress, just like opacity on a real layer. Finishing both days in a week automatically submits that week's check-in quiz report, and a full progress report is also sent automatically every 2 weeks (Sept 14 = Week 1) to your instructor.</div>
     </aside>
   </div>
   <footer class="appfoot">
@@ -1570,7 +1528,8 @@ document.querySelectorAll('.note-section[data-reading]').forEach(n=>noteObserver
           thomas@hmacademy.org.
      Until these two constants are filled in, reports fall back to
      opening a mailto: draft (the old, editable behavior) so nothing
-     silently fails with no visible result.
+     silently fails with no visible result while you're still setting
+     things up.
    ===================================================================== */
 const REPORT_EMAIL = 'thomas@hmacademy.org';
 const GOOGLE_FORM_ACTION_URL = ''; // e.g. 'https://docs.google.com/forms/d/e/XXXXXXXX/formResponse'
@@ -1654,6 +1613,7 @@ function enterApp(){
   updateProgress();
   updateGrade();
   checkBiweeklyReport();
+  theaterRenderSide();
 }
 (function initAuth(){
   const cur = getCurrentStudent();
@@ -1707,7 +1667,7 @@ document.querySelectorAll('.flip-card[data-day] .vocab').forEach(v=>{
   v.addEventListener('focus', mark);
   v.addEventListener('click', mark);
 });
-/* ---------- WEEK-END QUIZ (auto pop-out when all days in a week are done) ---------- */
+/* ---------- WEEK-END QUIZ (auto pop-out when both days in a week are done) ---------- */
 function buildWeekQuiz(week){
   const pool = vocabPool.filter(v=>v.week===week);
   if(pool.length < 2) return []; // not enough vocab this week (e.g. placeholder weeks) -> reflection-only
@@ -2213,7 +2173,7 @@ document.getElementById('atwSearch').addEventListener('input', e=>{
 });
 atwMakeGroupList();
 atwSelectGroup(1);
-/* ---------- SCREENCASTS & PRACTICE FILES: FITTED CARDS, THUMBNAIL, PLAYS INSIDE CARD ---------- */
+/* ---------- PRACTICE FILES: FITTED CARDS, THUMBNAIL, PLAYS/PREVIEWS INSIDE CARD ---------- */
 function driveEmbedUrl(id){ return `https://drive.google.com/file/d/${id}/preview`; }
 function driveViewUrl(id){ return `https://drive.google.com/file/d/${id}/view?usp=drive_link`; }
 function driveThumbUrl(id){ return `https://drive.google.com/thumbnail?id=${id}&sz=w640`; }
@@ -2297,13 +2257,95 @@ const practiceIds = [
   '1G-7HQ02DKWNB0KV1Zig_ewB3Oi4X6yNZ','1y81quAh0_axcnbufcti7XqVps5Kupsno','1VZeqFzGAZtBjfNYGg8lClM1NT8bwhKnO',
   '1BwweNQo0GDjqttZUC37MjRgrNh268SmK','1BSSMMfhW0RcZevkiNXt4zbv4b2RefSwE','1pEeilJNCas3ak8A4oVkdOTE7991-Spfz'
 ];
-const grid1 = document.getElementById('screencastGrid1');
-const grid2 = document.getElementById('screencastGrid2');
 const pgrid = document.getElementById('practiceGrid');
-screencastIds.forEach((id,i)=>grid1.appendChild(renderMediaCard({id, label:`Screencast ${i+1}`, kind:'video', accent:'#12a394'})));
-screencastIdsSet2.forEach((id,i)=>grid2.appendChild(renderMediaCard({id, label:`Screencast ${21+i}`, kind:'video', accent:'#12a394'})));
 practiceIds.forEach((id,i)=>pgrid.appendChild(renderMediaCard({id, label:`Practice File ${i+1}`, kind:'file', accent:'#ef476f'})));
+/* ================= CINEMATIC THEATER PLAYER (SCREENCASTS) ================= */
+/* YouTube-watch-page style: one large player on the left, the rest of the
+   recordings listed as clickable thumbnails on the side. Clicking a side
+   item swaps the main player, exactly like switching between related videos. */
+const allScreencasts = screencastIds.map((id,i)=>({ id, label:`Screencast ${i+1}` }))
+  .concat(screencastIdsSet2.map((id,i)=>({ id, label:`Screencast ${21+i}` })));
+let theaterCurrentId = null;
+let theaterDwellTimer = null;
+function theaterRenderSide(){
+  const side = document.getElementById('theaterSide');
+  if(!side) return;
+  side.innerHTML = '';
+  allScreencasts.forEach(v=>{
+    const watched = !!(student && student.videoConfirmed && student.videoConfirmed[v.id]);
+    const item = document.createElement('button');
+    item.type = 'button';
+    item.className = 'theater-item' + (theaterCurrentId===v.id ? ' active' : '');
+    item.setAttribute('aria-label', `Play ${v.label}`);
+    item.innerHTML = `<img src="${driveThumbUrl(v.id)}" alt="" loading="lazy" onerror="this.remove()">
+      <span class="ti-label">${v.label}${watched ? '<span class="ti-watched">watched 75%+ ✓</span>' : ''}</span>`;
+    item.addEventListener('click', ()=>theaterPlay(v.id, v.label));
+    side.appendChild(item);
+  });
+}
+function theaterShowPoster(id, label){
+  const wrap = document.getElementById('theaterPlayerWrap');
+  wrap.innerHTML = `<button type="button" class="thumb-poster" aria-label="Play in large screen: ${label}">
+      <img class="thumb-preview" src="${driveThumbUrl(id)}" alt="" loading="lazy" onerror="this.remove()">
+      <div class="play-badge" aria-hidden="true">▶</div>
+      <span class="lbl">Play in large screen</span>
+    </button>`;
+  wrap.querySelector('.thumb-poster').addEventListener('click', ()=>theaterLoadIframe(id, label), { once:true });
+}
+function theaterLoadIframe(id, label){
+  const wrap = document.getElementById('theaterPlayerWrap');
+  wrap.innerHTML = '<div class="thumb-poster" style="cursor:default;"><div class="thumb-spinner" aria-hidden="true"></div><span class="lbl">Loading...</span></div>';
+  const iframe = document.createElement('iframe');
+  iframe.src = driveEmbedUrl(id);
+  iframe.title = label;
+  iframe.loading = 'lazy';
+  iframe.setAttribute('allow','autoplay');
+  iframe.setAttribute('allowfullscreen','true');
+  iframe.addEventListener('load', ()=>{ wrap.innerHTML=''; wrap.appendChild(iframe); }, { once:true });
+  setTimeout(()=>{ if(!wrap.contains(iframe)){ wrap.innerHTML=''; wrap.appendChild(iframe); } }, 600);
+}
+function theaterPlay(id, label){
+  theaterCurrentId = id;
+  clearTimeout(theaterDwellTimer);
+  theaterLoadIframe(id, label);
+  document.getElementById('theaterTitle').textContent = label;
+  document.getElementById('theaterOpenDrive').href = driveViewUrl(id);
+  const chk = document.getElementById('theaterChk');
+  const watchBtn = document.getElementById('theaterWatchBtn');
+  const alreadyWatched = !!(student && student.videoConfirmed && student.videoConfirmed[id]);
+  chk.textContent = alreadyWatched ? 'watched 75%+ ✓' : 'opened ✓';
+  chk.classList.add('seen');
+  watchBtn.style.display = 'none';
+  if(student){
+    student.seenScreencasts = student.seenScreencasts || [];
+    if(!student.seenScreencasts.includes(id)){ student.seenScreencasts.push(id); saveStudentRecord(student); }
+  }
+  if(!alreadyWatched){
+    theaterDwellTimer = setTimeout(()=>{ watchBtn.style.display = 'inline-block'; }, VIDEO_WATCH_THRESHOLD_MS);
+  }
+  theaterRenderSide();
+}
+document.getElementById('theaterWatchBtn').addEventListener('click', ()=>{
+  if(!student){ alert('Sign in first.'); return; }
+  if(!theaterCurrentId) return;
+  student.videoConfirmed = student.videoConfirmed || {};
+  student.videoConfirmed[theaterCurrentId] = true;
+  saveStudentRecord(student);
+  updateGrade();
+  document.getElementById('theaterChk').textContent = 'watched 75%+ ✓';
+  document.getElementById('theaterWatchBtn').style.display = 'none';
+  theaterRenderSide();
+});
+if(allScreencasts.length){
+  theaterShowPoster(allScreencasts[0].id, allScreencasts[0].label);
+  document.getElementById('theaterTitle').textContent = allScreencasts[0].label;
+  document.getElementById('theaterOpenDrive').href = driveViewUrl(allScreencasts[0].id);
+}
+theaterRenderSide();
 renderProgressView();
 </script>
+</body>
+</html>
+
 </body>
 </html>
