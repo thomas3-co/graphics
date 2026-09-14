@@ -287,27 +287,41 @@ footer.appfoot .foot-contact a:hover{text-decoration:underline;}
 .media-card .media-body .chk.seen{opacity:1;background:var(--card-accent,var(--c-screen));color:#fff;}
 .media-card .media-body a{margin-top:2px;text-decoration:none;font-weight:700;font-size:12px;color:var(--card-accent,var(--c-screen));display:flex;align-items:center;gap:6px;}
 /* ===== CINEMATIC THEATER PLAYER (Screencasts) ===== */
-.theater{display:flex;gap:18px;margin-top:18px;align-items:flex-start;}
+.theater{display:flex;gap:20px;margin-top:18px;align-items:flex-start;}
 .theater-main{flex:1;min-width:0;}
 .theater-player{width:100%;aspect-ratio:16/9;background:#0e1015;border-radius:14px;overflow:hidden;position:relative;box-shadow:var(--shadow);}
 .theater-player iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block;}
 .theater-player .thumb-poster{position:absolute;inset:0;width:100%;}
-.theater-info{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:12px;padding:14px 16px;background:#fff;border-radius:12px;box-shadow:var(--shadow);}
-.theater-info b{font-size:14.5px;flex:1;min-width:120px;}
-.theater-info a{text-decoration:none;font-weight:700;font-size:12.5px;color:var(--c-screen);}
-.theater-side{width:320px;flex-shrink:0;max-height:640px;overflow-y:auto;display:flex;flex-direction:column;gap:8px;padding-right:2px;}
-.theater-item{display:flex;gap:10px;align-items:center;background:#fff;border:2px solid transparent;border-radius:10px;padding:6px;cursor:pointer;text-align:left;box-shadow:0 2px 8px rgba(15,17,23,.06);}
-.theater-item:hover{background:#eef3ff;}
-.theater-item.active{border-color:var(--c-screen);background:#eafaf7;}
-.theater-item .ti-thumb{position:relative;width:96px;height:60px;border-radius:7px;overflow:hidden;flex-shrink:0;background:linear-gradient(135deg,#12a394,#0a5c52);display:flex;align-items:center;justify-content:center;color:#fff;font-size:15px;}
+.theater-info{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:14px;padding:16px 18px;background:#fff;border-radius:14px;box-shadow:var(--shadow);}
+.theater-info .ti-avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#12a394,#0a5c52);color:#fff;font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.theater-info .ti-meta{flex:1;min-width:160px;}
+.theater-info .ti-meta b{display:block;font-size:15.5px;line-height:1.3;}
+.theater-info .ti-meta small{display:block;font-size:12px;color:var(--muted);margin-top:2px;}
+.theater-info .chk{white-space:nowrap;}
+.theater-info a{text-decoration:none;font-weight:700;font-size:12.5px;color:var(--c-screen);white-space:nowrap;}
+.theater-side{width:340px;flex-shrink:0;max-height:660px;display:flex;flex-direction:column;}
+.theater-side-head{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;padding:0 4px 8px;flex-shrink:0;}
+.theater-list{overflow-y:auto;display:flex;flex-direction:column;gap:4px;padding-right:2px;flex:1;min-height:0;}
+.theater-item{display:flex;gap:10px;align-items:flex-start;background:transparent;border:none;border-radius:10px;padding:6px;cursor:pointer;text-align:left;}
+.theater-item:hover{background:#eef1f6;}
+.theater-item.active{background:#e4ecff;}
+.theater-item .ti-thumb{position:relative;width:112px;height:66px;border-radius:8px;overflow:hidden;flex-shrink:0;background:linear-gradient(135deg,#12a394,#0a5c52);display:flex;align-items:center;justify-content:center;color:#fff;font-size:15px;}
 .theater-item .ti-thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
-.theater-item .ti-label{font-size:12.5px;font-weight:600;line-height:1.35;}
-.theater-item .ti-watched{display:block;font-size:10.5px;color:var(--c-screen);font-weight:700;margin-top:2px;}
+.theater-item .ti-thumb .ti-check{position:absolute;bottom:4px;right:4px;width:18px;height:18px;border-radius:50%;background:#1a8a52;color:#fff;font-size:10.5px;font-weight:800;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 4px rgba(0,0,0,.45);z-index:2;}
+.theater-item .ti-bar{position:absolute;left:0;right:0;bottom:0;height:3px;background:rgba(255,255,255,.35);z-index:2;}
+.theater-item .ti-bar i{display:block;height:100%;background:#e0342a;width:0%;}
+.theater-item .ti-body{flex:1;min-width:0;padding-top:1px;}
+.theater-item .ti-label{font-size:13px;font-weight:600;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.theater-item.active .ti-label{color:var(--c-curriculum);}
+.theater-item .ti-watched{display:flex;align-items:center;gap:4px;font-size:11px;color:#1a8a52;font-weight:700;margin-top:4px;}
+.theater-item .ti-status{display:block;font-size:11px;color:var(--muted);margin-top:4px;}
 @media(max-width:900px){
   .theater{flex-direction:column;}
-  .theater-side{width:100%;max-height:none;flex-direction:row;overflow-x:auto;overflow-y:hidden;}
-  .theater-item{flex-direction:column;width:150px;flex-shrink:0;}
-  .theater-item .ti-thumb{width:100%;height:84px;}
+  .theater-side{width:100%;max-height:none;}
+  .theater-list{flex-direction:row;overflow-x:auto;overflow-y:hidden;gap:10px;}
+  .theater-item{flex-direction:column;width:160px;flex-shrink:0;}
+  .theater-item .ti-thumb{width:100%;height:90px;}
+  .theater-item .ti-body{padding-top:6px;}
 }
 /* ===== SIGN-IN GATE ===== */
 #signInGate{position:fixed;inset:0;z-index:5000;background:linear-gradient(135deg,#1c2030,#2f6fed 160%);display:flex;align-items:center;justify-content:center;padding:20px;}
@@ -465,7 +479,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
           </div>
           <div class="home-card" style="--accent:#5b6270" onclick="goTab('materials')" role="button" tabindex="0" onkeydown="if(event.key==='Enter')goTab('materials')">
             <h4>Additional Materials</h4>
-            <p>Extra resources your instructor adds over the course — check back here.</p>
+            <p>24 extra resources from your instructor, previewed right inside the card.</p>
           </div>
           <div class="home-card" style="--accent:#2f6fed" onclick="goTab('progress')" role="button" tabindex="0" onkeydown="if(event.key==='Enter')goTab('progress')">
             <h4>My Progress</h4>
@@ -1249,13 +1263,20 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
           <div class="theater-main">
             <div class="theater-player" id="theaterPlayerWrap"></div>
             <div class="theater-info">
-              <b id="theaterTitle">Select a recording</b>
+              <div class="ti-avatar" aria-hidden="true">Ps</div>
+              <div class="ti-meta">
+                <b id="theaterTitle">Select a recording</b>
+                <small>Graphic Design &amp; Photoshop · Screencast recordings</small>
+              </div>
               <span class="chk" id="theaterChk" data-role="chk">not opened</span>
-              <button type="button" class="chk" id="theaterWatchBtn" style="cursor:pointer;display:none;">Mark watched 75%+</button>
+              <button type="button" class="chk" id="theaterWatchBtn" style="cursor:pointer;display:none;">Mark watched 50%+</button>
               <a id="theaterOpenDrive" href="#" target="_blank" rel="noopener">Open in Google Drive →</a>
             </div>
           </div>
-          <div class="theater-side" id="theaterSide"></div>
+          <div class="theater-side">
+            <div class="theater-side-head">Up next · 23 recordings</div>
+            <div class="theater-list" id="theaterSide"></div>
+          </div>
         </div>
       </section>
       <!-- ========== PRACTICE FILES ========== -->
@@ -1267,11 +1288,8 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
       <!-- ========== ADDITIONAL MATERIALS (placeholder) ========== -->
       <section id="materials" class="view">
         <div class="view-head"><div><h2>Additional Materials</h2>
-        <p>Extra resources for this course will be added here.</p></div></div>
-        <div class="note-section" style="text-align:center;padding:50px 24px;">
-          <h3 style="margin-top:0;">Coming soon</h3>
-          <p style="color:var(--muted);max-width:480px;margin:0 auto;">This section is a placeholder — your instructor will add extra readings, templates, fonts, brushes, or reference files here. Check back soon, or reach out with questions: <a href="mailto:thomas@hmacademy.org" style="color:var(--c-notes);font-weight:700;">thomas@hmacademy.org</a>.</p>
-        </div>
+        <p>Extra readings, references and files from your instructor — tap a thumbnail to preview right inside the card, or open it in Google Drive.</p></div></div>
+        <div class="media-grid" id="materialsGrid"></div>
       </section>
       <!-- ========== MY PROGRESS ========== -->
       <section id="progress" class="view">
@@ -1486,7 +1504,7 @@ document.querySelectorAll('.note-section[data-reading]').forEach(n=>noteObserver
      on the same browser, but clearing site data or a private window
      resets it. Real enforcement needs a backend.
    - Google Drive's embedded player is a different origin, so this page
-     genuinely cannot read how much of a video was played. "75%+ watched"
+     genuinely cannot read how much of a video was played. "50%+ watched"
      below is an honest proxy: the card must be open with the tab
      visible for a minimum dwell time AND the student explicitly
      confirms — it is not a hidden, unfakeable measurement.
@@ -1561,11 +1579,12 @@ function loadStudentRecord(email){
       rec.videoConfirmed = rec.videoConfirmed || {};
       rec.seenScreencasts = rec.seenScreencasts || [];
       rec.seenPractice = rec.seenPractice || [];
+      rec.seenMaterials = rec.seenMaterials || [];
       rec.biweeklySent = rec.biweeklySent || {};
       return rec;
     }
   }catch(e){}
-  return { name:'', email:email.trim().toLowerCase(), completed:[], weekQuizzes:{}, readingSeen:[], vocabSeen:{}, videoConfirmed:{}, seenScreencasts:[], seenPractice:[], biweeklySent:{}, signedInAt:new Date().toISOString() };
+  return { name:'', email:email.trim().toLowerCase(), completed:[], weekQuizzes:{}, readingSeen:[], vocabSeen:{}, videoConfirmed:{}, seenScreencasts:[], seenPractice:[], seenMaterials:[], biweeklySent:{}, signedInAt:new Date().toISOString() };
 }
 function saveStudentRecord(rec){ try{ localStorage.setItem(studentKey(rec.email), JSON.stringify(rec)); }catch(e){ console.error(e); } }
 let student = null; // active record for this session
@@ -1827,8 +1846,9 @@ function renderProgressView(){
       <div class="progress-card" style="--pc-accent:#2f6fed"><h4>Lessons Completed</h4><div class="pc-big">${student.completed.length}/${cards.length}</div><div class="pc-sub">across ${TOTAL_WEEKS} weeks</div></div>
       <div class="progress-card" style="--pc-accent:#ff7a2d"><h4>Week Quizzes</h4><div class="pc-big">${quizzesTaken}/${TOTAL_WEEKS}</div><div class="pc-sub">completed automatically at week end</div></div>
       <div class="progress-card" style="--pc-accent:#8b5cf6"><h4>Reading Opened</h4><div class="pc-big">${student.readingSeen.length}/10</div><div class="pc-sub">Read Me sections viewed</div></div>
-      <div class="progress-card" style="--pc-accent:#12a394"><h4>Screencasts Watched</h4><div class="pc-big">${videosConfirmed}/23</div><div class="pc-sub">confirmed 75%+ (self-reported)</div></div>
+      <div class="progress-card" style="--pc-accent:#12a394"><h4>Screencasts Watched</h4><div class="pc-big">${videosConfirmed}/23</div><div class="pc-sub">confirmed 50%+ (self-reported)</div></div>
       <div class="progress-card" style="--pc-accent:#ef476f"><h4>Practice Files Opened</h4><div class="pc-big">${student.seenPractice.length}/6</div><div class="pc-sub">exercise files previewed</div></div>
+      <div class="progress-card" style="--pc-accent:#5b6270"><h4>Materials Opened</h4><div class="pc-big">${(student.seenMaterials||[]).length}/24</div><div class="pc-sub">additional resources previewed</div></div>
     </div>
     <div class="note-section" style="margin-top:22px;">
       <h3 style="margin-top:0;">Week-by-week breakdown</h3>
@@ -1864,14 +1884,14 @@ function buildReportBody(trigger){
   if(vocabWeeks.length===0){ lines.push('  (none yet)'); }
   vocabWeeks.forEach(wk=>{ lines.push(`  Week ${wk}: ${student.vocabSeen[wk].length} terms — ${student.vocabSeen[wk].join(', ')}`); });
   lines.push('');
-  lines.push('Screencasts confirmed watched 75%+ (student self-confirmed after minimum dwell time — see note in report footer):');
+  lines.push('Screencasts confirmed watched 50%+ (student self-confirmed after minimum dwell time — see note in report footer):');
   const watched = Object.keys(student.videoConfirmed).filter(id=>student.videoConfirmed[id]);
   lines.push(`  ${watched.length} of 23 recordings confirmed`);
   lines.push('');
   lines.push('Practice files opened:');
   lines.push(`  ${student.seenPractice.length} files`);
   lines.push('');
-  lines.push('NOTE: "75%+ watched" is a self-confirmed estimate (minimum on-screen dwell time + explicit student confirmation), not a measurement read from the video player — Google Drive\'s embedded player does not expose playback progress to this page.');
+  lines.push('NOTE: "50%+ watched" is a self-confirmed estimate (minimum on-screen dwell time + explicit student confirmation), not a measurement read from the video player — Google Drive\'s embedded player does not expose playback progress to this page.');
   return lines.join('\n');
 }
 /* ---------- SILENT, NON-EDITABLE SUBMISSION ---------- */
@@ -2186,8 +2206,8 @@ atwSelectGroup(1);
 function driveEmbedUrl(id){ return `https://drive.google.com/file/d/${id}/preview`; }
 function driveViewUrl(id){ return `https://drive.google.com/file/d/${id}/view?usp=drive_link`; }
 function driveThumbUrl(id){ return `https://drive.google.com/thumbnail?id=${id}&sz=w640`; }
-const VIDEO_WATCH_THRESHOLD_MS = 45000; // dwell required before "mark watched" becomes available
-function renderMediaCard({ id, label, kind, accent }){
+const VIDEO_WATCH_THRESHOLD_MS = 30000; // dwell required before "mark watched" becomes available
+function renderMediaCard({ id, label, kind, accent, trackKey }){
   const card = document.createElement('div');
   card.className = 'media-card';
   card.style.setProperty('--card-accent', accent);
@@ -2203,7 +2223,7 @@ function renderMediaCard({ id, label, kind, accent }){
     </div>
     <div class="media-body">
       <div class="mb-top"><b>${label}</b><span class="chk" data-role="chk">not opened</span></div>
-      ${kind==='video' ? '<button type="button" class="chk" data-role="watchbtn" style="cursor:pointer;display:none;">Mark watched 75%+</button>' : ''}
+      ${kind==='video' ? '<button type="button" class="chk" data-role="watchbtn" style="cursor:pointer;display:none;">Mark watched 50%+</button>' : ''}
       <a href="${driveViewUrl(id)}" target="_blank" rel="noopener">Open in Google Drive →</a>
     </div>`;
   const thumb = card.querySelector('.media-thumb');
@@ -2211,7 +2231,7 @@ function renderMediaCard({ id, label, kind, accent }){
   const chk = card.querySelector('[data-role="chk"]');
   const watchBtn = card.querySelector('[data-role="watchbtn"]');
   if(student && student.videoConfirmed && student.videoConfirmed[id]){
-    if(chk){ chk.textContent='watched 75%+ ✓'; chk.classList.add('seen'); }
+    if(chk){ chk.textContent='watched 50%+ ✓'; chk.classList.add('seen'); }
   }
   poster.addEventListener('click', ()=>{
     thumb.innerHTML = '<div class="thumb-poster" style="cursor:default;"><div class="thumb-spinner" aria-hidden="true"></div><span class="lbl">Loading...</span></div>';
@@ -2226,7 +2246,7 @@ function renderMediaCard({ id, label, kind, accent }){
     chk.textContent = 'opened ✓';
     chk.classList.add('seen');
     if(student){
-      const seenKey = kind==='video' ? 'seenScreencasts' : 'seenPractice';
+      const seenKey = trackKey || (kind==='video' ? 'seenScreencasts' : 'seenPractice');
       student[seenKey] = student[seenKey] || [];
       if(!student[seenKey].includes(id)){ student[seenKey].push(id); saveStudentRecord(student); }
     }
@@ -2245,7 +2265,7 @@ function renderMediaCard({ id, label, kind, accent }){
       student.videoConfirmed[id] = true;
       saveStudentRecord(student);
       updateGrade();
-      chk.textContent = 'watched 75%+ ✓';
+      chk.textContent = 'watched 50%+ ✓';
       chk.classList.add('seen');
       watchBtn.style.display = 'none';
     });
@@ -2268,6 +2288,19 @@ const practiceIds = [
 ];
 const pgrid = document.getElementById('practiceGrid');
 practiceIds.forEach((id,i)=>pgrid.appendChild(renderMediaCard({id, label:`Practice File ${i+1}`, kind:'file', accent:'#ef476f'})));
+/* ---------- ADDITIONAL MATERIALS ---------- */
+const materialIds = [
+  '1ZVRAV-2bjJL6UeUwqn8lpVX0ajjTpta7','1eMdoNwin_NOt3_eI0QLacl9NG-MfiXX3','1EWIFWvDwi-IhMqeWyFrSyptnrs5PHTn1',
+  '1P2azdiHTis8kQqyBQpDXHvyLOMO-D6MD','13HzeWOsadw9U8aiq4HDTz1z0l0x4KRR4','1cNLmsHpMUXQh9mRe0RDNuQvGLxSLjW0k',
+  '19AOw7LCKg2yQs1gs-bzOCsT-epfSti_0','1a9PZgHxOGqkDWzo2bI-HlERuUstrYTYJ','1BTkbuiyiV6Pr0WhYFCTlRZbNoNe140xH',
+  '19SgiuedSaWwWoCB2BDou3ntDgQyKsi1z','1MbJc9L70qRABuhNkawl8NJyHHuESgDpX','1g8lmdoeK-ktAnS5mMd-7IxiVpcuuhKih',
+  '1TkwEEQTn_sGIyd5DePCmEUm0YQnroQW2','1oou-duyFUwuhZ5jqBUCKMhT4PWghdxTu','111AGUhs84b-G4LKsV6cDcxSH-ISP-ndX',
+  '1SmHILtt0RT0EzfHEk7rTtoClb6xbN8ui','1syb9ETDgoS-SixGAkCiFF6SpSnScdFkI','10IokWwGGXFLUTVbtSAq2OFdID0Ym3o7j',
+  '1npxc1qVAcnLyxdwVcw1EJ_qxKd10ylnn','1qQfchvrfdKWP-Fs9ZnLacXeU0tmlme-f','1Ih7HXo1Z8778Knh9ammfl2PBjsbrYDBD',
+  '16wtWHWwyAqW7psHgRKRtN1LCDDPV_pF5','1uX8OsswuJCUguVjUzHRuFPdEHFqJtcC0','1AVx463Sasy8EdZydYoecppUQI-Rio4Tf'
+];
+const mgrid = document.getElementById('materialsGrid');
+materialIds.forEach((id,i)=>mgrid.appendChild(renderMediaCard({id, label:`Material ${i+1}`, kind:'file', accent:'#5b6270', trackKey:'seenMaterials'})));
 /* ================= CINEMATIC THEATER PLAYER (SCREENCASTS) ================= */
 /* YouTube-watch-page style: one large player on the left, the rest of the
    recordings listed as clickable thumbnails on the side. Clicking a side
@@ -2282,12 +2315,22 @@ function theaterRenderSide(){
   side.innerHTML = '';
   allScreencasts.forEach(v=>{
     const watched = !!(student && student.videoConfirmed && student.videoConfirmed[v.id]);
+    const opened = !!(student && student.seenScreencasts && student.seenScreencasts.includes(v.id));
+    const isActive = theaterCurrentId===v.id;
     const item = document.createElement('button');
     item.type = 'button';
-    item.className = 'theater-item' + (theaterCurrentId===v.id ? ' active' : '');
+    item.className = 'theater-item' + (isActive ? ' active' : '');
     item.setAttribute('aria-label', `Play ${v.label}`);
-    item.innerHTML = `<div class="ti-thumb"><span aria-hidden="true">▶</span><img src="${driveThumbUrl(v.id)}" alt="" loading="lazy" onerror="this.style.display='none'"></div>
-      <span class="ti-label">${v.label}${watched ? '<span class="ti-watched">watched 75%+ ✓</span>' : ''}</span>`;
+    item.innerHTML = `<div class="ti-thumb">
+        <span aria-hidden="true">▶</span>
+        <img src="${driveThumbUrl(v.id)}" alt="" loading="lazy" onerror="this.style.display='none'">
+        ${watched ? '<span class="ti-check" aria-hidden="true">✓</span>' : ''}
+        <span class="ti-bar"><i style="width:${watched ? '100' : '0'}%"></i></span>
+      </div>
+      <div class="ti-body">
+        <span class="ti-label">${v.label}</span>
+        ${watched ? '<span class="ti-watched">✓ Watched 50%+</span>' : (opened ? '<span class="ti-status">Opened</span>' : '')}
+      </div>`;
     item.addEventListener('click', ()=>theaterPlay(v.id, v.label));
     side.appendChild(item);
   });
@@ -2322,7 +2365,7 @@ function theaterPlay(id, label){
   const chk = document.getElementById('theaterChk');
   const watchBtn = document.getElementById('theaterWatchBtn');
   const alreadyWatched = !!(student && student.videoConfirmed && student.videoConfirmed[id]);
-  chk.textContent = alreadyWatched ? 'watched 75%+ ✓' : 'opened ✓';
+  chk.textContent = alreadyWatched ? 'watched 50%+ ✓' : 'opened ✓';
   chk.classList.add('seen');
   watchBtn.style.display = 'none';
   if(student){
@@ -2341,7 +2384,7 @@ document.getElementById('theaterWatchBtn').addEventListener('click', ()=>{
   student.videoConfirmed[theaterCurrentId] = true;
   saveStudentRecord(student);
   updateGrade();
-  document.getElementById('theaterChk').textContent = 'watched 75%+ ✓';
+  document.getElementById('theaterChk').textContent = 'watched 50%+ ✓';
   document.getElementById('theaterWatchBtn').style.display = 'none';
   theaterRenderSide();
 });
