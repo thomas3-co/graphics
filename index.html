@@ -305,6 +305,9 @@ footer.appfoot .foot-contact a:hover{text-decoration:underline;}
 .theater-info .ti-meta small{display:block;font-size:12px;color:var(--muted);margin-top:2px;}
 .theater-info .chk{white-space:nowrap;}
 .theater-info a{text-decoration:none;font-weight:700;font-size:12.5px;color:var(--c-screen);white-space:nowrap;}
+.theater-about{margin-top:12px;padding:16px 18px;background:#fff;border-radius:14px;box-shadow:var(--shadow);}
+.theater-about h4{margin:0 0 8px;font-size:14.5px;color:var(--ink);}
+.theater-about p{margin:0;font-size:13px;color:var(--muted);line-height:1.6;}
 .theater-side{width:340px;flex-shrink:0;max-height:760px;display:flex;flex-direction:column;}
 .theater-progress{background:#fff;border-radius:12px;padding:12px 14px;box-shadow:var(--shadow);margin-bottom:10px;flex-shrink:0;}
 .theater-progress .tp-row{display:flex;justify-content:space-between;font-size:12px;font-weight:700;color:var(--ink);margin-bottom:8px;}
@@ -1399,6 +1402,10 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
               </div>
               <span class="chk" id="theaterChk" data-role="chk">not opened</span>
             </div>
+            <div class="theater-about">
+              <h4 id="theaterAboutTitle">Select a recording</h4>
+              <p id="theaterDesc">Pick any recording from the list to see what it covers.</p>
+            </div>
           </div>
           <div class="theater-side">
             <div class="theater-progress">
@@ -1641,7 +1648,7 @@ document.querySelectorAll('.note-section[data-reading]').forEach(n=>noteObserver
      on the same browser, but clearing site data or a private window
      resets it. Real enforcement needs a backend.
    - Google Drive's embedded player is a different origin, so this page
-     genuinely cannot read how much of a video was played. "50%+ watched"
+     genuinely cannot read how much of a video was played. "75%+ watched"
      below is an honest proxy: the card must be open with the tab
      visible for a minimum dwell time AND the student explicitly
      confirms — it is not a hidden, unfakeable measurement.
@@ -1984,7 +1991,7 @@ function renderProgressView(){
       <div class="progress-card" style="--pc-accent:#2f6fed"><h4>Lessons Completed</h4><div class="pc-big">${student.completed.length}/${cards.length}</div><div class="pc-sub">across ${TOTAL_WEEKS} weeks</div></div>
       <div class="progress-card" style="--pc-accent:#ff7a2d"><h4>Week Quizzes</h4><div class="pc-big">${quizzesTaken}/${TOTAL_WEEKS}</div><div class="pc-sub">completed automatically at week end</div></div>
       <div class="progress-card" style="--pc-accent:#8b5cf6"><h4>Reading Opened</h4><div class="pc-big">${student.readingSeen.length}/10</div><div class="pc-sub">Read Me sections viewed</div></div>
-      <div class="progress-card" style="--pc-accent:#12a394"><h4>Screencasts Watched</h4><div class="pc-big">${videosConfirmed}/23</div><div class="pc-sub">confirmed 50%+ (auto-detected)</div></div>
+      <div class="progress-card" style="--pc-accent:#12a394"><h4>Screencasts Watched</h4><div class="pc-big">${videosConfirmed}/23</div><div class="pc-sub">confirmed 75%+ (auto-detected)</div></div>
       <div class="progress-card" style="--pc-accent:#ef476f"><h4>Practice Files Opened</h4><div class="pc-big">${student.seenPractice.length}/43</div><div class="pc-sub">exercise files previewed</div></div>
       <div class="progress-card" style="--pc-accent:#d1476b"><h4>Practice Folders Opened</h4><div class="pc-big">${(student.seenPracticeFolders||[]).length}/1</div><div class="pc-sub">shared folder browsed</div></div>
       <div class="progress-card" style="--pc-accent:#5b6270"><h4>Materials Opened</h4><div class="pc-big">${(student.seenMaterials||[]).length}/23</div><div class="pc-sub">additional resources previewed</div></div>
@@ -2023,14 +2030,14 @@ function buildReportBody(trigger){
   if(vocabWeeks.length===0){ lines.push('  (none yet)'); }
   vocabWeeks.forEach(wk=>{ lines.push(`  Week ${wk}: ${student.vocabSeen[wk].length} terms — ${student.vocabSeen[wk].join(', ')}`); });
   lines.push('');
-  lines.push('Screencasts auto-marked watched 50%+ (recording stayed open long enough — see note in report footer):');
+  lines.push('Screencasts auto-marked watched 75%+ (recording stayed open long enough — see note in report footer):');
   const watched = Object.keys(student.videoConfirmed).filter(id=>student.videoConfirmed[id]);
   lines.push(`  ${watched.length} of 23 recordings confirmed`);
   lines.push('');
   lines.push('Practice files opened:');
   lines.push(`  ${student.seenPractice.length} files`);
   lines.push('');
-  lines.push('NOTE: "50%+ watched" is an automatic estimate based on minimum on-screen dwell time, not a measurement read from the video player — Google Drive\'s embedded player does not expose playback progress to this page.');
+  lines.push('NOTE: "75%+ watched" is an automatic estimate based on minimum on-screen dwell time, not a measurement read from the video player — Google Drive\'s embedded player does not expose playback progress to this page.');
   return lines.join('\n');
 }
 /* ---------- SILENT, NON-EDITABLE SUBMISSION ---------- */
@@ -2430,7 +2437,7 @@ epSelectElement(1);
 function driveEmbedUrl(id){ return `https://drive.google.com/file/d/${id}/preview`; }
 function driveViewUrl(id){ return `https://drive.google.com/file/d/${id}/view?usp=drive_link`; }
 function driveThumbUrl(id){ return `https://drive.google.com/thumbnail?id=${id}&sz=w640`; }
-const VIDEO_WATCH_THRESHOLD_MS = 30000; // dwell required before "mark watched" becomes available
+const VIDEO_WATCH_THRESHOLD_MS = 60000; // dwell required before a recording auto-marks as watched (75%+ proxy)
 function driveFolderEmbedUrl(id){ return `https://drive.google.com/embeddedfolderview?id=${id}#grid`; }
 function driveFolderViewUrl(id){ return `https://drive.google.com/drive/folders/${id}?usp=drive_link`; }
 function renderMediaCard({ id, label, kind, accent, trackKey }){
@@ -2451,7 +2458,7 @@ function renderMediaCard({ id, label, kind, accent, trackKey }){
     </div>
     <div class="media-body">
       <div class="mb-top"><b>${label}</b><span class="chk" data-role="chk">not opened</span></div>
-      ${kind==='video' ? '<button type="button" class="chk" data-role="watchbtn" style="cursor:pointer;display:none;">Mark watched 50%+</button>' : ''}
+      ${kind==='video' ? '<button type="button" class="chk" data-role="watchbtn" style="cursor:pointer;display:none;">Mark watched 75%+</button>' : ''}
       <a href="${openUrl}" target="_blank" rel="noopener">Open in Google Drive →</a>
     </div>`;
   const thumb = card.querySelector('.media-thumb');
@@ -2459,7 +2466,7 @@ function renderMediaCard({ id, label, kind, accent, trackKey }){
   const chk = card.querySelector('[data-role="chk"]');
   const watchBtn = card.querySelector('[data-role="watchbtn"]');
   if(student && student.videoConfirmed && student.videoConfirmed[id]){
-    if(chk){ chk.textContent='watched 50%+ ✓'; chk.classList.add('seen'); }
+    if(chk){ chk.textContent='watched 75%+ ✓'; chk.classList.add('seen'); }
   }
   poster.addEventListener('click', ()=>{
     thumb.innerHTML = '<div class="thumb-poster" style="cursor:default;"><div class="thumb-spinner" aria-hidden="true"></div><span class="lbl">Loading...</span></div>';
@@ -2493,7 +2500,7 @@ function renderMediaCard({ id, label, kind, accent, trackKey }){
       student.videoConfirmed[id] = true;
       saveStudentRecord(student);
       updateGrade();
-      chk.textContent = 'watched 50%+ ✓';
+      chk.textContent = 'watched 75%+ ✓';
       chk.classList.add('seen');
       watchBtn.style.display = 'none';
     });
@@ -2551,8 +2558,13 @@ materialIds.forEach((id,i)=>mgrid.appendChild(renderMediaCard({id, label:`Materi
 /* YouTube-watch-page style player: large main video, prev/next transport,
    an overall watch-progress summary, live search, and watched/unwatched
    filtering across the side list. */
-const allScreencasts = screencastIds.map((id,i)=>({ id, label:`Screencast ${i+1}` }))
-  .concat(screencastIdsSet2.map((id,i)=>({ id, label:`Screencast ${21+i}` })));
+/* TITLE + DESCRIPTION: these are editable placeholders, not generated from
+   watching the actual recordings — this app has no way to view or transcribe
+   the linked Google Drive videos. Your instructor should replace `desc` (and
+   `label`, if you want a real title instead of "Screencast N") for each
+   entry below with what that recording actually covers. */
+const allScreencasts = screencastIds.map((id,i)=>({ id, label:`Screencast ${i+1}`, desc:'Add a short description of what this recording covers.' }))
+  .concat(screencastIdsSet2.map((id,i)=>({ id, label:`Screencast ${21+i}`, desc:'Add a short description of what this recording covers.' })));
 let theaterCurrentId = null;
 let theaterDwellTimer = null;
 let theaterSearchTerm = '';
@@ -2607,7 +2619,7 @@ function theaterRenderSide(){
       </div>
       <div class="ti-body">
         <span class="ti-label">${v.label}</span>
-        ${watched ? '<span class="ti-watched">✓ Watched 50%+</span>' : (opened ? '<span class="ti-status">Opened</span>' : '')}
+        ${watched ? '<span class="ti-watched">✓ Watched 75%+</span>' : (opened ? '<span class="ti-status">Opened</span>' : '')}
       </div>`;
     item.addEventListener('click', ()=>theaterPlay(v.id, v.label));
     side.appendChild(item);
@@ -2664,7 +2676,7 @@ function theaterMarkWatched(id){
   updateGrade();
   if(theaterCurrentId===id){
     const chk = document.getElementById('theaterChk');
-    if(chk) chk.textContent = 'watched 50%+ ✓';
+    if(chk) chk.textContent = 'watched 75%+ ✓';
   }
   theaterRenderSide();
 }
@@ -2673,9 +2685,12 @@ function theaterPlay(id, label){
   clearTimeout(theaterDwellTimer);
   theaterLoadIframe(id, label);
   document.getElementById('theaterTitle').textContent = label;
+  const meta = allScreencasts.find(v=>v.id===id);
+  document.getElementById('theaterAboutTitle').textContent = label;
+  document.getElementById('theaterDesc').textContent = (meta && meta.desc) || 'Add a short description of what this recording covers.';
   const chk = document.getElementById('theaterChk');
   const alreadyWatched = theaterIsWatched(id);
-  chk.textContent = alreadyWatched ? 'watched 50%+ ✓' : 'opened ✓';
+  chk.textContent = alreadyWatched ? 'watched 75%+ ✓' : 'opened ✓';
   chk.classList.add('seen');
   if(student){
     student.seenScreencasts = student.seenScreencasts || [];
@@ -2683,7 +2698,7 @@ function theaterPlay(id, label){
   }
   if(!alreadyWatched){
     // No manual click needed — once a student has kept a recording open long
-    // enough to represent 50%+ engagement, it's marked watched automatically
+    // enough to represent 75%+ engagement, it's marked watched automatically
     // and shows up in the Watched list and checkmark right away.
     theaterDwellTimer = setTimeout(()=>theaterMarkWatched(id), VIDEO_WATCH_THRESHOLD_MS);
   }
@@ -2711,6 +2726,8 @@ document.addEventListener('keydown', e=>{
 if(allScreencasts.length){
   theaterShowPoster(allScreencasts[0].id, allScreencasts[0].label);
   document.getElementById('theaterTitle').textContent = allScreencasts[0].label;
+  document.getElementById('theaterAboutTitle').textContent = allScreencasts[0].label;
+  document.getElementById('theaterDesc').textContent = allScreencasts[0].desc || 'Add a short description of what this recording covers.';
 }
 theaterUpdateNav();
 theaterRenderSide();
