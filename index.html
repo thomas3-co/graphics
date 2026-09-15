@@ -815,13 +815,14 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
         <div class="view-head">
           <div>
             <h2>Group Projects</h2>
-            <p>Three hands-on studio briefs. Pick a tab, follow the instructions, and submit your files to the class Google Drive folder.</p>
+            <p>Four hands-on studio briefs. Pick a tab, follow the instructions, and submit your files to the class Google Drive folder.</p>
           </div>
         </div>
         <div class="subnav" id="projSubnav">
           <button class="active" data-proj="world">Week 3 · Around the World with a Twist</button>
           <button data-proj="mockup">Week 6 · Phone / iPad Mockup</button>
           <button data-proj="gojo">Week 9 · Gojo Pop-Out Project</button>
+          <button data-proj="elemental">Week 16 · Elemental Portraits (Final Project)</button>
         </div>
         <!-- ---- PROJECT 3: AROUND THE WORLD (now first / Week 3) ---- -->
         <div class="proj-view active" id="proj-world">
@@ -1140,6 +1141,107 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
         </div>
         </div>
         </div>
+        <!-- ---- PROJECT 4: ELEMENTAL PORTRAITS (Week 16, Final Project) ---- -->
+        <div class="proj-view" id="proj-elemental">
+        <style>
+        .ep-scope{ --ep-accent:#7c3aed; --ep-gold:#f5b942; font-family:'Inter',sans-serif; color:#eef0ff; }
+        .ep-container{max-width:1100px;margin:0 auto;padding:26px;border-radius:22px;position:relative;overflow:hidden;
+          background:radial-gradient(circle at 15% 0%,rgba(124,58,237,.55),transparent 55%),
+                     radial-gradient(circle at 85% 100%,rgba(18,163,148,.4),transparent 55%),
+                     linear-gradient(160deg,#120c26,#1a1030 55%,#0d0a1c);
+          box-shadow:0 24px 60px rgba(10,6,28,.5);}
+        .ep-container header{display:flex;gap:16px;align-items:center;margin-bottom:20px;position:relative;z-index:1;}
+        .ep-badge{width:56px;height:56px;border-radius:14px;background:linear-gradient(135deg,var(--ep-accent),#12a394);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;box-shadow:0 8px 22px rgba(124,58,237,.4);}
+        .ep-container h1{margin:0;font-size:21px;color:#fff;font-family:'Poppins',sans-serif;}
+        .ep-container p.lead{margin:4px 0 0;color:#c7c3e8;font-size:13.5px;}
+        .ep-final-tag{display:inline-block;margin-top:8px;padding:3px 10px;border-radius:999px;background:rgba(245,185,66,.15);border:1px solid rgba(245,185,66,.4);color:var(--ep-gold);font-size:10.5px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;}
+        .ep-main{display:grid;grid-template-columns:280px 1fr;gap:18px;position:relative;z-index:1;}
+        .ep-side{position:sticky;top:75px;height:fit-content;max-height:calc(100vh - 100px);overflow:auto;padding:12px;background:rgba(255,255,255,.05);border-radius:14px;border:1px solid rgba(255,255,255,.1);backdrop-filter:blur(4px);}
+        .ep-search{display:flex;padding:8px;border-radius:10px;background:rgba(255,255,255,.07);align-items:center;}
+        .ep-search input{border:0;background:transparent;outline:none;padding:6px;width:100%;font-size:13px;color:#fff;}
+        .ep-search input::placeholder{color:#a7a1cf;}
+        .ep-list{margin-top:12px;display:flex;flex-direction:column;gap:8px;}
+        .ep-item{padding:10px;border-radius:10px;background:rgba(255,255,255,.05);cursor:pointer;border:1px solid rgba(255,255,255,.09);font-size:13px;transition:.2s;text-align:left;width:100%;font-family:inherit;color:#eef0ff;display:flex;align-items:center;gap:10px;}
+        .ep-item:hover{background:rgba(255,255,255,.1);}
+        .ep-item.active{outline:2px solid var(--ep-gold);border-color:var(--ep-gold);background:rgba(245,185,66,.12);font-weight:600;}
+        .ep-item .ep-swatch{width:26px;height:26px;border-radius:50%;flex-shrink:0;box-shadow:0 2px 8px rgba(0,0,0,.35);}
+        .ep-content{padding:22px;background:rgba(10,7,24,.5);border-radius:14px;min-height:420px;border:1px solid rgba(255,255,255,.08);backdrop-filter:blur(4px);}
+        .ep-hero{display:flex;gap:16px;align-items:center;flex-wrap:wrap;}
+        .ep-hero-left{flex:1;min-width:220px;}
+        .ep-hero-right{width:190px;height:110px;border-radius:12px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;box-shadow:0 6px 20px rgba(0,0,0,.4);font-family:'Poppins',sans-serif;}
+        .ep-section-title{margin:14px 0 8px;font-size:15px;color:var(--ep-gold);font-family:'Poppins',sans-serif;}
+        .ep-card{background:rgba(255,255,255,.05);padding:16px;border-radius:12px;margin-bottom:14px;border:1px solid rgba(255,255,255,.08);font-size:13.5px;color:#e4e1f7;line-height:1.6;}
+        .ep-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+        .ep-meta{font-size:13px;color:#c7c3e8;line-height:1.65;}
+        .ep-content details{background:transparent;padding:8px 0;border-radius:8px;color:#e4e1f7;}
+        .ep-content summary{cursor:pointer;font-weight:600;color:var(--ep-gold);}
+        .ep-submit-list{list-style:none;padding:0;margin:8px 0;}
+        .ep-submit-list li{padding:8px 0;border-bottom:1px dashed rgba(255,255,255,.1);font-size:13.5px;color:#e4e1f7;}
+        .ep-filename{font-family:monospace;background:rgba(245,185,66,.18);color:var(--ep-gold);padding:2px 6px;border-radius:6px;}
+        .ep-submit-btn{display:inline-flex;align-items:center;gap:8px;padding:11px 16px;border-radius:11px;background:linear-gradient(90deg,var(--ep-accent),#12a394);color:#fff;font-weight:700;border:none;cursor:pointer;text-decoration:none;font-size:13.5px;margin-top:10px;}
+        .ep-submit-btn:hover{opacity:.9;}
+        @media(max-width:900px){.ep-main{grid-template-columns:1fr;}.ep-side{position:static;max-height:none;}.ep-grid-2{grid-template-columns:1fr;}}
+        </style>
+        <div class="ep-scope">
+        <div class="ep-container">
+          <header>
+            <div class="ep-badge" aria-hidden="true">✦</div>
+            <div>
+              <h1>Week 16 — Elemental Portraits</h1>
+              <p class="lead">Fuse a portrait with a force of nature to create a surreal Elemental Being. The capstone project for Class of 2028.</p>
+              <span class="ep-final-tag">Final Project</span>
+            </div>
+          </header>
+          <div class="ep-main">
+            <nav class="ep-side" aria-label="Elements navigation">
+              <div class="ep-search"><label for="epSearch" style="position:absolute;left:-9999px;">Search elements or keywords</label><input id="epSearch" placeholder="Search elements..."></div>
+              <div class="ep-list" id="epList"></div>
+            </nav>
+            <section class="ep-content">
+              <div class="ep-hero">
+                <div class="ep-hero-left">
+                  <h2 style="margin:0 0 8px;font-size:17px;color:#fff;">General Instructions</h2>
+                  <p class="ep-meta">Choose one elemental force below and fuse it with a self-portrait (or a willing model) to create a surreal "Elemental Being." The fusion should feel physically believable — as if the force is erupting from, wrapping around, or replacing part of the subject — not simply pasted on top. Use blending modes, layer masks, Liquify, and color grading to sell the illusion, and build a short visual story around your character: who are they, and where does their power come from?</p>
+                </div>
+                <div class="ep-hero-right" id="epHeroSwatch">Class of 2028</div>
+              </div>
+              <div id="epContent"></div>
+              <div class="ep-card">
+                <h3 class="ep-section-title">Submission Format</h3>
+                <div class="ep-grid-2">
+                  <div>
+                    <h4 style="margin:0 0 6px;font-size:14px;color:#fff;">1. Final Photoshop File (.PSD)</h4>
+                    <ul class="ep-submit-list">
+                      <li>Include organized layers: portrait, element textures, blending/masking, and color grade.</li>
+                      <li>Rename layers clearly (e.g., "Fire Overlay", "Skin Glow Mask").</li>
+                      <li>Remove hidden or unnecessary layers for file cleanliness.</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h4 style="margin:0 0 6px;font-size:14px;color:#fff;">2. Final Image (.JPG or .PNG)</h4>
+                    <ul class="ep-submit-list">
+                      <li>High resolution (minimum 2000 px wide).</li>
+                      <li>Export at quality 10 or higher; avoid compression.</li>
+                      <li>Filename format: <span class="ep-filename">Element_CharacterName_ClassOf2028.jpg</span></li>
+                    </ul>
+                  </div>
+                </div>
+                <div style="margin-top:12px">
+                  <h4 style="margin:0 0 6px;font-size:14px;color:#fff;">3. Short Creative Reflection (PDF, max 1 page)</h4>
+                  <ul class="ep-submit-list">
+                    <li>Character name and one-paragraph origin story for your Elemental Being.</li>
+                    <li>Tools used: Layer Masks, Blend Modes, Liquify, Dodge &amp; Burn, Gradient Map, etc.</li>
+                    <li>Design choices: color palette, texture sourcing, and how you sold the fusion.</li>
+                    <li>Include main challenges and lessons learned across the whole course.</li>
+                  </ul>
+                </div>
+                <a class="ep-submit-btn" href="https://drive.google.com/drive/folders/10rRbwGYnjjTxAA4Q9PHvf9JrsA7kqzuw?usp=sharing" target="_blank" rel="noopener">Submit files to Class Drive Folder →</a>
+              </div>
+            </section>
+          </div>
+        </div>
+        </div>
+        </div>
       </section>
       <!-- ========== NOTES / READ ME ========== -->
       <section id="notes" class="view">
@@ -1296,8 +1398,6 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
                 <small>Graphic Design &amp; Photoshop · Screencast recordings</small>
               </div>
               <span class="chk" id="theaterChk" data-role="chk">not opened</span>
-              <button type="button" class="chk" id="theaterWatchBtn" style="cursor:pointer;display:none;">Mark watched 50%+</button>
-              <a id="theaterOpenDrive" href="#" target="_blank" rel="noopener">Open in Google Drive →</a>
             </div>
           </div>
           <div class="theater-side">
@@ -1617,11 +1717,12 @@ function loadStudentRecord(email){
       rec.seenScreencasts = rec.seenScreencasts || [];
       rec.seenPractice = rec.seenPractice || [];
       rec.seenMaterials = rec.seenMaterials || [];
+      rec.seenPracticeFolders = rec.seenPracticeFolders || [];
       rec.biweeklySent = rec.biweeklySent || {};
       return rec;
     }
   }catch(e){}
-  return { name:'', email:email.trim().toLowerCase(), completed:[], weekQuizzes:{}, readingSeen:[], vocabSeen:{}, videoConfirmed:{}, seenScreencasts:[], seenPractice:[], seenMaterials:[], biweeklySent:{}, signedInAt:new Date().toISOString() };
+  return { name:'', email:email.trim().toLowerCase(), completed:[], weekQuizzes:{}, readingSeen:[], vocabSeen:{}, videoConfirmed:{}, seenScreencasts:[], seenPractice:[], seenPracticeFolders:[], seenMaterials:[], biweeklySent:{}, signedInAt:new Date().toISOString() };
 }
 function saveStudentRecord(rec){ try{ localStorage.setItem(studentKey(rec.email), JSON.stringify(rec)); }catch(e){ console.error(e); } }
 let student = null; // active record for this session
@@ -1883,8 +1984,9 @@ function renderProgressView(){
       <div class="progress-card" style="--pc-accent:#2f6fed"><h4>Lessons Completed</h4><div class="pc-big">${student.completed.length}/${cards.length}</div><div class="pc-sub">across ${TOTAL_WEEKS} weeks</div></div>
       <div class="progress-card" style="--pc-accent:#ff7a2d"><h4>Week Quizzes</h4><div class="pc-big">${quizzesTaken}/${TOTAL_WEEKS}</div><div class="pc-sub">completed automatically at week end</div></div>
       <div class="progress-card" style="--pc-accent:#8b5cf6"><h4>Reading Opened</h4><div class="pc-big">${student.readingSeen.length}/10</div><div class="pc-sub">Read Me sections viewed</div></div>
-      <div class="progress-card" style="--pc-accent:#12a394"><h4>Screencasts Watched</h4><div class="pc-big">${videosConfirmed}/23</div><div class="pc-sub">confirmed 50%+ (self-reported)</div></div>
-      <div class="progress-card" style="--pc-accent:#ef476f"><h4>Practice Files Opened</h4><div class="pc-big">${student.seenPractice.length}/6</div><div class="pc-sub">exercise files previewed</div></div>
+      <div class="progress-card" style="--pc-accent:#12a394"><h4>Screencasts Watched</h4><div class="pc-big">${videosConfirmed}/23</div><div class="pc-sub">confirmed 50%+ (auto-detected)</div></div>
+      <div class="progress-card" style="--pc-accent:#ef476f"><h4>Practice Files Opened</h4><div class="pc-big">${student.seenPractice.length}/43</div><div class="pc-sub">exercise files previewed</div></div>
+      <div class="progress-card" style="--pc-accent:#d1476b"><h4>Practice Folders Opened</h4><div class="pc-big">${(student.seenPracticeFolders||[]).length}/1</div><div class="pc-sub">shared folder browsed</div></div>
       <div class="progress-card" style="--pc-accent:#5b6270"><h4>Materials Opened</h4><div class="pc-big">${(student.seenMaterials||[]).length}/23</div><div class="pc-sub">additional resources previewed</div></div>
     </div>
     <div class="note-section" style="margin-top:22px;">
@@ -1921,14 +2023,14 @@ function buildReportBody(trigger){
   if(vocabWeeks.length===0){ lines.push('  (none yet)'); }
   vocabWeeks.forEach(wk=>{ lines.push(`  Week ${wk}: ${student.vocabSeen[wk].length} terms — ${student.vocabSeen[wk].join(', ')}`); });
   lines.push('');
-  lines.push('Screencasts confirmed watched 50%+ (student self-confirmed after minimum dwell time — see note in report footer):');
+  lines.push('Screencasts auto-marked watched 50%+ (recording stayed open long enough — see note in report footer):');
   const watched = Object.keys(student.videoConfirmed).filter(id=>student.videoConfirmed[id]);
   lines.push(`  ${watched.length} of 23 recordings confirmed`);
   lines.push('');
   lines.push('Practice files opened:');
   lines.push(`  ${student.seenPractice.length} files`);
   lines.push('');
-  lines.push('NOTE: "50%+ watched" is a self-confirmed estimate (minimum on-screen dwell time + explicit student confirmation), not a measurement read from the video player — Google Drive\'s embedded player does not expose playback progress to this page.');
+  lines.push('NOTE: "50%+ watched" is an automatic estimate based on minimum on-screen dwell time, not a measurement read from the video player — Google Drive\'s embedded player does not expose playback progress to this page.');
   return lines.join('\n');
 }
 /* ---------- SILENT, NON-EDITABLE SUBMISSION ---------- */
@@ -2239,21 +2341,110 @@ document.getElementById('atwSearch').addEventListener('input', e=>{
 });
 atwMakeGroupList();
 atwSelectGroup(1);
+/* ================= ELEMENTAL PORTRAITS (Week 16 Final Project) ================= */
+const epElements = [
+  {id:1, name:'Fire', title:'The Ember Walker', color:'#ff6a3d', gradient:'linear-gradient(135deg,#ff6a3d,#ffb347)', instructions:[
+    'Blend fire, embers, or smoke textures into the hair and skin using Screen or Lighten blend modes.',
+    'Push a warm orange-red color grade with Curves or a Gradient Map.',
+    'Add glowing rim light along the jaw and shoulders with Dodge Tool or a soft Outer Glow.',
+    'Scatter a few floating embers or sparks around the subject for depth.']},
+  {id:2, name:'Water', title:'The Tide Bound', color:'#2f9fd6', gradient:'linear-gradient(135deg,#2f9fd6,#12a394)', instructions:[
+    'Blend wave, droplet, or ripple textures into the skin and clothing using Screen or Overlay.',
+    'Cool the whole image toward blue-teal with Color Balance or Curves.',
+    'Use Liquify to add gentle ripple distortion where water meets skin.',
+    'Add fine water droplets or mist for a fresh, refractive feel.']},
+  {id:3, name:'Earth', title:'The Root Bloom', color:'#4c9a2a', gradient:'linear-gradient(135deg,#4c9a2a,#8a6d3b)', instructions:[
+    'Grow moss, vines, bark, or flower textures across the skin using Multiply or Darken blend modes.',
+    'Warm the palette toward earthy greens and browns.',
+    'Use a Layer Mask with a soft brush so growth looks like it emerges from pores and hairline, not pasted on.',
+    'Scatter petals, leaves, or pollen for atmosphere.']},
+  {id:4, name:'Storm', title:'The Static Sovereign', color:'#8a7bd8', gradient:'linear-gradient(135deg,#8a7bd8,#3a4a7a)', instructions:[
+    'Composite storm clouds behind the subject and thin lightning cracks across the skin using Screen.',
+    'Use Liquify to sweep the hair as if caught in high wind.',
+    'Add an electric blue-violet rim glow with Outer Glow or a Screen-mode highlight layer.',
+    'Grade the whole image toward a cool, dramatic gray-violet.']},
+  {id:5, name:'Cosmos', title:'The Starborn', color:'#8b5cf6', gradient:'linear-gradient(135deg,#8b5cf6,#1a1030)', instructions:[
+    'Blend nebula or galaxy textures into hair and skin using Screen or Lighten.',
+    'Dodge in small stars and constellations across the subject by hand.',
+    'Push a deep purple-blue-black color grade for a night-sky mood.',
+    'Try a soft glow in the eyes to suggest they hold starlight.']},
+  {id:6, name:'Shadow', title:'The Ashwraith', color:'#6b7280', gradient:'linear-gradient(135deg,#6b7280,#1f2430)', instructions:[
+    'Blend smoke or fog textures using Screen mode, fraying the silhouette at the edges.',
+    'Try a dispersion effect — part of the subject breaking apart into drifting particles.',
+    'Desaturate the image, then bring back just one accent color for mood.',
+    'Keep the lighting moody and directional — one strong light source, deep shadow everywhere else.']}
+];
+const epList = document.getElementById('epList');
+const epContent = document.getElementById('epContent');
+function epMakeList(){
+  epElements.forEach(el=>{
+    const item = document.createElement('button');
+    item.type = 'button';
+    item.className = 'ep-item';
+    item.innerHTML = `<span class="ep-swatch" style="background:${el.color}"></span><span><strong>${el.name}</strong> — ${el.title}</span>`;
+    item.onclick = () => epSelectElement(el.id);
+    epList.appendChild(item);
+  });
+}
+function epSelectElement(id){
+  document.querySelectorAll('.ep-item').forEach(el=>el.classList.remove('active'));
+  const active = [...document.querySelectorAll('.ep-item')][id-1];
+  if(active) active.classList.add('active');
+  const el = epElements.find(x=>x.id===id);
+  epRenderElement(el);
+}
+function epRenderElement(el){
+  epContent.innerHTML = '';
+  const swatch = document.getElementById('epHeroSwatch');
+  if(swatch) swatch.style.background = el.gradient;
+  const wrapper = document.createElement('div');
+  wrapper.className = 'ep-card';
+  wrapper.innerHTML = `
+    <h3 style="margin:0 0 6px;font-size:15px;color:#fff;">${el.name} — ${el.title}</h3>
+    <p class="ep-meta">Element brief for ${el.name}.</p>
+    <div style="margin-top:10px"><h4 style="margin:0 0 6px;font-size:13.5px;color:#fff;">Instructions</h4>
+    <ul>${el.instructions.map(i=>`<li style="color:#e4e1f7;">${i}</li>`).join('')}</ul></div>
+    <details style="margin-top:10px">
+      <summary>Rubric (8 pts)</summary>
+      <ul class="ep-submit-list">
+        <li><strong>Fusion Believability (2 pts):</strong> The element looks physically integrated with the subject, not pasted on top.</li>
+        <li><strong>Blend Mode Mastery (2 pts):</strong> Screen, Multiply, Overlay, or Lighten used appropriately for the chosen element.</li>
+        <li><strong>Color Grading &amp; Mood (2 pts):</strong> A cohesive palette that matches the element's atmosphere.</li>
+        <li><strong>Creativity &amp; Storytelling (1 pt):</strong> An original character concept and visual narrative.</li>
+        <li><strong>File Organization (Bonus 1 pt):</strong> Clean, descriptive layer naming and grouping in the PSD.</li>
+      </ul>
+    </details>`;
+  epContent.appendChild(wrapper);
+}
+document.getElementById('epSearch').addEventListener('input', e=>{
+  const q = e.target.value.toLowerCase().trim();
+  document.querySelectorAll('.ep-item').forEach((el,idx)=>{
+    const data = epElements[idx];
+    const text = `${data.name} ${data.title}`.toLowerCase();
+    el.style.display = text.includes(q) ? '' : 'none';
+  });
+});
+epMakeList();
+epSelectElement(1);
 /* ---------- PRACTICE FILES: FITTED CARDS, THUMBNAIL, PLAYS/PREVIEWS INSIDE CARD ---------- */
 function driveEmbedUrl(id){ return `https://drive.google.com/file/d/${id}/preview`; }
 function driveViewUrl(id){ return `https://drive.google.com/file/d/${id}/view?usp=drive_link`; }
 function driveThumbUrl(id){ return `https://drive.google.com/thumbnail?id=${id}&sz=w640`; }
 const VIDEO_WATCH_THRESHOLD_MS = 30000; // dwell required before "mark watched" becomes available
+function driveFolderEmbedUrl(id){ return `https://drive.google.com/embeddedfolderview?id=${id}#grid`; }
+function driveFolderViewUrl(id){ return `https://drive.google.com/drive/folders/${id}?usp=drive_link`; }
 function renderMediaCard({ id, label, kind, accent, trackKey }){
   const card = document.createElement('div');
   card.className = 'media-card';
   card.style.setProperty('--card-accent', accent);
-  const icon = kind === 'video' ? '▶' : '⭳';
-  const posterLabel = kind === 'video' ? 'Play in card' : 'Preview file';
+  const icon = kind === 'video' ? '▶' : (kind === 'folder' ? '📁' : '⭳');
+  const posterLabel = kind === 'video' ? 'Play in card' : (kind === 'folder' ? 'Browse folder' : 'Preview file');
+  const openUrl = kind === 'folder' ? driveFolderViewUrl(id) : driveViewUrl(id);
+  const embedUrl = kind === 'folder' ? driveFolderEmbedUrl(id) : driveEmbedUrl(id);
   card.innerHTML = `
     <div class="media-thumb">
       <button type="button" class="thumb-poster" aria-label="${posterLabel}: ${label}">
-        <img class="thumb-preview" src="${driveThumbUrl(id)}" alt="" loading="lazy" onerror="this.remove()">
+        ${kind === 'folder' ? '' : `<img class="thumb-preview" src="${driveThumbUrl(id)}" alt="" loading="lazy" onerror="this.remove()">`}
         <div class="play-badge" aria-hidden="true">${icon}</div>
         <span class="lbl">${posterLabel}</span>
       </button>
@@ -2261,7 +2452,7 @@ function renderMediaCard({ id, label, kind, accent, trackKey }){
     <div class="media-body">
       <div class="mb-top"><b>${label}</b><span class="chk" data-role="chk">not opened</span></div>
       ${kind==='video' ? '<button type="button" class="chk" data-role="watchbtn" style="cursor:pointer;display:none;">Mark watched 50%+</button>' : ''}
-      <a href="${driveViewUrl(id)}" target="_blank" rel="noopener">Open in Google Drive →</a>
+      <a href="${openUrl}" target="_blank" rel="noopener">Open in Google Drive →</a>
     </div>`;
   const thumb = card.querySelector('.media-thumb');
   const poster = card.querySelector('.thumb-poster');
@@ -2273,7 +2464,7 @@ function renderMediaCard({ id, label, kind, accent, trackKey }){
   poster.addEventListener('click', ()=>{
     thumb.innerHTML = '<div class="thumb-poster" style="cursor:default;"><div class="thumb-spinner" aria-hidden="true"></div><span class="lbl">Loading...</span></div>';
     const iframe = document.createElement('iframe');
-    iframe.src = driveEmbedUrl(id);
+    iframe.src = embedUrl;
     iframe.title = label;
     iframe.loading = 'lazy';
     iframe.setAttribute('allow','autoplay');
@@ -2323,8 +2514,26 @@ const practiceIds = [
   '1G-7HQ02DKWNB0KV1Zig_ewB3Oi4X6yNZ','1y81quAh0_axcnbufcti7XqVps5Kupsno','1VZeqFzGAZtBjfNYGg8lClM1NT8bwhKnO',
   '1BwweNQo0GDjqttZUC37MjRgrNh268SmK','1BSSMMfhW0RcZevkiNXt4zbv4b2RefSwE','1pEeilJNCas3ak8A4oVkdOTE7991-Spfz'
 ];
+const practiceFolders = ['1FsOmv2JEFiTrul_Z2YcinKJoJ56-I0Qu'];
+const practiceIds2 = [
+  '1FiQa4q3sUXHehu8bteeJi5Kh4wvhjRoa','1iTTHOsv0qsjb-43jt77fFuhmXEekiS9N','1rv53EuNAg9Ac6VUqj546oNv2_hsVnFZc',
+  '1mKD5JPS0pq2PdGujQig7jI-FprgfNUDF','1sRy0CmDYZUsPb1DJbWZJRIqJSml2cD3V','1Z-H2bTdPtb2nqWoSz6euxn0UDMIUYjmC',
+  '1-rDHfInCptsEb6neYY_9lEMTriBzcx49','1L5ZC0BqwpV-8FtZkONKnU6PKZ7Dl7WQR','1mrJz1MA7dVvpAdW6aMQ_l0s5KwfB7Th2',
+  '1ITe8EVenmWyZ0LubHbthCwUFqXikT_IJ','1T_8_x9DbJlGAPJ1_lpj3JXgB2sryC0n5','14LqTwScuz3kCQNzfUChaDFO9vS5G_Trm',
+  '1DC6ZVsKg_drCfoGlmw53B_2b-clNEFp4','1FfJy380S2eNWvj4jBR0ZEajK2pd_06GV','1NKA6dcvkl6v50HIjUb7EPRk7hewByHFl',
+  '1sjWXKKMTcy85nFAUzCM_mA6nywkC7T4n','10TyDCT0IdbWbE7O0kAGwXzjF_4E1p5JD','1v8ho5_Q2Y5hGsUuk5om57G-ioH1HevCS',
+  '1oCDdwUS7dKig9SBP6ihuwJBarkFYGwjq','1t9A2EjSzf8RwSFO5KnoA_ZajMKlMylHn','1o-ixKQ73tw9xw48TAY5r04aaT-DKbpbV',
+  '12M96ItYqmO_3gRo0El96YD46HYJJtEAz','1vZD8YMnR38NcIwjIRbx99ZtCvxZglzWH','1j68JTJh_YVmMQ2cO5fG7sU7UG_QO7K_u',
+  '1i0vP4ICYdmCLLpyOB47kKYvqTxKurfiA','1HgQIJyY42JJsxgXd2iDP7J9lMMLK1xyY','16OyMRwsyPup71NMBBBPNgH03PBcDHdEw',
+  '1PtA26D5nCSDm1eYnG7w-LErf-TW9Pf4v','1uQNVuLWp6TtGBPDcns68ivyCqdkbLTcO','1xXIHzSPOK44Ga-p0BP0N4n25nYw468xa',
+  '1CT5FFjj3FtBBap82rTmeZgmp2Wkhgo-L','1quYShrn_J2fEXo8N_w9aPbl-1A1cyb-R','1zau5FBEO5_zEMAb0W-piL6haCrtN4VJi',
+  '1BInYw76mSmkJ3paaWgo6n76I-P-x_xCD','1LuavYltIGhHo5Eaf6_gxk1KpkT7IGKdm','1jx7YKGr-EgZR2duJ4f8EMOtplpYbRHJ6',
+  '1jG_VtUPLaxMDJmc8-uAU4sT1iuL0Dq1T'
+];
 const pgrid = document.getElementById('practiceGrid');
 practiceIds.forEach((id,i)=>pgrid.appendChild(renderMediaCard({id, label:`Practice File ${i+1}`, kind:'file', accent:'#ef476f'})));
+practiceFolders.forEach((id,i)=>pgrid.appendChild(renderMediaCard({id, label:`Practice Folder ${i+1}`, kind:'folder', accent:'#d1476b', trackKey:'seenPracticeFolders'})));
+practiceIds2.forEach((id,i)=>pgrid.appendChild(renderMediaCard({id, label:`Practice File ${practiceIds.length+i+1}`, kind:'file', accent:'#ef476f'})));
 /* ---------- ADDITIONAL MATERIALS ---------- */
 const materialIds = [
   '1ZVRAV-2bjJL6UeUwqn8lpVX0ajjTpta7','1eMdoNwin_NOt3_eI0QLacl9NG-MfiXX3','1EWIFWvDwi-IhMqeWyFrSyptnrs5PHTn1',
@@ -2446,24 +2655,37 @@ function theaterUpdateNav(){
   nextBtn.disabled = idx>=allScreencasts.length-1;
   indexEl.textContent = `Screencast ${idx+1} of ${allScreencasts.length}`;
 }
+function theaterMarkWatched(id){
+  if(!student) return;
+  if(theaterIsWatched(id)) return;
+  student.videoConfirmed = student.videoConfirmed || {};
+  student.videoConfirmed[id] = true;
+  saveStudentRecord(student);
+  updateGrade();
+  if(theaterCurrentId===id){
+    const chk = document.getElementById('theaterChk');
+    if(chk) chk.textContent = 'watched 50%+ ✓';
+  }
+  theaterRenderSide();
+}
 function theaterPlay(id, label){
   theaterCurrentId = id;
   clearTimeout(theaterDwellTimer);
   theaterLoadIframe(id, label);
   document.getElementById('theaterTitle').textContent = label;
-  document.getElementById('theaterOpenDrive').href = driveViewUrl(id);
   const chk = document.getElementById('theaterChk');
-  const watchBtn = document.getElementById('theaterWatchBtn');
   const alreadyWatched = theaterIsWatched(id);
   chk.textContent = alreadyWatched ? 'watched 50%+ ✓' : 'opened ✓';
   chk.classList.add('seen');
-  watchBtn.style.display = 'none';
   if(student){
     student.seenScreencasts = student.seenScreencasts || [];
     if(!student.seenScreencasts.includes(id)){ student.seenScreencasts.push(id); saveStudentRecord(student); }
   }
   if(!alreadyWatched){
-    theaterDwellTimer = setTimeout(()=>{ watchBtn.style.display = 'inline-block'; }, VIDEO_WATCH_THRESHOLD_MS);
+    // No manual click needed — once a student has kept a recording open long
+    // enough to represent 50%+ engagement, it's marked watched automatically
+    // and shows up in the Watched list and checkmark right away.
+    theaterDwellTimer = setTimeout(()=>theaterMarkWatched(id), VIDEO_WATCH_THRESHOLD_MS);
   }
   theaterUpdateNav();
   theaterRenderSide();
@@ -2477,17 +2699,6 @@ function theaterStep(delta){
 }
 document.getElementById('theaterPrevBtn').addEventListener('click', ()=>theaterStep(-1));
 document.getElementById('theaterNextBtn').addEventListener('click', ()=>theaterStep(1));
-document.getElementById('theaterWatchBtn').addEventListener('click', ()=>{
-  if(!student){ alert('Sign in first.'); return; }
-  if(!theaterCurrentId) return;
-  student.videoConfirmed = student.videoConfirmed || {};
-  student.videoConfirmed[theaterCurrentId] = true;
-  saveStudentRecord(student);
-  updateGrade();
-  document.getElementById('theaterChk').textContent = 'watched 50%+ ✓';
-  document.getElementById('theaterWatchBtn').style.display = 'none';
-  theaterRenderSide();
-});
 /* Keyboard shortcuts: only while the Screencasts tab is open and the person
    isn't typing in the search box — Left/Right (or J/K) jump between
    recordings, like a playlist. */
@@ -2500,7 +2711,6 @@ document.addEventListener('keydown', e=>{
 if(allScreencasts.length){
   theaterShowPoster(allScreencasts[0].id, allScreencasts[0].label);
   document.getElementById('theaterTitle').textContent = allScreencasts[0].label;
-  document.getElementById('theaterOpenDrive').href = driveViewUrl(allScreencasts[0].id);
 }
 theaterUpdateNav();
 theaterRenderSide();
