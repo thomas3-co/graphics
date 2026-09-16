@@ -2778,7 +2778,9 @@ function theaterShowPoster(id, label){
       <div class="play-badge" aria-hidden="true">▶</div>
       <span class="lbl">Play in large screen</span>
     </button>`;
-  wrap.querySelector('.thumb-poster').addEventListener('click', ()=>theaterLoadIframe(id, label), { once:true });
+  // Watch tracking only begins once the student actually presses Play here —
+  // selecting a recording from the list just loads its poster/details.
+  wrap.querySelector('.thumb-poster').addEventListener('click', ()=>theaterBeginPlayback(id, label), { once:true });
 }
 function theaterLoadIframe(id, label){
   const wrap = document.getElementById('theaterPlayerWrap');
@@ -2791,6 +2793,17 @@ function theaterLoadIframe(id, label){
   iframe.setAttribute('allowfullscreen','true');
   iframe.addEventListener('load', ()=>{ wrap.innerHTML=''; wrap.appendChild(iframe); }, { once:true });
   setTimeout(()=>{ if(!wrap.contains(iframe)){ wrap.innerHTML=''; wrap.appendChild(iframe); } }, 600);
+}
+/* The one moment we treat as "playback started": the student clicked Play
+   on the poster for the currently-selected recording. Only from here does
+   the video actually load AND the watch-progress timer start — simply
+   picking a recording from the side list does not start the clock. */
+function theaterBeginPlayback(id, label){
+  theaterCurrentId = id;
+  theaterLoadIframe(id, label);
+  theaterStartWatchTracking(id);
+  theaterUpdateNav();
+  theaterRenderSide();
 }
 function theaterUpdateNav(){
   const idx = allScreencasts.findIndex(v=>v.id===theaterCurrentId);
@@ -2817,7 +2830,10 @@ function theaterMarkWatched(id){
 }
 function theaterPlay(id, label){
   theaterCurrentId = id;
-  theaterLoadIframe(id, label);
+  // Selecting a recording only loads its poster/details — the watch-progress
+  // timer doesn't start until the student presses Play (theaterBeginPlayback).
+  theaterClearWatchTracking();
+  theaterShowPoster(id, label);
   document.getElementById('theaterTitle').textContent = label;
   const meta = allScreencasts.find(v=>v.id===id);
   document.getElementById('theaterAboutTitle').textContent = label;
@@ -2826,13 +2842,11 @@ function theaterPlay(id, label){
   const alreadyWatched = theaterIsWatched(id);
   chk.textContent = alreadyWatched ? 'watched 75%+ ✓' : 'opened ✓';
   chk.classList.add('seen');
+  theaterSetWatchBar(alreadyWatched ? 100 : 0);
   if(student){
     student.seenScreencasts = student.seenScreencasts || [];
     if(!student.seenScreencasts.includes(id)){ student.seenScreencasts.push(id); saveStudentRecord(student); }
   }
-  // Track dwell time toward the 75% checkpoint, then ask the student to
-  // confirm before it counts as watched — see theaterStartWatchTracking.
-  theaterStartWatchTracking(id);
   theaterUpdateNav();
   theaterRenderSide();
 }
