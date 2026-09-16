@@ -1416,7 +1416,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
                 <div class="theater-watchbar-marker"></div>
               </div>
               <div class="theater-watchbar-label">
-                <span>Watch progress (estimated)</span>
+                <span>Watch progress (% of this recording's runtime)</span>
                 <span class="wl-live" id="theaterWatchPct">0%</span>
               </div>
               <div class="theater-confirm" id="theaterConfirmBox" role="dialog" aria-label="Confirm you've watched this recording">
@@ -1691,12 +1691,14 @@ document.querySelectorAll('.note-section[data-reading]').forEach(n=>noteObserver
      on the same browser, but clearing site data or a private window
      resets it. Real enforcement needs a backend.
    - Google Drive's embedded player is a different origin, so this page
-     genuinely cannot read how much of a video was played. "75%+ watched"
-     on the Screencasts page is an honest proxy: a visible progress bar
-     fills while the recording is open, and once it reaches the 75%
-     checkpoint the page stops and asks the student a direct yes/no
-     check-in before marking it watched — it is not a hidden,
-     unfakeable measurement, just a confirmed estimate.
+     genuinely cannot read live playback position. "75%+ watched" on the
+     Screencasts page is calculated from each recording's own runtime
+     (see screencastDurations near the playlist array) rather than one
+     flat timer for every video — a visible progress bar fills once
+     playback actually starts, and at 75% of that recording's length the
+     page stops and asks the student a direct yes/no check-in before
+     marking it watched. Recordings without a real duration filled in
+     fall back to a 10-minute default until one is added.
    - There's no email-sending backend, so "automatic" send means: the
      instant the end-of-week quiz is submitted, the page immediately
      opens a pre-filled, non-editable-by-the-page report addressed to
@@ -2579,6 +2581,20 @@ const screencastPlaylist = [
   { id:'1y13t7n5nTN_3oppd_Nx7AJ1Yfd7nSwdE', label:'How to Create Realistic T-Shirt Mockups', desc:'Build custom, fully editable apparel mockups using Smart Objects and Displacement Maps. Learn how to set up reusable template files where graphics instantly conform to garment folds, highlights, and shadow layers with a single click.' }
 ];
 const allScreencasts = screencastPlaylist;
+/* OPTIONAL: exact runtime for each recording, in seconds. When a recording's
+   id is listed here, the 75% watch-checkpoint is calculated from THAT
+   recording's actual length (find it in Google Drive: right-click the file
+   → "File information" → Details panel shows duration). Anything not
+   listed falls back to DEFAULT_VIDEO_DURATION_SECONDS below, so tracking
+   still works correctly before every exact length has been filled in —
+   just less precisely for the ones still on the default. */
+const screencastDurations = {
+  // '1khSdxt8enMJ7NW60dp-gLxFGEKmbOzOJ': 540, // example: 9 min 0 sec — replace with the real length
+};
+const DEFAULT_VIDEO_DURATION_SECONDS = 600; // 10 min fallback for any recording without a real duration above
+function theaterGetDurationSeconds(id){
+  return screencastDurations[id] || DEFAULT_VIDEO_DURATION_SECONDS;
+}
 const practiceIds = [
   '1G-7HQ02DKWNB0KV1Zig_ewB3Oi4X6yNZ','1y81quAh0_axcnbufcti7XqVps5Kupsno','1VZeqFzGAZtBjfNYGg8lClM1NT8bwhKnO',
   '1BwweNQo0GDjqttZUC37MjRgrNh268SmK','1BSSMMfhW0RcZevkiNXt4zbv4b2RefSwE','1pEeilJNCas3ak8A4oVkdOTE7991-Spfz'
@@ -2630,7 +2646,7 @@ let theaterFilterMode = 'all'; // all | watched | unwatched
    they've actually watched that much before it counts — it is not a
    hidden, unfakeable measurement, just a check-in rather than a silent
    auto-mark. */
-const WATCH_CHECK_MS = 45000; // dwell time treated as reaching the 75% checkpoint
+const WATCH_CHECK_INTERVAL_MS = 400; // how often the progress bar is refreshed while playing
 let theaterWatchInterval = null;
 let theaterWatchStart = null;
 function theaterSetWatchBar(pct){
@@ -2675,20 +2691,25 @@ function theaterStartWatchTracking(id){
     theaterShowWatchedBanner();
     return;
   }
+  // The checkpoint is 75% of THIS recording's own runtime, not a fixed
+  // dwell time — a 20-minute recording and a 3-minute recording each need
+  // their own proportional amount of watch time before the check-in fires.
+  const durationSec = theaterGetDurationSeconds(id);
+  const checkpointMs = durationSec * 0.75 * 1000;
   theaterSetWatchBar(0);
   theaterWatchStart = Date.now();
   theaterWatchInterval = setInterval(()=>{
     if(theaterCurrentId !== id) return; // switched videos — stale interval, ignore
     const elapsed = Date.now() - theaterWatchStart;
-    const pct = (elapsed / WATCH_CHECK_MS) * 75;
+    const pct = (elapsed / checkpointMs) * 75;
     theaterSetWatchBar(pct);
-    if(elapsed >= WATCH_CHECK_MS){
+    if(elapsed >= checkpointMs){
       clearInterval(theaterWatchInterval);
       theaterWatchInterval = null;
       theaterSetWatchBar(75);
       theaterShowConfirm();
     }
-  }, 400);
+  }, WATCH_CHECK_INTERVAL_MS);
 }
 document.getElementById('theaterConfirmYes').addEventListener('click', ()=>{
   if(!theaterCurrentId) return;
