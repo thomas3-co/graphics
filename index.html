@@ -2670,7 +2670,18 @@ let theaterFilterMode = 'all'; // all | watched | unwatched
    auto-mark. */
 const WATCH_CHECK_INTERVAL_MS = 400; // how often the progress bar is refreshed while playing
 let theaterWatchInterval = null;
-let theaterWatchStart = null;
+let theaterWatchElapsedMs = 0;      // total counted watch time for the current recording
+let theaterWatchLastTickTime = null; // timestamp of the last tick, used to measure real elapsed time
+function theaterIsCountable(){
+  // Only count time toward "watched" while the Screencasts tab is the active
+  // view AND the browser tab/window itself is visible and focused. If the
+  // student switches to another tab in the course (Curriculum, Notes, etc.),
+  // switches to a different browser tab, or minimizes the window, the timer
+  // stops accumulating until they come back to actually watching.
+  const screencastsSection = document.getElementById('screencasts');
+  const screencastsActive = screencastsSection && screencastsSection.classList.contains('active');
+  return !!screencastsActive && document.visibilityState === 'visible' && document.hasFocus();
+}
 function theaterSetWatchBar(pct){
   const fill = document.getElementById('theaterWatchBarFill');
   const label = document.getElementById('theaterWatchPct');
@@ -2698,7 +2709,8 @@ function theaterShowWatchedBanner(){
 }
 function theaterClearWatchTracking(){
   if(theaterWatchInterval){ clearInterval(theaterWatchInterval); theaterWatchInterval = null; }
-  theaterWatchStart = null;
+  theaterWatchElapsedMs = 0;
+  theaterWatchLastTickTime = null;
   theaterHideConfirm();
   theaterHideWatchedBanner();
   const stage = document.getElementById('theaterStage');
@@ -2719,13 +2731,23 @@ function theaterStartWatchTracking(id){
   const durationSec = theaterGetDurationSeconds(id);
   const checkpointMs = durationSec * 0.75 * 1000;
   theaterSetWatchBar(0);
-  theaterWatchStart = Date.now();
+  theaterWatchElapsedMs = 0;
+  theaterWatchLastTickTime = Date.now();
   theaterWatchInterval = setInterval(()=>{
-    if(theaterCurrentId !== id) return; // switched videos — stale interval, ignore
-    const elapsed = Date.now() - theaterWatchStart;
-    const pct = (elapsed / checkpointMs) * 75;
+    if(theaterCurrentId !== id){ return; } // switched videos — stale interval, ignore
+    const now = Date.now();
+    const sinceLastTick = now - theaterWatchLastTickTime;
+    theaterWatchLastTickTime = now;
+    // Only add this tick's time to the count if the recording was actually
+    // the active, visible thing on screen for it — not while the student
+    // is on another tab of the course, another browser tab, or the window
+    // is unfocused/minimized.
+    if(theaterIsCountable()){
+      theaterWatchElapsedMs += sinceLastTick;
+    }
+    const pct = (theaterWatchElapsedMs / checkpointMs) * 75;
     theaterSetWatchBar(pct);
-    if(elapsed >= checkpointMs){
+    if(theaterWatchElapsedMs >= checkpointMs){
       clearInterval(theaterWatchInterval);
       theaterWatchInterval = null;
       theaterSetWatchBar(75);
