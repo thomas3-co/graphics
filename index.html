@@ -2511,15 +2511,13 @@ function renderMediaCard({ id, label, kind, accent, trackKey }){
     if(chk){ chk.textContent='watched 75%+ ✓'; chk.classList.add('seen'); }
   }
   poster.addEventListener('click', ()=>{
-    thumb.innerHTML = '<div class="thumb-poster" style="cursor:default;"><div class="thumb-spinner" aria-hidden="true"></div><span class="lbl">Loading...</span></div>';
+    thumb.innerHTML = '';
     const iframe = document.createElement('iframe');
     iframe.src = embedUrl;
     iframe.title = label;
-    iframe.loading = 'lazy';
     iframe.setAttribute('allow','autoplay');
     iframe.setAttribute('allowfullscreen','true');
-    iframe.addEventListener('load', ()=>{ thumb.innerHTML=''; thumb.appendChild(iframe); }, { once:true });
-    setTimeout(()=>{ if(!thumb.contains(iframe)){ thumb.innerHTML=''; thumb.appendChild(iframe); } }, 600);
+    thumb.appendChild(iframe);
     chk.textContent = 'opened ✓';
     chk.classList.add('seen');
     if(student){
@@ -2829,15 +2827,13 @@ function theaterShowPoster(id, label){
 }
 function theaterLoadIframe(id, label){
   const wrap = document.getElementById('theaterPlayerWrap');
-  wrap.innerHTML = '<div class="thumb-poster" style="cursor:default;"><div class="thumb-spinner" aria-hidden="true"></div><span class="lbl">Loading...</span></div>';
+  wrap.innerHTML = '';
   const iframe = document.createElement('iframe');
   iframe.src = driveEmbedUrl(id);
   iframe.title = label;
-  iframe.loading = 'lazy';
   iframe.setAttribute('allow','autoplay');
   iframe.setAttribute('allowfullscreen','true');
-  iframe.addEventListener('load', ()=>{ wrap.innerHTML=''; wrap.appendChild(iframe); }, { once:true });
-  setTimeout(()=>{ if(!wrap.contains(iframe)){ wrap.innerHTML=''; wrap.appendChild(iframe); } }, 600);
+  wrap.appendChild(iframe);
 }
 /* The one moment we treat as "playback started": the student clicked Play
    on the poster for the currently-selected recording. Only from here does
