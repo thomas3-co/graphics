@@ -2863,10 +2863,10 @@ function theaterLoadIframe(id, label){
 }
 /* Two clicks on the main cinematic screen, not one, before anything counts:
    1st click (on the poster) loads the actual video into the player.
-   2nd click (on the overlay shown on top of that loaded video) is the only
-   thing that starts the watch-progress timer. Selecting a recording from
-   the side list, or via Previous/Next, never starts the clock on its own —
-   see theaterPlay above. */
+   2nd click (on the Play overlay shown on top of that loaded video) is the
+   only thing that starts the watch-progress timer. Selecting a recording
+   from the side list, or via Previous/Next, never starts the clock on its
+   own — see theaterPlay above. */
 function theaterBeginPlayback(id, label){
   theaterCurrentId = id;
   theaterLoadIframe(id, label);
@@ -2884,8 +2884,8 @@ function theaterShowStartOverlay(id){
   const overlay = document.createElement('button');
   overlay.type = 'button';
   overlay.className = 'theater-start-overlay';
-  overlay.setAttribute('aria-label','Click again to start counting watch progress');
-  overlay.innerHTML = '<span class="tso-badge" aria-hidden="true">▶</span><span class="tso-lbl">Click again to start watch progress</span>';
+  overlay.setAttribute('aria-label','Play — starts watch progress');
+  overlay.innerHTML = '<span class="tso-badge" aria-hidden="true">▶</span><span class="tso-lbl">Play</span>';
   overlay.addEventListener('click', ()=>{
     overlay.remove();
     theaterStartWatchTracking(id);
