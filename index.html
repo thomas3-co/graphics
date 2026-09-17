@@ -294,6 +294,10 @@ footer.appfoot .foot-contact a:hover{text-decoration:underline;}
 .theater-player{width:100%;aspect-ratio:16/9;background:#0e1015;border-radius:14px;overflow:hidden;position:relative;box-shadow:0 0 0 1px rgba(255,255,255,.08);}
 .theater-player iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block;}
 .theater-player .thumb-poster{position:absolute;inset:0;width:100%;}
+.theater-start-overlay{position:absolute;inset:0;z-index:5;background:rgba(10,11,15,.45);border:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:#fff;cursor:pointer;padding:0;}
+.theater-start-overlay:hover{background:rgba(10,11,15,.55);}
+.theater-start-overlay .tso-badge{width:52px;height:52px;border-radius:50%;background:rgba(255,255,255,.95);color:var(--c-screen);display:flex;align-items:center;justify-content:center;font-size:20px;box-shadow:0 8px 20px rgba(0,0,0,.4);}
+.theater-start-overlay .tso-lbl{font-size:12.5px;font-weight:700;letter-spacing:.3px;text-align:center;max-width:220px;line-height:1.4;}
 /* --- Watch-progress bar + 75% checkpoint marker (shown under the player) --- */
 .theater-watchbar{position:relative;height:9px;border-radius:8px;background:rgba(255,255,255,.10);margin:16px 2px 0;overflow:visible;}
 .theater-watchbar-fill{position:absolute;left:0;top:0;bottom:0;border-radius:8px;background:linear-gradient(90deg,#12a394,#2f6fed);width:0%;transition:width .35s linear;}
@@ -2857,17 +2861,36 @@ function theaterLoadIframe(id, label){
   iframe.setAttribute('allowfullscreen','true');
   wrap.appendChild(iframe);
 }
-/* The one moment we treat as "playback started": the student clicked Play
-   on the poster shown in the main cinematic screen. Only from here does the
-   video actually load AND the watch-progress timer start — selecting a
-   recording from the side list, or via Previous/Next, only loads its poster
-   and details and never starts the clock on its own. */
+/* Two clicks on the main cinematic screen, not one, before anything counts:
+   1st click (on the poster) loads the actual video into the player.
+   2nd click (on the overlay shown on top of that loaded video) is the only
+   thing that starts the watch-progress timer. Selecting a recording from
+   the side list, or via Previous/Next, never starts the clock on its own —
+   see theaterPlay above. */
 function theaterBeginPlayback(id, label){
   theaterCurrentId = id;
   theaterLoadIframe(id, label);
-  theaterStartWatchTracking(id);
+  if(theaterIsWatched(id)){
+    // Already confirmed watched — just show that state, no need to gate behind another click.
+    theaterStartWatchTracking(id);
+  } else {
+    theaterShowStartOverlay(id);
+  }
   theaterUpdateNav();
   theaterRenderSide();
+}
+function theaterShowStartOverlay(id){
+  const wrap = document.getElementById('theaterPlayerWrap');
+  const overlay = document.createElement('button');
+  overlay.type = 'button';
+  overlay.className = 'theater-start-overlay';
+  overlay.setAttribute('aria-label','Click again to start counting watch progress');
+  overlay.innerHTML = '<span class="tso-badge" aria-hidden="true">▶</span><span class="tso-lbl">Click again to start watch progress</span>';
+  overlay.addEventListener('click', ()=>{
+    overlay.remove();
+    theaterStartWatchTracking(id);
+  }, { once:true });
+  wrap.appendChild(overlay);
 }
 function theaterUpdateNav(){
   const idx = allScreencasts.findIndex(v=>v.id===theaterCurrentId);
@@ -2895,10 +2918,11 @@ function theaterMarkWatched(id){
 function theaterPlay(id, label){
   theaterCurrentId = id;
   // Selecting a recording (from the side list, or via Previous/Next) only
-  // loads its poster and details on the main cinematic screen. The video
-  // itself does not load and the watch-progress timer does not start until
-  // the student clicks the Play button on that main player — see
-  // theaterShowPoster -> theaterBeginPlayback below.
+  // loads its poster and details on the main cinematic screen. Nothing is
+  // counted from here — watch-progress only starts after two clicks on the
+  // cinematic screen itself: one to load the video, one more on the overlay
+  // to actually start the timer. See theaterShowPoster -> theaterBeginPlayback
+  // -> theaterShowStartOverlay below.
   theaterClearWatchTracking();
   theaterShowPoster(id, label);
   document.getElementById('theaterTitle').textContent = label;
