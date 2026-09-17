@@ -2858,10 +2858,10 @@ function theaterLoadIframe(id, label){
   wrap.appendChild(iframe);
 }
 /* The one moment we treat as "playback started": the student clicked Play
-   on the poster for the currently-selected recording. Only from here does
-   the video actually load AND the watch-progress timer start — simply
-   picking a recording from the side list does not start the clock.
-   (Kept for the very first video shown before any click on page load.) */
+   on the poster shown in the main cinematic screen. Only from here does the
+   video actually load AND the watch-progress timer start — selecting a
+   recording from the side list, or via Previous/Next, only loads its poster
+   and details and never starts the clock on its own. */
 function theaterBeginPlayback(id, label){
   theaterCurrentId = id;
   theaterLoadIframe(id, label);
@@ -2892,14 +2892,15 @@ function theaterMarkWatched(id){
   }
   theaterRenderSide();
 }
-/* One click, both things happen together: selecting a recording (from the
-   sidebar, or via Previous/Next) immediately loads the video AND starts the
-   watch-progress timer — no separate "press play on the poster" step. */
 function theaterPlay(id, label){
   theaterCurrentId = id;
+  // Selecting a recording (from the side list, or via Previous/Next) only
+  // loads its poster and details on the main cinematic screen. The video
+  // itself does not load and the watch-progress timer does not start until
+  // the student clicks the Play button on that main player — see
+  // theaterShowPoster -> theaterBeginPlayback below.
   theaterClearWatchTracking();
-  theaterLoadIframe(id, label);
-  theaterStartWatchTracking(id);
+  theaterShowPoster(id, label);
   document.getElementById('theaterTitle').textContent = label;
   const meta = allScreencasts.find(v=>v.id===id);
   document.getElementById('theaterAboutTitle').textContent = label;
@@ -2908,6 +2909,7 @@ function theaterPlay(id, label){
   const alreadyWatched = theaterIsWatched(id);
   chk.textContent = alreadyWatched ? 'watched 75%+ ✓' : 'opened ✓';
   chk.classList.add('seen');
+  theaterSetWatchBar(alreadyWatched ? 100 : 0);
   if(student){
     student.seenScreencasts = student.seenScreencasts || [];
     if(!student.seenScreencasts.includes(id)){ student.seenScreencasts.push(id); saveStudentRecord(student); }
