@@ -2581,15 +2581,39 @@ const screencastPlaylist = [
   { id:'1y13t7n5nTN_3oppd_Nx7AJ1Yfd7nSwdE', label:'How to Create Realistic T-Shirt Mockups', desc:'Build custom, fully editable apparel mockups using Smart Objects and Displacement Maps. Learn how to set up reusable template files where graphics instantly conform to garment folds, highlights, and shadow layers with a single click.' }
 ];
 const allScreencasts = screencastPlaylist;
-/* OPTIONAL: exact runtime for each recording, in seconds. When a recording's
-   id is listed here, the 75% watch-checkpoint is calculated from THAT
-   recording's actual length (find it in Google Drive: right-click the file
-   → "File information" → Details panel shows duration). Anything not
-   listed falls back to DEFAULT_VIDEO_DURATION_SECONDS below, so tracking
-   still works correctly before every exact length has been filled in —
-   just less precisely for the ones still on the default. */
+/* Exact runtime for each recording, in seconds — every video in this
+   course already has its own slot below, all starting at null. To find a
+   recording's real length: open Google Drive, right-click the file →
+   "File information" → Details panel shows its Duration (e.g. 9:12 =
+   9*60+12 = 552 seconds). Replace that recording's `null` with the number.
+   Any recording still left at null falls back to DEFAULT_VIDEO_DURATION_SECONDS
+   below, which is why every un-filled recording currently checks in at the
+   same point regardless of how long it actually runs — fill these in to
+   make the 75% checkpoint accurate per video. */
 const screencastDurations = {
-  // '1khSdxt8enMJ7NW60dp-gLxFGEKmbOzOJ': 540, // example: 9 min 0 sec — replace with the real length
+  '1khSdxt8enMJ7NW60dp-gLxFGEKmbOzOJ': 102, // Change Background & Smudge Tool Basics — replace null with the exact length in seconds
+  '1I2VJv2bLE7w0t_2ITY8XMzHBSGR1-UCg': 126, // How to Create a Passport Size Image (1.5 x 2 in) — replace null with the exact length in seconds
+  '1MuJkKq7MsJtB-WRZ_8oHmi5X-f0up7h5': 304, // Lip & Face Retouching (Dodge & Burn, Healing Brush, Frequency Separation) — replace null with the exact length in seconds
+  '1QQA6LEBWIn7iPkLY5Jfk81BVNUzl4qm6': 43, // Advanced Portrait Retouching: Teeth Whitening — replace null with the exact length in seconds
+  '1Y1kl-zMa5cMcTAysIrRK-1kwhfe93sW1': 70, // Portrait Perfection: Eyes and Reflections for Realistic Results (Part 1) — replace null with the exact length in seconds
+  '1Pc0NNb3xMy_vXsri7keAP28856xXsEP5': 288, // Portrait Perfection: Eyes and Reflections for Realistic Results (Part 2) — replace null with the exact length in seconds
+  '1V0DwbaQaJsRiGsmrPIjk5k4evZ8Xrbmj': 29, // Advanced Portrait Retouching: Teeth Whitening & Eye Enhancement — replace null with the exact length in seconds
+  '1FQby71jwqu5vc3ZFLa551cwsL2-Fr1JL': 49, // Uneven Eye Enhancement (Part 1) — replace null with the exact length in seconds
+  '10IGHEvSRSe2bnd2LXC1wwh3MXu8wmg1g': 34, // Uneven Eye Enhancement (Part 2) — replace null with the exact length in seconds
+  '1GPnPtOIV2Sgb3uyPIpb2wnTt8riCEXTo': 130, // Puppet Warp Tool — replace null with the exact length in seconds
+  '1u3xzfCcBGat9p5z7Vk08Pye5pVdoXowM': 60, // How To Easily Add Design on Dress in Photoshop (Part 1) — replace null with the exact length in seconds
+  '1EsXq8eZ_IXs79tvvjKxfozooqOwCUQeT': 229, // How To Easily Add Design on Dress in Photoshop (Part 2) — replace null with the exact length in seconds
+  '1bTuJ8yUYKXAOakIObT6kz_vh8NehMEiD': 95, // How to Change the Color of Clothing (Part 1) — replace null with the exact length in seconds
+  '1T5-Q5M56LtTljcvAnAjURpwmWguRN80o': 182, // How to Change the Color of Clothing (Part 2) — replace null with the exact length in seconds
+  '17AFMI2mDOhpH-geevQRCJfCK7R4sjrQh': 165, // Text Effect — replace null with the exact length in seconds
+  '169tqSKyd_TyYctbJE6Iq2mMHr0quyX29': 131, // Text Effect by Cutting & Adding Shadow — replace null with the exact length in seconds
+  '1atg0WcM04qpfIUYZt8wgvX-Qpc3LEmUQ': 290, // 3D Text Effect & Pop-Out Image — replace null with the exact length in seconds
+  '1PhTdscHTCnjoCJ6Q-k7wBo8HsmXhgOxu': 118, // Vintage Photo Editing — replace null with the exact length in seconds
+  '1Gp2uTObLUigJkqLkvbweigLd6Yj-lf1f': 334, // Neon Text Effect — replace null with the exact length in seconds
+  '1S2IWx1R1whsPW53Bth8fsEP7I0fkbsMK': 449, // Double Exposure & Poster Making (Beginner Level) — replace null with the exact length in seconds
+  '10xSYahhd1fEb6YO4ckW_6hq7rhZ2YWdE': 129, // Creative Poster Making with Double Exposure — replace null with the exact length in seconds
+  '10WmX1xYIRWtgzbLgUDJJb3E9fZ8rKh25': 182, // Advanced Double Exposure Techniques — replace null with the exact length in seconds
+  '1y13t7n5nTN_3oppd_Nx7AJ1Yfd7nSwdE': 421, // How to Create Realistic T-Shirt Mockups — replace null with the exact length in seconds
 };
 const DEFAULT_VIDEO_DURATION_SECONDS = 600; // 10 min fallback for any recording without a real duration above
 function theaterGetDurationSeconds(id){
@@ -2906,3 +2930,4 @@ initAuth();
 </script>
 </body>
 </html>
+
