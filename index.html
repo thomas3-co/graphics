@@ -436,6 +436,17 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
     </div>
   </div>
 </div>
+<!-- ========== CONTENT CHECK-IN MODAL (pops after a screencast or reading is completed) ========== -->
+<div class="wq-modal" id="cqModal" role="dialog" aria-modal="true" aria-labelledby="cqHeading">
+  <div class="wq-box">
+    <div class="wq-tag" id="cqTag">Quick Check</div>
+    <h3 id="cqHeading">Nice work! Quick 2-question check:</h3>
+    <div id="cqQuizBody"></div>
+    <div class="wq-actions">
+      <button class="wq-submit" id="cqSubmit" type="button">Submit</button>
+    </div>
+  </div>
+</div>
 <div class="app">
   <header class="topbar">
     <button class="brand" id="brandHomeBtn" type="button" aria-label="Go to Home">
@@ -1690,7 +1701,12 @@ const noteObserver = new IntersectionObserver(entries=>{
           const rect = e.target.getBoundingClientRect();
           if(rect.top < window.innerHeight && rect.bottom > 0){
             readingSeen.add(key);
-            if(student){ student.readingSeen = Array.from(readingSeen); saveStudentRecord(student); }
+            if(student){
+              student.readingSeen = Array.from(readingSeen);
+              saveStudentRecord(student);
+              const readingItem = readingPool.find(p=>p.key===key);
+              maybeShowContentQuiz('reading', key, readingPool, `Nice work reading "${readingItem ? readingItem.title : key}"! Quick 2-question check:`);
+            }
           }
         }, 2000);
       }
@@ -1698,6 +1714,96 @@ const noteObserver = new IntersectionObserver(entries=>{
   });
 },{threshold:0.5});
 document.querySelectorAll('.note-section[data-reading]').forEach(n=>noteObserver.observe(n));
+/* ================= CONTENT CHECK-IN QUIZZES (screencasts + reading) =================
+   A lightweight 2-question multiple-choice check pops up right after a
+   screencast is marked watched, or a Read Me section is marked read. Both
+   questions are generated from that item's own title and description —
+   one asks what the title covers (options are descriptions, one real,
+   three borrowed from other items), the other asks which title matches
+   the description shown. Scores are stored per item and rolled up on the
+   My Progress page. */
+function truncateText(str, maxLen){
+  if(!str) return '';
+  return str.length > maxLen ? str.slice(0, maxLen-1).trim() + '…' : str;
+}
+function shuffleArr(arr){ return arr.slice().sort(()=>Math.random()-0.5); }
+function buildItemQuiz(pool, key){
+  const current = pool.find(p=>p.key===key);
+  if(!current || !current.desc) return [];
+  const others = pool.filter(p=>p.key!==key && p.desc);
+  if(others.length < 3) return []; // not enough other items yet to build distractors
+  const distractorsA = shuffleArr(others).slice(0,3);
+  const optionsA = shuffleArr([
+    { text: truncateText(current.desc, 120), correct:true },
+    ...distractorsA.map(o=>({ text: truncateText(o.desc, 120), correct:false }))
+  ]);
+  const distractorsB = shuffleArr(others).slice(0,3);
+  const optionsB = shuffleArr([
+    { text: current.title, correct:true },
+    ...distractorsB.map(o=>({ text: o.title, correct:false }))
+  ]);
+  return [
+    { prompt: `What does "${current.title}" mainly cover?`, options: optionsA },
+    { prompt: `Which title matches this: "${truncateText(current.desc, 140)}"`, options: optionsB }
+  ];
+}
+/* Reading pool is read straight off the DOM (title = the section's h3,
+   description = its first paragraph) so it always matches what's actually
+   in Read Me, including the new-project-menu section added at the top. */
+const readingPool = Array.from(document.querySelectorAll('.note-section[data-reading]')).map(el=>({
+  key: el.dataset.reading,
+  title: (el.querySelector('h3') && el.querySelector('h3').textContent.trim()) || el.dataset.reading,
+  desc: (el.querySelector('p') && el.querySelector('p').textContent.trim()) || ''
+}));
+let cqPendingType = null; // 'video' | 'reading'
+let cqPendingKey = null;
+function maybeShowContentQuiz(type, key, pool, headingText){
+  if(!student) return;
+  const bucket = type === 'video' ? 'screencasts' : 'reading';
+  if(student.contentQuizzes[bucket][key]) return; // already completed this one
+  if(document.getElementById('wqModal').classList.contains('open')) return; // don't stack on the weekly check-in
+  const questions = buildItemQuiz(pool, key);
+  if(!questions.length) return;
+  cqPendingType = type;
+  cqPendingKey = key;
+  document.getElementById('cqTag').textContent = type==='video' ? 'Screencast Check' : 'Reading Check';
+  document.getElementById('cqHeading').textContent = headingText;
+  const body = document.getElementById('cqQuizBody');
+  body.innerHTML = questions.map((q,i)=>`
+    <div style="margin-bottom:12px;">
+      <div style="font-size:13px;font-weight:700;margin-bottom:6px;">${i+1}. ${q.prompt}</div>
+      ${q.options.map((opt,oi)=>`<label style="display:block;font-size:13px;margin:4px 0;cursor:pointer;">
+        <input type="radio" name="cqq${i}" value="${oi}" data-correct="${opt.correct?'1':'0'}"> ${opt.text}
+      </label>`).join('')}
+    </div>`).join('');
+  document.getElementById('cqModal').classList.add('open');
+  const firstInput = document.querySelector('#cqQuizBody input');
+  if(firstInput) firstInput.focus();
+}
+document.getElementById('cqSubmit').addEventListener('click', ()=>{
+  const modal = document.getElementById('cqModal');
+  if(!student || !cqPendingType || !cqPendingKey){ modal.classList.remove('open'); return; }
+  const groups = {};
+  document.querySelectorAll('#cqQuizBody input[type=radio]').forEach(r=>{ groups[r.name] = groups[r.name]||[]; groups[r.name].push(r); });
+  const names = Object.keys(groups);
+  if(!names.length){ modal.classList.remove('open'); return; }
+  for(const name of names){
+    const checked = groups[name].find(r=>r.checked);
+    if(!checked){ alert('Please answer both questions before submitting.'); return; }
+  }
+  let score = 0;
+  names.forEach(name=>{
+    const checked = groups[name].find(r=>r.checked);
+    if(checked && checked.dataset.correct==='1') score++;
+  });
+  const bucket = cqPendingType==='video' ? 'screencasts' : 'reading';
+  student.contentQuizzes[bucket][cqPendingKey] = { score, total: names.length, completedAt:new Date().toISOString() };
+  saveStudentRecord(student);
+  updateGrade();
+  modal.classList.remove('open');
+  cqPendingType = null;
+  cqPendingKey = null;
+});
 /* =====================================================================
    SIGN-IN + DEVICE LOCK + WEEK-END QUIZ + GRADING + AUTO PROGRESS REPORT
    =====================================================================
@@ -1787,10 +1893,13 @@ function loadStudentRecord(email){
       rec.seenScreencasts = rec.seenScreencasts || [];
       rec.seenPractice = rec.seenPractice || [];
       rec.biweeklySent = rec.biweeklySent || {};
+      rec.contentQuizzes = rec.contentQuizzes || { screencasts:{}, reading:{} };
+      rec.contentQuizzes.screencasts = rec.contentQuizzes.screencasts || {};
+      rec.contentQuizzes.reading = rec.contentQuizzes.reading || {};
       return rec;
     }
   }catch(e){}
-  return { name:'', email:email.trim().toLowerCase(), completed:[], weekQuizzes:{}, readingSeen:[], vocabSeen:{}, videoConfirmed:{}, seenScreencasts:[], seenPractice:[], seenMaterials:[], biweeklySent:{}, signedInAt:new Date().toISOString() };
+  return { name:'', email:email.trim().toLowerCase(), completed:[], weekQuizzes:{}, readingSeen:[], vocabSeen:{}, videoConfirmed:{}, seenScreencasts:[], seenPractice:[], seenMaterials:[], biweeklySent:{}, contentQuizzes:{ screencasts:{}, reading:{} }, signedInAt:new Date().toISOString() };
 }
 function saveStudentRecord(rec){ try{ localStorage.setItem(studentKey(rec.email), JSON.stringify(rec)); }catch(e){ console.error(e); } }
 let student = null; // active record for this session
@@ -2031,6 +2140,11 @@ function renderProgressView(){
   const g = computeGrade();
   const quizzesTaken = Object.keys(student.weekQuizzes).length;
   const videosConfirmed = Object.keys(student.videoConfirmed).filter(id=>student.videoConfirmed[id]).length;
+  const videoQuizEntries = Object.values(student.contentQuizzes.screencasts);
+  const readingQuizEntries = Object.values(student.contentQuizzes.reading);
+  const avgPct = entries => entries.length ? Math.round(entries.reduce((s,q)=> s + (q.total ? (q.score/q.total)*100 : 0), 0) / entries.length) : 0;
+  const videoQuizAvg = avgPct(videoQuizEntries);
+  const readingQuizAvg = avgPct(readingQuizEntries);
   let rows = '';
   for(let w=1; w<=TOTAL_WEEKS; w++){
     const st = weekStatus(w);
@@ -2055,6 +2169,8 @@ function renderProgressView(){
       <div class="progress-card" style="--pc-accent:#ff6a2c"><h4>Screencasts Watched</h4><div class="pc-big">${videosConfirmed}/23</div><div class="pc-sub">reached 75% of runtime</div></div>
       <div class="progress-card" style="--pc-accent:#ef476f"><h4>Practice Files Opened</h4><div class="pc-big">${student.seenPractice.length}/43</div><div class="pc-sub">exercise files previewed</div></div>
       <div class="progress-card" style="--pc-accent:#5b6270"><h4>Materials Opened</h4><div class="pc-big">${(student.seenMaterials||[]).length}/23</div><div class="pc-sub">additional resources previewed</div></div>
+      <div class="progress-card" style="--pc-accent:#ff6a2c"><h4>Screencast Checks</h4><div class="pc-big">${videoQuizEntries.length}/23</div><div class="pc-sub">avg score ${videoQuizAvg}%</div></div>
+      <div class="progress-card" style="--pc-accent:#8b5cf6"><h4>Reading Checks</h4><div class="pc-big">${readingQuizEntries.length}/11</div><div class="pc-sub">avg score ${readingQuizAvg}%</div></div>
     </div>
     <div class="note-section" style="margin-top:22px;">
       <h3 style="margin-top:0;">Week-by-week breakdown</h3>
@@ -2093,6 +2209,12 @@ function buildReportBody(trigger){
   lines.push('Screencasts marked watched 75%+ (background dwell checkpoint reached — see note in report footer):');
   const watched = Object.keys(student.videoConfirmed).filter(id=>student.videoConfirmed[id]);
   lines.push(`  ${watched.length} of 23 recordings confirmed`);
+  lines.push('');
+  lines.push('Post-video and post-reading check-in quizzes (2 questions each, generated from that item\'s title/description):');
+  const vq = Object.entries(student.contentQuizzes.screencasts);
+  const rq = Object.entries(student.contentQuizzes.reading);
+  lines.push(`  Screencast checks: ${vq.length} of 23 — ${vq.map(([k,q])=>`${q.score}/${q.total}`).join(', ')||'none yet'}`);
+  lines.push(`  Reading checks: ${rq.length} of 11 — ${rq.map(([k,q])=>`${q.score}/${q.total}`).join(', ')||'none yet'}`);
   lines.push('');
   lines.push('Practice files opened:');
   lines.push(`  ${student.seenPractice.length} files`);
@@ -2807,6 +2929,23 @@ function theaterBeginPlayback(id, label){
   theaterUpdateNav();
   theaterRenderSide();
 }
+/* Switching away from this browser tab "pauses" the recording: Google
+   Drive's embedded player is cross-origin, so this page can't send it an
+   actual pause command — instead it stops the invisible watch-progress
+   timer immediately and swaps the video back to its poster, the same
+   state it's in before playback starts. Coming back to the tab does not
+   auto-resume; the student presses Play again, same as starting fresh. */
+function theaterPauseForHiddenTab(){
+  const wrap = document.getElementById('theaterPlayerWrap');
+  if(!wrap || !wrap.querySelector('iframe')) return; // nothing actively playing
+  if(!theaterCurrentId) return;
+  const meta = allScreencasts.find(v=>v.id===theaterCurrentId);
+  theaterClearWatchTracking();
+  theaterShowPoster(theaterCurrentId, meta ? meta.label : '');
+}
+document.addEventListener('visibilitychange', ()=>{
+  if(document.hidden) theaterPauseForHiddenTab();
+});
 function theaterUpdateNav(){
   const idx = allScreencasts.findIndex(v=>v.id===theaterCurrentId);
   const prevBtn = document.getElementById('theaterPrevBtn');
@@ -2825,6 +2964,9 @@ function theaterMarkWatched(id){
   saveStudentRecord(student);
   updateGrade();
   theaterRenderSide();
+  const meta = allScreencasts.find(v=>v.id===id);
+  const videoPool = allScreencasts.map(v=>({ key:v.id, title:v.label, desc:v.desc }));
+  maybeShowContentQuiz('video', id, videoPool, `Nice work finishing "${meta ? meta.label : 'that recording'}"! Quick 2-question check:`);
 }
 function theaterPlay(id, label){
   theaterCurrentId = id;
