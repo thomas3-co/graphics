@@ -2816,13 +2816,19 @@ function theaterClearWatchTracking(){
   const stage = document.getElementById('theaterStage');
   if(stage) stage.classList.remove('is-playing');
 }
+/* TESTING AID: open the page with ?fastwatch=1 in the URL to make every
+   recording's checkpoint fire ~5 seconds after pressing Play, so the
+   check-in quiz can be demoed instantly without waiting on real video
+   lengths. Never affects students opening the page normally — remove this
+   block (or just don't share the ?fastwatch=1 link) once you're done
+   testing. */
+const FAST_WATCH_TEST_MODE = new URLSearchParams(location.search).get('fastwatch') === '1';
 function theaterStartWatchTracking(id){
   theaterClearWatchTracking();
   const stage = document.getElementById('theaterStage');
   if(stage) stage.classList.add('is-playing');
   if(theaterIsWatched(id)) return; // already counted — nothing more to track
-  const durationSec = theaterGetDurationSeconds(id);
-  const checkpointMs = durationSec * 0.75 * 1000;
+  const checkpointMs = FAST_WATCH_TEST_MODE ? 5000 : theaterGetDurationSeconds(id) * 0.75 * 1000;
   theaterWatchTimer = setTimeout(()=>{
     theaterWatchTimer = null;
     theaterMarkWatched(id);
