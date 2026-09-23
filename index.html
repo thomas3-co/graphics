@@ -1361,6 +1361,105 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
           <div class="note-tip"><strong>Tip:</strong> Always keep a "backup layer" for original images to prevent accidental mistakes.</div>
           <div class="note-visual"><strong>Visual Example:</strong> Imagine a blank canvas as a plate. Each layer is a separate ingredient. Masks are lids that cover parts of layers without deleting them. Smart Objects are frozen ingredients you can use later without changing the original taste.</div>
         </div>
+        <div class="note-section" id="open-save-export" data-reading="open-save-export">
+          <div class="note-actions">
+          <button class="note-dl" onclick="downloadSectionPDF('open-save-export','How to Open, Save and Export Files in Photoshop')">Download PDF</button>
+          <button class="note-mark" data-reading-key="open-save-export" onclick="markReadingRead('open-save-export', this)">✓ Mark as Read</button>
+          </div>
+          <h3>How to Open, Save and Export Files in Photoshop</h3>
+          <p>Save and export is the loop every Photoshop project runs on: open a file, work on it in layers, save the layered version, then export a flat copy for wherever it is going. Skip the middle step and you can never revise the edit; skip the last one and you have a file nobody else can open.</p>
+          <p>Photoshop's file handling trips people up more often than any of its tools, and always in the same way: the finished JPEG exists, the layered version does not, and the only way to change anything is to start over.</p>
+          <div class="note-tip"><strong>The habit that prevents it:</strong> Open the file, save a layered PSD early, keep working, and export a flat copy only at the very end. Day 2 runs that loop end to end on one photograph, adding a sun flare and a set of light rays along the way so there is something worth saving.</div>
+
+          <div class="vocab-title" style="margin-top:18px;">Part 1 · How to Open Files in Photopea</div>
+          <p>Photopea is a browser-based graphic editor that supports multiple file formats (<code>.PSD</code>, <code>.AI</code>, <code>.XCF</code>, <code>.PNG</code>, <code>.JPG</code>, <code>.SVG</code>, etc.).</p>
+
+          <div class="note-tool"><strong>1. File Menu (Standard Local Import)</strong><br>
+          <strong>How to do it:</strong> Go to File → Open (<code>Ctrl+O</code> / <code>Cmd+O</code>), select your image, and open it.<br>
+          <strong>Photoshop version:</strong> Photoshop 1.0 (1990).<br>
+          <strong>How it worked before &amp; why:</strong> Before digital image editors allowed opening images through a graphical file menu, image data had to be read from dedicated hardware scanners, system frame buffers, or raw bit-mapped files using specialized command-line scripts. Standard local file import gave non-programmer designers a standard desktop interface for opening files from hard drives or floppy disks.</div>
+
+          <div class="note-tool"><strong>2. Drag &amp; Drop</strong><br>
+          <strong>How to do it:</strong> Drag a file from your file manager directly onto the canvas area to load it.<br>
+          <strong>Photoshop version:</strong> Photoshop 7.0 (2002) for basic canvas loading, expanded in Photoshop CS2 (2005) to auto-generate Smart Objects on drag-and-drop.<br>
+          <strong>How it worked before &amp; why:</strong> Before OS-level drag-and-drop, users had to use File → Place or File → Open, manually select the open canvas (<code>Ctrl+A</code>), and paste it (<code>Ctrl+V</code>) into their target canvas. Drag-and-drop sped up multi-file workflows by skipping the manual import menus and repetitive copy-paste.</div>
+
+          <div class="note-tool"><strong>3. Open from URL</strong><br>
+          <strong>How to do it:</strong> Go to File → Open More → Open from URL and paste an image link directly.<br>
+          <strong>Photoshop version:</strong> Photoshop CC (2013), integrating web and Adobe Stock asset fetching.<br>
+          <strong>How it worked before &amp; why:</strong> Before web-fetching, users had to right-click an image in a browser, "Save Image As...", save it locally, then open the downloaded file in Photoshop. Web URL fetching removed the local-storage clutter and let people edit straight from a web link.</div>
+
+          <div class="note-tool"><strong>4. Clipboard (Paste Direct)</strong><br>
+          <strong>How to do it:</strong> Copy an image to your clipboard (<code>Ctrl+C</code>) and paste it into Photopea (<code>Ctrl+V</code>). File → New also auto-detects clipboard dimensions.<br>
+          <strong>Photoshop version:</strong> Photoshop 2.0 (1991).<br>
+          <strong>How it worked before &amp; why:</strong> Early editors could only open files already saved to disk — a screen snippet or copied frame had to be saved as a temporary file first. Native clipboard ingestion let visual data move instantly between applications.</div>
+
+          <div class="note-tool"><strong>5. Open from Cloud / Remote Storage</strong><br>
+          <strong>How to do it:</strong> Go to File → Open More to connect directly to Google Drive, Dropbox, OneDrive, or Google Photos.<br>
+          <strong>Photoshop version:</strong> Photoshop CC 2014 (v15.0), with Creative Cloud asset integration.<br>
+          <strong>How it worked before &amp; why:</strong> Users previously needed local desktop sync utilities to pull cloud files down before opening them. Native cloud integration supports remote, collaborative workflows across multiple devices without manual downloads.</div>
+
+          <div class="vocab-title" style="margin-top:18px;">Part 2 · How to Save and Export in Photopea</div>
+          <p>Photopea distinguishes between saving working <strong>source</strong> project files and exporting final <strong>rendered</strong> output images.</p>
+          <p><strong>1. Saving editable source files</strong></p>
+          <div class="note-tool"><strong>Save as PSD (recommended)</strong><br>
+          <strong>How to do it:</strong> File → Save as PSD (<code>Ctrl+S</code> / <code>Cmd+S</code>).<br>
+          <strong>Photoshop version:</strong> Photoshop 3.0 (1994).<br>
+          <strong>How it worked before &amp; why:</strong> Before 3.0, programs saved images as single flat files — text typed over a photo and saved burned permanently into the pixels. The PSD format arrived alongside layers to save structural metadata, masks, text paths, and separate layers without flattening them.</div>
+          <div class="note-tool"><strong>Save to Cloud Storage</strong><br>
+          <strong>How to do it:</strong> File → Save More → Save to Google Drive / Dropbox / OneDrive.<br>
+          <strong>Photoshop version:</strong> Photoshop CC (2013).<br>
+          <strong>How it worked before &amp; why:</strong> Users had to save locally, then manually upload the PSD to a server through a browser. Direct cloud saving streamlined online backups and multi-device access.</div>
+
+          <p style="margin-top:14px;"><strong>2. Exporting rendered output files</strong></p>
+          <div class="note-tool"><strong>PNG</strong> — lossless compression with transparency support.<br>
+          <strong>Photoshop version:</strong> Photoshop 5.5 (1999), via "Save for Web".<br>
+          <strong>How it worked before &amp; why:</strong> Web designers relied on GIF for transparent graphics, limited to 256 colors. PNG added 24-bit full color with smooth alpha-channel transparency and no quality loss.</div>
+          <div class="note-tool"><strong>JPG / JPEG</strong> — lossy compression for small file sizes; no transparency.<br>
+          <strong>Photoshop version:</strong> Photoshop 2.5 (1992).<br>
+          <strong>How it worked before &amp; why:</strong> Uncompressed raster files (TIFF, BMP) were massive and hard to store or transfer over early networks. JPEG compression drastically shrank photo file sizes.</div>
+          <div class="note-tool"><strong>SVG</strong> — scalable vector format.<br>
+          <strong>Photoshop version:</strong> Photoshop CC 2015.<br>
+          <strong>How it worked before &amp; why:</strong> Raster graphics pixelate when enlarged, so designers had to hop over to a vector app like Illustrator. SVG export brought resolution-independent output directly into a photo editor for responsive web design.</div>
+          <div class="note-tool"><strong>PDF</strong> — document and print format.<br>
+          <strong>Photoshop version:</strong> Photoshop 6.0 (2000).<br>
+          <strong>How it worked before &amp; why:</strong> Sending artwork to commercial printers meant manually placing exported images into desktop-publishing software like QuarkXPress or PageMaker. Direct PDF export delivers print-ready files with embedded fonts, vectors, and color profiles from the image editor itself.</div>
+          <div class="note-tool"><strong>GIF</strong> — frame animations and limited-palette images.<br>
+          <strong>Photoshop version:</strong> Photoshop 5.5 (1999).<br>
+          <strong>How it worked before &amp; why:</strong> Early editors targeted static print or display images only. GIF export arrived during the dot-com era so designers could build light web banners and animations.</div>
+
+          <div class="vocab-title" style="margin-top:18px;">Part 3 · Understanding Layers — The Glass Sheet Analogy</div>
+          <div class="note-visual"><strong>Think of layers as a vertical stack of transparent sheets of glass resting directly over one another.</strong>
+          <ul style="margin-top:8px;">
+            <li><strong>Transparency:</strong> an empty layer is a clean, transparent pane — you see straight through to the panes below.</li>
+            <li><strong>Painting / content:</strong> a red dot painted on the top sheet covers whatever sits behind it; the clear areas around it still show the lower sheets.</li>
+            <li><strong>Stacking order:</strong> the top-most layer in the Layers Panel is the front-most sheet, closest to your eye — the bottom pane is the Background.</li>
+            <li><strong>Isolation:</strong> modifying one sheet leaves the others completely untouched — you can reorder or hide any sheet without altering the rest.</li>
+          </ul></div>
+          <div class="note-tool"><strong>Photoshop version:</strong> Photoshop 3.0 (1994).<br>
+          <strong>How it worked before &amp; why:</strong> Prior to 1994, image editors worked like a single piece of paper — text painted across a photo destroyed the pixels underneath permanently, and fixing a typo meant repainting the background by hand or starting over. Co-founder Thomas Knoll invented layers so elements (text, subjects, backgrounds) could sit independently on top of each other, turning image editing from destructive paint-over work into flexible compositing.</div>
+
+          <div class="vocab-title" style="margin-top:18px;">Part 4 · Destructive vs. Non-Destructive Editing</div>
+          <div style="overflow-x:auto;"><table class="progress-week-table">
+            <thead><tr><th>Feature / Technique</th><th>Destructive Workflow</th><th>Non-Destructive Workflow</th><th>Version &amp; History</th><th>Why it Changed</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Core Layer Architecture</strong></td><td>Editing directly on a single flat image layer.</td><td>Working across isolated, stacked layers.</td><td>Photoshop 3.0 (1994)</td><td>Before: edits overwrote the base data. Layers let elements move or be removed without touching what's around them.</td></tr>
+              <tr><td><strong>Erasing vs. Masking</strong></td><td>Eraser Tool deletes pixel data permanently.</td><td>Layer Mask uses black/white paint to hide or reveal pixels without deleting them.</td><td>Photoshop 4.0 (1996)</td><td>Before: erasing permanently deleted background pixels. Masks let parts of a layer be hidden and unhidden at any point.</td></tr>
+              <tr><td><strong>Color &amp; Tonal Adjustments</strong></td><td>Image → Adjustments overwrites raw pixel values directly.</td><td>Adjustment Layers sit above the image like a tinted glass pane, applying changes dynamically.</td><td>Photoshop 4.0 (1996)</td><td>Before: adjusting contrast or saturation modified raw data permanently. Adjustment layers allow changes any time without degrading the original.</td></tr>
+              <tr><td><strong>Scaling &amp; Transforming</strong></td><td>Raster Scaling: shrinking/enlarging degrades sharpness and adds blur.</td><td>Smart Objects embed the original high-resolution source in a protective container.</td><td>Photoshop CS2 / 9.0 (2005)</td><td>Before: scaling down discarded pixel data; scaling back up stretched what remained, causing blur. Smart Objects preserve full original quality through transforms.</td></tr>
+            </tbody>
+          </table></div>
+
+          <div class="vocab-title" style="margin-top:18px;">Part 5 · Pixels and Resolution Explained</div>
+          <ul>
+            <li><strong>Pixel (Picture Element):</strong> the smallest individual square block of colored light that forms a digital raster image.</li>
+            <li><strong>Grid structure:</strong> every raster image sits on a 2D grid where each pixel holds a specific RGB color value.</li>
+            <li><strong>Pixel density &amp; scaling:</strong> zooming in close enough shows the individual colored squares — a state called <strong>pixelation</strong>.</li>
+            <li><strong>Resolution (PPI/DPI):</strong> Pixels Per Inch. Standard web displays use 72 PPI; high-quality printing needs 300 DPI to keep pixels from looking blocky.</li>
+          </ul>
+          <div class="note-tool"><strong>Photoshop version:</strong> Photoshop 1.0 (1990) for the base pixel grid engine, and Photoshop 6.0 (2000) for resolution-independent vector shapes layered over pixel grids.<br>
+          <strong>How it worked before &amp; why:</strong> Early monitors could only render basic monochrome or fixed-resolution low-color images. Photoshop was built to process multi-channel RGB pixel data so desktop computers could edit photography tone-by-tone and pixel-by-pixel — vector layers were later combined with pixel grids in Photoshop 6.0 so smooth vector graphics and pixel-based photography could share one canvas.</div>
+        </div>
         <div class="note-section" id="rastervector" data-reading="rastervector">
           <div class="note-actions">
           <button class="note-dl" onclick="downloadSectionPDF('rastervector','Raster vs Vector Graphics')">Download PDF</button>
@@ -2154,7 +2253,7 @@ function computeGrade(){
   const quizzesTaken = Object.keys(student.weekQuizzes).length;
   const quizPctSum = Object.values(student.weekQuizzes).reduce((s,q)=> s + (q.total ? (q.score/q.total)*100 : 100), 0);
   const quizAvg = quizzesTaken ? quizPctSum/quizzesTaken : 0;
-  const readingPct = Math.min(100, (student.readingSeen.length/10)*100);
+  const readingPct = Math.min(100, (student.readingSeen.length/11)*100);
   const videoIds = Object.keys(student.videoConfirmed).filter(id=>student.videoConfirmed[id]);
   const videoPct = Math.min(100, (videoIds.length/23)*100);
   const overall = completionPct*0.45 + quizAvg*0.25 + readingPct*0.15 + videoPct*0.15;
@@ -2213,12 +2312,12 @@ function renderProgressView(){
     <div class="progress-grid">
       <div class="progress-card" style="--pc-accent:#2f6fed"><h4>Lessons Completed</h4><div class="pc-big">${student.completed.length}/${cards.length}</div><div class="pc-sub">across ${TOTAL_WEEKS} weeks</div></div>
       <div class="progress-card" style="--pc-accent:#ff7a2d"><h4>Week Quizzes</h4><div class="pc-big">${quizzesTaken}/${TOTAL_WEEKS}</div><div class="pc-sub">completed automatically at week end</div></div>
-      <div class="progress-card" style="--pc-accent:#8b5cf6"><h4>Reading Opened</h4><div class="pc-big">${student.readingSeen.length}/10</div><div class="pc-sub">Read Me sections viewed</div></div>
+      <div class="progress-card" style="--pc-accent:#8b5cf6"><h4>Reading Opened</h4><div class="pc-big">${student.readingSeen.length}/11</div><div class="pc-sub">Read Me sections viewed</div></div>
       <div class="progress-card" style="--pc-accent:#ff6a2c"><h4>Screencasts Watched</h4><div class="pc-big">${videosConfirmed}/23</div><div class="pc-sub">reached 75% of runtime</div></div>
       <div class="progress-card" style="--pc-accent:#ef476f"><h4>Practice Files Opened</h4><div class="pc-big">${student.seenPractice.length}/43</div><div class="pc-sub">exercise files previewed</div></div>
       <div class="progress-card" style="--pc-accent:#5b6270"><h4>Materials Opened</h4><div class="pc-big">${(student.seenMaterials||[]).length}/23</div><div class="pc-sub">additional resources previewed</div></div>
       <div class="progress-card" style="--pc-accent:#ff6a2c"><h4>Screencast Checks</h4><div class="pc-big">${videoQuizEntries.length}/23</div><div class="pc-sub">avg score ${videoQuizAvg}%</div></div>
-      <div class="progress-card" style="--pc-accent:#8b5cf6"><h4>Reading Checks</h4><div class="pc-big">${readingQuizEntries.length}/10</div><div class="pc-sub">avg score ${readingQuizAvg}%</div></div>
+      <div class="progress-card" style="--pc-accent:#8b5cf6"><h4>Reading Checks</h4><div class="pc-big">${readingQuizEntries.length}/11</div><div class="pc-sub">avg score ${readingQuizAvg}%</div></div>
     </div>
     <div class="note-section" style="margin-top:22px;">
       <h3 style="margin-top:0;">Week-by-week breakdown</h3>
@@ -2247,7 +2346,7 @@ function buildReportBody(trigger){
   });
   lines.push('');
   lines.push('Reading material opened (Read Me sections viewed 2s+):');
-  lines.push(`  ${student.readingSeen.length} of 10 sections — ${student.readingSeen.join(', ')||'none yet'}`);
+  lines.push(`  ${student.readingSeen.length} of 11 sections — ${student.readingSeen.join(', ')||'none yet'}`);
   lines.push('');
   lines.push('Vocabulary check (terms opened per week):');
   const vocabWeeks = Object.keys(student.vocabSeen).sort((a,b)=>Number(a)-Number(b));
