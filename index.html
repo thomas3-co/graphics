@@ -215,14 +215,30 @@ button{font-family:inherit;}
 .proj-view{display:none;}
 .proj-view.active{display:block;animation:fade .4s ease;}
 /* ===== NOTES ===== */
-.note-section{background:#fff;border-radius:16px;box-shadow:var(--shadow);margin-bottom:20px;padding:24px;position:relative;}
-.note-section h3{color:var(--c-notes);margin-top:0;font-size:1.15rem;}
-.note-dl{position:absolute;top:20px;right:20px;background:var(--c-notes);color:#fff;border:none;border-radius:9px;padding:8px 14px;font-size:12.5px;font-weight:700;cursor:pointer;}
+.note-section{background:#fff;border-radius:16px;box-shadow:var(--shadow);margin-bottom:24px;padding:26px 28px;position:relative;border-top:5px solid var(--c-notes);transition:box-shadow .25s ease,transform .25s ease;}
+.note-section:hover{box-shadow:0 16px 38px rgba(139,92,246,.16);transform:translateY(-2px);}
+.note-section h3{color:var(--c-notes);margin-top:0;font-size:1.2rem;padding-right:150px;}
+.note-actions{position:absolute;top:22px;right:22px;display:flex;flex-direction:column;gap:8px;align-items:stretch;}
+.note-dl{background:var(--c-notes);color:#fff;border:none;border-radius:9px;padding:8px 14px;font-size:12.5px;font-weight:700;cursor:pointer;box-shadow:0 4px 12px rgba(139,92,246,.28);white-space:nowrap;}
 .note-dl:hover{opacity:.88;}
-.note-tool,.note-tip,.note-visual{border-left:4px solid var(--c-notes);padding:.8rem 1rem;border-radius:8px;margin:1rem 0;background:#f5f2ff;font-size:.92rem;}
+.note-mark{background:#fff;color:var(--c-notes);border:1.5px solid var(--c-notes);border-radius:9px;padding:8px 14px;font-size:12.5px;font-weight:700;cursor:pointer;transition:.2s;white-space:nowrap;}
+.note-mark:hover{background:#f5f2ff;}
+.note-mark.done{background:#1a8a52;border-color:#1a8a52;color:#fff;cursor:default;}
+.note-mark.done:hover{background:#1a8a52;}
+.note-tool,.note-tip,.note-visual{border-left:4px solid var(--c-notes);padding:.9rem 1.1rem;border-radius:10px;margin:1.1rem 0;background:#f5f2ff;font-size:.92rem;line-height:1.55;position:relative;padding-left:2.6rem;}
+.note-tool::before,.note-tip::before,.note-visual::before{position:absolute;left:.9rem;top:.85rem;font-size:1.05rem;}
+.note-tool::before{content:"🛠️";}
+.note-tip::before{content:"💡";}
+.note-visual::before{content:"👁️";}
 .note-tip{border-left-color:var(--c-projects);background:#fff5ec;}
 .note-visual{border-left-color:#f59e0b;background:#fffaf0;}
-.note-steps{background:#f5f2ff;border-left:4px solid var(--c-notes);padding:.9rem 1.1rem;border-radius:8px;margin:0.4rem 0;}
+.note-steps{background:#f5f2ff;border-left:4px solid var(--c-notes);padding:1rem 1.2rem;border-radius:10px;margin:0.6rem 0;line-height:1.6;}
+.note-steps li{margin-bottom:6px;}
+@media(max-width:640px){
+  .note-section{padding:22px 20px;}
+  .note-section h3{padding-right:0;margin-bottom:70px;}
+  .note-actions{position:static;flex-direction:row;margin-top:-56px;margin-bottom:14px;}
+}
 /* ===== SCREENCASTS / PRACTICE ===== */
 .media-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px;margin-top:18px;}
 .media-icon{width:38px;height:38px;border-radius:10px;background:var(--card-accent,var(--c-screen));color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;}
@@ -1267,7 +1283,10 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
           </div>
         </div>
         <div class="note-section" id="new-project-menu" data-reading="new-project-menu">
+          <div class="note-actions">
           <button class="note-dl" onclick="downloadSectionPDF('new-project-menu','The New Project Menu')">Download PDF</button>
+          <button class="note-mark" data-reading-key="new-project-menu" onclick="markReadingRead('new-project-menu', this)">✓ Mark as Read</button>
+          </div>
           <h3>The New Project Menu</h3>
           <p>Before you can design anything, you need a canvas. The New Project menu is split into three panels working together: a filter on the left, ready-made presets in the middle, and a fully manual setup on the right.</p>
 
@@ -1326,7 +1345,10 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
           <div class="note-visual"><strong>Visual Example:</strong> Bit depth is how many distinct paint tubes you keep in your art box — 8-bit gives you a standard set of paints, while 16-bit/32-bit gives you hundreds of microscopic shade variations of the same color.</div>
         </div>
         <div class="note-section" id="intro" data-reading="intro">
+          <div class="note-actions">
           <button class="note-dl" onclick="downloadSectionPDF('intro','Introduction to Graphic Design & Photoshop')">Download PDF</button>
+          <button class="note-mark" data-reading-key="intro" onclick="markReadingRead('intro', this)">✓ Mark as Read</button>
+          </div>
           <h3>Introduction to Graphic Design &amp; Photoshop</h3>
           <p>Graphic Design communicates ideas visually using typography, images, colors, and layout. Photoshop is a digital workspace where imagination becomes tangible.</p>
           <ol class="note-steps">
@@ -1340,7 +1362,10 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
           <div class="note-visual"><strong>Visual Example:</strong> Imagine a blank canvas as a plate. Each layer is a separate ingredient. Masks are lids that cover parts of layers without deleting them. Smart Objects are frozen ingredients you can use later without changing the original taste.</div>
         </div>
         <div class="note-section" id="rastervector" data-reading="rastervector">
+          <div class="note-actions">
           <button class="note-dl" onclick="downloadSectionPDF('rastervector','Raster vs Vector Graphics')">Download PDF</button>
+          <button class="note-mark" data-reading-key="rastervector" onclick="markReadingRead('rastervector', this)">✓ Mark as Read</button>
+          </div>
           <h3>Raster vs Vector Graphics</h3>
           <p>Raster images are pixel-based, perfect for detailed photos. Vector graphics are path-based and scalable without losing quality.</p>
           <ul><li><strong>Raster:</strong> Photos, textures, paintings.</li><li><strong>Vector:</strong> Logos, icons, illustrations requiring scalability.</li></ul>
@@ -1355,7 +1380,10 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
           <div class="note-visual"><strong>Visual Example:</strong> Imagine a photo of a cat (raster) vs a cartoon cat outline (vector). Zoom the photo: pixels appear. Zoom the cartoon: it stays sharp, clean, and scalable.</div>
         </div>
         <div class="note-section" id="photopea" data-reading="photopea">
+          <div class="note-actions">
           <button class="note-dl" onclick="downloadSectionPDF('photopea','Photopea Overview')">Download PDF</button>
+          <button class="note-mark" data-reading-key="photopea" onclick="markReadingRead('photopea', this)">✓ Mark as Read</button>
+          </div>
           <h3>Photopea Overview</h3>
           <p>Photopea is an online Photoshop alternative supporting layers, masks, smart objects, and adjustments.</p>
           <ol class="note-steps">
@@ -1370,7 +1398,10 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
           <div class="note-visual"><strong>Visual Example:</strong> Picture carrying a small, foldable art studio in your laptop browser, with all brushes, layers, and panels ready.</div>
         </div>
         <div class="note-section" id="removing-bg" data-reading="removing-bg">
+          <div class="note-actions">
           <button class="note-dl" onclick="downloadSectionPDF('removing-bg','Removing Backgrounds and Subjects')">Download PDF</button>
+          <button class="note-mark" data-reading-key="removing-bg" onclick="markReadingRead('removing-bg', this)">✓ Mark as Read</button>
+          </div>
           <h3>Removing Backgrounds and Subjects</h3>
           <p>Essential for product design, e-commerce, social media, and composites.</p>
           <ol class="note-steps">
@@ -1384,7 +1415,10 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
           <div class="note-visual"><strong>Visual Example:</strong> Imagine cutting a portrait out of a magazine but having invisible scissors that allow you to adjust edges after cutting.</div>
         </div>
         <div class="note-section" id="passport" data-reading="passport">
+          <div class="note-actions">
           <button class="note-dl" onclick="downloadSectionPDF('passport','Passport Photo Editing')">Download PDF</button>
+          <button class="note-mark" data-reading-key="passport" onclick="markReadingRead('passport', this)">✓ Mark as Read</button>
+          </div>
           <h3>Passport Size Photo</h3>
           <p>Precise cropping, clean background, and correct exposure are key.</p>
           <ol class="note-steps">
@@ -1398,7 +1432,10 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
           <div class="note-visual"><strong>Visual Example:</strong> Picture a perfectly framed passport headshot on a white canvas, with soft shadows blending into the background.</div>
         </div>
         <div class="note-section" id="retouch" data-reading="retouch">
+          <div class="note-actions">
           <button class="note-dl" onclick="downloadSectionPDF('retouch','Face and Skin Retouching')">Download PDF</button>
+          <button class="note-mark" data-reading-key="retouch" onclick="markReadingRead('retouch', this)">✓ Mark as Read</button>
+          </div>
           <h3>Face and Skin Retouching</h3>
           <p>Enhance portraits subtly while preserving texture.</p>
           <ol class="note-steps">
@@ -1412,7 +1449,10 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
           <div class="note-visual"><strong>Visual Example:</strong> Imagine painting small corrections over a face while keeping pores and skin details intact.</div>
         </div>
         <div class="note-section" id="eyes" data-reading="eyes">
+          <div class="note-actions">
           <button class="note-dl" onclick="downloadSectionPDF('eyes','Teeth and Eye Whitening, Reflection & Correction')">Download PDF</button>
+          <button class="note-mark" data-reading-key="eyes" onclick="markReadingRead('eyes', this)">✓ Mark as Read</button>
+          </div>
           <h3>Teeth and Eye Whitening, Reflection &amp; Correction</h3>
           <p>Brighten eyes and teeth subtly while maintaining realism.</p>
           <ol class="note-steps">
@@ -1425,7 +1465,10 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
           <div class="note-visual"><strong>Visual Example:</strong> Visualize adding a soft highlight to the eyes like a sunbeam, without changing natural color.</div>
         </div>
         <div class="note-section" id="mockup" data-reading="mockup">
+          <div class="note-actions">
           <button class="note-dl" onclick="downloadSectionPDF('mockup','Posture Correction & Dress Mockups')">Download PDF</button>
+          <button class="note-mark" data-reading-key="mockup" onclick="markReadingRead('mockup', this)">✓ Mark as Read</button>
+          </div>
           <h3>Posture Correction &amp; Dress Mockups</h3>
           <p>Adjust posture and garments for realistic presentation using Smart Objects.</p>
           <ol class="note-steps">
@@ -1439,7 +1482,10 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
           <div class="note-visual"><strong>Visual Example:</strong> Picture moving an arm slightly, like bending a paper doll, and the clothes following naturally with realistic folds.</div>
         </div>
         <div class="note-section" id="reuse" data-reading="reuse">
+          <div class="note-actions">
           <button class="note-dl" onclick="downloadSectionPDF('reuse','Tool Reuse & Project Application')">Download PDF</button>
+          <button class="note-mark" data-reading-key="reuse" onclick="markReadingRead('reuse', this)">✓ Mark as Read</button>
+          </div>
           <h3>Tool Reuse &amp; Project Application</h3>
           <p>Skills compound — mastering one tool allows multiple creative applications.</p>
           <ul>
@@ -1535,6 +1581,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
 <script>
 /* ================= TAB NAVIGATION ================= */
 function goTab(name){
+  const leavingScreencasts = document.getElementById('screencasts').classList.contains('active') && name !== 'screencasts';
   document.querySelectorAll('.tab').forEach(t=>{
     const active = t.dataset.tab===name;
     t.classList.toggle('active', active);
@@ -1544,6 +1591,9 @@ function goTab(name){
   if(progBtn) progBtn.classList.toggle('active', name==='progress');
   document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active', v.id===name));
   window.scrollTo({top:0,behavior:'smooth'});
+  // Leaving Screencasts for another tab counts as "done with this recording"
+  // if they'd watched a meaningful chunk of it — see theaterClearWatchTracking.
+  if(leavingScreencasts && typeof theaterClearWatchTracking === 'function') theaterClearWatchTracking(true);
 }
 document.getElementById('mainTabs').addEventListener('click', e=>{
   const btn = e.target.closest('.tab');
@@ -1689,31 +1739,22 @@ function downloadSectionPDF(sectionId, topic){
   printWindow.focus();
   printWindow.print();
 }
-/* Track which reading sections a student has opened/viewed (50%+ visible for 2s) */
+/* Reading sections are marked read explicitly via the "Mark as Read" button
+   on each section — the same explicit-action pattern as pressing Play on a
+   screencast, rather than a passive "was this on screen for 2 seconds"
+   guess that's easy to trigger by accident while scrolling past. */
 const readingSeen = new Set();
-const noteObserver = new IntersectionObserver(entries=>{
-  entries.forEach(e=>{
-    if(e.isIntersecting){
-      const key = e.target.dataset.reading;
-      if(key && !readingSeen.has(key)){
-        setTimeout(()=>{
-          // confirm still intersecting-ish by re-checking bounding box roughly on screen
-          const rect = e.target.getBoundingClientRect();
-          if(rect.top < window.innerHeight && rect.bottom > 0){
-            readingSeen.add(key);
-            if(student){
-              student.readingSeen = Array.from(readingSeen);
-              saveStudentRecord(student);
-              const readingItem = readingPool.find(p=>p.key===key);
-              maybeShowContentQuiz('reading', key, readingPool, `Nice work reading "${readingItem ? readingItem.title : key}"! Quick 2-question check:`);
-            }
-          }
-        }, 2000);
-      }
-    }
-  });
-},{threshold:0.5});
-document.querySelectorAll('.note-section[data-reading]').forEach(n=>noteObserver.observe(n));
+function markReadingRead(key, btnEl){
+  if(!student){ alert('Sign in first.'); return; }
+  if(readingSeen.has(key)) return; // already marked
+  readingSeen.add(key);
+  student.readingSeen = Array.from(readingSeen);
+  saveStudentRecord(student);
+  updateGrade();
+  if(btnEl){ btnEl.textContent = '✓ Read'; btnEl.classList.add('done'); btnEl.disabled = true; }
+  const readingItem = readingPool.find(p=>p.key===key);
+  maybeShowContentQuiz('reading', key, readingPool, `Nice work reading "${readingItem ? readingItem.title : key}"! Quick 2-question check:`);
+}
 /* ================= CONTENT CHECK-IN QUIZZES (screencasts + reading) =================
    A lightweight 2-question multiple-choice check pops up right after a
    screencast is marked watched, or a Read Me section is marked read. Both
@@ -1945,6 +1986,13 @@ function enterApp(){
   completed = student.completed;
   cards.forEach(card=>{ card.classList.toggle('done', completed.includes(card.dataset.day)); });
   (student.readingSeen||[]).forEach(k=>readingSeen.add(k));
+  document.querySelectorAll('.note-mark').forEach(btn=>{
+    if(readingSeen.has(btn.dataset.readingKey)){
+      btn.textContent = '✓ Read';
+      btn.classList.add('done');
+      btn.disabled = true;
+    }
+  });
   updateProgress();
   updateGrade();
   checkBiweeklyReport();
@@ -2106,7 +2154,7 @@ function computeGrade(){
   const quizzesTaken = Object.keys(student.weekQuizzes).length;
   const quizPctSum = Object.values(student.weekQuizzes).reduce((s,q)=> s + (q.total ? (q.score/q.total)*100 : 100), 0);
   const quizAvg = quizzesTaken ? quizPctSum/quizzesTaken : 0;
-  const readingPct = Math.min(100, (student.readingSeen.length/11)*100);
+  const readingPct = Math.min(100, (student.readingSeen.length/10)*100);
   const videoIds = Object.keys(student.videoConfirmed).filter(id=>student.videoConfirmed[id]);
   const videoPct = Math.min(100, (videoIds.length/23)*100);
   const overall = completionPct*0.45 + quizAvg*0.25 + readingPct*0.15 + videoPct*0.15;
@@ -2165,12 +2213,12 @@ function renderProgressView(){
     <div class="progress-grid">
       <div class="progress-card" style="--pc-accent:#2f6fed"><h4>Lessons Completed</h4><div class="pc-big">${student.completed.length}/${cards.length}</div><div class="pc-sub">across ${TOTAL_WEEKS} weeks</div></div>
       <div class="progress-card" style="--pc-accent:#ff7a2d"><h4>Week Quizzes</h4><div class="pc-big">${quizzesTaken}/${TOTAL_WEEKS}</div><div class="pc-sub">completed automatically at week end</div></div>
-      <div class="progress-card" style="--pc-accent:#8b5cf6"><h4>Reading Opened</h4><div class="pc-big">${student.readingSeen.length}/11</div><div class="pc-sub">Read Me sections viewed</div></div>
+      <div class="progress-card" style="--pc-accent:#8b5cf6"><h4>Reading Opened</h4><div class="pc-big">${student.readingSeen.length}/10</div><div class="pc-sub">Read Me sections viewed</div></div>
       <div class="progress-card" style="--pc-accent:#ff6a2c"><h4>Screencasts Watched</h4><div class="pc-big">${videosConfirmed}/23</div><div class="pc-sub">reached 75% of runtime</div></div>
       <div class="progress-card" style="--pc-accent:#ef476f"><h4>Practice Files Opened</h4><div class="pc-big">${student.seenPractice.length}/43</div><div class="pc-sub">exercise files previewed</div></div>
       <div class="progress-card" style="--pc-accent:#5b6270"><h4>Materials Opened</h4><div class="pc-big">${(student.seenMaterials||[]).length}/23</div><div class="pc-sub">additional resources previewed</div></div>
       <div class="progress-card" style="--pc-accent:#ff6a2c"><h4>Screencast Checks</h4><div class="pc-big">${videoQuizEntries.length}/23</div><div class="pc-sub">avg score ${videoQuizAvg}%</div></div>
-      <div class="progress-card" style="--pc-accent:#8b5cf6"><h4>Reading Checks</h4><div class="pc-big">${readingQuizEntries.length}/11</div><div class="pc-sub">avg score ${readingQuizAvg}%</div></div>
+      <div class="progress-card" style="--pc-accent:#8b5cf6"><h4>Reading Checks</h4><div class="pc-big">${readingQuizEntries.length}/10</div><div class="pc-sub">avg score ${readingQuizAvg}%</div></div>
     </div>
     <div class="note-section" style="margin-top:22px;">
       <h3 style="margin-top:0;">Week-by-week breakdown</h3>
@@ -2199,7 +2247,7 @@ function buildReportBody(trigger){
   });
   lines.push('');
   lines.push('Reading material opened (Read Me sections viewed 2s+):');
-  lines.push(`  ${student.readingSeen.length} of 11 sections — ${student.readingSeen.join(', ')||'none yet'}`);
+  lines.push(`  ${student.readingSeen.length} of 10 sections — ${student.readingSeen.join(', ')||'none yet'}`);
   lines.push('');
   lines.push('Vocabulary check (terms opened per week):');
   const vocabWeeks = Object.keys(student.vocabSeen).sort((a,b)=>Number(a)-Number(b));
@@ -2803,16 +2851,37 @@ let theaterFilterMode = 'all'; // all | watched | unwatched
 /* --- Silent watch-progress tracking ---
    Runs quietly in the background once a recording actually starts playing
    (theaterBeginPlayback) — no visible bar, marker, or prompt on screen.
-   The checkpoint is 75% of THAT recording's own runtime (screencastDurations
-   below), so a 20-minute recording and a 3-minute recording each need their
-   own proportional amount of watch time before they're marked watched.
+   Two ways a recording gets marked watched:
+   1. The full checkpoint: 75% of THAT recording's own runtime
+      (screencastDurations below) — accurate once real durations are filled
+      in, but until then every recording defaults to a 10-minute assumed
+      length, which is longer than most of these recordings actually run.
+   2. The safety net: if the student has kept a recording open for at
+      least MIN_WATCH_CREDIT_MS and then moves on — picks another
+      recording, hits Next/Previous, or leaves the Screencasts tab — that's
+      treated as "finished with this one," so the feature still works
+      correctly for a short recording even before its real duration has
+      been entered. Simply switching browser tabs does NOT credit this
+      (see theaterPauseForHiddenTab) — that stays a plain pause.
    Honest limit: Google Drive's embedded player is a different origin, so
-   this page cannot read real playback position — this is a background
-   timer against the student's own dwell time, not a true playback
-   measurement. */
+   this page cannot read real playback position — both of the above are
+   dwell-time proxies, not a true playback measurement. */
 let theaterWatchTimer = null;
-function theaterClearWatchTracking(){
+let theaterWatchStartedAt = null;
+let theaterWatchTrackedId = null;
+const MIN_WATCH_CREDIT_MS = 30000; // minimum time open before "moving on" counts as finished
+function theaterClearWatchTracking(creditIfEligible){
   if(theaterWatchTimer){ clearTimeout(theaterWatchTimer); theaterWatchTimer = null; }
+  if(creditIfEligible && theaterWatchTrackedId && theaterWatchStartedAt){
+    const elapsed = Date.now() - theaterWatchStartedAt;
+    const id = theaterWatchTrackedId;
+    theaterWatchStartedAt = null;
+    theaterWatchTrackedId = null;
+    if(elapsed >= MIN_WATCH_CREDIT_MS) theaterMarkWatched(id);
+  } else {
+    theaterWatchStartedAt = null;
+    theaterWatchTrackedId = null;
+  }
   const stage = document.getElementById('theaterStage');
   if(stage) stage.classList.remove('is-playing');
 }
@@ -2824,13 +2893,17 @@ function theaterClearWatchTracking(){
    testing. */
 const FAST_WATCH_TEST_MODE = new URLSearchParams(location.search).get('fastwatch') === '1';
 function theaterStartWatchTracking(id){
-  theaterClearWatchTracking();
+  theaterClearWatchTracking(false); // starting fresh — don't credit whatever was tracked before this call
   const stage = document.getElementById('theaterStage');
   if(stage) stage.classList.add('is-playing');
   if(theaterIsWatched(id)) return; // already counted — nothing more to track
+  theaterWatchStartedAt = Date.now();
+  theaterWatchTrackedId = id;
   const checkpointMs = FAST_WATCH_TEST_MODE ? 5000 : theaterGetDurationSeconds(id) * 0.75 * 1000;
   theaterWatchTimer = setTimeout(()=>{
     theaterWatchTimer = null;
+    theaterWatchStartedAt = null;
+    theaterWatchTrackedId = null;
     theaterMarkWatched(id);
   }, checkpointMs);
 }
@@ -2978,7 +3051,9 @@ function theaterPlay(id, label){
   theaterCurrentId = id;
   // Selecting a recording only loads its poster/details — the watch-progress
   // timer doesn't start until the student presses Play (theaterBeginPlayback).
-  theaterClearWatchTracking();
+  // If a DIFFERENT recording was already playing, moving on from it after
+  // a meaningful watch counts as finishing it (see MIN_WATCH_CREDIT_MS).
+  theaterClearWatchTracking(true);
   theaterShowPoster(id, label);
   document.getElementById('theaterTitle').textContent = label;
   const meta = allScreencasts.find(v=>v.id===id);
