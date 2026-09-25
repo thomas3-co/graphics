@@ -1309,329 +1309,365 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
         </div>
         </div>
       </section>
-      <!-- ========== NOTES / READ ME ========== -->
-      <section id="notes" class="view">
-        <div class="view-head">
-          <div>
-            <h2>Read Me — Detailed Notes</h2>
-            <p>Step-by-step written lessons with tools, tips, and visual analogies. Each section can be downloaded on its own as a PDF. Click a section's title — or the 📖 icon — to expand it and read, or collapse it; sections you scroll past will minimize automatically. Opening a section counts toward your weekly reading check.</p>
-          </div>
-        </div>
-        <div class="note-section" id="new-project-menu" data-reading="new-project-menu">
-          <div class="note-actions">
-          <button class="note-dl" onclick="downloadSectionPDF('new-project-menu','The New Project Menu')">Download PDF</button>
-          <button class="note-mark" data-reading-key="new-project-menu" onclick="markReadingRead('new-project-menu', this)"><span class="nm-circle" aria-hidden="true"></span><span class="nm-label">Mark as Read</span></button>
-          </div>
-          <h3>The New Project Menu</h3>
-          <p>Before you can design anything, you need a canvas. The New Project menu is split into three panels working together: a filter on the left, ready-made presets in the middle, and a fully manual setup on the right.</p>
+ <section id="notes" class="view">
+  <div class="view-head">
+    <div>
+      <h2>Read Me — Detailed Notes</h2>
+      <p>Step-by-step written lessons with tools, tips, and visual analogies. Each section can be downloaded on its own as a PDF. Click a section's title — or the 📖 icon — to expand it and read, or collapse it; sections you scroll past will minimize automatically. Opening a section counts toward your weekly reading check.</p>
+    </div>
+  </div>
 
-          <div class="vocab-title" style="margin-top:14px;">1 · The Left Panel — Template Filtering &amp; Search</div>
-          <p>Think of this panel as a smart shopping filter in a pre-made design store. Instead of building a painting from scratch, you're browsing pre-drawn outline kits.</p>
-          <ol class="note-steps">
-            <li><strong>With Symbols</strong> (checkbox) — toggles whether templates containing vector graphics, logos, and line-art shapes appear in the results.</li>
-            <li><strong>With Photo</strong> (checkbox) — filters templates to include or exclude real stock photographs.</li>
-            <li><strong>Keywords</strong> (search bar &amp; refresh ↻) — filters the community library by subject tag (e.g. typing "Fitness" or "Real Estate").</li>
-          </ol>
-          <div class="note-tool"><strong>Analogies:</strong> "With Symbols" is like checking a box at a craft store that says "show me kits with pre-cut wooden shapes and stickers." "With Photo" is like asking for kits that come with real photos printed in the background. "Keywords" is like asking a store clerk to take you straight to the aisle with restaurant menu templates.</div>
+  <div class="note-section" id="new-project-menu" data-reading="new-project-menu">
+    <div class="note-header">
+      <div class="header-title-group">
+        <i class="fa-solid fa-chevron-down toggle-icon" aria-hidden="true"></i>
+        <h3><i class="fa-solid fa-book-open" aria-hidden="true"></i> The New Project Menu</h3>
+      </div>
+      <div class="note-actions">
+        <button class="note-dl" onclick="event.stopPropagation(); downloadSectionPDF('new-project-menu','The New Project Menu')">Download PDF</button>
+        <button class="note-mark" data-reading-key="new-project-menu" onclick="event.stopPropagation(); markReadingRead('new-project-menu', this)"><span class="nm-circle" aria-hidden="true"></span><span class="nm-label">Mark as Read</span></button>
+      </div>
+    </div>
+    <div class="note-content">
+      <p>Before you can design anything, you need a canvas. The New Project menu is split into three panels working together: a filter on the left, ready-made presets in the middle, and a fully manual setup on the right.</p>
 
-          <div class="vocab-title" style="margin-top:18px;">2 · The Middle Panel — Preset Categories &amp; Canvas Sizes</div>
-          <p>This panel is a pre-cut canvas rack. Instead of measuring and cutting your own wooden board, you grab a frame already built for a specific job.</p>
-          <p><strong>The categories (top tabs):</strong></p>
-          <ul>
-            <li><strong>Social</strong> — standard dimensions tailored to fit social media feeds without awkward cropping.</li>
-            <li><strong>Print</strong> — standard physical paper sizes (A4, Letter), automatically configured for ink and paper.</li>
-            <li><strong>Photo</strong> — sizes matching physical picture frames (4×6", 5×7", 8×10").</li>
-            <li><strong>Screen</strong> — digital display standards matching TVs, monitors, and laptops (1080p, 4K).</li>
-            <li><strong>Mobile</strong> — dimensions tailored to phone-screen proportions, for UI mockups or wallpapers.</li>
-            <li><strong>Ads</strong> — standard digital ad-banner dimensions recognized by web networks.</li>
-            <li><strong>2ⁿ (Power of Two)</strong> — sizes formatted for 3D textures (256×256, 512×512, 1024×1024, 2048×2048).</li>
-          </ul>
-          <p><strong>Individual presets under Social:</strong></p>
-          <ul>
-            <li><strong>FB Page Cover</strong> (1640 × 664 px) — wide rectangle sized for Facebook business header banners.</li>
-            <li><strong>FB Event Image</strong> (1920 × 1080 px) — standard 16:9 landscape layout for event invitations.</li>
-            <li><strong>FB Group Header</strong> (1640 × 856 px) — banner scaled specifically for Facebook group pages.</li>
-            <li><strong>Instagram</strong> (1080 × 1080 px) — classic 1:1 square canvas.</li>
-            <li><strong>Insta Story</strong> (1080 × 1920 px) — full-screen vertical 9:16 layout for mobile phones.</li>
-            <li><strong>Insta Portrait</strong> (1080 × 1350 px) — vertical 4:5 ratio, a tall poster shape that fills more of the feed.</li>
-            <li><strong>YouTube Thumbnail</strong> (1280 × 720 px) — standard 16:9 widescreen video preview image.</li>
-            <li><strong>YouTube Profile</strong> (800 × 800 px) — high-res square avatar; YouTube crops it into a circle automatically.</li>
-            <li><strong>YouTube Cover</strong> (2560 × 1440 px) — large canvas required to stay sharp across mobile, desktop, and TV apps.</li>
-            <li><strong>Twitter Profile</strong> (400 × 400 px) — standard profile-picture square for X/Twitter.</li>
-            <li><strong>Twitter Header</strong> (1500 × 500 px) — ultra-wide 3:1 banner for profile headers.</li>
-          </ul>
-          <div class="note-tool"><strong>Analogies:</strong> Instagram's square canvas is a standard ceramic tile — equal on all sides in a grid. Insta Story is like turning your phone vertical to fill every millimeter of the display. Insta Portrait is a tall poster that takes up maximum vertical space so people spend more time scrolling past it.</div>
+      <div class="vocab-title" style="margin-top:14px;">1 · The Left Panel — Template Filtering &amp; Search</div>
+      <p>Think of this panel as a smart shopping filter in a pre-made design store. Instead of building a painting from scratch, you're browsing pre-drawn outline kits.</p>
+      <ol class="note-steps">
+        <li><strong>With Symbols</strong> (checkbox) — toggles whether templates containing vector graphics, logos, and line-art shapes appear in the results.</li>
+        <li><strong>With Photo</strong> (checkbox) — filters templates to include or exclude real stock photographs.</li>
+        <li><strong>Keywords</strong> (search bar &amp; refresh ↻) — filters the community library by subject tag (e.g. typing "Fitness" or "Real Estate").</li>
+      </ol>
+      <div class="note-tool"><strong>Analogies:</strong> "With Symbols" is like checking a box at a craft store that says "show me kits with pre-cut wooden shapes and stickers." "With Photo" is like asking for kits that come with real photos printed in the background. "Keywords" is like asking a store clerk to take you straight to the aisle with restaurant menu templates.</div>
 
-          <div class="vocab-title" style="margin-top:18px;">3 · The Right Panel — Manual Configuration &amp; Technical Parameters</div>
-          <p>This is your custom carpenter workstation — where you measure and configure a raw canvas from scratch.</p>
-          <ol class="note-steps">
-            <li><strong>Name (New Project)</strong> — gives your project file a default title before you start working, like labeling a folder or writing a title on the back of a canvas.</li>
-            <li><strong>Width &amp; Height</strong> (e.g. 1280 × 720) — defines the horizontal and vertical boundary of your working space, like measuring a wooden frame with a tape measure.</li>
-            <li><strong>Swap button (⇄)</strong> — flips the width and height values instantly, like rotating a rectangular frame 90° to switch between Landscape and Portrait.</li>
-            <li><strong>Units dropdown</strong> — sets what system the Width/Height numbers use: <strong>Pixels</strong> (best for anything viewed on a screen), <strong>Inches / Centimeters / Millimeters</strong> (physical measurements, best for print), or <strong>Percent</strong> (relative proportions based on another image's size).</li>
-            <li><strong>DPI &amp; Resolution Unit</strong> — Dots Per Inch controls pixel density: <strong>72 DPI</strong> is standard for computer screens; <strong>300 DPI</strong> is standard for physical ink printing.</li>
-            <li><strong>Background</strong> — the starting color of your base layer: <strong>White/Black</strong> starts with a solid painted base; <strong>Transparent</strong> starts with an empty grid (ideal for logos and stickers); <strong>Custom</strong> lets you pick any starting color.</li>
-            <li><strong>Artboards</strong> (checkbox) — lets multiple independent canvases live side-by-side in the same file, like a long worktable with several sketchpads laid out so you can design a multi-card set all at once.</li>
-            <li><strong>Mode</strong> — <strong>RGB</strong> is the red/green/blue light mixing used by screens; <strong>8-bit</strong> gives 256 brightness levels per channel (16.7 million total colors), while 16-bit/32-bit are used in high-end photography to prevent color banding in gradients like skies.</li>
-            <li><strong>Profile (sRGB)</strong> — the standard color map used across the web, so the same blue looks the same on an iPhone, a Samsung phone, and a PC monitor.</li>
-            <li><strong>Create button</strong> — builds the file with your chosen specifications and opens the editor.</li>
-          </ol>
-          <div class="note-tip"><strong>Tip:</strong> DPI is like thread count on bed sheets — 72 DPI is coarse burlap, fine for a screen viewed from a distance; 300 DPI is fine silk, holding crisp detail up close on printed paper.</div>
-          <div class="note-visual"><strong>Visual Example:</strong> Bit depth is how many distinct paint tubes you keep in your art box — 8-bit gives you a standard set of paints, while 16-bit/32-bit gives you hundreds of microscopic shade variations of the same color.</div>
-        </div>
-        <div class="note-section" id="intro" data-reading="intro">
-          <div class="note-actions">
-          <button class="note-dl" onclick="downloadSectionPDF('intro','Introduction to Graphic Design & Photoshop')">Download PDF</button>
-          <button class="note-mark" data-reading-key="intro" onclick="markReadingRead('intro', this)"><span class="nm-circle" aria-hidden="true"></span><span class="nm-label">Mark as Read</span></button>
-          </div>
-          <h3>Introduction to Graphic Design &amp; Photoshop</h3>
-          <p>Graphic Design communicates ideas visually using typography, images, colors, and layout. Photoshop is a digital workspace where imagination becomes tangible.</p>
-          <ol class="note-steps">
-            <li>Open Photoshop and explore the workspace: Menu Bar, Toolbar, Panels, Options Bar.</li>
-            <li>Familiarize yourself with essential panels: <strong>Layers</strong>, <strong>Adjustments</strong>, <strong>Properties</strong>, <strong>History</strong>.</li>
-            <li>Learn non-destructive editing: use <strong>Layer Masks</strong>, <strong>Smart Objects</strong>, and <strong>Adjustment Layers</strong>.</li>
-            <li>Practice: Draw simple shapes and apply color fills to understand layer stacking.</li>
-          </ol>
-          <div class="note-tool"><strong>Analogy:</strong> Photoshop is like a designer's kitchen: brushes are spices, layers are ingredients, masks are containers, and smart objects are reusable recipes.</div>
-          <div class="note-tip"><strong>Tip:</strong> Always keep a "backup layer" for original images to prevent accidental mistakes.</div>
-          <div class="note-visual"><strong>Visual Example:</strong> Imagine a blank canvas as a plate. Each layer is a separate ingredient. Masks are lids that cover parts of layers without deleting them. Smart Objects are frozen ingredients you can use later without changing the original taste.</div>
-        </div>
-        <div class="note-section" id="open-save-export" data-reading="open-save-export">
-          <div class="note-actions">
-          <button class="note-dl" onclick="downloadSectionPDF('open-save-export','How to Open, Save and Export Files in Photoshop')">Download PDF</button>
-          <button class="note-mark" data-reading-key="open-save-export" onclick="markReadingRead('open-save-export', this)"><span class="nm-circle" aria-hidden="true"></span><span class="nm-label">Mark as Read</span></button>
-          </div>
-          <h3>How to Open, Save and Export Files in Photoshop</h3>
-          <p>Save and export is the loop every Photoshop project runs on: open a file, work on it in layers, save the layered version, then export a flat copy for wherever it is going. Skip the middle step and you can never revise the edit; skip the last one and you have a file nobody else can open.</p>
-          <p>Photoshop's file handling trips people up more often than any of its tools, and always in the same way: the finished JPEG exists, the layered version does not, and the only way to change anything is to start over.</p>
-          <div class="note-tip"><strong>The habit that prevents it:</strong> Open the file, save a layered PSD early, keep working, and export a flat copy only at the very end. Day 2 runs that loop end to end on one photograph, adding a sun flare and a set of light rays along the way so there is something worth saving.</div>
+      <div class="vocab-title" style="margin-top:18px;">2 · The Middle Panel — Preset Categories &amp; Canvas Sizes</div>
+      <p>This panel is a pre-cut canvas rack. Instead of measuring and cutting your own wooden board, you grab a frame already built for a specific job.</p>
+      <p><strong>The categories (top tabs):</strong></p>
+      <ul>
+        <li><strong>Social</strong> — standard dimensions tailored to fit social media feeds without awkward cropping.</li>
+        <li><strong>Print</strong> — standard physical paper sizes (A4, Letter), automatically configured for ink and paper.</li>
+        <li><strong>Photo</strong> — sizes matching physical picture frames (4×6", 5×7", 8×10").</li>
+        <li><strong>Screen</strong> — digital display standards matching TVs, monitors, and laptops (1080p, 4K).</li>
+        <li><strong>Mobile</strong> — dimensions tailored to phone-screen proportions, for UI mockups or wallpapers.</li>
+        <li><strong>Ads</strong> — standard digital ad-banner dimensions recognized by web networks.</li>
+        <li><strong>2ⁿ (Power of Two)</strong> — sizes formatted for 3D textures (256×256, 512×512, 1024×1024, 2048×2048).</li>
+      </ul>
+      <p><strong>Individual presets under Social:</strong></p>
+      <ul>
+        <li><strong>FB Page Cover</strong> (1640 × 664 px) — wide rectangle sized for Facebook business header banners.</li>
+        <li><strong>FB Event Image</strong> (1920 × 1080 px) — standard 16:9 landscape layout for event invitations.</li>
+        <li><strong>FB Group Header</strong> (1640 × 856 px) — banner scaled specifically for Facebook group pages.</li>
+        <li><strong>Instagram</strong> (1080 × 1080 px) — classic 1:1 square canvas.</li>
+        <li><strong>Insta Story</strong> (1080 × 1920 px) — full-screen vertical 9:16 layout for mobile phones.</li>
+        <li><strong>Insta Portrait</strong> (1080 × 1350 px) — vertical 4:5 ratio, a tall poster shape that fills more of the feed.</li>
+        <li><strong>YouTube Thumbnail</strong> (1280 × 720 px) — standard 16:9 widescreen video preview image.</li>
+        <li><strong>YouTube Profile</strong> (800 × 800 px) — high-res square avatar; YouTube crops it into a circle automatically.</li>
+        <li><strong>YouTube Cover</strong> (2560 × 1440 px) — large canvas required to stay sharp across mobile, desktop, and TV apps.</li>
+        <li><strong>Twitter Profile</strong> (400 × 400 px) — standard profile-picture square for X/Twitter.</li>
+        <li><strong>Twitter Header</strong> (1500 × 500 px) — ultra-wide 3:1 banner for profile headers.</li>
+      </ul>
+      <div class="note-tool"><strong>Analogies:</strong> Instagram's square canvas is a standard ceramic tile — equal on all sides in a grid. Insta Story is like turning your phone vertical to fill every millimeter of the display. Insta Portrait is a tall poster that takes up maximum vertical space so people spend more time scrolling past it.</div>
 
-          <div class="vocab-title" style="margin-top:18px;">Part 1 · How to Open Files in Photopea</div>
-          <p>Photopea is a browser-based graphic editor that supports multiple file formats (<code>.PSD</code>, <code>.AI</code>, <code>.XCF</code>, <code>.PNG</code>, <code>.JPG</code>, <code>.SVG</code>, etc.).</p>
+      <div class="vocab-title" style="margin-top:18px;">3 · The Right Panel — Manual Configuration &amp; Technical Parameters</div>
+      <p>This is your custom carpenter workstation — where you measure and configure a raw canvas from scratch.</p>
+      <ol class="note-steps">
+        <li><strong>Name (New Project)</strong> — gives your project file a default title before you start working, like labeling a folder or writing a title on the back of a canvas.</li>
+        <li><strong>Width &amp; Height</strong> (e.g. 1280 × 720) — defines the horizontal and vertical boundary of your working space, like measuring a wooden frame with a tape measure.</li>
+        <li><strong>Swap button (⇄)</strong> — flips the width and height values instantly, like rotating a rectangular frame 90° to switch between Landscape and Portrait.</li>
+        <li><strong>Units dropdown</strong> — sets what system the Width/Height numbers use: <strong>Pixels</strong> (best for anything viewed on a screen), <strong>Inches / Centimeters / Millimeters</strong> (physical measurements, best for print), or <strong>Percent</strong> (relative proportions based on another image's size).</li>
+        <li><strong>DPI &amp; Resolution Unit</strong> — Dots Per Inch controls pixel density: <strong>72 DPI</strong> is standard for computer screens; <strong>300 DPI</strong> is standard for physical ink printing.</li>
+        <li><strong>Background</strong> — the starting color of your base layer: <strong>White/Black</strong> starts with a solid painted base; <strong>Transparent</strong> starts with an empty grid (ideal for logos and stickers); <strong>Custom</strong> lets you pick any starting color.</li>
+        <li><strong>Artboards</strong> (checkbox) — lets multiple independent canvases live side-by-side in the same file, like a long worktable with several sketchpads laid out so you can design a multi-card set all at once.</li>
+        <li><strong>Mode</strong> — <strong>RGB</strong> is the red/green/blue light mixing used by screens; <strong>8-bit</strong> gives 256 brightness levels per channel (16.7 million total colors), while 16-bit/32-bit are used in high-end photography to prevent color banding in gradients like skies.</li>
+        <li><strong>Profile (sRGB)</strong> — the standard color map used across the web, so the same blue looks the same on an iPhone, a Samsung phone, and a PC monitor.</li>
+        <li><strong>Create button</strong> — builds the file with your chosen specifications and opens the editor.</li>
+      </ol>
+      <div class="note-tip"><strong>Tip:</strong> DPI is like thread count on bed sheets — 72 DPI is coarse burlap, fine for a screen viewed from a distance; 300 DPI is fine silk, holding crisp detail up close on printed paper.</div>
+      <div class="note-visual"><strong>Visual Example:</strong> Bit depth is how many distinct paint tubes you keep in your art box — 8-bit gives you a standard set of paints, while 16-bit/32-bit gives you hundreds of microscopic shade variations of the same color.</div>
+    </div>
+  </div>
 
-          <div class="note-tool"><strong>1. File Menu (Standard Local Import)</strong><br>
-          <strong>How to do it:</strong> Go to File → Open (<code>Ctrl+O</code> / <code>Cmd+O</code>), select your image, and open it.<br>
-          <strong>Photoshop version:</strong> Photoshop 1.0 (1990).<br>
-          <strong>How it worked before &amp; why:</strong> Before digital image editors allowed opening images through a graphical file menu, image data had to be read from dedicated hardware scanners, system frame buffers, or raw bit-mapped files using specialized command-line scripts. Standard local file import gave non-programmer designers a standard desktop interface for opening files from hard drives or floppy disks.</div>
+  <div class="note-section" id="intro" data-reading="intro">
+    <div class="note-header">
+      <div class="header-title-group">
+        <i class="fa-solid fa-chevron-down toggle-icon" aria-hidden="true"></i>
+        <h3><i class="fa-solid fa-book-open" aria-hidden="true"></i> Introduction to Graphic Design &amp; Photoshop</h3>
+      </div>
+      <div class="note-actions">
+        <button class="note-dl" onclick="event.stopPropagation(); downloadSectionPDF('intro','Introduction to Graphic Design & Photoshop')">Download PDF</button>
+        <button class="note-mark" data-reading-key="intro" onclick="event.stopPropagation(); markReadingRead('intro', this)"><span class="nm-circle" aria-hidden="true"></span><span class="nm-label">Mark as Read</span></button>
+      </div>
+    </div>
+    <div class="note-content">
+      <p>Graphic Design communicates ideas visually using typography, images, colors, and layout. Photoshop is a digital workspace where imagination becomes tangible.</p>
+      <ol class="note-steps">
+        <li>Open Photoshop and explore the workspace: Menu Bar, Toolbar, Panels, Options Bar.</li>
+        <li>Familiarize yourself with essential panels: <strong>Layers</strong>, <strong>Adjustments</strong>, <strong>Properties</strong>, <strong>History</strong>.</li>
+        <li>Learn non-destructive editing: use <strong>Layer Masks</strong>, <strong>Smart Objects</strong>, and <strong>Adjustment Layers</strong>.</li>
+        <li>Practice: Draw simple shapes and apply color fills to understand layer stacking.</li>
+      </ol>
+      <div class="note-tool"><strong>Analogy:</strong> Photoshop is like a designer's kitchen: brushes are spices, layers are ingredients, masks are containers, and smart objects are reusable recipes.</div>
+      <div class="note-tip"><strong>Tip:</strong> Always keep a "backup layer" for original images to prevent accidental mistakes.</div>
+      <div class="note-visual"><strong>Visual Example:</strong> Imagine a blank canvas as a plate. Each layer is a separate ingredient. Masks are lids that cover parts of layers without deleting them. Smart Objects are frozen ingredients you can use later without changing the original taste.</div>
+    </div>
+  </div>
 
-          <div class="note-tool"><strong>2. Drag &amp; Drop</strong><br>
-          <strong>How to do it:</strong> Drag a file from your file manager directly onto the canvas area to load it.<br>
-          <strong>Photoshop version:</strong> Photoshop 7.0 (2002) for basic canvas loading, expanded in Photoshop CS2 (2005) to auto-generate Smart Objects on drag-and-drop.<br>
-          <strong>How it worked before &amp; why:</strong> Before OS-level drag-and-drop, users had to use File → Place or File → Open, manually select the open canvas (<code>Ctrl+A</code>), and paste it (<code>Ctrl+V</code>) into their target canvas. Drag-and-drop sped up multi-file workflows by skipping the manual import menus and repetitive copy-paste.</div>
+  <div class="note-section" id="open-save-export" data-reading="open-save-export">
+    <div class="note-header">
+      <div class="header-title-group">
+        <i class="fa-solid fa-chevron-down toggle-icon" aria-hidden="true"></i>
+        <h3><i class="fa-solid fa-book-open" aria-hidden="true"></i> How to Open, Save and Export Files in Photoshop</h3>
+      </div>
+      <div class="note-actions">
+        <button class="note-dl" onclick="event.stopPropagation(); downloadSectionPDF('open-save-export','How to Open, Save and Export Files in Photoshop')">Download PDF</button>
+        <button class="note-mark" data-reading-key="open-save-export" onclick="event.stopPropagation(); markReadingRead('open-save-export', this)"><span class="nm-circle" aria-hidden="true"></span><span class="nm-label">Mark as Read</span></button>
+      </div>
+    </div>
+    <div class="note-content">
+      <p>Save and export is the loop every Photoshop project runs on: open a file, work on it in layers, save the layered version, then export a flat copy for wherever it is going. Skip the middle step and you can never revise the edit; skip the last one and you have a file nobody else can open.</p>
+      <p>Photoshop's file handling trips people up more often than any of its tools, and always in the same way: the finished JPEG exists, the layered version does not, and the only way to change anything is to start over.</p>
+      <div class="note-tip"><strong>The habit that prevents it:</strong> Open the file, save a layered PSD early, keep working, and export a flat copy only at the very end. Day 2 runs that loop end to end on one photograph, adding a sun flare and a set of light rays along the way so there is something worth saving.</div>
 
-          <div class="note-tool"><strong>3. Open from URL</strong><br>
-          <strong>How to do it:</strong> Go to File → Open More → Open from URL and paste an image link directly.<br>
-          <strong>Photoshop version:</strong> Photoshop CC (2013), integrating web and Adobe Stock asset fetching.<br>
-          <strong>How it worked before &amp; why:</strong> Before web-fetching, users had to right-click an image in a browser, "Save Image As...", save it locally, then open the downloaded file in Photoshop. Web URL fetching removed the local-storage clutter and let people edit straight from a web link.</div>
+      <div class="vocab-title" style="margin-top:18px;">Part 1 · How to Open Files in Photopea</div>
+      <p>Photopea is a browser-based graphic editor that supports multiple file formats (<code>.PSD</code>, <code>.AI</code>, <code>.XCF</code>, <code>.PNG</code>, <code>.JPG</code>, <code>.SVG</code>, etc.).</p>
 
-          <div class="note-tool"><strong>4. Clipboard (Paste Direct)</strong><br>
-          <strong>How to do it:</strong> Copy an image to your clipboard (<code>Ctrl+C</code>) and paste it into Photopea (<code>Ctrl+V</code>). File → New also auto-detects clipboard dimensions.<br>
-          <strong>Photoshop version:</strong> Photoshop 2.0 (1991).<br>
-          <strong>How it worked before &amp; why:</strong> Early editors could only open files already saved to disk — a screen snippet or copied frame had to be saved as a temporary file first. Native clipboard ingestion let visual data move instantly between applications.</div>
+      <div class="note-tool"><strong>1. File Menu (Standard Local Import)</strong><br>
+      <strong>How to do it:</strong> Go to File → Open (<code>Ctrl+O</code> / <code>Cmd+O</code>), select your image, and open it.<br>
+      <strong>Photoshop version:</strong> Photoshop 1.0 (1990).<br>
+      <strong>How it worked before &amp; why:</strong> Before digital image editors allowed opening images through a graphical file menu, image data had to be read from dedicated hardware scanners, system frame buffers, or raw bit-mapped files using specialized command-line scripts. Standard local file import gave non-programmer designers a standard desktop interface for opening files from hard drives or floppy disks.</div>
 
-          <div class="note-tool"><strong>5. Open from Cloud / Remote Storage</strong><br>
-          <strong>How to do it:</strong> Go to File → Open More to connect directly to Google Drive, Dropbox, OneDrive, or Google Photos.<br>
-          <strong>Photoshop version:</strong> Photoshop CC 2014 (v15.0), with Creative Cloud asset integration.<br>
-          <strong>How it worked before &amp; why:</strong> Users previously needed local desktop sync utilities to pull cloud files down before opening them. Native cloud integration supports remote, collaborative workflows across multiple devices without manual downloads.</div>
+      <div class="note-tool"><strong>2. Drag &amp; Drop</strong><br>
+      <strong>How to do it:</strong> Drag a file from your file manager directly onto the canvas area to load it.<br>
+      <strong>Photoshop version:</strong> Photoshop 7.0 (2002) for basic canvas loading, expanded in Photoshop CS2 (2005) to auto-generate Smart Objects on drag-and-drop.<br>
+      <strong>How it worked before &amp; why:</strong> Before OS-level drag-and-drop, users had to use File → Place or File → Open, manually select the open canvas (<code>Ctrl+A</code>), and paste it (<code>Ctrl+V</code>) into their target canvas. Drag-and-drop sped up multi-file workflows by skipping the manual import menus and repetitive copy-paste.</div>
 
-          <div class="vocab-title" style="margin-top:18px;">Part 2 · How to Save and Export in Photopea</div>
-          <p>Photopea distinguishes between saving working <strong>source</strong> project files and exporting final <strong>rendered</strong> output images.</p>
-          <p><strong>1. Saving editable source files</strong></p>
-          <div class="note-tool"><strong>Save as PSD (recommended)</strong><br>
-          <strong>How to do it:</strong> File → Save as PSD (<code>Ctrl+S</code> / <code>Cmd+S</code>).<br>
-          <strong>Photoshop version:</strong> Photoshop 3.0 (1994).<br>
-          <strong>How it worked before &amp; why:</strong> Before 3.0, programs saved images as single flat files — text typed over a photo and saved burned permanently into the pixels. The PSD format arrived alongside layers to save structural metadata, masks, text paths, and separate layers without flattening them.</div>
-          <div class="note-tool"><strong>Save to Cloud Storage</strong><br>
-          <strong>How to do it:</strong> File → Save More → Save to Google Drive / Dropbox / OneDrive.<br>
-          <strong>Photoshop version:</strong> Photoshop CC (2013).<br>
-          <strong>How it worked before &amp; why:</strong> Users had to save locally, then manually upload the PSD to a server through a browser. Direct cloud saving streamlined online backups and multi-device access.</div>
+      <div class="note-tool"><strong>3. Open from URL</strong><br>
+      <strong>How to do it:</strong> Go to File → Open More → Open from URL and paste an image link directly.<br>
+      <strong>Photoshop version:</strong> Photoshop CC (2013), integrating web and Adobe Stock asset fetching.<br>
+      <strong>How it worked before &amp; why:</strong> Before web-fetching, users had to right-click an image in a browser, "Save Image As...", save it locally, then open the downloaded file in Photoshop. Web URL fetching removed the local-storage clutter and let people edit straight from a web link.</div>
 
-          <p style="margin-top:14px;"><strong>2. Exporting rendered output files</strong></p>
-          <div class="note-tool"><strong>PNG</strong> — lossless compression with transparency support.<br>
-          <strong>Photoshop version:</strong> Photoshop 5.5 (1999), via "Save for Web".<br>
-          <strong>How it worked before &amp; why:</strong> Web designers relied on GIF for transparent graphics, limited to 256 colors. PNG added 24-bit full color with smooth alpha-channel transparency and no quality loss.</div>
-          <div class="note-tool"><strong>JPG / JPEG</strong> — lossy compression for small file sizes; no transparency.<br>
-          <strong>Photoshop version:</strong> Photoshop 2.5 (1992).<br>
-          <strong>How it worked before &amp; why:</strong> Uncompressed raster files (TIFF, BMP) were massive and hard to store or transfer over early networks. JPEG compression drastically shrank photo file sizes.</div>
-          <div class="note-tool"><strong>SVG</strong> — scalable vector format.<br>
-          <strong>Photoshop version:</strong> Photoshop CC 2015.<br>
-          <strong>How it worked before &amp; why:</strong> Raster graphics pixelate when enlarged, so designers had to hop over to a vector app like Illustrator. SVG export brought resolution-independent output directly into a photo editor for responsive web design.</div>
-          <div class="note-tool"><strong>PDF</strong> — document and print format.<br>
-          <strong>Photoshop version:</strong> Photoshop 6.0 (2000).<br>
-          <strong>How it worked before &amp; why:</strong> Sending artwork to commercial printers meant manually placing exported images into desktop-publishing software like QuarkXPress or PageMaker. Direct PDF export delivers print-ready files with embedded fonts, vectors, and color profiles from the image editor itself.</div>
-          <div class="note-tool"><strong>GIF</strong> — frame animations and limited-palette images.<br>
-          <strong>Photoshop version:</strong> Photoshop 5.5 (1999).<br>
-          <strong>How it worked before &amp; why:</strong> Early editors targeted static print or display images only. GIF export arrived during the dot-com era so designers could build light web banners and animations.</div>
+      <div class="note-tool"><strong>4. Clipboard (Paste Direct)</strong><br>
+      <strong>How to do it:</strong> Copy an image to your clipboard (<code>Ctrl+C</code>) and paste it into Photopea (<code>Ctrl+V</code>). File → New also auto-detects clipboard dimensions.<br>
+      <strong>Photoshop version:</strong> Photoshop 2.0 (1991).<br>
+      <strong>How it worked before &amp; why:</strong> Early editors could only open files already saved to disk — a screen snippet or copied frame had to be saved as a temporary file first. Native clipboard ingestion let visual data move instantly between applications.</div>
 
-          <div class="vocab-title" style="margin-top:18px;">Part 3 · Understanding Layers — The Glass Sheet Analogy</div>
-          <div class="note-visual"><strong>Think of layers as a vertical stack of transparent sheets of glass resting directly over one another.</strong>
-          <ul style="margin-top:8px;">
-            <li><strong>Transparency:</strong> an empty layer is a clean, transparent pane — you see straight through to the panes below.</li>
-            <li><strong>Painting / content:</strong> a red dot painted on the top sheet covers whatever sits behind it; the clear areas around it still show the lower sheets.</li>
-            <li><strong>Stacking order:</strong> the top-most layer in the Layers Panel is the front-most sheet, closest to your eye — the bottom pane is the Background.</li>
-            <li><strong>Isolation:</strong> modifying one sheet leaves the others completely untouched — you can reorder or hide any sheet without altering the rest.</li>
-          </ul></div>
-          <div class="note-tool"><strong>Photoshop version:</strong> Photoshop 3.0 (1994).<br>
-          <strong>How it worked before &amp; why:</strong> Prior to 1994, image editors worked like a single piece of paper — text painted across a photo destroyed the pixels underneath permanently, and fixing a typo meant repainting the background by hand or starting over. Co-founder Thomas Knoll invented layers so elements (text, subjects, backgrounds) could sit independently on top of each other, turning image editing from destructive paint-over work into flexible compositing.</div>
+      <div class="note-tool"><strong>5. Open from Cloud / Remote Storage</strong><br>
+      <strong>How to do it:</strong> Go to File → Open More to connect directly to Google Drive, Dropbox, OneDrive, or Google Photos.<br>
+      <strong>Photoshop version:</strong> Photoshop CC 2014 (v15.0), with Creative Cloud asset integration.<br>
+      <strong>How it worked before &amp; why:</strong> Users previously needed local desktop sync utilities to pull cloud files down before opening them. Native cloud integration supports remote, collaborative workflows across multiple devices without manual downloads.</div>
 
-          <div class="vocab-title" style="margin-top:18px;">Part 4 · Destructive vs. Non-Destructive Editing</div>
-          <div style="overflow-x:auto;"><table class="progress-week-table">
-            <thead><tr><th>Feature / Technique</th><th>Destructive Workflow</th><th>Non-Destructive Workflow</th><th>Version &amp; History</th><th>Why it Changed</th></tr></thead>
-            <tbody>
-              <tr><td><strong>Core Layer Architecture</strong></td><td>Editing directly on a single flat image layer.</td><td>Working across isolated, stacked layers.</td><td>Photoshop 3.0 (1994)</td><td>Before: edits overwrote the base data. Layers let elements move or be removed without touching what's around them.</td></tr>
-              <tr><td><strong>Erasing vs. Masking</strong></td><td>Eraser Tool deletes pixel data permanently.</td><td>Layer Mask uses black/white paint to hide or reveal pixels without deleting them.</td><td>Photoshop 4.0 (1996)</td><td>Before: erasing permanently deleted background pixels. Masks let parts of a layer be hidden and unhidden at any point.</td></tr>
-              <tr><td><strong>Color &amp; Tonal Adjustments</strong></td><td>Image → Adjustments overwrites raw pixel values directly.</td><td>Adjustment Layers sit above the image like a tinted glass pane, applying changes dynamically.</td><td>Photoshop 4.0 (1996)</td><td>Before: adjusting contrast or saturation modified raw data permanently. Adjustment layers allow changes any time without degrading the original.</td></tr>
-              <tr><td><strong>Scaling &amp; Transforming</strong></td><td>Raster Scaling: shrinking/enlarging degrades sharpness and adds blur.</td><td>Smart Objects embed the original high-resolution source in a protective container.</td><td>Photoshop CS2 / 9.0 (2005)</td><td>Before: scaling down discarded pixel data; scaling back up stretched what remained, causing blur. Smart Objects preserve full original quality through transforms.</td></tr>
-            </tbody>
-          </table></div>
+      <div class="vocab-title" style="margin-top:18px;">Part 2 · How to Save and Export in Photopea</div>
+      <p>Photopea distinguishes between saving working <strong>source</strong> project files and exporting final <strong>rendered</strong> output images.</p>
+      <p><strong>1. Saving editable source files</strong></p>
+      <div class="note-tool"><strong>Save as PSD (recommended)</strong><br>
+      <strong>How to do it:</strong> File → Save as PSD (<code>Ctrl+S</code> / <code>Cmd+S</code>).<br>
+      <strong>Photoshop version:</strong> Photoshop 3.0 (1994).<br>
+      <strong>How it worked before &amp; why:</strong> Before 3.0, programs saved images as single flat files — text typed over a photo and saved burned permanently into the pixels. The PSD format arrived alongside layers to save structural metadata, masks, text paths, and separate layers without flattening them.</div>
+      <div class="note-tool"><strong>Save to Cloud Storage</strong><br>
+      <strong>How to do it:</strong> File → Save More → Save to Google Drive / Dropbox / OneDrive.<br>
+      <strong>Photoshop version:</strong> Photoshop CC (2013).<br>
+      <strong>How it worked before &amp; why:</strong> Users had to save locally, then manually upload the PSD to a server through a browser. Direct cloud saving streamlined online backups and multi-device access.</div>
 
-          <div class="vocab-title" style="margin-top:18px;">Part 5 · Pixels and Resolution Explained</div>
-          <ul>
-            <li><strong>Pixel (Picture Element):</strong> the smallest individual square block of colored light that forms a digital raster image.</li>
-            <li><strong>Grid structure:</strong> every raster image sits on a 2D grid where each pixel holds a specific RGB color value.</li>
-            <li><strong>Pixel density &amp; scaling:</strong> zooming in close enough shows the individual colored squares — a state called <strong>pixelation</strong>.</li>
-            <li><strong>Resolution (PPI/DPI):</strong> Pixels Per Inch. Standard web displays use 72 PPI; high-quality printing needs 300 DPI to keep pixels from looking blocky.</li>
-          </ul>
-          <div class="note-tool"><strong>Photoshop version:</strong> Photoshop 1.0 (1990) for the base pixel grid engine, and Photoshop 6.0 (2000) for resolution-independent vector shapes layered over pixel grids.<br>
-          <strong>How it worked before &amp; why:</strong> Early monitors could only render basic monochrome or fixed-resolution low-color images. Photoshop was built to process multi-channel RGB pixel data so desktop computers could edit photography tone-by-tone and pixel-by-pixel — vector layers were later combined with pixel grids in Photoshop 6.0 so smooth vector graphics and pixel-based photography could share one canvas.</div>
-        </div>
-        <div class="note-section" id="rastervector" data-reading="rastervector">
-          <div class="note-actions">
-          <button class="note-dl" onclick="downloadSectionPDF('rastervector','Raster vs Vector Graphics')">Download PDF</button>
-          <button class="note-mark" data-reading-key="rastervector" onclick="markReadingRead('rastervector', this)"><span class="nm-circle" aria-hidden="true"></span><span class="nm-label">Mark as Read</span></button>
-          </div>
-          <h3>Raster vs Vector Graphics</h3>
-          <p>Raster images are pixel-based, perfect for detailed photos. Vector graphics are path-based and scalable without losing quality.</p>
-          <ul><li><strong>Raster:</strong> Photos, textures, paintings.</li><li><strong>Vector:</strong> Logos, icons, illustrations requiring scalability.</li></ul>
-          <ol class="note-steps">
-            <li>Open a raster image, zoom in — notice pixels when enlarged.</li>
-            <li>Draw a shape with the <strong>Pen Tool</strong> — crisp at any zoom.</li>
-            <li>Save raster as JPG/PNG, vector as SVG/AI.</li>
-            <li>Practice: Trace a raster logo into a vector path.</li>
-          </ol>
-          <div class="note-tool"><strong>Pen Tool:</strong> Precise path creation.<br><strong>Analogy:</strong> Tracing a logo on tracing paper for clean outlines.</div>
-          <div class="note-tip"><strong>Pro Tip:</strong> Combine raster &amp; vector: vector logos with raster textures for realism.</div>
-          <div class="note-visual"><strong>Visual Example:</strong> Imagine a photo of a cat (raster) vs a cartoon cat outline (vector). Zoom the photo: pixels appear. Zoom the cartoon: it stays sharp, clean, and scalable.</div>
-        </div>
-        <div class="note-section" id="photopea" data-reading="photopea">
-          <div class="note-actions">
-          <button class="note-dl" onclick="downloadSectionPDF('photopea','Photopea Overview')">Download PDF</button>
-          <button class="note-mark" data-reading-key="photopea" onclick="markReadingRead('photopea', this)"><span class="nm-circle" aria-hidden="true"></span><span class="nm-label">Mark as Read</span></button>
-          </div>
-          <h3>Photopea Overview</h3>
-          <p>Photopea is an online Photoshop alternative supporting layers, masks, smart objects, and adjustments.</p>
-          <ol class="note-steps">
-            <li>Visit <a href="https://www.photopea.com" target="_blank" rel="noopener">photopea.com</a>.</li>
-            <li>Open or drag an image.</li>
-            <li>Use Move, Brush, Clone Stamp, and Adjustment Layers.</li>
-            <li>Save as PSD for future edits or export as PNG/JPG.</li>
-            <li>Practice: Open a Photoshop PSD in Photopea and observe layer compatibility.</li>
-          </ol>
-          <div class="note-tool"><strong>Analogy:</strong> Photopea is a pocket Photoshop — light and ready anywhere.</div>
-          <div class="note-tip"><strong>Tip:</strong> Learn Photopea shortcuts; most match Photoshop for faster workflow.</div>
-          <div class="note-visual"><strong>Visual Example:</strong> Picture carrying a small, foldable art studio in your laptop browser, with all brushes, layers, and panels ready.</div>
-        </div>
-        <div class="note-section" id="removing-bg" data-reading="removing-bg">
-          <div class="note-actions">
-          <button class="note-dl" onclick="downloadSectionPDF('removing-bg','Removing Backgrounds and Subjects')">Download PDF</button>
-          <button class="note-mark" data-reading-key="removing-bg" onclick="markReadingRead('removing-bg', this)"><span class="nm-circle" aria-hidden="true"></span><span class="nm-label">Mark as Read</span></button>
-          </div>
-          <h3>Removing Backgrounds and Subjects</h3>
-          <p>Essential for product design, e-commerce, social media, and composites.</p>
-          <ol class="note-steps">
-            <li>Select the subject using <strong>Quick Selection Tool</strong> or <strong>Select Subject</strong>.</li>
-            <li>Refine edges using <strong>Select and Mask</strong>.</li>
-            <li>Apply <strong>Layer Mask</strong> to hide the background non-destructively.</li>
-            <li>Use <strong>Refine Edge Brush</strong> for hair or intricate details.</li>
-          </ol>
-          <div class="note-tool"><strong>Analogy:</strong> Digital scissors that are reversible.</div>
-          <div class="note-tip"><strong>Tip:</strong> Check edges at 200% zoom for perfection.</div>
-          <div class="note-visual"><strong>Visual Example:</strong> Imagine cutting a portrait out of a magazine but having invisible scissors that allow you to adjust edges after cutting.</div>
-        </div>
-        <div class="note-section" id="passport" data-reading="passport">
-          <div class="note-actions">
-          <button class="note-dl" onclick="downloadSectionPDF('passport','Passport Photo Editing')">Download PDF</button>
-          <button class="note-mark" data-reading-key="passport" onclick="markReadingRead('passport', this)"><span class="nm-circle" aria-hidden="true"></span><span class="nm-label">Mark as Read</span></button>
-          </div>
-          <h3>Passport Size Photo</h3>
-          <p>Precise cropping, clean background, and correct exposure are key.</p>
-          <ol class="note-steps">
-            <li>Crop to 2x2 inches using <strong>Crop Tool</strong>.</li>
-            <li>Adjust background with <strong>Solid Color Fill</strong> or <strong>Brush Tool</strong>.</li>
-            <li>Dodge &amp; Burn to balance skin tone.</li>
-            <li>Save at 300 dpi.</li>
-          </ol>
-          <div class="note-tool"><strong>Analogy:</strong> Trimming a printed photo to fit exactly into a passport window.</div>
-          <div class="note-tip"><strong>Tip:</strong> Use soft brush edges for smooth background transitions.</div>
-          <div class="note-visual"><strong>Visual Example:</strong> Picture a perfectly framed passport headshot on a white canvas, with soft shadows blending into the background.</div>
-        </div>
-        <div class="note-section" id="retouch" data-reading="retouch">
-          <div class="note-actions">
-          <button class="note-dl" onclick="downloadSectionPDF('retouch','Face and Skin Retouching')">Download PDF</button>
-          <button class="note-mark" data-reading-key="retouch" onclick="markReadingRead('retouch', this)"><span class="nm-circle" aria-hidden="true"></span><span class="nm-label">Mark as Read</span></button>
-          </div>
-          <h3>Face and Skin Retouching</h3>
-          <p>Enhance portraits subtly while preserving texture.</p>
-          <ol class="note-steps">
-            <li>Duplicate the original layer.</li>
-            <li>Spot Healing Brush for blemishes.</li>
-            <li>Frequency Separation: separate color &amp; texture for precise edits.</li>
-            <li>Dodge &amp; Burn for highlights and contours.</li>
-          </ol>
-          <div class="note-tool"><strong>Healing Brush:</strong> Digital makeup without destroying skin texture.</div>
-          <div class="note-tip"><strong>Tip:</strong> Zoom at 100–200% to see true texture.</div>
-          <div class="note-visual"><strong>Visual Example:</strong> Imagine painting small corrections over a face while keeping pores and skin details intact.</div>
-        </div>
-        <div class="note-section" id="eyes" data-reading="eyes">
-          <div class="note-actions">
-          <button class="note-dl" onclick="downloadSectionPDF('eyes','Teeth and Eye Whitening, Reflection & Correction')">Download PDF</button>
-          <button class="note-mark" data-reading-key="eyes" onclick="markReadingRead('eyes', this)"><span class="nm-circle" aria-hidden="true"></span><span class="nm-label">Mark as Read</span></button>
-          </div>
-          <h3>Teeth and Eye Whitening, Reflection &amp; Correction</h3>
-          <p>Brighten eyes and teeth subtly while maintaining realism.</p>
-          <ol class="note-steps">
-            <li>Dodge Tool 10–15% exposure for brightening.</li>
-            <li>Add reflections with Overlay layers.</li>
-            <li>Liquify Tool for small alignment fixes.</li>
-          </ol>
-          <div class="note-tool"><strong>Liquify Tool:</strong> Gentle reshaping like soft clay.</div>
-          <div class="note-tip"><strong>Tip:</strong> Keep whitening subtle to avoid a fake look.</div>
-          <div class="note-visual"><strong>Visual Example:</strong> Visualize adding a soft highlight to the eyes like a sunbeam, without changing natural color.</div>
-        </div>
-        <div class="note-section" id="mockup" data-reading="mockup">
-          <div class="note-actions">
-          <button class="note-dl" onclick="downloadSectionPDF('mockup','Posture Correction & Dress Mockups')">Download PDF</button>
-          <button class="note-mark" data-reading-key="mockup" onclick="markReadingRead('mockup', this)"><span class="nm-circle" aria-hidden="true"></span><span class="nm-label">Mark as Read</span></button>
-          </div>
-          <h3>Posture Correction &amp; Dress Mockups</h3>
-          <p>Adjust posture and garments for realistic presentation using Smart Objects.</p>
-          <ol class="note-steps">
-            <li>Puppet Warp for subtle posture corrections.</li>
-            <li>Convert garments to Smart Objects.</li>
-            <li>Warp Transform for folds and fabric flow.</li>
-            <li>Adjust shadows and highlights for realism.</li>
-          </ol>
-          <div class="note-tool"><strong>Puppet Warp:</strong> Controlled string movement like a puppet.</div>
-          <div class="note-tip"><strong>Tip:</strong> Make small incremental adjustments to avoid unnatural distortion.</div>
-          <div class="note-visual"><strong>Visual Example:</strong> Picture moving an arm slightly, like bending a paper doll, and the clothes following naturally with realistic folds.</div>
-        </div>
-        <div class="note-section" id="reuse" data-reading="reuse">
-          <div class="note-actions">
-          <button class="note-dl" onclick="downloadSectionPDF('reuse','Tool Reuse & Project Application')">Download PDF</button>
-          <button class="note-mark" data-reading-key="reuse" onclick="markReadingRead('reuse', this)"><span class="nm-circle" aria-hidden="true"></span><span class="nm-label">Mark as Read</span></button>
-          </div>
-          <h3>Tool Reuse &amp; Project Application</h3>
-          <p>Skills compound — mastering one tool allows multiple creative applications.</p>
-          <ul>
-            <li><strong>Healing Brush:</strong> Polishing portraits &amp; products.</li>
-            <li><strong>Pen Tool:</strong> Clean logos &amp; scalable shapes.</li>
-            <li><strong>Liquify:</strong> Fashion edits &amp; symmetry correction.</li>
-            <li><strong>Smart Objects:</strong> Reusable templates, non-destructive scaling.</li>
-          </ul>
-          <div class="note-tip"><strong>Tip:</strong> Always name layers &amp; groups. Reusable workflows depend on organization.</div>
-          <div class="note-visual"><strong>Visual Example:</strong> Imagine a toolbox where each tool can be picked and reused in multiple projects — nothing is wasted, everything is reusable.</div>
-        </div>
-      </section>
+      <p style="margin-top:14px;"><strong>2. Exporting rendered output files</strong></p>
+      <div class="note-tool"><strong>PNG</strong> — lossless compression with transparency support.<br>
+      <strong>Photoshop version:</strong> Photoshop 5.5 (1999), via "Save for Web".<br>
+      <strong>How it worked before &amp; why:</strong> Web designers relied on GIF for transparent graphics, limited to 256 colors. PNG added 24-bit full color with smooth alpha-channel transparency and no quality loss.</div>
+      <div class="note-tool"><strong>JPG / JPEG</strong> — lossy compression for small file sizes; no transparency.<br>
+      <strong>Photoshop version:</strong> Photoshop 2.5 (1992).<br>
+      <strong>How it worked before &amp; why:</strong> Uncompressed raster files (TIFF, BMP) were massive and hard to store or transfer over early networks. JPEG compression drastically shrank photo file sizes.</div>
+      <div class="note-tool"><strong>SVG</strong> — scalable vector format.<br>
+      <strong>Photoshop version:</strong> Photoshop CC 2015.<br>
+      <strong>How it worked before &amp; why:</strong> Raster graphics pixelate when enlarged, so designers had to hop over to a vector app like Illustrator. SVG export brought resolution-independent output directly into a photo editor for responsive web design.</div>
+      <div class="note-tool"><strong>PDF</strong> — document and print format.<br>
+      <strong>Photoshop version:</strong> Photoshop 6.0 (2000).<br>
+      <strong>How it worked before &amp; why:</strong> Sending artwork to commercial printers meant manually placing exported images into desktop-publishing software like QuarkXPress or PageMaker. Direct PDF export delivers print-ready files with embedded fonts, vectors, and color profiles from the image editor itself.</div>
+      <div class="note-tool"><strong>GIF</strong> — frame animations and limited-palette images.<br>
+      <strong>Photoshop version:</strong> Photoshop 5.5 (1999).<br>
+      <strong>How it worked before &amp; why:</strong> Early editors targeted static print or display images only. GIF export arrived during the dot-com era so designers could build light web banners and animations.</div>
+
+      <div class="vocab-title" style="margin-top:18px;">Part 3 · Understanding Layers — The Glass Sheet Analogy</div>
+      <div class="note-visual"><strong>Think of layers as a vertical stack of transparent sheets of glass resting directly over one another.</strong>
+      <ul style="margin-top:8px;">
+        <li><strong>Transparency:</strong> an empty layer is a clean, transparent pane — you see straight through to the panes below.</li>
+        <li><strong>Painting / content:</strong> a red dot painted on the top sheet covers whatever sits behind it; the clear areas around it still show the lower sheets.</li>
+        <li><strong>Stacking order:</strong> the top-most layer in the Layers Panel is the front-most sheet, closest to your eye — the bottom pane is the Background.</li>
+        <li><strong>Isolation:</strong> modifying one sheet leaves the others completely untouched — you can reorder or hide any sheet without altering the rest.</li>
+      </ul></div>
+      <div class="note-tool"><strong>Photoshop version:</strong> Photoshop 3.0 (1994).<br>
+      <strong>How it worked before &amp; why:</strong> Prior to 1994, image editors worked like a single piece of paper — text painted across a photo destroyed the pixels underneath permanently, and fixing a typo meant repainting the background by hand or starting over. Co-founder Thomas Knoll invented layers so elements (text, subjects, backgrounds) could sit independently on top of each other, turning image editing from destructive paint-over work into flexible compositing.</div>
+
+      <div class="vocab-title" style="margin-top:18px;">Part 4 · Destructive vs. Non-Destructive Editing</div>
+      <div style="overflow-x:auto;"><table class="progress-week-table">
+        <thead><tr><th>Feature / Technique</th><th>Destructive Workflow</th><th>Non-Destructive Workflow</th><th>Version &amp; History</th><th>Why it Changed</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Core Layer Architecture</strong></td><td>Editing directly on a single flat image layer.</td><td>Working across isolated, stacked layers.</td><td>Photoshop 3.0 (1994)</td><td>Before: edits overwrote the base data. Layers let elements move or be removed without touching what's around them.</td></tr>
+          <tr><td><strong>Erasing vs. Masking</strong></td><td>Eraser Tool deletes pixel data permanently.</td><td>Layer Mask uses black/white paint to hide or reveal pixels without deleting them.</td><td>Photoshop 4.0 (1996)</td><td>Before: erasing permanently deleted background pixels. Masks let parts of a layer be hidden and unhidden at any point.</td></tr>
+          <tr><td><strong>Color &amp; Tonal Adjustments</strong></td><td>Image → Adjustments overwrites raw pixel values directly.</td><td>Adjustment Layers sit above the image like a tinted glass pane, applying changes dynamically.</td><td>Photoshop 4.0 (1996)</td><td>Before: adjusting contrast or saturation modified raw data permanently. Adjustment layers allow changes any time without degrading the original.</td></tr>
+          <tr><td><strong>Scaling &amp; Transforming</strong></td><td>Raster Scaling: shrinking/enlarging degrades sharpness and adds blur.</td><td>Smart Objects embed the original high-resolution source in a protective container.</td><td>Photoshop CS2 / 9.0 (2005)</td><td>Before: scaling down discarded pixel data; scaling back up stretched what remained, causing blur. Smart Objects preserve full original quality through transforms.</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="vocab-title" style="margin-top:18px;">Part 5 · Pixels and Resolution Explained</div>
+      <ul>
+        <li><strong>Pixel (Picture Element):</strong> the smallest individual square block of colored light that forms a digital raster image.</li>
+        <li><strong>Grid structure:</strong> every raster image sits on a 2D grid where each pixel holds a specific RGB color value.</li>
+        <li><strong>Pixel density &amp; scaling:</strong> zooming in close enough shows the individual colored squares — a state called <strong>pixelation</strong>.</li>
+        <li><strong>Resolution (PPI/DPI):</strong> Pixels Per Inch. Standard web displays use 72 PPI; high-quality printing needs 300 DPI to keep pixels from looking blocky.</li>
+      </ul>
+      <div class="note-tool"><strong>Photoshop version:</strong> Photoshop 1.0 (1990) for the base pixel grid engine, and Photoshop 6.0 (2000) for resolution-independent vector shapes layered over pixel grids.<br>
+      <strong>How it worked before &amp; why:</strong> Early monitors could only render basic monochrome or fixed-resolution low-color images. Photoshop was built to process multi-channel RGB pixel data so desktop computers could edit photography tone-by-tone and pixel-by-pixel — vector layers were later combined with pixel grids in Photoshop 6.0 so smooth vector graphics and pixel-based photography could share one canvas.</div>
+    </div>
+  </div>
+
+  <div class="note-section" id="rastervector" data-reading="rastervector">
+    <div class="note-header">
+      <div class="header-title-group">
+        <i class="fa-solid fa-chevron-down toggle-icon" aria-hidden="true"></i>
+        <h3><i class="fa-solid fa-book-open" aria-hidden="true"></i> Raster vs Vector Graphics</h3>
+      </div>
+      <div class="note-actions">
+        <button class="note-dl" onclick="event.stopPropagation(); downloadSectionPDF('rastervector','Raster vs Vector Graphics')">Download PDF</button>
+        <button class="note-mark" data-reading-key="rastervector" onclick="event.stopPropagation(); markReadingRead('rastervector', this)"><span class="nm-circle" aria-hidden="true"></span><span class="nm-label">Mark as Read</span></button>
+      </div>
+    </div>
+    <div class="note-content">
+      <p>Raster images are pixel-based, perfect for detailed photos. Vector graphics are path-based and scalable without losing quality.</p>
+      <ul><li><strong>Raster:</strong> Photos, textures, paintings.</li><li><strong>Vector:</strong> Logos, icons, illustrations requiring scalability.</li></ul>
+      <ol class="note-steps">
+        <li>Open a raster image, zoom in — notice pixels when enlarged.</li>
+        <li>Draw a shape with the <strong>Pen Tool</strong> — crisp at any zoom.</li>
+        <li>Save raster as JPG/PNG, vector as SVG/AI.</li>
+        <li>Practice: Trace a raster logo into a vector path.</li>
+      </ol>
+      <div class="note-tool"><strong>Pen Tool:</strong> Precise path creation.<br><strong>Analogy:</strong> Tracing a logo on tracing paper for clean outlines.</div>
+      <div class="note-tip"><strong>Pro Tip:</strong> Combine raster &amp; vector: vector logos with raster textures for realism.</div>
+      <div class="note-visual"><strong>Visual Example:</strong> Imagine a photo of a cat (raster) vs a cartoon cat outline (vector). Zoom the photo: pixels appear. Zoom the cartoon: it stays sharp, clean, and scalable.</div>
+    </div>
+  </div>
+
+  <div class="note-section" id="photopea" data-reading="photopea">
+    <div class="note-header">
+      <div class="header-title-group">
+        <i class="fa-solid fa-chevron-down toggle-icon" aria-hidden="true"></i>
+        <h3><i class="fa-solid fa-book-open" aria-hidden="true"></i> Photopea Overview</h3>
+      </div>
+      <div class="note-actions">
+        <button class="note-dl" onclick="event.stopPropagation(); downloadSectionPDF('photopea','Photopea Overview')">Download PDF</button>
+        <button class="note-mark" data-reading-key="photopea" onclick="event.stopPropagation(); markReadingRead('photopea', this)"><span class="nm-circle" aria-hidden="true"></span><span class="nm-label">Mark as Read</span></button>
+      </div>
+    </div>
+    <div class="note-content">
+      <p>Photopea is an online Photoshop alternative supporting layers, masks, smart objects, and adjustments.</p>
+      <ol class="note-steps">
+        <li>Visit <a href="https://www.photopea.com" target="_blank" rel="noopener">photopea.com</a>.</li>
+        <li>Open or drag an image.</li>
+        <li>Use Move, Brush, Clone Stamp, and Adjustment Layers.</li>
+        <li>Save as PSD for future edits or export as PNG/JPG.</li>
+        <li>Practice: Open a Photoshop PSD in Photopea and observe layer compatibility.</li>
+      </ol>
+      <div class="note-tool"><strong>Analogy:</strong> Photopea is a pocket Photoshop — light and ready anywhere.</div>
+      <div class="note-tip"><strong>Tip:</strong> Learn Photopea shortcuts; most match Photoshop for faster workflow.</div>
+      <div class="note-visual"><strong>Visual Example:</strong> Picture carrying a small, foldable art studio in your laptop browser, with all brushes, layers, and panels ready.</div>
+    </div>
+  </div>
+
+  <div class="note-section" id="removing-bg" data-reading="removing-bg">
+    <div class="note-header">
+      <div class="header-title-group">
+        <i class="fa-solid fa-chevron-down toggle-icon" aria-hidden="true"></i>
+        <h3><i class="fa-solid fa-book-open" aria-hidden="true"></i> Removing Backgrounds and Subjects</h3>
+      </div>
+      <div class="note-actions">
+        <button class="note-dl" onclick="event.stopPropagation(); downloadSectionPDF('removing-bg','Removing Backgrounds and Subjects')">Download PDF</button>
+        <button class="note-mark" data-reading-key="removing-bg" onclick="event.stopPropagation(); markReadingRead('removing-bg', this)"><span class="nm-circle" aria-hidden="true"></span><span class="nm-label">Mark as Read</span></button>
+      </div>
+    </div>
+    <div class="note-content">
+      <p>Essential for product design, e-commerce, social media, and composites.</p>
+      <ol class="note-steps">
+        <li>Select the subject using <strong>Quick Selection Tool</strong> or <strong>Select Subject</strong>.</li>
+        <li>Refine edges using <strong>Select and Mask</strong>.</li>
+        <li>Apply <strong>Layer Mask</strong> to hide the background non-destructively.</li>
+        <li>Use <strong>Refine Edge Brush</strong> for hair or intricate details.</li>
+      </ol>
+      <div class="note-tool"><strong>Analogy:</strong> Digital scissors that are reversible.</div>
+      <div class="note-tip"><strong>Tip:</strong> Check edges at 200% zoom for perfection.</div>
+      <div class="note-visual"><strong>Visual Example:</strong> Imagine cutting a portrait out of a magazine but having invisible scissors that allow you to adjust edges after cutting.</div>
+    </div>
+  </div>
+
+  <div class="note-section" id="passport" data-reading="passport">
+    <div class="note-header">
+      <div class="header-title-group">
+        <i class="fa-solid fa-chevron-down toggle-icon" aria-hidden="true"></i>
+        <h3><i class="fa-solid fa-book-open" aria-hidden="true"></i> Passport Size Photo</h3>
+      </div>
+      <div class="note-actions">
+        <button class="note-dl" onclick="event.stopPropagation(); downloadSectionPDF('passport','Passport Photo Editing')">Download PDF</button>
+        <button class="note-mark" data-reading-key="passport" onclick="event.stopPropagation(); markReadingRead('passport', this)"><span class="nm-circle" aria-hidden="true"></span><span class="nm-label">Mark as Read</span></button>
+      </div>
+    </div>
+    <div class="note-content">
+      <p>Precise cropping, clean background, and correct exposure are key.</p>
+      <ol class="note-steps">
+        <li>Crop to 2x2 inches using <strong>Crop Tool</strong>.</li>
+        <li>Adjust background with <strong>Solid Color Fill</strong> or <strong>Brush Tool</strong>.</li>
+        <li>Dodge &amp; Burn to balance skin tone.</li>
+        <li>Save at 300 dpi.</li>
+      </ol>
+      <div class="note-tool"><strong>Analogy:</strong> Trimming a printed photo to fit exactly into a passport window.</div>
+      <div class="note-tip"><strong>Tip:</strong> Use soft brush edges for smooth background transitions.</div>
+      <div class="note-visual"><strong>Visual Example:</strong> Picture a perfectly framed passport headshot on a white canvas, with soft shadows blending into the background.</div>
+    </div>
+  </div>
+
+  <div class="note-section" id="retouch" data-reading="retouch">
+    <div class="note-header">
+      <div class="header-title-group">
+        <i class="fa-solid fa-chevron-down toggle-icon" aria-hidden="true"></i>
+        <h3><i class="fa-solid fa-book-open" aria-hidden="true"></i> Face and Skin Retouching</h3>
+      </div>
+      <div class="note-actions">
+        <button class="note-dl" onclick="event.stopPropagation(); downloadSectionPDF('retouch','Face and Skin Retouching')">Download PDF</button>
+        <button class="note-mark" data-reading-key="retouch" onclick="event.stopPropagation(); markReadingRead('retouch', this)"><span class="nm-circle" aria-hidden="true"></span><span class="nm-label">Mark as Read</span></button>
+      </div>
+    </div>
+    <div class="note-content">
+      <p>Enhance portraits subtly while preserving texture.</p>
+      <ol class="note-steps">
+        <li>Duplicate the original layer.</li>
+        <li>Spot Healing Brush for blemishes.</li>
+        <li>Frequency Separation: separate color &amp; texture for precise edits.</li>
+        <li>Dodge &amp; Burn for highlights and contours.</li>
+      </ol>
+      <div class="note-tool"><strong>Healing Brush:</strong> Digital makeup without destroying skin texture.</div>
+      <div class="note-tip"><strong>Tip:</strong> Zoom at 100–200% to see true texture.</div>
+      <div class="note-visual"><strong>Visual Example:</strong> Imagine painting small corrections over a face while keeping pores and skin details intact.</div>
+    </div>
+  </div>
+
+  <div class="note-section" id="eyes" data-reading="eyes">
+    <div class="note-header">
+      <div class="header-title-group">
+        <i class="fa-solid fa-chevron-down toggle-icon" aria-hidden="true"></i>
+        <h3><i class="fa-solid fa-book-open" aria-hidden="true"></i> Eye &amp; Iris Enhancement</h3>
+      </div>
+      <div class="note-actions">
+        <button class="note-dl" onclick="event.stopPropagation(); downloadSectionPDF('eyes','Eye & Iris Enhancement')">Download PDF</button>
+        <button class="note-mark" data-reading-key="eyes" onclick="event.stopPropagation(); markReadingRead('eyes', this)"><span class="nm-circle" aria-hidden="true"></span><span class="nm-label">Mark as Read</span></button>
+      </div>
+    </div>
+    <div class="note-content">
+      <p>Sharpen irises, adjust catchlights, and balance contrast to draw focus to portrait subjects.</p>
+      <ol class="note-steps">
+        <li>Create an <strong>Unsharp Mask</strong> or High Pass adjustment layer tailored to iris ring boundaries.</li>
+        <li>Use a <strong>Curves Adjustment Layer</strong> with a localized mask to brighten catchlight reflections.</li>
+        <li>Desaturate minor veins in the sclera using targeted <strong>Hue/Saturation</strong> adjustments.</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
       <!-- ========== SCREENCASTS (CINEMATIC THEATER PLAYER) ========== -->
       <section id="screencasts" class="view">
         <div class="view-head"><div><h2>Screencasts</h2></div></div>
@@ -1807,7 +1843,7 @@ function buildLayersPanel(){
     row.setAttribute('aria-label', `Week ${w}: ${weekMeta[w]}, ${pct}% complete`);
     row.innerHTML = `<span class="lp-eye" aria-hidden="true">${pct===100?'●':'○'}</span>
       <span class="lp-thumb"><i style="height:${pct}%"></i></span>
-      <span class="lp-label"><b>Week ${w}</b><small>${weekMeta[w]}</small></span>
+      <span class="lp-label"><b>Week w</b><small>{weekMeta[w]}</small></span>
       <span class="lp-pct">${pct}%</span>`;
     const jump = () => {
       const monthOf = w<=4?'m1':(w<=8?'m2':(w<=12?'m3':'m4'));
@@ -1996,7 +2032,7 @@ function renderQuizBody(questions){
     <div style="margin-bottom:12px;">
       <div style="font-size:13px;font-weight:700;margin-bottom:6px;">${i+1}. ${q.prompt}</div>
       ${q.options.map((opt,oi)=>`<label style="display:block;font-size:13px;margin:4px 0;cursor:pointer;">
-        <input type="radio" name="cqq${i}" value="${oi}" data-correct="${opt.correct?'1':'0'}"> ${opt.text}
+        <input type="radio" name="cqqi"value="{oi}" data-correct="${opt.correct?'1':'0'}"> ${opt.text}
       </label>`).join('')}
     </div>`).join('');
 }
@@ -2322,9 +2358,9 @@ function maybeShowWeekQuiz(week){
     quiz.forEach((q,i)=>{
       const wrap = document.createElement('div');
       wrap.style.marginBottom = '12px';
-      wrap.innerHTML = `<div style="font-size:13px;font-weight:700;margin-bottom:6px;">${i+1}. What does "${q.term}" mean?</div>` +
+      wrap.innerHTML = `<div style="font-size:13px;font-weight:700;margin-bottom:6px;">i+1.Whatdoes"{q.term}" mean?</div>` +
         q.options.map((opt,oi)=>`<label style="display:block;font-size:13px;margin:4px 0;cursor:pointer;">
-          <input type="radio" name="wqq${i}" value="${oi}" data-correct="${opt===q.correct?'1':'0'}"> ${opt}
+          <input type="radio" name="wqqi"value="{oi}" data-correct="${opt===q.correct?'1':'0'}"> ${opt}
         </label>`).join('');
       body.appendChild(wrap);
     });
@@ -2400,7 +2436,7 @@ function updateGrade(){
   const g = computeGrade();
   const letterEl = document.getElementById('lpGradeLetter');
   const detailEl = document.getElementById('lpGradeDetail');
-  if(letterEl){ letterEl.textContent = student ? `${g.letter}  (${g.pct}%)` : '—'; }
+  if(letterEl){ letterEl.textContent = student ? `g.letter ({g.pct}%)` : '—'; }
   if(detailEl){ detailEl.textContent = g.detail; }
   const sbGrade = document.getElementById('sbGrade');
   if(sbGrade) sbGrade.textContent = student ? `${g.letter} · ${g.pct}%` : '—';
@@ -2434,13 +2470,13 @@ function renderProgressView(){
     let badgeClass = 'notstarted', badgeText = 'Not started';
     if(st.pct===100){ badgeClass='done'; badgeText='Complete'; }
     else if(st.pct>0){ badgeClass='partial'; badgeText='In progress'; }
-    const quizText = quiz ? (quiz.total ? `${quiz.score}/${quiz.total} correct` : 'Reflection submitted') : '—';
-    rows += `<tr><td>Week ${w}</td><td>${weekMeta[w]||''}</td><td>${st.done}/${st.total} days</td><td><span class="pw-badge ${badgeClass}">${badgeText}</span></td><td>${quizText}</td></tr>`;
+    const quizText = quiz ? (quiz.total ? `quiz.score/{quiz.total} correct` : 'Reflection submitted') : '—';
+    rows += `<tr><td>Week w</td><td>{weekMeta[w]||''}</td><td>st.done/{st.total} days</td><td><span class="pw-badge badgeClass">{badgeText}</span></td><td>${quizText}</td></tr>`;
   }
   let readingRows = readingPool.map(item=>{
     const isRead = student.readingSeen.includes(item.key);
     const quiz = student.contentQuizzes.reading[item.key];
-    return `<tr><td>${item.title}</td><td><span class="pw-badge ${isRead?'done':'notstarted'}">${isRead?'Read':'Not read'}</span></td><td>${quiz? (quiz.score+'/'+quiz.total) : '—'}</td></tr>`;
+    return `<tr><td>${item.title}</td><td><span class="pw-badge isRead?'done':'notstarted'">{isRead?'Read':'Not read'}</span></td><td>${quiz? (quiz.score+'/'+quiz.total) : '—'}</td></tr>`;
   }).join('');
   let screencastRows = (typeof allScreencasts !== 'undefined' ? allScreencasts : []).map(v=>{
     const watched = typeof theaterIsWatched === 'function' ? theaterIsWatched(v.id) : false;
@@ -2448,7 +2484,7 @@ function renderProgressView(){
     const status = watched ? 'Watched' : (opened ? 'Opened' : 'Not started');
     const badgeClass = watched?'done':(opened?'partial':'notstarted');
     const quiz = student.contentQuizzes.screencasts[v.id];
-    return `<tr><td>${v.label}</td><td><span class="pw-badge ${badgeClass}">${status}</span></td><td>${quiz? (quiz.score+'/'+quiz.total) : '—'}</td></tr>`;
+    return `<tr><td>${v.label}</td><td><span class="pw-badge badgeClass">{status}</span></td><td>${quiz? (quiz.score+'/'+quiz.total) : '—'}</td></tr>`;
   }).join('');
   body.innerHTML = `
     <div class="progress-hero">
@@ -2458,8 +2494,8 @@ function renderProgressView(){
       </div>
     </div>
     <div class="progress-grid">
-      <div class="progress-card" style="--pc-accent:#2f6fed"><h4>Lessons Completed</h4><div class="pc-big">${student.completed.length}/${cards.length}</div><div class="pc-sub">across ${TOTAL_WEEKS} weeks</div></div>
-      <div class="progress-card" style="--pc-accent:#ff7a2d"><h4>Week Quizzes</h4><div class="pc-big">${quizzesTaken}/${TOTAL_WEEKS}</div><div class="pc-sub">completed automatically at week end</div></div>
+      <div class="progress-card" style="--pc-accent:#2f6fed"><h4>Lessons Completed</h4><div class="pc-big">student.completed.length/{cards.length}</div><div class="pc-sub">across ${TOTAL_WEEKS} weeks</div></div>
+      <div class="progress-card" style="--pc-accent:#ff7a2d"><h4>Week Quizzes</h4><div class="pc-big">quizzesTaken/{TOTAL_WEEKS}</div><div class="pc-sub">completed automatically at week end</div></div>
       <div class="progress-card" style="--pc-accent:#8b5cf6"><h4>Reading Opened</h4><div class="pc-big">${student.readingSeen.length}/11</div><div class="pc-sub">Read Me sections viewed</div></div>
       <div class="progress-card" style="--pc-accent:#ff6a2c"><h4>Screencasts Watched</h4><div class="pc-big">${videosConfirmed}/23</div><div class="pc-sub">fully watched</div></div>
       <div class="progress-card" style="--pc-accent:#ef476f"><h4>Practice Files Opened</h4><div class="pc-big">${student.seenPractice.length}/43</div><div class="pc-sub">exercise files previewed</div></div>
@@ -2502,19 +2538,19 @@ function renderAssessmentView(){
   const pool = typeof screencastQuizPool !== 'undefined' ? screencastQuizPool : [];
   const readingItems = readingPool.map(item=>{
     const quiz = student.contentQuizzes.reading[item.key];
-    const statusText = quiz ? `${quiz.score}/${quiz.total}` : 'Not taken';
+    const statusText = quiz ? `quiz.score/{quiz.total}` : 'Not taken';
     const btn = quiz
       ? `<button type="button" class="assess-btn" disabled>Completed</button>`
       : `<button type="button" class="assess-btn" onclick="assessmentStart('reading','${item.key}')">Start</button>`;
-    return `<div class="assess-row"><div class="assess-row-main"><b>${item.title}</b><span class="assess-status ${quiz?'done':''}">${statusText}</span></div>${btn}</div>`;
+    return `<div class="assess-row"><div class="assess-row-main"><b>${item.title}</b><span class="assess-status quiz?'done':''">{statusText}</span></div>${btn}</div>`;
   }).join('') || '<p style="font-size:13px;color:var(--muted);">No Read Me sections available yet.</p>';
   const videoItems = pool.map(item=>{
     const quiz = student.contentQuizzes.screencasts[item.key];
-    const statusText = quiz ? `${quiz.score}/${quiz.total}` : 'Not taken';
+    const statusText = quiz ? `quiz.score/{quiz.total}` : 'Not taken';
     const btn = quiz
       ? `<button type="button" class="assess-btn" disabled>Completed</button>`
       : `<button type="button" class="assess-btn" onclick="assessmentStart('video','${item.key}')">Start</button>`;
-    return `<div class="assess-row"><div class="assess-row-main"><b>${item.title}</b><span class="assess-status ${quiz?'done':''}">${statusText}</span></div>${btn}</div>`;
+    return `<div class="assess-row"><div class="assess-row-main"><b>${item.title}</b><span class="assess-status quiz?'done':''">{statusText}</span></div>${btn}</div>`;
   }).join('') || '<p style="font-size:13px;color:var(--muted);">No screencasts available yet.</p>';
   const readingDone = Object.keys(student.contentQuizzes.reading).length;
   const videoDone = Object.keys(student.contentQuizzes.screencasts).length;
@@ -2522,18 +2558,18 @@ function renderAssessmentView(){
   const videoPct = pool.length ? Math.round((videoDone/pool.length)*100) : 0;
   body.innerHTML = `
     <div class="assess-summary-row">
-      <div class="progress-card" style="--pc-accent:#8b5cf6;flex:1;min-width:200px;"><h4>Read Me Assessments</h4><div class="pc-big">${readingDone}/${readingPool.length}</div><div class="pc-sub">completed</div></div>
-      <div class="progress-card" style="--pc-accent:#ff6a2c;flex:1;min-width:200px;"><h4>Screencast Assessments</h4><div class="pc-big">${videoDone}/${pool.length}</div><div class="pc-sub">completed</div></div>
+      <div class="progress-card" style="--pc-accent:#8b5cf6;flex:1;min-width:200px;"><h4>Read Me Assessments</h4><div class="pc-big">readingDone/{readingPool.length}</div><div class="pc-sub">completed</div></div>
+      <div class="progress-card" style="--pc-accent:#ff6a2c;flex:1;min-width:200px;"><h4>Screencast Assessments</h4><div class="pc-big">videoDone/{pool.length}</div><div class="pc-sub">completed</div></div>
     </div>
     <div class="note-section" id="assess-reading">
       <h3>Read Me Notes Assessment</h3>
-      <div class="assess-progress-row"><span>${readingDone} of ${readingPool.length} completed</span><span style="color:var(--c-notes);">${readingPct}%</span></div>
+      <div class="assess-progress-row"><span>${readingDone} of readingPool.lengthcompleted</span><spanstyle="color:var(--c-notes);">{readingPct}%</span></div>
       <div class="assess-progress-bar"><i style="background:linear-gradient(90deg,#8b5cf6,#b794f4);width:${readingPct}%;"></i></div>
       <div>${readingItems}</div>
     </div>
     <div class="note-section" id="assess-video">
       <h3>Screencast Assessment</h3>
-      <div class="assess-progress-row"><span>${videoDone} of ${pool.length} completed</span><span style="color:var(--c-screen);">${videoPct}%</span></div>
+      <div class="assess-progress-row"><span>${videoDone} of pool.lengthcompleted</span><spanstyle="color:var(--c-screen);">{videoPct}%</span></div>
       <div class="assess-progress-bar"><i style="background:linear-gradient(90deg,#ff6a2c,#ffb347);width:${videoPct}%;"></i></div>
       <div>${videoItems}</div>
     </div>`;
@@ -2543,9 +2579,9 @@ function renderAssessmentView(){
 function buildReportBody(trigger){
   const g = computeGrade();
   const lines = [];
-  lines.push(`Progress report for ${student.name} (${student.email})`);
+  lines.push(`Progress report for student.name({student.email})`);
   if(trigger) lines.push(`Trigger: ${trigger}`);
-  lines.push(`Overall grade: ${g.letter} (${g.pct}%)`);
+  lines.push(`Overall grade: g.letter({g.pct}%)`);
   lines.push(`Lessons completed: ${student.completed.length} of ${cards.length}`);
   lines.push('');
   lines.push('Week-end quizzes:');
@@ -2596,9 +2632,9 @@ function submitReportSilently(trigger){
       .catch(()=>{ /* no-cors means we can't read the response either way; nothing more to do */ });
   } else {
     // Fallback only — remove once GOOGLE_FORM_ACTION_URL / GOOGLE_FORM_ENTRY_ID are set above.
-    const subject = encodeURIComponent(`Progress Report — ${student.name} (${student.email})`);
+    const subject = encodeURIComponent(`Progress Report — student.name({student.email})`);
     const body = encodeURIComponent(reportText);
-    window.location.href = `mailto:${REPORT_EMAIL}?subject=${subject}&body=${body}`;
+    window.location.href = `mailto:REPORTEMAIL?subject={subject}&body=${body}`;
   }
 }
 document.getElementById('lpReportBtn').addEventListener('click', ()=>{
@@ -2620,7 +2656,7 @@ function checkBiweeklyReport(){
     const dueDate = new Date(COURSE_START_DATE.getTime() + periodEndsAfterWeek*7*86400000);
     if(now >= dueDate && !student.biweeklySent[p]){
       const weekLo = p*2-1, weekHi = periodEndsAfterWeek;
-      submitReportSilently(`Biweekly report — Weeks ${weekLo}-${weekHi}`);
+      submitReportSilently(`Biweekly report — Weeks weekLo-{weekHi}`);
       student.biweeklySent[p] = new Date().toISOString();
       saveStudentRecord(student);
     }
@@ -2650,7 +2686,7 @@ document.querySelectorAll('.ideaUpload').forEach(inp=>{
       const url=URL.createObjectURL(file);
       const box=document.createElement('div');
       box.className='thumb';
-      box.innerHTML=`<img src="${url}" alt="${file.name}" style="width:100%;height:100%;object-fit:cover">`;
+      box.innerHTML=`<img src="url"alt="{file.name}" style="width:100%;height:100%;object-fit:cover">`;
       parent.appendChild(box);
     });
   });
@@ -2700,7 +2736,7 @@ async function gjGeneratePDF(data){
   doc.setFontSize(16); doc.text(`1.1 Symbolic Animal: ${data.animal}`,50,y); y+=20;
   doc.text(`1.2 Members:`,50,y); y+=18;
   doc.setFontSize(14);
-  data.members.forEach(m=>{ doc.text(`- ${m.name} (${m.role||'member'})`,70,y); y+=16; });
+  data.members.forEach(m=>{ doc.text(`- m.name({m.role||'member'})`,70,y); y+=16; });
   for(const [i,idea] of data.ideas.entries()){
     y+=10;
     if(y>pageHeight-250){ doc.addPage(); drawBackground(); y=40; }
@@ -2928,7 +2964,7 @@ function epMakeList(){
     const item = document.createElement('button');
     item.type = 'button';
     item.className = 'ep-item';
-    item.innerHTML = `<span class="ep-swatch" style="background:${el.color}"></span><span><strong>${el.name}</strong> — ${el.title}</span>`;
+    item.innerHTML = `<span class="ep-swatch" style="background:el.color"></span><span><strong>{el.name}</strong> — ${el.title}</span>`;
     item.onclick = () => epSelectElement(el.id);
     epList.appendChild(item);
   });
@@ -3249,7 +3285,7 @@ function theaterRenderSide(){
   theaterUpdateProgressSummary();
   const list = theaterFilteredList();
   const headEl = document.getElementById('theaterSideHead');
-  if(headEl) headEl.textContent = theaterFilterMode==='all' ? `Up next · ${allScreencasts.length} recordings` : `${list.length} ${theaterFilterMode} recording${list.length===1?'':'s'}`;
+  if(headEl) headEl.textContent = theaterFilterMode==='all' ? `Up next · allScreencasts.lengthrecordings`:`{list.length} theaterFilterModerecording{list.length===1?'':'s'}`;
   side.innerHTML = '';
   if(!list.length){
     side.innerHTML = '<div class="theater-empty">No recordings match your search or filter.</div>';
@@ -3414,4 +3450,5 @@ renderProgressView();
 initAuth();
 </script>
 </body>
-</html>
+</html>]\
+
