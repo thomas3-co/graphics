@@ -243,6 +243,24 @@ button{font-family:inherit;}
   .note-section h3{padding-right:0;margin-bottom:70px;}
   .note-actions{position:static;flex-direction:row;margin-top:-56px;margin-bottom:14px;}
 }
+/* ===== NOTE ACCORDION / SCROLL-MINIMIZE ===== */
+.note-h3-clickable{cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:10px;user-select:none;}
+.note-toggle{background:transparent;border:none;color:var(--c-notes);font-size:16px;cursor:pointer;flex-shrink:0;transition:transform .25s ease;line-height:1;padding:2px 6px;}
+.note-section.collapsed .note-toggle{transform:rotate(-90deg);}
+.note-body{overflow:hidden;max-height:8000px;opacity:1;transition:max-height .4s ease, opacity .3s ease;}
+.note-section.collapsed .note-body{max-height:0;opacity:0;pointer-events:none;}
+.note-section{scroll-margin-top:80px;}
+.note-section.collapsed{padding-bottom:20px;}
+/* ===== ASSESSMENT PAGE ===== */
+.assess-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--line);flex-wrap:wrap;}
+.assess-row:last-child{border-bottom:none;}
+.assess-row-main{display:flex;flex-direction:column;gap:4px;}
+.assess-row-main b{font-size:13.5px;}
+.assess-status{font-size:11.5px;font-weight:700;color:var(--muted);}
+.assess-status.done{color:#1a8a52;}
+.assess-btn{background:var(--c-notes);color:#fff;border:none;border-radius:9px;padding:7px 14px;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap;flex-shrink:0;}
+.assess-btn:hover{opacity:.88;}
+.assess-summary-row{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:6px;}
 /* ===== SCREENCASTS / PRACTICE ===== */
 .media-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px;margin-top:18px;}
 .media-icon{width:38px;height:38px;border-radius:10px;background:var(--card-accent,var(--c-screen));color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;}
@@ -484,6 +502,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
       <button class="tab" data-tab="screencasts" role="tab" aria-selected="false">Screencasts</button>
       <button class="tab" data-tab="practice" role="tab" aria-selected="false">Practice Files</button>
       <button class="tab" data-tab="materials" role="tab" aria-selected="false">Additional Materials</button>
+      <button class="tab" data-tab="assessment" role="tab" aria-selected="false">Assessment</button>
     </nav>
     <button class="progress-nav-btn" id="progressNavBtn" type="button">My Progress</button>
     <div class="student-badge" id="studentBadge" style="display:none;">
@@ -536,6 +555,10 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
           <div class="home-card" style="--accent:#5b6270" onclick="goTab('materials')" role="button" tabindex="0" onkeydown="if(event.key==='Enter')goTab('materials')">
             <h4>Additional Materials</h4>
             <p>23 extra resources from your instructor, previewed right inside the card.</p>
+          </div>
+          <div class="home-card" style="--accent:#06b6d4" onclick="goTab('assessment')" role="button" tabindex="0" onkeydown="if(event.key==='Enter')goTab('assessment')">
+            <h4>Assessment</h4>
+            <p>Quick checks generated from the Read Me notes and screencast descriptions.</p>
           </div>
           <div class="home-card" style="--accent:#2f6fed" onclick="goTab('progress')" role="button" tabindex="0" onkeydown="if(event.key==='Enter')goTab('progress')">
             <h4>My Progress</h4>
@@ -1283,7 +1306,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
         <div class="view-head">
           <div>
             <h2>Read Me — Detailed Notes</h2>
-            <p>Step-by-step written lessons with tools, tips, and visual analogies. Each section can be downloaded on its own as a PDF. Opening a section counts toward your weekly reading check.</p>
+            <p>Step-by-step written lessons with tools, tips, and visual analogies. Each section can be downloaded on its own as a PDF. Click a section's title to collapse or expand it — sections you scroll past will minimize automatically. Opening a section counts toward your weekly reading check.</p>
           </div>
         </div>
         <div class="note-section" id="new-project-menu" data-reading="new-project-menu">
@@ -1654,6 +1677,12 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
         <p>Extra readings, references and files from your instructor — tap a thumbnail to preview right inside the card, or open it in Google Drive.</p></div></div>
         <div class="media-grid" id="materialsGrid"></div>
       </section>
+      <!-- ========== ASSESSMENT ========== -->
+      <section id="assessment" class="view">
+        <div class="view-head"><div><h2>Assessment</h2>
+        <p>Questions generated from the Read Me notes and the screencast descriptions, organized by section. Take or retake any check anytime — scores feed into My Progress.</p></div></div>
+        <div id="assessmentBody"></div>
+      </section>
       <!-- ========== MY PROGRESS ========== -->
       <section id="progress" class="view">
         <div class="view-head"><div><h2>My Progress</h2>
@@ -1697,6 +1726,8 @@ function goTab(name){
   // Leaving Screencasts for another tab counts as "done with this recording"
   // if they'd watched a meaningful chunk of it — see theaterClearWatchTracking.
   if(leavingScreencasts && typeof theaterClearWatchTracking === 'function') theaterClearWatchTracking(true);
+  if(name==='assessment' && typeof renderAssessmentView === 'function') renderAssessmentView();
+  if(name==='progress' && typeof renderProgressView === 'function') renderProgressView();
 }
 document.getElementById('mainTabs').addEventListener('click', e=>{
   const btn = e.target.closest('.tab');
@@ -1828,20 +1859,62 @@ document.getElementById('lpToggle').addEventListener('click', function(){
   const collapsed = panel.classList.toggle('collapsed');
   this.setAttribute('aria-expanded', collapsed ? 'false':'true');
 });
-/* ================= NOTES: DOWNLOAD SECTION AS PDF + READING TRACKING ================= */
-function downloadSectionPDF(sectionId, topic){
-  const section = document.getElementById(sectionId);
-  const printWindow = window.open('', '', 'width=800,height=900');
-  if(!printWindow){ alert('Your browser blocked the print window. Please allow pop-ups for this site and try again.'); return; }
-  const esc = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-  printWindow.document.write(`<!DOCTYPE html><html><head><title>${esc(topic)} - Class of 2028</title><style>body{font-family:Poppins,sans-serif;margin:40px;line-height:1.6;}h1{color:#1e3a8a;}footer{text-align:center;font-size:0.8rem;opacity:0.6;} .watermark{position:fixed;bottom:20px;right:20px;opacity:0.2;font-size:2rem;color:#1e3a8a;}</style></head><body>`);
-  printWindow.document.write(`<h1>${esc(topic)}</h1>`);
-  printWindow.document.write(section.innerHTML);
-  printWindow.document.write('<div class="watermark">Class of 2028</div><footer>Graphic Design &amp; Photoshop</footer></body></html>');
-  printWindow.document.close();
-  printWindow.focus();
-  printWindow.print();
+/* ================= NOTES: ACCORDION + SCROLL-MINIMIZE ================= */
+/* Each .note-section keeps its h3 + .note-actions visible at all times;
+   everything else gets wrapped into a .note-body div at runtime so it can
+   collapse. Clicking the title toggles it manually, and an
+   IntersectionObserver auto-collapses a section once you've scrolled past
+   it (and re-expands it if you scroll back up to it) so long sections
+   don't clutter the page as you move down through Read Me. */
+function initNoteAccordion(root){
+  const scope = root || document;
+  scope.querySelectorAll('.note-section').forEach(section=>{
+    if(section.querySelector('.note-body')) return; // already set up
+    const h3 = section.querySelector('h3');
+    if(!h3) return;
+    const body = document.createElement('div');
+    body.className = 'note-body';
+    let node = h3.nextSibling;
+    while(node){
+      const next = node.nextSibling;
+      body.appendChild(node);
+      node = next;
+    }
+    section.appendChild(body);
+    const toggle = document.createElement('button');
+    toggle.type = 'button';
+    toggle.className = 'note-toggle';
+    toggle.setAttribute('aria-label','Expand or collapse this section');
+    toggle.setAttribute('aria-expanded','true');
+    toggle.innerHTML = '▾';
+    h3.classList.add('note-h3-clickable');
+    h3.appendChild(toggle);
+    const doToggle = ()=>{
+      const collapsed = section.classList.toggle('collapsed');
+      toggle.setAttribute('aria-expanded', collapsed?'false':'true');
+    };
+    h3.addEventListener('click', doToggle);
+    if(noteScrollObserver) noteScrollObserver.observe(section);
+  });
 }
+let noteScrollObserver = null;
+if('IntersectionObserver' in window){
+  noteScrollObserver = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      const section = entry.target;
+      const toggle = section.querySelector('.note-toggle');
+      if(entry.isIntersecting){
+        section.classList.remove('collapsed');
+        if(toggle) toggle.setAttribute('aria-expanded','true');
+      } else if(entry.boundingClientRect.top < 0){
+        // scrolled UP and out of view (past it) -> minimize it
+        section.classList.add('collapsed');
+        if(toggle) toggle.setAttribute('aria-expanded','false');
+      }
+    });
+  }, { threshold: 0, rootMargin: '-90px 0px -55% 0px' });
+}
+initNoteAccordion();
 /* Reading sections are marked read explicitly via the "Mark as Read" button
    on each section — the same explicit-action pattern as pressing Play on a
    screencast, rather than a passive "was this on screen for 2 seconds"
@@ -1906,6 +1979,15 @@ const readingPool = Array.from(document.querySelectorAll('.note-section[data-rea
 }));
 let cqPendingType = null; // 'video' | 'reading'
 let cqPendingKey = null;
+function renderQuizBody(questions){
+  return questions.map((q,i)=>`
+    <div style="margin-bottom:12px;">
+      <div style="font-size:13px;font-weight:700;margin-bottom:6px;">${i+1}. ${q.prompt}</div>
+      ${q.options.map((opt,oi)=>`<label style="display:block;font-size:13px;margin:4px 0;cursor:pointer;">
+        <input type="radio" name="cqq${i}" value="${oi}" data-correct="${opt.correct?'1':'0'}"> ${opt.text}
+      </label>`).join('')}
+    </div>`).join('');
+}
 function maybeShowContentQuiz(type, key, pool, headingText){
   if(!student) return;
   const bucket = type === 'video' ? 'screencasts' : 'reading';
@@ -1917,14 +1999,26 @@ function maybeShowContentQuiz(type, key, pool, headingText){
   cqPendingKey = key;
   document.getElementById('cqTag').textContent = type==='video' ? 'Screencast Check' : 'Reading Check';
   document.getElementById('cqHeading').textContent = headingText;
-  const body = document.getElementById('cqQuizBody');
-  body.innerHTML = questions.map((q,i)=>`
-    <div style="margin-bottom:12px;">
-      <div style="font-size:13px;font-weight:700;margin-bottom:6px;">${i+1}. ${q.prompt}</div>
-      ${q.options.map((opt,oi)=>`<label style="display:block;font-size:13px;margin:4px 0;cursor:pointer;">
-        <input type="radio" name="cqq${i}" value="${oi}" data-correct="${opt.correct?'1':'0'}"> ${opt.text}
-      </label>`).join('')}
-    </div>`).join('');
+  document.getElementById('cqQuizBody').innerHTML = renderQuizBody(questions);
+  document.getElementById('cqModal').classList.add('open');
+  const firstInput = document.querySelector('#cqQuizBody input');
+  if(firstInput) firstInput.focus();
+}
+/* Assessment page: same generated-question mechanic as the pop-up checks,
+   but browsable any time from its own tab, organized into "Read Me Notes"
+   and "Screencasts" groups, with retakes allowed. */
+function assessmentStart(type, key){
+  if(!student){ alert('Sign in first.'); return; }
+  const pool = type === 'video' ? screencastQuizPool : readingPool;
+  const item = pool.find(p=>p.key===key);
+  if(!item) return;
+  const questions = buildItemQuiz(pool, key);
+  if(!questions.length){ alert('Not enough content published yet to build this assessment.'); return; }
+  cqPendingType = type;
+  cqPendingKey = key;
+  document.getElementById('cqTag').textContent = type==='video' ? 'Screencast Assessment' : 'Read Me Assessment';
+  document.getElementById('cqHeading').textContent = `Assessment: ${item.title}`;
+  document.getElementById('cqQuizBody').innerHTML = renderQuizBody(questions);
   document.getElementById('cqModal').classList.add('open');
   const firstInput = document.querySelector('#cqQuizBody input');
   if(firstInput) firstInput.focus();
@@ -1952,6 +2046,7 @@ document.getElementById('cqSubmit').addEventListener('click', ()=>{
   modal.classList.remove('open');
   cqPendingType = null;
   cqPendingKey = null;
+  if(document.getElementById('assessment').classList.contains('active')) renderAssessmentView();
 });
 /* =====================================================================
    SIGN-IN + DEVICE LOCK + WEEK-END QUIZ + GRADING + AUTO PROGRESS REPORT
@@ -2302,8 +2397,10 @@ function renderProgressView(){
   const quizzesTaken = Object.keys(student.weekQuizzes).length;
   const videosConfirmed = Object.keys(student.videoConfirmed).filter(id=>student.videoConfirmed[id]).length;
   const readingQuizEntries = Object.values(student.contentQuizzes.reading);
+  const screencastQuizEntries = Object.values(student.contentQuizzes.screencasts);
   const avgPct = entries => entries.length ? Math.round(entries.reduce((s,q)=> s + (q.total ? (q.score/q.total)*100 : 0), 0) / entries.length) : 0;
   const readingQuizAvg = avgPct(readingQuizEntries);
+  const screencastQuizAvg = avgPct(screencastQuizEntries);
   let rows = '';
   for(let w=1; w<=TOTAL_WEEKS; w++){
     const st = weekStatus(w);
@@ -2314,6 +2411,19 @@ function renderProgressView(){
     const quizText = quiz ? (quiz.total ? `${quiz.score}/${quiz.total} correct` : 'Reflection submitted') : '—';
     rows += `<tr><td>Week ${w}</td><td>${weekMeta[w]||''}</td><td>${st.done}/${st.total} days</td><td><span class="pw-badge ${badgeClass}">${badgeText}</span></td><td>${quizText}</td></tr>`;
   }
+  let readingRows = readingPool.map(item=>{
+    const isRead = student.readingSeen.includes(item.key);
+    const quiz = student.contentQuizzes.reading[item.key];
+    return `<tr><td>${item.title}</td><td><span class="pw-badge ${isRead?'done':'notstarted'}">${isRead?'Read':'Not read'}</span></td><td>${quiz? (quiz.score+'/'+quiz.total) : '—'}</td></tr>`;
+  }).join('');
+  let screencastRows = (typeof allScreencasts !== 'undefined' ? allScreencasts : []).map(v=>{
+    const watched = typeof theaterIsWatched === 'function' ? theaterIsWatched(v.id) : false;
+    const opened = typeof theaterIsOpened === 'function' ? theaterIsOpened(v.id) : false;
+    const status = watched ? 'Watched' : (opened ? 'Opened' : 'Not started');
+    const badgeClass = watched?'done':(opened?'partial':'notstarted');
+    const quiz = student.contentQuizzes.screencasts[v.id];
+    return `<tr><td>${v.label}</td><td><span class="pw-badge ${badgeClass}">${status}</span></td><td>${quiz? (quiz.score+'/'+quiz.total) : '—'}</td></tr>`;
+  }).join('');
   body.innerHTML = `
     <div class="progress-hero">
       <div class="ph-grade"><b>${g.letter} · ${g.pct}%</b><span>Overall grade</span></div>
@@ -2329,6 +2439,7 @@ function renderProgressView(){
       <div class="progress-card" style="--pc-accent:#ef476f"><h4>Practice Files Opened</h4><div class="pc-big">${student.seenPractice.length}/43</div><div class="pc-sub">exercise files previewed</div></div>
       <div class="progress-card" style="--pc-accent:#5b6270"><h4>Materials Opened</h4><div class="pc-big">${(student.seenMaterials||[]).length}/23</div><div class="pc-sub">additional resources previewed</div></div>
       <div class="progress-card" style="--pc-accent:#8b5cf6"><h4>Reading Checks</h4><div class="pc-big">${readingQuizEntries.length}/11</div><div class="pc-sub">avg score ${readingQuizAvg}%</div></div>
+      <div class="progress-card" style="--pc-accent:#ff6a2c"><h4>Screencast Checks</h4><div class="pc-big">${screencastQuizEntries.length}/23</div><div class="pc-sub">avg score ${screencastQuizAvg}%</div></div>
     </div>
     <div class="note-section" style="margin-top:22px;">
       <h3 style="margin-top:0;">Week-by-week breakdown</h3>
@@ -2337,7 +2448,58 @@ function renderProgressView(){
         <tbody>${rows}</tbody>
       </table></div>
     </div>
+    <div class="note-section">
+      <h3 style="margin-top:0;">Read Me notes — read or not</h3>
+      <div style="overflow-x:auto;"><table class="progress-week-table">
+        <thead><tr><th>Section</th><th>Status</th><th>Check score</th></tr></thead>
+        <tbody>${readingRows}</tbody>
+      </table></div>
+    </div>
+    <div class="note-section">
+      <h3 style="margin-top:0;">Screencasts — watched or not</h3>
+      <div style="overflow-x:auto;"><table class="progress-week-table">
+        <thead><tr><th>Recording</th><th>Status</th><th>Check score</th></tr></thead>
+        <tbody>${screencastRows}</tbody>
+      </table></div>
+    </div>
   `;
+  initNoteAccordion(body);
+}
+/* ---------- ASSESSMENT PAGE ---------- */
+function renderAssessmentView(){
+  const body = document.getElementById('assessmentBody');
+  if(!body) return;
+  if(!student){
+    body.innerHTML = `<div class="progress-signedout"><h3>Sign in to take assessments</h3><p>Assessments are generated automatically from the Read Me notes and screencast descriptions.</p></div>`;
+    return;
+  }
+  const pool = typeof screencastQuizPool !== 'undefined' ? screencastQuizPool : [];
+  const readingItems = readingPool.map(item=>{
+    const quiz = student.contentQuizzes.reading[item.key];
+    const statusText = quiz ? `${quiz.score}/${quiz.total}` : 'Not taken';
+    return `<div class="assess-row"><div class="assess-row-main"><b>${item.title}</b><span class="assess-status ${quiz?'done':''}">${statusText}</span></div><button type="button" class="assess-btn" onclick="assessmentStart('reading','${item.key}')">${quiz?'Retake':'Start'}</button></div>`;
+  }).join('') || '<p style="font-size:13px;color:var(--muted);">No Read Me sections available yet.</p>';
+  const videoItems = pool.map(item=>{
+    const quiz = student.contentQuizzes.screencasts[item.key];
+    const statusText = quiz ? `${quiz.score}/${quiz.total}` : 'Not taken';
+    return `<div class="assess-row"><div class="assess-row-main"><b>${item.title}</b><span class="assess-status ${quiz?'done':''}">${statusText}</span></div><button type="button" class="assess-btn" onclick="assessmentStart('video','${item.key}')">${quiz?'Retake':'Start'}</button></div>`;
+  }).join('') || '<p style="font-size:13px;color:var(--muted);">No screencasts available yet.</p>';
+  const readingDone = Object.keys(student.contentQuizzes.reading).length;
+  const videoDone = Object.keys(student.contentQuizzes.screencasts).length;
+  body.innerHTML = `
+    <div class="assess-summary-row">
+      <div class="progress-card" style="--pc-accent:#8b5cf6;flex:1;min-width:200px;"><h4>Read Me Assessments</h4><div class="pc-big">${readingDone}/${readingPool.length}</div><div class="pc-sub">completed</div></div>
+      <div class="progress-card" style="--pc-accent:#ff6a2c;flex:1;min-width:200px;"><h4>Screencast Assessments</h4><div class="pc-big">${videoDone}/${pool.length}</div><div class="pc-sub">completed</div></div>
+    </div>
+    <div class="note-section" id="assess-reading">
+      <h3>Read Me Notes Assessment</h3>
+      <div>${readingItems}</div>
+    </div>
+    <div class="note-section" id="assess-video">
+      <h3>Screencast Assessment</h3>
+      <div>${videoItems}</div>
+    </div>`;
+  initNoteAccordion(body);
 }
 /* ---------- PROGRESS REPORT → EMAIL (auto-fires on week-quiz submit; also manual button) ---------- */
 function buildReportBody(trigger){
@@ -2368,9 +2530,11 @@ function buildReportBody(trigger){
   const watched = Object.keys(student.videoConfirmed).filter(id=>student.videoConfirmed[id]);
   lines.push(`  ${watched.length} of 23 recordings confirmed`);
   lines.push('');
-  lines.push('Post-reading check-in quizzes (2 questions each, generated from that section\'s title/description):');
+  lines.push('Post-content check-in / assessment quizzes (2 questions each, generated from that item\'s title/description):');
   const rq = Object.entries(student.contentQuizzes.reading);
   lines.push(`  Reading checks: ${rq.length} of 11 — ${rq.map(([k,q])=>`${q.score}/${q.total}`).join(', ')||'none yet'}`);
+  const vq = Object.entries(student.contentQuizzes.screencasts);
+  lines.push(`  Screencast checks: ${vq.length} of 23 — ${vq.map(([k,q])=>`${q.score}/${q.total}`).join(', ')||'none yet'}`);
   lines.push('');
   lines.push('Practice files opened:');
   lines.push(`  ${student.seenPractice.length} files`);
@@ -2875,6 +3039,7 @@ const screencastPlaylist = [
   { id:'1y13t7n5nTN_3oppd_Nx7AJ1Yfd7nSwdE', label:'How to Create Realistic T-Shirt Mockups', desc:'Build custom, fully editable apparel mockups using Smart Objects and Displacement Maps. Learn how to set up reusable template files where graphics instantly conform to garment folds, highlights, and shadow layers with a single click.' }
 ];
 const allScreencasts = screencastPlaylist;
+const screencastQuizPool = allScreencasts.map(v=>({ key:v.id, title:v.label, desc:v.desc }));
 /* Exact runtime for each recording, in seconds — every video in this
    course already has its own slot below, all starting at null. To find a
    recording's real length: open Google Drive, right-click the file →
@@ -3151,6 +3316,8 @@ function theaterMarkWatched(id){
   saveStudentRecord(student);
   updateGrade();
   theaterRenderSide();
+  const meta = allScreencasts.find(v=>v.id===id);
+  maybeShowContentQuiz('video', id, screencastQuizPool, `Nice work watching "${meta ? meta.label : 'this recording'}"! Quick 2-question check:`);
 }
 function theaterPlay(id, label){
   theaterCurrentId = id;
