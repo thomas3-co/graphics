@@ -1688,7 +1688,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
       <!-- ========== ASSESSMENT ========== -->
       <section id="assessment" class="view">
         <div class="view-head"><div><h2>Assessment</h2>
-        <p>Questions generated from the Read Me notes and the screencast descriptions, organized by section. Each check can be taken once — your score is saved right away to My Progress.</p></div></div>
+        <p>Questions from the Read Me notes and the screencast descriptions, organized by section. Each check can be taken once — your score is saved right away to My Progress.</p></div></div>
         <div id="assessmentBody"></div>
       </section>
       <!-- ========== MY PROGRESS ========== -->
@@ -1807,7 +1807,7 @@ function buildLayersPanel(){
     row.setAttribute('aria-label', `Week ${w}: ${weekMeta[w]}, ${pct}% complete`);
     row.innerHTML = `<span class="lp-eye" aria-hidden="true">${pct===100?'●':'○'}</span>
       <span class="lp-thumb"><i style="height:${pct}%"></i></span>
-      <span class="lp-label"><b>Week ${w}</b><small>${weekMeta[w]}</small></span>
+      <span class="lp-label"><b>Week w</b><small>{weekMeta[w]}</small></span>
       <span class="lp-pct">${pct}%</span>`;
     const jump = () => {
       const monthOf = w<=4?'m1':(w<=8?'m2':(w<=12?'m3':'m4'));
@@ -1996,7 +1996,7 @@ function renderQuizBody(questions){
     <div style="margin-bottom:12px;">
       <div style="font-size:13px;font-weight:700;margin-bottom:6px;">${i+1}. ${q.prompt}</div>
       ${q.options.map((opt,oi)=>`<label style="display:block;font-size:13px;margin:4px 0;cursor:pointer;">
-        <input type="radio" name="cqq${i}" value="${oi}" data-correct="${opt.correct?'1':'0'}"> ${opt.text}
+        <input type="radio" name="cqqi"value="{oi}" data-correct="${opt.correct?'1':'0'}"> ${opt.text}
       </label>`).join('')}
     </div>`).join('');
 }
@@ -2322,9 +2322,9 @@ function maybeShowWeekQuiz(week){
     quiz.forEach((q,i)=>{
       const wrap = document.createElement('div');
       wrap.style.marginBottom = '12px';
-      wrap.innerHTML = `<div style="font-size:13px;font-weight:700;margin-bottom:6px;">${i+1}. What does "${q.term}" mean?</div>` +
+      wrap.innerHTML = `<div style="font-size:13px;font-weight:700;margin-bottom:6px;">i+1.Whatdoes"{q.term}" mean?</div>` +
         q.options.map((opt,oi)=>`<label style="display:block;font-size:13px;margin:4px 0;cursor:pointer;">
-          <input type="radio" name="wqq${i}" value="${oi}" data-correct="${opt===q.correct?'1':'0'}"> ${opt}
+          <input type="radio" name="wqqi"value="{oi}" data-correct="${opt===q.correct?'1':'0'}"> ${opt}
         </label>`).join('');
       body.appendChild(wrap);
     });
@@ -2400,7 +2400,7 @@ function updateGrade(){
   const g = computeGrade();
   const letterEl = document.getElementById('lpGradeLetter');
   const detailEl = document.getElementById('lpGradeDetail');
-  if(letterEl){ letterEl.textContent = student ? `${g.letter}  (${g.pct}%)` : '—'; }
+  if(letterEl){ letterEl.textContent = student ? `g.letter ({g.pct}%)` : '—'; }
   if(detailEl){ detailEl.textContent = g.detail; }
   const sbGrade = document.getElementById('sbGrade');
   if(sbGrade) sbGrade.textContent = student ? `${g.letter} · ${g.pct}%` : '—';
@@ -2434,13 +2434,13 @@ function renderProgressView(){
     let badgeClass = 'notstarted', badgeText = 'Not started';
     if(st.pct===100){ badgeClass='done'; badgeText='Complete'; }
     else if(st.pct>0){ badgeClass='partial'; badgeText='In progress'; }
-    const quizText = quiz ? (quiz.total ? `${quiz.score}/${quiz.total} correct` : 'Reflection submitted') : '—';
-    rows += `<tr><td>Week ${w}</td><td>${weekMeta[w]||''}</td><td>${st.done}/${st.total} days</td><td><span class="pw-badge ${badgeClass}">${badgeText}</span></td><td>${quizText}</td></tr>`;
+    const quizText = quiz ? (quiz.total ? `quiz.score/{quiz.total} correct` : 'Reflection submitted') : '—';
+    rows += `<tr><td>Week w</td><td>{weekMeta[w]||''}</td><td>st.done/{st.total} days</td><td><span class="pw-badge badgeClass">{badgeText}</span></td><td>${quizText}</td></tr>`;
   }
   let readingRows = readingPool.map(item=>{
     const isRead = student.readingSeen.includes(item.key);
     const quiz = student.contentQuizzes.reading[item.key];
-    return `<tr><td>${item.title}</td><td><span class="pw-badge ${isRead?'done':'notstarted'}">${isRead?'Read':'Not read'}</span></td><td>${quiz? (quiz.score+'/'+quiz.total) : '—'}</td></tr>`;
+    return `<tr><td>${item.title}</td><td><span class="pw-badge isRead?'done':'notstarted'">{isRead?'Read':'Not read'}</span></td><td>${quiz? (quiz.score+'/'+quiz.total) : '—'}</td></tr>`;
   }).join('');
   let screencastRows = (typeof allScreencasts !== 'undefined' ? allScreencasts : []).map(v=>{
     const watched = typeof theaterIsWatched === 'function' ? theaterIsWatched(v.id) : false;
@@ -2448,7 +2448,7 @@ function renderProgressView(){
     const status = watched ? 'Watched' : (opened ? 'Opened' : 'Not started');
     const badgeClass = watched?'done':(opened?'partial':'notstarted');
     const quiz = student.contentQuizzes.screencasts[v.id];
-    return `<tr><td>${v.label}</td><td><span class="pw-badge ${badgeClass}">${status}</span></td><td>${quiz? (quiz.score+'/'+quiz.total) : '—'}</td></tr>`;
+    return `<tr><td>${v.label}</td><td><span class="pw-badge badgeClass">{status}</span></td><td>${quiz? (quiz.score+'/'+quiz.total) : '—'}</td></tr>`;
   }).join('');
   body.innerHTML = `
     <div class="progress-hero">
@@ -2458,8 +2458,8 @@ function renderProgressView(){
       </div>
     </div>
     <div class="progress-grid">
-      <div class="progress-card" style="--pc-accent:#2f6fed"><h4>Lessons Completed</h4><div class="pc-big">${student.completed.length}/${cards.length}</div><div class="pc-sub">across ${TOTAL_WEEKS} weeks</div></div>
-      <div class="progress-card" style="--pc-accent:#ff7a2d"><h4>Week Quizzes</h4><div class="pc-big">${quizzesTaken}/${TOTAL_WEEKS}</div><div class="pc-sub">completed automatically at week end</div></div>
+      <div class="progress-card" style="--pc-accent:#2f6fed"><h4>Lessons Completed</h4><div class="pc-big">student.completed.length/{cards.length}</div><div class="pc-sub">across ${TOTAL_WEEKS} weeks</div></div>
+      <div class="progress-card" style="--pc-accent:#ff7a2d"><h4>Week Quizzes</h4><div class="pc-big">quizzesTaken/{TOTAL_WEEKS}</div><div class="pc-sub">completed automatically at week end</div></div>
       <div class="progress-card" style="--pc-accent:#8b5cf6"><h4>Reading Opened</h4><div class="pc-big">${student.readingSeen.length}/11</div><div class="pc-sub">Read Me sections viewed</div></div>
       <div class="progress-card" style="--pc-accent:#ff6a2c"><h4>Screencasts Watched</h4><div class="pc-big">${videosConfirmed}/23</div><div class="pc-sub">fully watched</div></div>
       <div class="progress-card" style="--pc-accent:#ef476f"><h4>Practice Files Opened</h4><div class="pc-big">${student.seenPractice.length}/43</div><div class="pc-sub">exercise files previewed</div></div>
@@ -2502,19 +2502,19 @@ function renderAssessmentView(){
   const pool = typeof screencastQuizPool !== 'undefined' ? screencastQuizPool : [];
   const readingItems = readingPool.map(item=>{
     const quiz = student.contentQuizzes.reading[item.key];
-    const statusText = quiz ? `${quiz.score}/${quiz.total}` : 'Not taken';
+    const statusText = quiz ? `quiz.score/{quiz.total}` : 'Not taken';
     const btn = quiz
       ? `<button type="button" class="assess-btn" disabled>Completed</button>`
       : `<button type="button" class="assess-btn" onclick="assessmentStart('reading','${item.key}')">Start</button>`;
-    return `<div class="assess-row"><div class="assess-row-main"><b>${item.title}</b><span class="assess-status ${quiz?'done':''}">${statusText}</span></div>${btn}</div>`;
+    return `<div class="assess-row"><div class="assess-row-main"><b>${item.title}</b><span class="assess-status quiz?'done':''">{statusText}</span></div>${btn}</div>`;
   }).join('') || '<p style="font-size:13px;color:var(--muted);">No Read Me sections available yet.</p>';
   const videoItems = pool.map(item=>{
     const quiz = student.contentQuizzes.screencasts[item.key];
-    const statusText = quiz ? `${quiz.score}/${quiz.total}` : 'Not taken';
+    const statusText = quiz ? `quiz.score/{quiz.total}` : 'Not taken';
     const btn = quiz
       ? `<button type="button" class="assess-btn" disabled>Completed</button>`
       : `<button type="button" class="assess-btn" onclick="assessmentStart('video','${item.key}')">Start</button>`;
-    return `<div class="assess-row"><div class="assess-row-main"><b>${item.title}</b><span class="assess-status ${quiz?'done':''}">${statusText}</span></div>${btn}</div>`;
+    return `<div class="assess-row"><div class="assess-row-main"><b>${item.title}</b><span class="assess-status quiz?'done':''">{statusText}</span></div>${btn}</div>`;
   }).join('') || '<p style="font-size:13px;color:var(--muted);">No screencasts available yet.</p>';
   const readingDone = Object.keys(student.contentQuizzes.reading).length;
   const videoDone = Object.keys(student.contentQuizzes.screencasts).length;
@@ -2522,18 +2522,18 @@ function renderAssessmentView(){
   const videoPct = pool.length ? Math.round((videoDone/pool.length)*100) : 0;
   body.innerHTML = `
     <div class="assess-summary-row">
-      <div class="progress-card" style="--pc-accent:#8b5cf6;flex:1;min-width:200px;"><h4>Read Me Assessments</h4><div class="pc-big">${readingDone}/${readingPool.length}</div><div class="pc-sub">completed</div></div>
-      <div class="progress-card" style="--pc-accent:#ff6a2c;flex:1;min-width:200px;"><h4>Screencast Assessments</h4><div class="pc-big">${videoDone}/${pool.length}</div><div class="pc-sub">completed</div></div>
+      <div class="progress-card" style="--pc-accent:#8b5cf6;flex:1;min-width:200px;"><h4>Read Me Assessments</h4><div class="pc-big">readingDone/{readingPool.length}</div><div class="pc-sub">completed</div></div>
+      <div class="progress-card" style="--pc-accent:#ff6a2c;flex:1;min-width:200px;"><h4>Screencast Assessments</h4><div class="pc-big">videoDone/{pool.length}</div><div class="pc-sub">completed</div></div>
     </div>
     <div class="note-section" id="assess-reading">
       <h3>Read Me Notes Assessment</h3>
-      <div class="assess-progress-row"><span>${readingDone} of ${readingPool.length} completed</span><span style="color:var(--c-notes);">${readingPct}%</span></div>
+      <div class="assess-progress-row"><span>${readingDone} of readingPool.lengthcompleted</span><spanstyle="color:var(--c-notes);">{readingPct}%</span></div>
       <div class="assess-progress-bar"><i style="background:linear-gradient(90deg,#8b5cf6,#b794f4);width:${readingPct}%;"></i></div>
       <div>${readingItems}</div>
     </div>
     <div class="note-section" id="assess-video">
       <h3>Screencast Assessment</h3>
-      <div class="assess-progress-row"><span>${videoDone} of ${pool.length} completed</span><span style="color:var(--c-screen);">${videoPct}%</span></div>
+      <div class="assess-progress-row"><span>${videoDone} of pool.lengthcompleted</span><spanstyle="color:var(--c-screen);">{videoPct}%</span></div>
       <div class="assess-progress-bar"><i style="background:linear-gradient(90deg,#ff6a2c,#ffb347);width:${videoPct}%;"></i></div>
       <div>${videoItems}</div>
     </div>`;
@@ -2543,9 +2543,9 @@ function renderAssessmentView(){
 function buildReportBody(trigger){
   const g = computeGrade();
   const lines = [];
-  lines.push(`Progress report for ${student.name} (${student.email})`);
+  lines.push(`Progress report for student.name({student.email})`);
   if(trigger) lines.push(`Trigger: ${trigger}`);
-  lines.push(`Overall grade: ${g.letter} (${g.pct}%)`);
+  lines.push(`Overall grade: g.letter({g.pct}%)`);
   lines.push(`Lessons completed: ${student.completed.length} of ${cards.length}`);
   lines.push('');
   lines.push('Week-end quizzes:');
@@ -2596,9 +2596,9 @@ function submitReportSilently(trigger){
       .catch(()=>{ /* no-cors means we can't read the response either way; nothing more to do */ });
   } else {
     // Fallback only — remove once GOOGLE_FORM_ACTION_URL / GOOGLE_FORM_ENTRY_ID are set above.
-    const subject = encodeURIComponent(`Progress Report — ${student.name} (${student.email})`);
+    const subject = encodeURIComponent(`Progress Report — student.name({student.email})`);
     const body = encodeURIComponent(reportText);
-    window.location.href = `mailto:${REPORT_EMAIL}?subject=${subject}&body=${body}`;
+    window.location.href = `mailto:REPORTEMAIL?subject={subject}&body=${body}`;
   }
 }
 document.getElementById('lpReportBtn').addEventListener('click', ()=>{
@@ -2620,7 +2620,7 @@ function checkBiweeklyReport(){
     const dueDate = new Date(COURSE_START_DATE.getTime() + periodEndsAfterWeek*7*86400000);
     if(now >= dueDate && !student.biweeklySent[p]){
       const weekLo = p*2-1, weekHi = periodEndsAfterWeek;
-      submitReportSilently(`Biweekly report — Weeks ${weekLo}-${weekHi}`);
+      submitReportSilently(`Biweekly report — Weeks weekLo-{weekHi}`);
       student.biweeklySent[p] = new Date().toISOString();
       saveStudentRecord(student);
     }
@@ -2650,7 +2650,7 @@ document.querySelectorAll('.ideaUpload').forEach(inp=>{
       const url=URL.createObjectURL(file);
       const box=document.createElement('div');
       box.className='thumb';
-      box.innerHTML=`<img src="${url}" alt="${file.name}" style="width:100%;height:100%;object-fit:cover">`;
+      box.innerHTML=`<img src="url"alt="{file.name}" style="width:100%;height:100%;object-fit:cover">`;
       parent.appendChild(box);
     });
   });
@@ -2700,7 +2700,7 @@ async function gjGeneratePDF(data){
   doc.setFontSize(16); doc.text(`1.1 Symbolic Animal: ${data.animal}`,50,y); y+=20;
   doc.text(`1.2 Members:`,50,y); y+=18;
   doc.setFontSize(14);
-  data.members.forEach(m=>{ doc.text(`- ${m.name} (${m.role||'member'})`,70,y); y+=16; });
+  data.members.forEach(m=>{ doc.text(`- m.name({m.role||'member'})`,70,y); y+=16; });
   for(const [i,idea] of data.ideas.entries()){
     y+=10;
     if(y>pageHeight-250){ doc.addPage(); drawBackground(); y=40; }
@@ -2928,7 +2928,7 @@ function epMakeList(){
     const item = document.createElement('button');
     item.type = 'button';
     item.className = 'ep-item';
-    item.innerHTML = `<span class="ep-swatch" style="background:${el.color}"></span><span><strong>${el.name}</strong> — ${el.title}</span>`;
+    item.innerHTML = `<span class="ep-swatch" style="background:el.color"></span><span><strong>{el.name}</strong> — ${el.title}</span>`;
     item.onclick = () => epSelectElement(el.id);
     epList.appendChild(item);
   });
@@ -3249,7 +3249,7 @@ function theaterRenderSide(){
   theaterUpdateProgressSummary();
   const list = theaterFilteredList();
   const headEl = document.getElementById('theaterSideHead');
-  if(headEl) headEl.textContent = theaterFilterMode==='all' ? `Up next · ${allScreencasts.length} recordings` : `${list.length} ${theaterFilterMode} recording${list.length===1?'':'s'}`;
+  if(headEl) headEl.textContent = theaterFilterMode==='all' ? `Up next · allScreencasts.lengthrecordings`:`{list.length} theaterFilterModerecording{list.length===1?'':'s'}`;
   side.innerHTML = '';
   if(!list.length){
     side.innerHTML = '<div class="theater-empty">No recordings match your search or filter.</div>';
@@ -3415,3 +3415,4 @@ initAuth();
 </script>
 </body>
 </html>
+
