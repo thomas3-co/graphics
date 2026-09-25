@@ -223,12 +223,14 @@ button{font-family:inherit;}
 .note-dl:hover{opacity:.88;}
 .note-mark{display:inline-flex;align-items:center;gap:8px;background:#fff;color:var(--ink);border:1.5px solid #d7dbe3;border-radius:999px;padding:6px 14px 6px 6px;font-size:12.5px;font-weight:700;cursor:pointer;transition:.2s;white-space:nowrap;}
 .note-mark:hover{border-color:var(--c-notes);background:#f9f8ff;}
-.note-mark .nm-circle{width:20px;height:20px;border-radius:50%;border:2px solid #c7cbd4;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:.2s;font-size:11px;font-weight:800;color:transparent;}
+.note-mark .nm-circle{width:22px;height:22px;border-radius:50%;border:2px solid #c7cbd4;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:.25s cubic-bezier(.34,1.56,.64,1);font-size:12px;font-weight:800;color:transparent;}
 .note-mark:hover .nm-circle{border-color:var(--c-notes);}
-.note-mark.done{background:#f0faf4;border-color:#1a8a52;color:#1a8a52;cursor:default;}
+.note-mark.done{background:#f0faf4;border-color:#1a8a52;color:#1a8a52;cursor:default;box-shadow:0 0 0 3px rgba(26,138,82,.12);}
 .note-mark.done:hover{background:#f0faf4;}
-.note-mark.done .nm-circle{background:#1a8a52;border-color:#1a8a52;color:#fff;}
-.note-mark.done .nm-circle::after{content:"✓";}
+.note-mark.done .nm-circle{background:#1a8a52;border-color:#1a8a52;color:#fff;transform:scale(1.12);box-shadow:0 2px 8px rgba(26,138,82,.35);}
+.note-mark.done .nm-circle::after{content:"✓";font-size:13px;}
+@keyframes nmPop{0%{transform:scale(.6);}60%{transform:scale(1.25);}100%{transform:scale(1.12);}}
+.note-mark.just-done .nm-circle{animation:nmPop .45s ease;}
 .note-tool,.note-tip,.note-visual{border-left:4px solid var(--c-notes);padding:.9rem 1.1rem;border-radius:10px;margin:1.1rem 0;background:#f5f2ff;font-size:.92rem;line-height:1.55;position:relative;padding-left:2.6rem;}
 .note-tool::before,.note-tip::before,.note-visual::before{position:absolute;left:.9rem;top:.85rem;font-size:1.05rem;}
 .note-tool::before{content:"🛠️";}
@@ -245,8 +247,10 @@ button{font-family:inherit;}
 }
 /* ===== NOTE ACCORDION / SCROLL-MINIMIZE ===== */
 .note-h3-clickable{cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:10px;user-select:none;}
-.note-toggle{background:transparent;border:none;color:var(--c-notes);font-size:16px;cursor:pointer;flex-shrink:0;transition:transform .25s ease;line-height:1;padding:2px 6px;}
-.note-section.collapsed .note-toggle{transform:rotate(-90deg);}
+.note-toggle{background:rgba(139,92,246,.08);border:1px solid rgba(139,92,246,.18);color:var(--c-notes);font-size:14px;cursor:pointer;flex-shrink:0;transition:background .2s ease,box-shadow .2s ease;line-height:1;padding:6px 10px;border-radius:8px;display:inline-flex;align-items:center;gap:5px;}
+.note-toggle:hover{background:rgba(139,92,246,.16);box-shadow:0 2px 8px rgba(139,92,246,.18);}
+.note-toggle .nt-arrow{display:inline-block;transition:transform .25s ease;}
+.note-section.collapsed .note-toggle .nt-arrow{transform:rotate(-90deg);}
 .note-body{overflow:hidden;max-height:8000px;opacity:1;transition:max-height .4s ease, opacity .3s ease;}
 .note-section.collapsed .note-body{max-height:0;opacity:0;pointer-events:none;}
 .note-section{scroll-margin-top:80px;}
@@ -260,7 +264,11 @@ button{font-family:inherit;}
 .assess-status.done{color:#1a8a52;}
 .assess-btn{background:var(--c-notes);color:#fff;border:none;border-radius:9px;padding:7px 14px;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap;flex-shrink:0;}
 .assess-btn:hover{opacity:.88;}
+.assess-btn:disabled{opacity:.5;cursor:default;}
 .assess-summary-row{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:6px;}
+.assess-progress-row{display:flex;justify-content:space-between;font-size:12px;font-weight:700;color:var(--ink);margin-bottom:6px;}
+.assess-progress-bar{height:6px;border-radius:6px;background:#e9ecf2;overflow:hidden;margin-bottom:14px;}
+.assess-progress-bar i{display:block;height:100%;transition:width .4s ease;}
 /* ===== SCREENCASTS / PRACTICE ===== */
 .media-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px;margin-top:18px;}
 .media-icon{width:38px;height:38px;border-radius:10px;background:var(--card-accent,var(--c-screen));color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;}
@@ -1306,7 +1314,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
         <div class="view-head">
           <div>
             <h2>Read Me — Detailed Notes</h2>
-            <p>Step-by-step written lessons with tools, tips, and visual analogies. Each section can be downloaded on its own as a PDF. Click a section's title to collapse or expand it — sections you scroll past will minimize automatically. Opening a section counts toward your weekly reading check.</p>
+            <p>Step-by-step written lessons with tools, tips, and visual analogies. Each section can be downloaded on its own as a PDF. Click a section's title — or the 📖 icon — to expand it and read, or collapse it; sections you scroll past will minimize automatically. Opening a section counts toward your weekly reading check.</p>
           </div>
         </div>
         <div class="note-section" id="new-project-menu" data-reading="new-project-menu">
@@ -1680,7 +1688,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
       <!-- ========== ASSESSMENT ========== -->
       <section id="assessment" class="view">
         <div class="view-head"><div><h2>Assessment</h2>
-        <p>Questions generated from the Read Me notes and the screencast descriptions, organized by section. Take or retake any check anytime — scores feed into My Progress.</p></div></div>
+        <p>Questions generated from the Read Me notes and the screencast descriptions, organized by section. Each check can be taken once — your score is saved right away to My Progress.</p></div></div>
         <div id="assessmentBody"></div>
       </section>
       <!-- ========== MY PROGRESS ========== -->
@@ -1862,10 +1870,11 @@ document.getElementById('lpToggle').addEventListener('click', function(){
 /* ================= NOTES: ACCORDION + SCROLL-MINIMIZE ================= */
 /* Each .note-section keeps its h3 + .note-actions visible at all times;
    everything else gets wrapped into a .note-body div at runtime so it can
-   collapse. Clicking the title toggles it manually, and an
-   IntersectionObserver auto-collapses a section once you've scrolled past
-   it (and re-expands it if you scroll back up to it) so long sections
-   don't clutter the page as you move down through Read Me. */
+   collapse. Clicking the title, or the 📖 icon beside it, toggles it
+   manually, and an IntersectionObserver auto-collapses a section once
+   you've scrolled past it (and re-expands it if you scroll back up to it)
+   so long sections don't clutter the page as you move down through Read
+   Me. */
 function initNoteAccordion(root){
   const scope = root || document;
   scope.querySelectorAll('.note-section').forEach(section=>{
@@ -1884,9 +1893,10 @@ function initNoteAccordion(root){
     const toggle = document.createElement('button');
     toggle.type = 'button';
     toggle.className = 'note-toggle';
-    toggle.setAttribute('aria-label','Expand or collapse this section');
+    toggle.setAttribute('aria-label','Click to expand and read this section, or collapse it');
+    toggle.title = 'Click to read';
     toggle.setAttribute('aria-expanded','true');
-    toggle.innerHTML = '▾';
+    toggle.innerHTML = '<span aria-hidden="true">📖</span><span class="nt-arrow" aria-hidden="true">▾</span>';
     h3.classList.add('note-h3-clickable');
     h3.appendChild(toggle);
     const doToggle = ()=>{
@@ -1931,7 +1941,9 @@ function markReadingRead(key, btnEl){
     const label = btnEl.querySelector('.nm-label');
     if(label) label.textContent = 'Read';
     btnEl.classList.add('done');
+    btnEl.classList.add('just-done');
     btnEl.disabled = true;
+    setTimeout(()=>btnEl.classList.remove('just-done'), 500);
   }
   const readingItem = readingPool.find(p=>p.key===key);
   maybeShowContentQuiz('reading', key, readingPool, `Nice work reading "${readingItem ? readingItem.title : key}"! Quick 2-question check:`);
@@ -2006,9 +2018,16 @@ function maybeShowContentQuiz(type, key, pool, headingText){
 }
 /* Assessment page: same generated-question mechanic as the pop-up checks,
    but browsable any time from its own tab, organized into "Read Me Notes"
-   and "Screencasts" groups, with retakes allowed. */
+   and "Screencasts" groups. Each check can only be taken once — once a
+   score is recorded, it's locked in as "Completed" and feeds My Progress;
+   there is no retake. */
 function assessmentStart(type, key){
   if(!student){ alert('Sign in first.'); return; }
+  const bucket = type === 'video' ? 'screencasts' : 'reading';
+  if(student.contentQuizzes[bucket][key]){
+    alert("This check has already been completed and can't be retaken — your score is already saved to My Progress.");
+    return;
+  }
   const pool = type === 'video' ? screencastQuizPool : readingPool;
   const item = pool.find(p=>p.key===key);
   if(!item) return;
@@ -2040,6 +2059,13 @@ document.getElementById('cqSubmit').addEventListener('click', ()=>{
     if(checked && checked.dataset.correct==='1') score++;
   });
   const bucket = cqPendingType==='video' ? 'screencasts' : 'reading';
+  if(student.contentQuizzes[bucket][cqPendingKey]){
+    // Already recorded (e.g. a duplicate submit) — don't overwrite a locked-in score.
+    modal.classList.remove('open');
+    cqPendingType = null;
+    cqPendingKey = null;
+    return;
+  }
   student.contentQuizzes[bucket][cqPendingKey] = { score, total: names.length, completedAt:new Date().toISOString() };
   saveStudentRecord(student);
   updateGrade();
@@ -2477,15 +2503,23 @@ function renderAssessmentView(){
   const readingItems = readingPool.map(item=>{
     const quiz = student.contentQuizzes.reading[item.key];
     const statusText = quiz ? `${quiz.score}/${quiz.total}` : 'Not taken';
-    return `<div class="assess-row"><div class="assess-row-main"><b>${item.title}</b><span class="assess-status ${quiz?'done':''}">${statusText}</span></div><button type="button" class="assess-btn" onclick="assessmentStart('reading','${item.key}')">${quiz?'Retake':'Start'}</button></div>`;
+    const btn = quiz
+      ? `<button type="button" class="assess-btn" disabled>Completed</button>`
+      : `<button type="button" class="assess-btn" onclick="assessmentStart('reading','${item.key}')">Start</button>`;
+    return `<div class="assess-row"><div class="assess-row-main"><b>${item.title}</b><span class="assess-status ${quiz?'done':''}">${statusText}</span></div>${btn}</div>`;
   }).join('') || '<p style="font-size:13px;color:var(--muted);">No Read Me sections available yet.</p>';
   const videoItems = pool.map(item=>{
     const quiz = student.contentQuizzes.screencasts[item.key];
     const statusText = quiz ? `${quiz.score}/${quiz.total}` : 'Not taken';
-    return `<div class="assess-row"><div class="assess-row-main"><b>${item.title}</b><span class="assess-status ${quiz?'done':''}">${statusText}</span></div><button type="button" class="assess-btn" onclick="assessmentStart('video','${item.key}')">${quiz?'Retake':'Start'}</button></div>`;
+    const btn = quiz
+      ? `<button type="button" class="assess-btn" disabled>Completed</button>`
+      : `<button type="button" class="assess-btn" onclick="assessmentStart('video','${item.key}')">Start</button>`;
+    return `<div class="assess-row"><div class="assess-row-main"><b>${item.title}</b><span class="assess-status ${quiz?'done':''}">${statusText}</span></div>${btn}</div>`;
   }).join('') || '<p style="font-size:13px;color:var(--muted);">No screencasts available yet.</p>';
   const readingDone = Object.keys(student.contentQuizzes.reading).length;
   const videoDone = Object.keys(student.contentQuizzes.screencasts).length;
+  const readingPct = readingPool.length ? Math.round((readingDone/readingPool.length)*100) : 0;
+  const videoPct = pool.length ? Math.round((videoDone/pool.length)*100) : 0;
   body.innerHTML = `
     <div class="assess-summary-row">
       <div class="progress-card" style="--pc-accent:#8b5cf6;flex:1;min-width:200px;"><h4>Read Me Assessments</h4><div class="pc-big">${readingDone}/${readingPool.length}</div><div class="pc-sub">completed</div></div>
@@ -2493,10 +2527,14 @@ function renderAssessmentView(){
     </div>
     <div class="note-section" id="assess-reading">
       <h3>Read Me Notes Assessment</h3>
+      <div class="assess-progress-row"><span>${readingDone} of ${readingPool.length} completed</span><span style="color:var(--c-notes);">${readingPct}%</span></div>
+      <div class="assess-progress-bar"><i style="background:linear-gradient(90deg,#8b5cf6,#b794f4);width:${readingPct}%;"></i></div>
       <div>${readingItems}</div>
     </div>
     <div class="note-section" id="assess-video">
       <h3>Screencast Assessment</h3>
+      <div class="assess-progress-row"><span>${videoDone} of ${pool.length} completed</span><span style="color:var(--c-screen);">${videoPct}%</span></div>
+      <div class="assess-progress-bar"><i style="background:linear-gradient(90deg,#ff6a2c,#ffb347);width:${videoPct}%;"></i></div>
       <div>${videoItems}</div>
     </div>`;
   initNoteAccordion(body);
@@ -2530,7 +2568,7 @@ function buildReportBody(trigger){
   const watched = Object.keys(student.videoConfirmed).filter(id=>student.videoConfirmed[id]);
   lines.push(`  ${watched.length} of 23 recordings confirmed`);
   lines.push('');
-  lines.push('Post-content check-in / assessment quizzes (2 questions each, generated from that item\'s title/description):');
+  lines.push('Post-content check-in / assessment quizzes (2 questions each, generated from that item\'s title/description; each item can only be taken once):');
   const rq = Object.entries(student.contentQuizzes.reading);
   lines.push(`  Reading checks: ${rq.length} of 11 — ${rq.map(([k,q])=>`${q.score}/${q.total}`).join(', ')||'none yet'}`);
   const vq = Object.entries(student.contentQuizzes.screencasts);
@@ -3136,6 +3174,10 @@ let theaterFilterMode = 'all'; // all | watched | unwatched
       correctly for a short recording even before its real duration has
       been entered. Simply switching browser tabs does NOT credit this
       (see theaterPauseForHiddenTab) — that stays a plain pause.
+   Once a recording IS marked watched (either path above), it's added into
+   the overall watch-progress bar/count and is filed under the "Watched"
+   filter chip in the side list — that's the only thing that moves a
+   recording into the watched bucket.
    Honest limit: Google Drive's embedded player is a different origin, so
    this page cannot read real playback position — both of the above are
    dwell-time proxies, not a true playback measurement. */
