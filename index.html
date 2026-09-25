@@ -1,3 +1,6 @@
+
+
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -306,7 +309,7 @@ footer.appfoot .foot-contact a:hover{text-decoration:underline;}
 .media-card .media-thumb iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block;}
 .media-card .media-thumb .thumb-poster{
   position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;
-  background:linear-gradient(135deg,rgba(35,47,88,.25),rgba(107,75,120,.20)),var(--card-accent,var(--c-screen));
+  background:linear-gradient(135deg,rgba(0,0,0,.35),rgba(0,0,0,.15)),var(--card-accent,var(--c-screen));
   background-size:cover;background-position:center;
   color:#fff;cursor:pointer;transition:.2s;border:0;width:100%;
 }
@@ -425,52 +428,6 @@ footer.appfoot .foot-contact a:hover{text-decoration:underline;}
 .wq-box button{border:none;border-radius:10px;padding:10px 16px;font-weight:700;font-size:13px;cursor:pointer;}
 .wq-box .wq-skip{background:transparent;color:var(--muted);}
 .wq-box .wq-submit{background:var(--c-curriculum);color:#fff;}
-/* ===== COMPACT PROGRESS DROPDOWN ===== */
-.layers-panel{
-  transition:width .25s ease,padding .25s ease,transform .25s ease;
-}
-.layers-panel.compact{
-  width:280px;
-  max-height:calc(100vh - 57px);
-}
-.layers-panel.compact #lpRows{
-  display:none;
-}
-.layers-panel.compact .lp-note{
-  display:none;
-}
-.layers-panel.compact .lp-grade{
-  margin-top:10px;
-}
-.lp-note-btn{
-  width:100%;margin-top:8px;padding:9px;border-radius:9px;
-  border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.05);
-  color:#dfe2ea;font-weight:700;font-size:11.5px;cursor:pointer;
-}
-.lp-note-btn:hover{background:rgba(255,255,255,.10);}
-.lp-student-note{
-  margin-top:8px;padding:9px 10px;border-radius:9px;
-  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);
-  color:#cfd4df;font-size:10.5px;line-height:1.45;max-height:120px;overflow:auto;
-}
-.lp-student-note b{color:#fff;display:block;margin-bottom:3px;}
-.report-security-note{
-  margin-top:14px;padding:10px 12px;border-radius:10px;
-  background:#f7f8fb;border:1px solid var(--line);color:var(--muted);font-size:11.5px;line-height:1.5;
-}
-.theater-stage{
-  background:linear-gradient(135deg,#18233f 0%,#263a67 45%,#6b4b78 100%);
-  border:3px solid #7c8cff;
-  box-shadow:0 24px 54px rgba(35,42,78,.28),0 0 22px rgba(124,140,255,.20);
-}
-.theater-stage.is-playing{
-  border-color:#a9b3ff;
-  box-shadow:0 24px 54px rgba(35,42,78,.34),0 0 40px rgba(124,140,255,.30);
-}
-.theater-player{
-  background:linear-gradient(135deg,#edf1ff,#f8f4fb);
-  box-shadow:0 0 0 1px rgba(255,255,255,.28);
-}
 /* ===== PROGRESS REPORT PANEL EXTRAS ===== */
 .lp-grade{margin-top:14px;padding:12px;border-radius:10px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);}
 .lp-grade b{display:block;font-size:1.4rem;font-family:'Poppins',sans-serif;color:#fff;}
@@ -563,7 +520,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
       <span class="sb-name" id="sbName"></span>
       <span class="sb-grade" id="sbGrade">—</span>
     </div>
-    <button class="panel-toggle" id="lpToggle" aria-expanded="false" aria-controls="layersPanel">Layers ▾</button>
+    <button class="panel-toggle" id="lpToggle" aria-expanded="true" aria-controls="layersPanel">Layers ▾</button>
   </header>
   <div class="workspace">
     <main class="canvas" id="mainContent">
@@ -1689,7 +1646,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
             <div class="theater-nav">
               <button type="button" class="tn-btn" id="theaterPrevBtn">◀ Previous</button>
               <span class="tn-index" id="theaterIndex">—</span>
-              <button type="button" class="tn-btn" id="theaterNextBtn">Next → Assessment ▶</button>
+              <button type="button" class="tn-btn" id="theaterNextBtn">Next ▶</button>
             </div>
             <div class="theater-info">
               <div class="ti-avatar" aria-hidden="true">Ps</div>
@@ -1733,7 +1690,8 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
       </section>
       <!-- ========== ASSESSMENT ========== -->
       <section id="assessment" class="view">
-        <div class="view-head"><div><h2>Assessment</h2></div></div>
+        <div class="view-head"><div><h2>Assessment</h2>
+        <p>Questions generated from the Read Me notes and the screencast descriptions, organized by section. Each check can be taken once — your score is saved right away to My Progress.</p></div></div>
         <div id="assessmentBody"></div>
       </section>
       <!-- ========== MY PROGRESS ========== -->
@@ -1743,7 +1701,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
         <div id="progressBody"></div>
       </section>
     </main>
-    <aside class="layers-panel compact" id="layersPanel">
+    <aside class="layers-panel" id="layersPanel">
       <div class="lp-head"><h3>Layers — Progress</h3></div>
       <div class="lp-total" id="lpTotalPct">0%<span> complete</span></div>
       <div class="lp-bar"><i id="lpBar"></i></div>
@@ -1753,9 +1711,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
         <b id="lpGradeLetter">—</b>
         <span id="lpGradeDetail">Sign in to start tracking.</span>
       </div>
-      <button class="lp-report-btn" id="lpReportBtn">▣ Send Me Progress Report (PDF)</button>
-      <button class="lp-note-btn" id="lpAddNoteBtn" type="button">＋ Add Note</button>
-      <div class="lp-student-note" id="lpStudentNote" hidden></div>
+      <button class="lp-report-btn" id="lpReportBtn">✉ Send Progress Report</button>
       <button class="lp-signout" id="lpSignOutBtn">Sign out of this device</button>
       <div class="lp-note">Every lesson card is a "layer." Flip a card in the Curriculum tab to mark that day's lesson complete — this panel fills in as you progress, just like opacity on a real layer. Finishing both days in a week automatically submits that week's check-in quiz report, and a full progress report is also sent automatically every 2 weeks (Sept 14 = Week 1) to your instructor.</div>
     </aside>
@@ -1764,8 +1720,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
     Graphic Design &amp; Photoshop — Class of 2028
     <div class="foot-contact">✉ <a href="mailto:thomas@hmacademy.org">thomas@hmacademy.org</a></div>
   </footer>
-</div><script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</div><script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
 /* ================= TAB NAVIGATION ================= */
 function goTab(name){
@@ -1912,28 +1867,9 @@ cards.forEach(c=>cardObserver.observe(c));
 updateProgress();
 document.getElementById('lpToggle').addEventListener('click', function(){
   const panel = document.getElementById('layersPanel');
-  const compact = panel.classList.toggle('compact');
-  this.setAttribute('aria-expanded', compact ? 'false':'true');
+  const collapsed = panel.classList.toggle('collapsed');
+  this.setAttribute('aria-expanded', collapsed ? 'false':'true');
 });
-function renderStudentNote(){
-  const box = document.getElementById('lpStudentNote');
-  if(!box || !student) return;
-  const notes = student.dashboardNotes || [];
-  if(!notes.length){ box.hidden = true; box.innerHTML=''; return; }
-  const latest = notes[notes.length-1];
-  box.hidden = false;
-  box.innerHTML = `<b>Latest note</b>${String(latest.text||'').replace(/</g,'&lt;').replace(/>/g,'&gt;')}`;
-}
-document.getElementById('lpAddNoteBtn').addEventListener('click', ()=>{
-  if(!student){ alert('Sign in first.'); return; }
-  const note = prompt('Add a note for your progress dashboard:');
-  if(!note || !note.trim()) return;
-  student.dashboardNotes = student.dashboardNotes || [];
-  student.dashboardNotes.push({text:note.trim(), createdAt:new Date().toISOString()});
-  saveStudentRecord(student);
-  renderStudentNote();
-});
-renderStudentNote();
 /* ================= NOTES: ACCORDION + SCROLL-MINIMIZE ================= */
 /* Each .note-section keeps its h3 + .note-actions visible at all times;
    everything else gets wrapped into a .note-body div at runtime so it can
@@ -1945,7 +1881,7 @@ renderStudentNote();
 function initNoteAccordion(root){
   const scope = root || document;
   scope.querySelectorAll('.note-section').forEach(section=>{
-    if(section.querySelector('.note-body')) return;
+    if(section.querySelector('.note-body')) return; // already set up
     const h3 = section.querySelector('h3');
     if(!h3) return;
     const body = document.createElement('div');
@@ -1962,18 +1898,34 @@ function initNoteAccordion(root){
     toggle.className = 'note-toggle';
     toggle.setAttribute('aria-label','Click to expand and read this section, or collapse it');
     toggle.title = 'Click to read';
-    toggle.setAttribute('aria-expanded','false');
+    toggle.setAttribute('aria-expanded','true');
     toggle.innerHTML = '<span aria-hidden="true">📖</span><span class="nt-arrow" aria-hidden="true">▾</span>';
     h3.classList.add('note-h3-clickable');
     h3.appendChild(toggle);
-    section.classList.add('collapsed');
-    const doToggle = (event)=>{
-      if(event && event.target && event.target.closest('.note-toggle')) event.stopPropagation();
+    const doToggle = ()=>{
       const collapsed = section.classList.toggle('collapsed');
       toggle.setAttribute('aria-expanded', collapsed?'false':'true');
     };
     h3.addEventListener('click', doToggle);
+    if(noteScrollObserver) noteScrollObserver.observe(section);
   });
+}
+let noteScrollObserver = null;
+if('IntersectionObserver' in window){
+  noteScrollObserver = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      const section = entry.target;
+      const toggle = section.querySelector('.note-toggle');
+      if(entry.isIntersecting){
+        section.classList.remove('collapsed');
+        if(toggle) toggle.setAttribute('aria-expanded','true');
+      } else if(entry.boundingClientRect.top < 0){
+        // scrolled UP and out of view (past it) -> minimize it
+        section.classList.add('collapsed');
+        if(toggle) toggle.setAttribute('aria-expanded','false');
+      }
+    });
+  }, { threshold: 0, rootMargin: '-90px 0px -55% 0px' });
 }
 initNoteAccordion();
 /* Reading sections are marked read explicitly via the "Mark as Read" button
@@ -2121,18 +2073,9 @@ document.getElementById('cqSubmit').addEventListener('click', ()=>{
   saveStudentRecord(student);
   updateGrade();
   modal.classList.remove('open');
-  const completedAssessmentKey = cqPendingKey;
   cqPendingType = null;
   cqPendingKey = null;
   if(document.getElementById('assessment').classList.contains('active')) renderAssessmentView();
-  if(pendingTheaterNextId && completedAssessmentKey === pendingTheaterNextId){
-    const currentIdx = allScreencasts.findIndex(v=>v.id===pendingTheaterNextId);
-    pendingTheaterNextId = null;
-    if(currentIdx>=0 && currentIdx<allScreencasts.length-1){
-      const v=allScreencasts[currentIdx+1];
-      theaterPlay(v.id,v.label);
-    }
-  }
 });
 /* =====================================================================
    SIGN-IN + DEVICE LOCK + WEEK-END QUIZ + GRADING + AUTO PROGRESS REPORT
@@ -2480,7 +2423,6 @@ function renderProgressView(){
     return;
   }
   const g = computeGrade();
-  renderStudentNote();
   const quizzesTaken = Object.keys(student.weekQuizzes).length;
   const videosConfirmed = Object.keys(student.videoConfirmed).filter(id=>student.videoConfirmed[id]).length;
   const readingQuizEntries = Object.values(student.contentQuizzes.reading);
@@ -2572,13 +2514,10 @@ function renderAssessmentView(){
   const videoItems = pool.map(item=>{
     const quiz = student.contentQuizzes.screencasts[item.key];
     const statusText = quiz ? `${quiz.score}/${quiz.total}` : 'Not taken';
-    const watched = theaterIsWatched(item.key);
     const btn = quiz
       ? `<button type="button" class="assess-btn" disabled>Completed</button>`
-      : watched
-        ? `<button type="button" class="assess-btn" onclick="assessmentStart('video','${item.key}')">Start</button>`
-        : `<button type="button" class="assess-btn" disabled>Watch first</button>`;
-    return `<div class="assess-row"><div class="assess-row-main"><b>${item.title}</b><span class="assess-status ${quiz?'done':''}">${statusText}${!quiz && !watched ? ' · watch the video first' : ''}</span></div>${btn}</div>`;
+      : `<button type="button" class="assess-btn" onclick="assessmentStart('video','${item.key}')">Start</button>`;
+    return `<div class="assess-row"><div class="assess-row-main"><b>${item.title}</b><span class="assess-status ${quiz?'done':''}">${statusText}</span></div>${btn}</div>`;
   }).join('') || '<p style="font-size:13px;color:var(--muted);">No screencasts available yet.</p>';
   const readingDone = Object.keys(student.contentQuizzes.reading).length;
   const videoDone = Object.keys(student.contentQuizzes.screencasts).length;
@@ -2589,13 +2528,13 @@ function renderAssessmentView(){
       <div class="progress-card" style="--pc-accent:#8b5cf6;flex:1;min-width:200px;"><h4>Read Me Assessments</h4><div class="pc-big">${readingDone}/${readingPool.length}</div><div class="pc-sub">completed</div></div>
       <div class="progress-card" style="--pc-accent:#ff6a2c;flex:1;min-width:200px;"><h4>Screencast Assessments</h4><div class="pc-big">${videoDone}/${pool.length}</div><div class="pc-sub">completed</div></div>
     </div>
-    <div class="note-section collapsed" id="assess-reading">
+    <div class="note-section" id="assess-reading">
       <h3>Read Me Notes Assessment</h3>
       <div class="assess-progress-row"><span>${readingDone} of ${readingPool.length} completed</span><span style="color:var(--c-notes);">${readingPct}%</span></div>
       <div class="assess-progress-bar"><i style="background:linear-gradient(90deg,#8b5cf6,#b794f4);width:${readingPct}%;"></i></div>
       <div>${readingItems}</div>
     </div>
-    <div class="note-section collapsed" id="assess-video">
+    <div class="note-section" id="assess-video">
       <h3>Screencast Assessment</h3>
       <div class="assess-progress-row"><span>${videoDone} of ${pool.length} completed</span><span style="color:var(--c-screen);">${videoPct}%</span></div>
       <div class="assess-progress-bar"><i style="background:linear-gradient(90deg,#ff6a2c,#ffb347);width:${videoPct}%;"></i></div>
@@ -2638,11 +2577,6 @@ function buildReportBody(trigger){
   const vq = Object.entries(student.contentQuizzes.screencasts);
   lines.push(`  Screencast checks: ${vq.length} of 23 — ${vq.map(([k,q])=>`${q.score}/${q.total}`).join(', ')||'none yet'}`);
   lines.push('');
-  lines.push('Student dashboard notes:');
-  const dashboardNotes = student.dashboardNotes || [];
-  if(!dashboardNotes.length){ lines.push('  (none)'); }
-  dashboardNotes.forEach(n=>lines.push(`  - ${String(n.text||'').replace(/\s+/g,' ').slice(0,300)}`));
-  lines.push('');
   lines.push('Practice files opened:');
   lines.push(`  ${student.seenPractice.length} files`);
   lines.push('');
@@ -2670,67 +2604,10 @@ function submitReportSilently(trigger){
     window.location.href = `mailto:${REPORT_EMAIL}?subject=${subject}&body=${body}`;
   }
 }
-async function generateStudentProgressPDF(){
+document.getElementById('lpReportBtn').addEventListener('click', ()=>{
   if(!student){ alert('Sign in first.'); return; }
-  const btn=document.getElementById('lpReportBtn');
-  const original=btn.textContent;
-  btn.disabled=true; btn.textContent='Preparing PDF…';
-  try{
-    goTab('progress');
-    renderProgressView();
-    const source=document.getElementById('progressBody');
-    if(!source) throw new Error('Progress dashboard not available.');
-    const canvas=await html2canvas(source,{scale:2,useCORS:true,backgroundColor:'#f3f5f8',logging:false});
-    const {jsPDF}=window.jspdf;
-    const doc=new jsPDF({unit:'pt',format:'a4',orientation:'portrait',compress:true});
-    const pageW=doc.internal.pageSize.getWidth(), pageH=doc.internal.pageSize.getHeight();
-    const margin=24, contentW=pageW-margin*2;
-    const pxPerPage=Math.floor(canvas.width*(pageH-margin*2)/contentW);
-    let y=0, page=0;
-    while(y<canvas.height){
-      if(page>0) doc.addPage();
-      const sliceH=Math.min(pxPerPage,canvas.height-y);
-      const slice=document.createElement('canvas');
-      slice.width=canvas.width; slice.height=sliceH;
-      const ctx=slice.getContext('2d');
-      ctx.drawImage(canvas,0,y,canvas.width,sliceH,0,0,canvas.width,sliceH);
-      const img=slice.toDataURL('image/jpeg',0.92);
-      const renderedH=(sliceH/canvas.width)*contentW;
-      doc.addImage(img,'JPEG',margin,margin,contentW,renderedH,undefined,'FAST');
-      // Security watermark
-      doc.saveGraphicsState();
-      doc.setTextColor(125,135,155);
-      doc.setFontSize(34);
-      doc.setGState(new doc.GState({opacity:0.10}));
-      doc.text('REPORT',pageW/2,pageH/2,{angle:35,align:'center'});
-      doc.restoreGraphicsState();
-      // Subtle hidden/security figure pattern embedded into the image-based page.
-      doc.saveGraphicsState();
-      doc.setDrawColor(110,120,145);
-      doc.setGState(new doc.GState({opacity:0.035}));
-      for(let gx=18;gx<pageW;gx+=18){
-        for(let gy=18;gy<pageH;gy+=18){
-          const r=((gx+gy)/18)%2?1:0.7;
-          doc.circle(gx,gy,r,'S');
-        }
-      }
-      doc.restoreGraphicsState();
-      doc.setFontSize(7); doc.setTextColor(150,155,165);
-      doc.text(`REPORT • ${student.name} • Page ${page+1}`,margin,pageH-9);
-      y+=sliceH; page++;
-    }
-    const safeName=(student.name||'Student').replace(/[^a-z0-9_-]+/gi,'_');
-    doc.save(`Progress_Report_${safeName}.pdf`);
-    submitReportSilently('Manual PDF progress report');
-    alert('Your non-editable progress report PDF has been generated.');
-  }catch(err){
-    console.error(err);
-    alert('The PDF could not be generated. Please try again.');
-  }finally{
-    btn.disabled=false; btn.textContent=original;
-  }
-}
-document.getElementById('lpReportBtn').addEventListener('click', generateStudentProgressPDF);
+  submitReportSilently('Manual send from Layers panel');
+});
 /* ---------- CALENDAR-BASED BIWEEKLY AUTO-REPORT (Sept 14 = Week 1) ---------- */
 const BIWEEKLY_PERIODS = Math.ceil(TOTAL_WEEKS/2); // 16 weeks -> 8 two-week periods
 function courseWeekNumber(date){
@@ -3485,8 +3362,7 @@ function theaterMarkWatched(id){
   updateGrade();
   theaterRenderSide();
   const meta = allScreencasts.find(v=>v.id===id);
-  showTheaterMessage(`✓ Watched "${meta ? meta.label : 'this recording'}". Click Next to open the assessment.`);
-  renderAssessmentView();
+  maybeShowContentQuiz('video', id, screencastQuizPool, `Nice work watching "${meta ? meta.label : 'this recording'}"! Quick 2-question check:`);
 }
 function theaterPlay(id, label){
   theaterCurrentId = id;
@@ -3507,32 +3383,10 @@ function theaterPlay(id, label){
   theaterUpdateNav();
   theaterRenderSide();
 }
-function showTheaterMessage(message){
-  let el=document.getElementById('theaterMessage');
-  if(!el){
-    el=document.createElement('div');
-    el.id='theaterMessage';
-    el.style.cssText='margin-top:10px;padding:10px 12px;border-radius:10px;background:#eef3ff;color:#30407a;font-size:12.5px;font-weight:700;';
-    const nav=document.querySelector('.theater-nav');
-    if(nav) nav.insertAdjacentElement('afterend',el);
-  }
-  el.textContent=message;
-  clearTimeout(window.__theaterMessageTimer);
-  window.__theaterMessageTimer=setTimeout(()=>{ if(el) el.remove(); },6000);
-}
-let pendingTheaterNextId = null;
 function theaterStep(delta){
   const idx = allScreencasts.findIndex(v=>v.id===theaterCurrentId);
   const nextIdx = idx + delta;
-  if(idx<0 || nextIdx<0 || nextIdx>=allScreencasts.length) return;
-  if(delta===1 && theaterIsWatched(theaterCurrentId)){
-    const current = allScreencasts[idx];
-    if(student && !student.contentQuizzes.screencasts[theaterCurrentId]){
-      pendingTheaterNextId = theaterCurrentId;
-      assessmentStart('video', theaterCurrentId);
-      return;
-    }
-  }
+  if(nextIdx<0 || nextIdx>=allScreencasts.length) return;
   const v = allScreencasts[nextIdx];
   theaterPlay(v.id, v.label);
 }
