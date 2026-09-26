@@ -1,6 +1,3 @@
-
-
-
 <!doctype html>
 <html lang="en">
 <head>
@@ -115,6 +112,12 @@ button{font-family:inherit;}
 .lp-total span{font-size:12px;color:#8f96a6;font-weight:500;}
 .lp-bar{height:6px;border-radius:6px;background:#2a2e38;margin:10px 0 18px;overflow:hidden;}
 .lp-bar i{display:block;height:100%;background:linear-gradient(90deg,#2f6fed,#8b5cf6);width:0%;transition:width .5s ease;}
+.lp-rows-toggle{width:100%;text-align:left;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:#dfe2ea;border-radius:9px;padding:9px 12px;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;}
+.lp-rows-toggle:hover{background:rgba(255,255,255,.1);}
+.lp-rows-toggle .lrt-arrow{display:inline-block;transition:transform .25s ease;}
+.lp-rows-toggle.open .lrt-arrow{transform:rotate(180deg);}
+#lpRows{overflow:hidden;max-height:0;opacity:0;transition:max-height .35s ease, opacity .25s ease;}
+#lpRows.open{max-height:2400px;opacity:1;margin-top:6px;}
 .lp-row{
   display:flex;align-items:center;gap:10px;padding:8px 8px;border-radius:8px;cursor:pointer;
   transition:.15s;
@@ -338,9 +341,9 @@ footer.appfoot .foot-contact a:hover{text-decoration:underline;}
 /* ===== CINEMATIC THEATER PLAYER (Screencasts) ===== */
 .theater{display:flex;gap:20px;margin-top:18px;align-items:flex-start;}
 .theater-main{flex:1;min-width:0;}
-.theater-stage{background:radial-gradient(circle at 50% 25%,#2b1c12,#0f0805 78%);border-radius:20px;padding:18px;border:3px solid #ff6a2c;box-shadow:0 24px 54px rgba(20,8,2,.55),0 0 22px rgba(255,106,44,.35);transition:box-shadow .3s ease,border-color .3s ease;}
-.theater-stage.is-playing{border-color:#ffb347;box-shadow:0 24px 54px rgba(20,8,2,.6),0 0 40px rgba(255,106,44,.55);}
-.theater-player{width:100%;aspect-ratio:16/9;background:#0e1015;border-radius:14px;overflow:hidden;position:relative;box-shadow:0 0 0 1px rgba(255,255,255,.08);}
+.theater-stage{background:linear-gradient(135deg,#2f6fed,#8b5cf6 55%,#ff9b57);border-radius:20px;padding:18px;border:3px solid rgba(255,255,255,.35);box-shadow:0 24px 54px rgba(47,111,237,.30),0 0 22px rgba(139,92,246,.30);transition:box-shadow .3s ease,border-color .3s ease;}
+.theater-stage.is-playing{border-color:#fff;box-shadow:0 24px 54px rgba(47,111,237,.4),0 0 40px rgba(255,155,87,.45);}
+.theater-player{width:100%;aspect-ratio:16/9;background:#151a2e;border-radius:14px;overflow:hidden;position:relative;box-shadow:0 0 0 1px rgba(255,255,255,.14);}
 .theater-player iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block;}
 .theater-player .thumb-poster{position:absolute;inset:0;width:100%;}
 .theater-nav{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:12px;}
@@ -348,6 +351,7 @@ footer.appfoot .foot-contact a:hover{text-decoration:underline;}
 .theater-nav .tn-btn:hover{background:#eef3ff;border-color:var(--c-curriculum);}
 .theater-nav .tn-btn:disabled{opacity:.4;cursor:not-allowed;}
 .theater-nav .tn-index{font-size:12px;color:var(--muted);font-weight:600;}
+.theater-tip{margin-top:10px;font-size:12px;color:var(--muted);background:#fff;border:1px dashed var(--line);border-radius:10px;padding:9px 12px;text-align:center;line-height:1.5;}
 .theater-info{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:12px;padding:16px 18px;background:#fff;border-radius:14px;box-shadow:var(--shadow);}
 .theater-info .ti-avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#ff6a2c,#7a2e05);color:#fff;font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
 .theater-info .ti-meta{flex:1;min-width:160px;}
@@ -1648,6 +1652,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
               <span class="tn-index" id="theaterIndex">—</span>
               <button type="button" class="tn-btn" id="theaterNextBtn">Next ▶</button>
             </div>
+            <div class="theater-tip" id="theaterTip">📌 Tip: Click <strong>Next ▶</strong> after you've finished watching a recording — that saves your progress and unlocks that recording's quick assessment check.</div>
             <div class="theater-info">
               <div class="ti-avatar" aria-hidden="true">Ps</div>
               <div class="ti-meta">
@@ -1690,8 +1695,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
       </section>
       <!-- ========== ASSESSMENT ========== -->
       <section id="assessment" class="view">
-        <div class="view-head"><div><h2>Assessment</h2>
-        <p>Questions generated from the Read Me notes and the screencast descriptions, organized by section. Each check can be taken once — your score is saved right away to My Progress.</p></div></div>
+        <div class="view-head"><div><h2>Assessment</h2></div></div>
         <div id="assessmentBody"></div>
       </section>
       <!-- ========== MY PROGRESS ========== -->
@@ -1705,6 +1709,9 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
       <div class="lp-head"><h3>Layers — Progress</h3></div>
       <div class="lp-total" id="lpTotalPct">0%<span> complete</span></div>
       <div class="lp-bar"><i id="lpBar"></i></div>
+      <button type="button" class="lp-rows-toggle" id="lpRowsToggle" aria-expanded="false" aria-controls="lpRows">
+        <span>Weekly breakdown</span><span class="lrt-arrow" aria-hidden="true">▾</span>
+      </button>
       <div id="lpRows"></div>
       <div class="lp-grade">
         <span>Overall Grade</span>
@@ -1713,7 +1720,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
       </div>
       <button class="lp-report-btn" id="lpReportBtn">✉ Send Progress Report</button>
       <button class="lp-signout" id="lpSignOutBtn">Sign out of this device</button>
-      <div class="lp-note">Every lesson card is a "layer." Flip a card in the Curriculum tab to mark that day's lesson complete — this panel fills in as you progress, just like opacity on a real layer. Finishing both days in a week automatically submits that week's check-in quiz report, and a full progress report is also sent automatically every 2 weeks (Sept 14 = Week 1) to your instructor.</div>
+      <div class="lp-note">Every lesson card is a "layer." Flip a card in the Curriculum tab to mark that day's lesson complete — the total above and this panel's grade &amp; report stay visible even while the weekly breakdown is collapsed; tap "Weekly breakdown" to expand it. Finishing both days in a week automatically submits that week's check-in quiz report, and a full progress report is also sent automatically every 2 weeks (Sept 14 = Week 1) to your instructor.</div>
     </aside>
   </div>
   <footer class="appfoot">
@@ -1869,6 +1876,15 @@ document.getElementById('lpToggle').addEventListener('click', function(){
   const panel = document.getElementById('layersPanel');
   const collapsed = panel.classList.toggle('collapsed');
   this.setAttribute('aria-expanded', collapsed ? 'false':'true');
+});
+/* Weekly-breakdown rows dropdown inside the Layers panel — collapsed by
+   default (the overall % / bar / grade / report / sign-out stay visible
+   regardless), and only opens when the student explicitly taps it. */
+document.getElementById('lpRowsToggle').addEventListener('click', function(){
+  const rows = document.getElementById('lpRows');
+  const isOpen = rows.classList.toggle('open');
+  this.classList.toggle('open', isOpen);
+  this.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
 });
 /* ================= NOTES: ACCORDION + SCROLL-MINIMIZE ================= */
 /* Each .note-section keeps its h3 + .note-actions visible at all times;
@@ -2583,7 +2599,7 @@ function buildReportBody(trigger){
   lines.push('NOTE: "Watched" is a background dwell-time estimate tracked automatically once playback starts, not a measurement read from the video player — Google Drive\'s embedded player does not expose playback progress to this page.');
   return lines.join('\n');
 }
-/* ---------- SILENT, NON-EDITABLE SUBMISSION ---------- */
+/* ---------- SILENT, NON-EDITABLE SUBMISSION (to instructor) ---------- */
 /* Submits straight to your Google Form in the background — the student never sees
    a compose window, so there is no draft for them to alter before it sends. If the
    form isn't configured yet (see setup notes above), this falls back to opening an
@@ -2604,9 +2620,113 @@ function submitReportSilently(trigger){
     window.location.href = `mailto:${REPORT_EMAIL}?subject=${subject}&body=${body}`;
   }
 }
+/* ---------- PDF SNAPSHOT OF THE FULL DASHBOARD (student-facing "Send Progress Report") ----------
+   Clicking "Send Progress Report" now ALSO builds a downloadable PDF snapshot of the
+   student's own dashboard (grade, every week, every reading section, every screencast).
+   The PDF is generated with jsPDF's built-in encryption so it opens read-only in
+   compliant viewers (no user password, but modifying/copying is restricted) — that,
+   plus the diagonal "REPORT" watermark on every page, is the "not editable" /
+   report-marked deliverable. A second, very faint, tiled stamp (student email +
+   timestamp, in near-white text) is layered underneath the watermark on every page —
+   it isn't meant to be read at a glance, only to make a screenshotted or re-copied
+   page traceable back to whose report it came from and when it was generated. None
+   of this is unbreakable DRM — a determined person can still screenshot a PDF page —
+   but it does what a lightweight "protect against casual duplication" mark can do. */
+async function generateProgressReportPDF(){
+  if(!student) { alert('Sign in first.'); return; }
+  const { jsPDF } = window.jspdf;
+  let doc;
+  try{
+    doc = new jsPDF({
+      unit:'pt', format:'a4',
+      encryption:{ userPassword:'', ownerPassword: Math.random().toString(36).slice(2)+Date.now().toString(36), userPermissions:['print'] }
+    });
+  }catch(e){
+    // Older jsPDF builds without encryption support — still generate the PDF, just without the read-only lock.
+    doc = new jsPDF({ unit:'pt', format:'a4' });
+  }
+  const pageWidth = doc.internal.pageSize.getWidth();
+  const pageHeight = doc.internal.pageSize.getHeight();
+  const g = computeGrade();
+  const stampText = `${student.email} · ${new Date().toLocaleString()}`;
+
+  function stampPage(){
+    // Diagonal repeated "REPORT" watermark — light gray, visible but unobtrusive.
+    doc.setFont(undefined,'bold');
+    doc.setTextColor(222,226,236);
+    doc.setFontSize(46);
+    for(let ty=90; ty<pageHeight; ty+=150){
+      doc.text('REPORT', pageWidth/2, ty, { angle:35, align:'center' });
+    }
+    // Hidden/near-invisible forensic stamp — tiny, almost-white, tiled down the left
+    // margin — carries the student's email + generation time so a copied page can
+    // still be traced back to its source without being visually distracting.
+    doc.setFont(undefined,'normal');
+    doc.setTextColor(252,252,253);
+    doc.setFontSize(5);
+    for(let ty=18; ty<pageHeight; ty+=22){
+      doc.text(stampText, 16, ty);
+    }
+    doc.setTextColor(20,22,28);
+  }
+  function newPage(){ doc.addPage(); stampPage(); return 50; }
+
+  let y = 50;
+  stampPage();
+  doc.setFontSize(20); doc.text(`Progress Report — ${student.name}`, 40, y); y+=22;
+  doc.setFontSize(11); doc.text(student.email, 40, y); y+=16;
+  doc.setFontSize(9); doc.setTextColor(90,95,110); doc.text(`Generated ${new Date().toLocaleString()}`, 40, y); doc.setTextColor(20,22,28); y+=22;
+  doc.setFontSize(14); doc.text(`Overall Grade: ${g.letter} (${g.pct}%)`, 40, y); y+=18;
+  doc.setFontSize(11); doc.text(`Lessons completed: ${student.completed.length} of ${cards.length}`, 40, y); y+=26;
+
+  doc.setFontSize(13); doc.text('Week-by-week breakdown', 40, y); y+=16;
+  doc.setFontSize(9);
+  for(let w=1; w<=TOTAL_WEEKS; w++){
+    if(y > pageHeight-60) y = newPage();
+    const st = weekStatus(w);
+    const quiz = student.weekQuizzes[w];
+    const quizText = quiz ? (quiz.total ? `${quiz.score}/${quiz.total}` : 'reflection') : '—';
+    doc.text(`Week ${w} (${weekMeta[w]||''}): ${st.done}/${st.total} days · quiz ${quizText}`, 50, y);
+    y += 13;
+  }
+  y += 12;
+
+  if(y > pageHeight-100) y = newPage();
+  doc.setFontSize(13); doc.text('Read Me notes', 40, y); y+=16;
+  doc.setFontSize(9);
+  readingPool.forEach(item=>{
+    if(y > pageHeight-60) y = newPage();
+    const isRead = student.readingSeen.includes(item.key);
+    const quiz = student.contentQuizzes.reading[item.key];
+    doc.text(`${item.title}: ${isRead?'Read':'Not read'}${quiz? ' · check '+quiz.score+'/'+quiz.total : ''}`, 50, y);
+    y += 13;
+  });
+  y += 12;
+
+  if(y > pageHeight-100) y = newPage();
+  doc.setFontSize(13); doc.text('Screencasts', 40, y); y+=16;
+  doc.setFontSize(9);
+  (typeof allScreencasts !== 'undefined' ? allScreencasts : []).forEach(v=>{
+    if(y > pageHeight-60) y = newPage();
+    const watched = typeof theaterIsWatched === 'function' ? theaterIsWatched(v.id) : false;
+    const quiz = student.contentQuizzes.screencasts[v.id];
+    doc.text(`${v.label}: ${watched?'Watched':'Not watched'}${quiz? ' · check '+quiz.score+'/'+quiz.total : ''}`, 50, y);
+    y += 13;
+  });
+
+  const status = document.getElementById('lpReportStatus');
+  try{
+    doc.save(`${(student.name||'student').replace(/\s+/g,'_')}_Progress_Report.pdf`);
+    if(status) status.textContent = 'PDF report downloaded.';
+  }catch(err){
+    console.error(err);
+    if(status) status.textContent = 'Could not generate the PDF — please try again.';
+  }
+}
 document.getElementById('lpReportBtn').addEventListener('click', ()=>{
   if(!student){ alert('Sign in first.'); return; }
   submitReportSilently('Manual send from Layers panel');
+  generateProgressReportPDF();
 });
 /* ---------- CALENDAR-BASED BIWEEKLY AUTO-REPORT (Sept 14 = Week 1) ---------- */
 const BIWEEKLY_PERIODS = Math.ceil(TOTAL_WEEKS/2); // 16 weeks -> 8 two-week periods
