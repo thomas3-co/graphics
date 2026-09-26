@@ -1927,7 +1927,13 @@ function initNoteAccordion(root){
       toggle.setAttribute('aria-expanded', collapsed?'false':'true');
     };
     h3.addEventListener('click', doToggle);
-    if(noteScrollObserver) noteScrollObserver.observe(section);
+    // Only the real Read Me sections (which carry data-reading) auto-expand as you
+    // scroll to them. Progress-page and Assessment-page sections are plain
+    // click-to-toggle accordions that stay collapsed until the student taps them —
+    // without this check, the observer's initial callback would immediately
+    // re-expand any section already in view the moment the tab opens, undoing
+    // the "collapsed by default" state before the student ever saw it.
+    if(noteScrollObserver && section.dataset.reading) noteScrollObserver.observe(section);
   });
 }
 let noteScrollObserver = null;
@@ -2165,6 +2171,28 @@ const GOOGLE_FORM_ACTION_URL = ''; // e.g. 'https://docs.google.com/forms/d/e/XX
 const GOOGLE_FORM_ENTRY_ID = '';   // e.g. 'entry.1234567890'
 const COURSE_START_DATE = new Date('2026-09-14T00:00:00'); // Sept 14 = Week 1, Day 1
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+/* Lightweight device/browser sniff from navigator.userAgent — good enough to note
+   "which device this report came from" for the instructor, not meant to be exact. */
+function getDeviceInfo(){
+  try{
+    const ua = navigator.userAgent || '';
+    let browser = 'Unknown browser';
+    if(/Edg\//.test(ua)) browser = 'Edge';
+    else if(/OPR\//.test(ua)) browser = 'Opera';
+    else if(/Chrome\//.test(ua) && !/Chromium/.test(ua)) browser = 'Chrome';
+    else if(/Firefox\//.test(ua)) browser = 'Firefox';
+    else if(/Safari\//.test(ua) && !/Chrome/.test(ua)) browser = 'Safari';
+    let os = 'Unknown OS';
+    if(/Windows/.test(ua)) os = 'Windows';
+    else if(/Mac OS X/.test(ua)) os = 'macOS';
+    else if(/Android/.test(ua)) os = 'Android';
+    else if(/iPhone|iPad|iPod/.test(ua)) os = 'iOS';
+    else if(/Linux/.test(ua)) os = 'Linux';
+    const type = /Mobi|Android|iPhone|iPad/.test(ua) ? 'Mobile' : 'Desktop';
+    const res = (window.screen && window.screen.width && window.screen.height) ? `${window.screen.width}×${window.screen.height}` : '';
+    return `${type} · ${browser} on ${os}${res ? ' · '+res : ''}`;
+  }catch(e){ return 'Unknown device'; }
+}
 /* ---------- SIGN-IN / DEVICE LOCK ---------- */
 const gate = document.getElementById('signInGate');
 const siError = document.getElementById('siError');
@@ -2562,84 +2590,20 @@ function renderAssessmentView(){
     </div>`;
   initNoteAccordion(body);
 }
-/* ---------- PROGRESS REPORT → EMAIL (auto-fires on week-quiz submit; also manual button) ---------- */
-function buildReportBody(trigger){
-  const g = computeGrade();
-  const lines = [];
-  lines.push(`Progress report for ${student.name} (${student.email})`);
-  if(trigger) lines.push(`Trigger: ${trigger}`);
-  lines.push(`Overall grade: ${g.letter} (${g.pct}%)`);
-  lines.push(`Lessons completed: ${student.completed.length} of ${cards.length}`);
-  lines.push('');
-  lines.push('Week-end quizzes:');
-  const wkKeys = Object.keys(student.weekQuizzes).sort((a,b)=>Number(a)-Number(b));
-  if(wkKeys.length===0){ lines.push('  (none completed yet)'); }
-  wkKeys.forEach(wk=>{
-    const q = student.weekQuizzes[wk];
-    lines.push(`  Week ${wk}: ${q.total ? `${q.score}/${q.total} vocabulary correct` : 'reflection only (no vocab this week)'}${q.reflection ? ' — "'+q.reflection.replace(/\s+/g,' ').slice(0,200)+'"' : ''}`);
-  });
-  lines.push('');
-  lines.push('Reading material opened (Read Me sections viewed 2s+):');
-  lines.push(`  ${student.readingSeen.length} of 11 sections — ${student.readingSeen.join(', ')||'none yet'}`);
-  lines.push('');
-  lines.push('Vocabulary check (terms opened per week):');
-  const vocabWeeks = Object.keys(student.vocabSeen).sort((a,b)=>Number(a)-Number(b));
-  if(vocabWeeks.length===0){ lines.push('  (none yet)'); }
-  vocabWeeks.forEach(wk=>{ lines.push(`  Week ${wk}: ${student.vocabSeen[wk].length} terms — ${student.vocabSeen[wk].join(', ')}`); });
-  lines.push('');
-  lines.push('Screencasts marked fully watched (background dwell checkpoint reached — see note in report footer):');
-  const watched = Object.keys(student.videoConfirmed).filter(id=>student.videoConfirmed[id]);
-  lines.push(`  ${watched.length} of 23 recordings confirmed`);
-  lines.push('');
-  lines.push('Post-content check-in / assessment quizzes (2 questions each, generated from that item\'s title/description; each item can only be taken once):');
-  const rq = Object.entries(student.contentQuizzes.reading);
-  lines.push(`  Reading checks: ${rq.length} of 11 — ${rq.map(([k,q])=>`${q.score}/${q.total}`).join(', ')||'none yet'}`);
-  const vq = Object.entries(student.contentQuizzes.screencasts);
-  lines.push(`  Screencast checks: ${vq.length} of 23 — ${vq.map(([k,q])=>`${q.score}/${q.total}`).join(', ')||'none yet'}`);
-  lines.push('');
-  lines.push('Practice files opened:');
-  lines.push(`  ${student.seenPractice.length} files`);
-  lines.push('');
-  lines.push('NOTE: "Watched" is a background dwell-time estimate tracked automatically once playback starts, not a measurement read from the video player — Google Drive\'s embedded player does not expose playback progress to this page.');
-  return lines.join('\n');
-}
-/* ---------- SILENT, NON-EDITABLE SUBMISSION (to instructor) ---------- */
-/* Submits straight to your Google Form in the background — the student never sees
-   a compose window, so there is no draft for them to alter before it sends. If the
-   form isn't configured yet (see setup notes above), this falls back to opening an
-   editable mailto: draft so the report doesn't just silently disappear with no
-   visible result while you're still setting things up. */
-function submitReportSilently(trigger){
-  if(!student) return;
-  const reportText = `[${trigger}]\n\n` + buildReportBody(trigger);
-  if(GOOGLE_FORM_ACTION_URL && GOOGLE_FORM_ENTRY_ID){
-    const formData = new URLSearchParams();
-    formData.append(GOOGLE_FORM_ENTRY_ID, reportText);
-    fetch(GOOGLE_FORM_ACTION_URL, { method:'POST', mode:'no-cors', body: formData })
-      .catch(()=>{ /* no-cors means we can't read the response either way; nothing more to do */ });
-  } else {
-    // Fallback only — remove once GOOGLE_FORM_ACTION_URL / GOOGLE_FORM_ENTRY_ID are set above.
-    const subject = encodeURIComponent(`Progress Report — ${student.name} (${student.email})`);
-    const body = encodeURIComponent(reportText);
-    window.location.href = `mailto:${REPORT_EMAIL}?subject=${subject}&body=${body}`;
-  }
-}
-/* ---------- PDF SNAPSHOT OF THE FULL DASHBOARD (student-facing "Send Progress Report") ----------
-   Clicking "Send Progress Report" now ALSO builds a downloadable PDF snapshot of the
-   student's own dashboard (grade, every week, every reading section, every screencast).
-   The PDF is generated with jsPDF's built-in encryption so it opens read-only in
-   compliant viewers (no user password, but modifying/copying is restricted) — that,
-   plus the diagonal "REPORT" watermark on every page, is the "not editable" /
+/* ---------- PDF SNAPSHOT OF THE FULL DASHBOARD ----------
+   buildProgressReportDoc() builds and returns the actual PDF (does not save it) so
+   both the manual "Send Progress Report" button and the automatic triggers (week-end
+   quiz, biweekly check) can produce the exact same, fully up-to-date document.
+   It's generated with jsPDF's built-in encryption so it opens read-only in compliant
+   viewers (no user password, but modifying/copying is restricted) — that, plus a
+   single diagonal "REPORT" watermark centered on every page, is the "not editable" /
    report-marked deliverable. A second, very faint, tiled stamp (student email +
-   timestamp, in near-white text) is layered underneath the watermark on every page —
-   it isn't meant to be read at a glance, only to make a screenshotted or re-copied
-   page traceable back to whose report it came from and when it was generated. None
-   of this is unbreakable DRM — a determined person can still screenshot a PDF page —
-   but it does what a lightweight "protect against casual duplication" mark can do. */
-async function generateProgressReportPDF(){
-  if(!student) { alert('Sign in first.'); return; }
-  const status = document.getElementById('lpReportStatus');
-  if(status) status.textContent = 'Building your PDF report...';
+   timestamp, in near-white text) is layered in on every page too — it isn't meant to
+   be read at a glance, only to make a screenshotted or re-copied page traceable back
+   to whose report it came from and when it was generated. None of this is
+   unbreakable DRM — a determined person can still screenshot a PDF page — but it
+   does what a lightweight "protect against casual duplication" mark can do. */
+function buildProgressReportDoc(trigger){
   const { jsPDF } = window.jspdf;
   let doc;
   try{
@@ -2655,6 +2619,7 @@ async function generateProgressReportPDF(){
   const pageWidth = doc.internal.pageSize.getWidth();
   const pageHeight = doc.internal.pageSize.getHeight();
   const g = computeGrade();
+  const device = getDeviceInfo();
   const stampText = `${student.email} · ${new Date().toLocaleString()}`;
   const P = { blue:[47,111,237], purple:[139,92,246], orange:[255,122,45], red:[239,71,111], deep:[28,32,48], ink:[26,29,36], muted:[110,116,130], zebraBlue:[236,242,255], zebraPurple:[245,241,255], zebraOrange:[255,241,232] };
 
@@ -2667,13 +2632,12 @@ async function generateProgressReportPDF(){
   const readingQuizAvg = avgPct(readingQuizEntries);
   const screencastQuizAvg = avgPct(screencastQuizEntries);
 
+  // A SINGLE centered diagonal "REPORT" mark per page (not tiled/repeated).
   function watermarkPage(){
     doc.setFont(undefined,'bold');
     doc.setTextColor(226,230,242);
-    doc.setFontSize(46);
-    for(let ty=170; ty<pageHeight; ty+=150){
-      doc.text('REPORT', pageWidth/2, ty, { angle:35, align:'center' });
-    }
+    doc.setFontSize(72);
+    doc.text('REPORT', pageWidth/2, pageHeight/2, { angle:35, align:'center' });
     // Hidden/near-invisible forensic stamp — tiny, almost-white, tiled down the left
     // margin — carries the student's email + generation time so a copied page can
     // still be traced back to its source without being visually distracting.
@@ -2705,7 +2669,7 @@ async function generateProgressReportPDF(){
   doc.setFontSize(9);
   doc.text(`${student.name}  ·  ${student.email}`, 98, 80);
   doc.setFontSize(8); doc.setTextColor(150,160,192);
-  doc.text(`Generated ${new Date().toLocaleString()}`, 98, 93);
+  doc.text(`Generated ${new Date().toLocaleString()}  ·  ${device}${trigger ? '  ·  '+trigger : ''}`, 98, 93);
 
   let y = 130;
 
@@ -2817,8 +2781,18 @@ async function generateProgressReportPDF(){
     watermarkPage();
     drawFooter(p, totalPages);
   }
-
+  return doc;
+}
+/* Builds the PDF above and saves it to the student's device. Used directly by the
+   "Send Progress Report" button, and also called from submitReportSilently() so
+   every automatic trigger (week-end quiz, biweekly check-in) produces a fresh PDF
+   on the student's own device at the same moment the instructor is notified. */
+function generateProgressReportPDF(trigger){
+  if(!student) { alert('Sign in first.'); return; }
+  const status = document.getElementById('lpReportStatus');
+  if(status) status.textContent = 'Building your PDF report...';
   try{
+    const doc = buildProgressReportDoc(trigger);
     doc.save(`${(student.name||'student').replace(/\s+/g,'_')}_Progress_Report.pdf`);
     if(status) status.textContent = 'PDF report downloaded.';
   }catch(err){
@@ -2826,10 +2800,56 @@ async function generateProgressReportPDF(){
     if(status) status.textContent = 'Could not generate the PDF — please try again.';
   }
 }
+/* ---------- SHORT NOTIFICATION TO THE INSTRUCTOR ----------
+   This used to stuff the ENTIRE report (every week, every reading section, every
+   screencast, every vocab term) into a mailto: link's body — but mailto: URLs have
+   a hard length limit in most browsers/mail clients, so a long report silently got
+   cut off mid-sentence, which is what showed up as garbled, nonsensical text on the
+   Read Me section of the report. Fixing that: this now sends only a short summary,
+   and the FULL detail lives in the PDF (see buildProgressReportDoc above), which is
+   generated and saved to the student's device at the same time.
+   NOTE ON ATTACHMENTS: a mailto: link genuinely cannot attach a file — that's a
+   browser/email-standard limitation, not something this page's code can work around
+   without a real server. The Google Form path can't attach a file either without a
+   file-upload question tied to the responder's own Google sign-in, which can't be
+   done automatically. So "attaching" the PDF here means: the PDF downloads to the
+   student's device automatically, and the short notification says so — actually
+   emailing it still needs the student (or instructor, once GOOGLE_FORM_ACTION_URL
+   is wired to something that can receive files) to attach it by hand. */
+function notifyInstructor(trigger){
+  const g = computeGrade();
+  const summary = [
+    `Progress update for ${student.name} (${student.email})`,
+    `Trigger: ${trigger}`,
+    `Overall grade: ${g.letter} (${g.pct}%)`,
+    `Lessons completed: ${student.completed.length} of ${cards.length}`,
+    `Device: ${getDeviceInfo()}`,
+    '',
+    'Full detail is in the PDF progress report generated on the student\'s device at the same time as this notification.'
+  ].join('\n');
+  if(GOOGLE_FORM_ACTION_URL && GOOGLE_FORM_ENTRY_ID){
+    const formData = new URLSearchParams();
+    formData.append(GOOGLE_FORM_ENTRY_ID, summary);
+    fetch(GOOGLE_FORM_ACTION_URL, { method:'POST', mode:'no-cors', body: formData })
+      .catch(()=>{ /* no-cors means we can't read the response either way; nothing more to do */ });
+  } else {
+    // Fallback only — remove once GOOGLE_FORM_ACTION_URL / GOOGLE_FORM_ENTRY_ID are set above.
+    const subject = encodeURIComponent(`Progress Report — ${student.name} (${student.email})`);
+    const body = encodeURIComponent(summary + '\n\n(The full PDF report has just been downloaded on the student\'s device — please attach it here manually before sending, since email links can\'t attach files automatically.)');
+    window.location.href = `mailto:${REPORT_EMAIL}?subject=${subject}&body=${body}`;
+  }
+}
+/* Fires both halves of a report: a short notification to the instructor, and the
+   full, colorful PDF saved to the student's own device — replacing the old "one
+   giant plain-text email" approach. */
+function submitReportSilently(trigger){
+  if(!student) return;
+  notifyInstructor(trigger);
+  generateProgressReportPDF(trigger);
+}
 document.getElementById('lpReportBtn').addEventListener('click', ()=>{
   if(!student){ alert('Sign in first.'); return; }
   submitReportSilently('Manual send from Layers panel');
-  generateProgressReportPDF();
 });
 /* ---------- CALENDAR-BASED BIWEEKLY AUTO-REPORT (Sept 14 = Week 1) ---------- */
 const BIWEEKLY_PERIODS = Math.ceil(TOTAL_WEEKS/2); // 16 weeks -> 8 two-week periods
