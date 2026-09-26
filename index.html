@@ -257,6 +257,7 @@ button{font-family:inherit;}
 .note-toggle:hover{background:rgba(139,92,246,.16);box-shadow:0 2px 8px rgba(139,92,246,.18);}
 .note-toggle .nt-arrow{display:inline-block;transition:transform .25s ease;}
 .note-section.collapsed .note-toggle .nt-arrow{transform:rotate(-90deg);}
+.note-count{display:inline-block;margin-left:8px;font-size:11px;font-weight:700;color:var(--c-notes);background:rgba(139,92,246,.1);border:1px solid rgba(139,92,246,.25);border-radius:999px;padding:2px 10px;vertical-align:middle;}
 .note-body{overflow:hidden;max-height:8000px;opacity:1;transition:max-height .4s ease, opacity .3s ease;}
 .note-section.collapsed .note-body{max-height:0;opacity:0;pointer-events:none;}
 .note-section{scroll-margin-top:80px;}
@@ -1719,6 +1720,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
         <span id="lpGradeDetail">Sign in to start tracking.</span>
       </div>
       <button class="lp-report-btn" id="lpReportBtn">✉ Send Progress Report</button>
+      <div id="lpReportStatus" style="font-size:10.5px;color:#8f96a6;margin-top:6px;min-height:12px;"></div>
       <button class="lp-signout" id="lpSignOutBtn">Sign out of this device</button>
       <div class="lp-note">Every lesson card is a "layer." Flip a card in the Curriculum tab to mark that day's lesson complete — the total above and this panel's grade &amp; report stay visible even while the weekly breakdown is collapsed; tap "Weekly breakdown" to expand it. Finishing both days in a week automatically submits that week's check-in quiz report, and a full progress report is also sent automatically every 2 weeks (Sept 14 = Week 1) to your instructor.</div>
     </aside>
@@ -1728,6 +1730,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
     <div class="foot-contact">✉ <a href="mailto:thomas@hmacademy.org">thomas@hmacademy.org</a></div>
   </footer>
 </div><script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
 <script>
 /* ================= TAB NAVIGATION ================= */
 function goTab(name){
@@ -1913,8 +1916,9 @@ function initNoteAccordion(root){
     toggle.type = 'button';
     toggle.className = 'note-toggle';
     toggle.setAttribute('aria-label','Click to expand and read this section, or collapse it');
-    toggle.title = 'Click to read';
-    toggle.setAttribute('aria-expanded','true');
+    toggle.title = 'Click to expand';
+    const startsCollapsed = section.classList.contains('collapsed');
+    toggle.setAttribute('aria-expanded', startsCollapsed ? 'false' : 'true');
     toggle.innerHTML = '<span aria-hidden="true">📖</span><span class="nt-arrow" aria-hidden="true">▾</span>';
     h3.classList.add('note-h3-clickable');
     h3.appendChild(toggle);
@@ -2486,22 +2490,22 @@ function renderProgressView(){
       <div class="progress-card" style="--pc-accent:#8b5cf6"><h4>Reading Checks</h4><div class="pc-big">${readingQuizEntries.length}/11</div><div class="pc-sub">avg score ${readingQuizAvg}%</div></div>
       <div class="progress-card" style="--pc-accent:#ff6a2c"><h4>Screencast Checks</h4><div class="pc-big">${screencastQuizEntries.length}/23</div><div class="pc-sub">avg score ${screencastQuizAvg}%</div></div>
     </div>
-    <div class="note-section" style="margin-top:22px;">
-      <h3 style="margin-top:0;">Week-by-week breakdown</h3>
+    <div class="note-section collapsed" style="margin-top:22px;">
+      <h3 style="margin-top:0;"><span>Week-by-week breakdown <span class="note-count">${student.completed.length}/${cards.length} lessons</span></span></h3>
       <div style="overflow-x:auto;"><table class="progress-week-table">
         <thead><tr><th>Week</th><th>Topic</th><th>Days done</th><th>Status</th><th>Quiz</th></tr></thead>
         <tbody>${rows}</tbody>
       </table></div>
     </div>
-    <div class="note-section">
-      <h3 style="margin-top:0;">Read Me notes — read or not</h3>
+    <div class="note-section collapsed">
+      <h3 style="margin-top:0;"><span>Read Me notes — read or not <span class="note-count">${student.readingSeen.length}/11</span></span></h3>
       <div style="overflow-x:auto;"><table class="progress-week-table">
         <thead><tr><th>Section</th><th>Status</th><th>Check score</th></tr></thead>
         <tbody>${readingRows}</tbody>
       </table></div>
     </div>
-    <div class="note-section">
-      <h3 style="margin-top:0;">Screencasts — watched or not</h3>
+    <div class="note-section collapsed">
+      <h3 style="margin-top:0;"><span>Screencasts — watched or not <span class="note-count">${videosConfirmed}/23</span></span></h3>
       <div style="overflow-x:auto;"><table class="progress-week-table">
         <thead><tr><th>Recording</th><th>Status</th><th>Check score</th></tr></thead>
         <tbody>${screencastRows}</tbody>
@@ -2544,14 +2548,14 @@ function renderAssessmentView(){
       <div class="progress-card" style="--pc-accent:#8b5cf6;flex:1;min-width:200px;"><h4>Read Me Assessments</h4><div class="pc-big">${readingDone}/${readingPool.length}</div><div class="pc-sub">completed</div></div>
       <div class="progress-card" style="--pc-accent:#ff6a2c;flex:1;min-width:200px;"><h4>Screencast Assessments</h4><div class="pc-big">${videoDone}/${pool.length}</div><div class="pc-sub">completed</div></div>
     </div>
-    <div class="note-section" id="assess-reading">
-      <h3>Read Me Notes Assessment</h3>
+    <div class="note-section collapsed" id="assess-reading">
+      <h3><span>Read Me Notes Assessment <span class="note-count">${readingDone}/${readingPool.length}</span></span></h3>
       <div class="assess-progress-row"><span>${readingDone} of ${readingPool.length} completed</span><span style="color:var(--c-notes);">${readingPct}%</span></div>
       <div class="assess-progress-bar"><i style="background:linear-gradient(90deg,#8b5cf6,#b794f4);width:${readingPct}%;"></i></div>
       <div>${readingItems}</div>
     </div>
-    <div class="note-section" id="assess-video">
-      <h3>Screencast Assessment</h3>
+    <div class="note-section collapsed" id="assess-video">
+      <h3><span>Screencast Assessment <span class="note-count">${videoDone}/${pool.length}</span></span></h3>
       <div class="assess-progress-row"><span>${videoDone} of ${pool.length} completed</span><span style="color:var(--c-screen);">${videoPct}%</span></div>
       <div class="assess-progress-bar"><i style="background:linear-gradient(90deg,#ff6a2c,#ffb347);width:${videoPct}%;"></i></div>
       <div>${videoItems}</div>
@@ -2634,6 +2638,8 @@ function submitReportSilently(trigger){
    but it does what a lightweight "protect against casual duplication" mark can do. */
 async function generateProgressReportPDF(){
   if(!student) { alert('Sign in first.'); return; }
+  const status = document.getElementById('lpReportStatus');
+  if(status) status.textContent = 'Building your PDF report...';
   const { jsPDF } = window.jspdf;
   let doc;
   try{
@@ -2645,17 +2651,27 @@ async function generateProgressReportPDF(){
     // Older jsPDF builds without encryption support — still generate the PDF, just without the read-only lock.
     doc = new jsPDF({ unit:'pt', format:'a4' });
   }
+  const hasAutoTable = typeof doc.autoTable === 'function';
   const pageWidth = doc.internal.pageSize.getWidth();
   const pageHeight = doc.internal.pageSize.getHeight();
   const g = computeGrade();
   const stampText = `${student.email} · ${new Date().toLocaleString()}`;
+  const P = { blue:[47,111,237], purple:[139,92,246], orange:[255,122,45], red:[239,71,111], deep:[28,32,48], ink:[26,29,36], muted:[110,116,130], zebraBlue:[236,242,255], zebraPurple:[245,241,255], zebraOrange:[255,241,232] };
 
-  function stampPage(){
-    // Diagonal repeated "REPORT" watermark — light gray, visible but unobtrusive.
+  // ----- KPI numbers, matching the web My Progress dashboard exactly -----
+  const quizzesTaken = Object.keys(student.weekQuizzes).length;
+  const videosConfirmed = Object.keys(student.videoConfirmed).filter(id=>student.videoConfirmed[id]).length;
+  const readingQuizEntries = Object.values(student.contentQuizzes.reading);
+  const screencastQuizEntries = Object.values(student.contentQuizzes.screencasts);
+  const avgPct = entries => entries.length ? Math.round(entries.reduce((s,q)=> s + (q.total ? (q.score/q.total)*100 : 0), 0) / entries.length) : 0;
+  const readingQuizAvg = avgPct(readingQuizEntries);
+  const screencastQuizAvg = avgPct(screencastQuizEntries);
+
+  function watermarkPage(){
     doc.setFont(undefined,'bold');
-    doc.setTextColor(222,226,236);
+    doc.setTextColor(226,230,242);
     doc.setFontSize(46);
-    for(let ty=90; ty<pageHeight; ty+=150){
+    for(let ty=170; ty<pageHeight; ty+=150){
       doc.text('REPORT', pageWidth/2, ty, { angle:35, align:'center' });
     }
     // Hidden/near-invisible forensic stamp — tiny, almost-white, tiled down the left
@@ -2664,57 +2680,144 @@ async function generateProgressReportPDF(){
     doc.setFont(undefined,'normal');
     doc.setTextColor(252,252,253);
     doc.setFontSize(5);
-    for(let ty=18; ty<pageHeight; ty+=22){
+    for(let ty=130; ty<pageHeight; ty+=22){
       doc.text(stampText, 16, ty);
     }
-    doc.setTextColor(20,22,28);
   }
-  function newPage(){ doc.addPage(); stampPage(); return 50; }
+  function drawFooter(pageNum, totalPages){
+    doc.setFontSize(8);
+    doc.setTextColor(...P.muted);
+    doc.text('Graphic Design & Photoshop · Class of 2028 — Progress Report', 40, pageHeight-20);
+    doc.text(`Page ${pageNum} of ${totalPages}`, pageWidth-90, pageHeight-20);
+    doc.setTextColor(...P.ink);
+  }
 
-  let y = 50;
-  stampPage();
-  doc.setFontSize(20); doc.text(`Progress Report — ${student.name}`, 40, y); y+=22;
-  doc.setFontSize(11); doc.text(student.email, 40, y); y+=16;
-  doc.setFontSize(9); doc.setTextColor(90,95,110); doc.text(`Generated ${new Date().toLocaleString()}`, 40, y); doc.setTextColor(20,22,28); y+=22;
-  doc.setFontSize(14); doc.text(`Overall Grade: ${g.letter} (${g.pct}%)`, 40, y); y+=18;
-  doc.setFontSize(11); doc.text(`Lessons completed: ${student.completed.length} of ${cards.length}`, 40, y); y+=26;
-
-  doc.setFontSize(13); doc.text('Week-by-week breakdown', 40, y); y+=16;
+  // ----- Header banner -----
+  doc.setFillColor(...P.deep);
+  doc.rect(0,0,pageWidth,108,'F');
+  doc.setFillColor(...P.blue);
+  doc.roundedRect(40,26,44,44,10,10,'F');
+  doc.setFont(undefined,'bold'); doc.setFontSize(17); doc.setTextColor(255,255,255);
+  doc.text('Ps', 62, 54, { align:'center' });
+  doc.setFontSize(19); doc.text('Progress Report', 98, 48);
+  doc.setFont(undefined,'normal'); doc.setFontSize(10.5); doc.setTextColor(205,212,235);
+  doc.text('Graphic Design & Photoshop — Class of 2028', 98, 65);
   doc.setFontSize(9);
+  doc.text(`${student.name}  ·  ${student.email}`, 98, 80);
+  doc.setFontSize(8); doc.setTextColor(150,160,192);
+  doc.text(`Generated ${new Date().toLocaleString()}`, 98, 93);
+
+  let y = 130;
+
+  // ----- Summary: colorful KPI dashboard cards (2 rows x 3) -----
+  const stats = [
+    { label:'Overall Grade', big:`${g.letter} · ${g.pct}%`, color:P.blue },
+    { label:'Lessons Completed', big:`${student.completed.length}/${cards.length}`, color:P.orange },
+    { label:'Week Quizzes', big:`${quizzesTaken}/${TOTAL_WEEKS}`, color:P.purple },
+    { label:'Reading Opened', big:`${student.readingSeen.length}/11`, color:P.purple },
+    { label:'Screencasts Watched', big:`${videosConfirmed}/23`, color:P.red },
+    { label:'Practice Files Opened', big:`${student.seenPractice.length}/43`, color:P.blue },
+  ];
+  const gap = 14, cardW = (pageWidth-80-2*gap)/3, cardH = 58;
+  stats.forEach((s,i)=>{
+    const col = i % 3, row = Math.floor(i/3);
+    const cx = 40 + col*(cardW+gap), cy = y + row*(cardH+gap);
+    doc.setFillColor(248,249,252);
+    doc.roundedRect(cx, cy, cardW, cardH, 8, 8, 'F');
+    doc.setFillColor(...s.color);
+    doc.roundedRect(cx, cy, 4, cardH, 2, 2, 'F');
+    doc.setFont(undefined,'bold'); doc.setFontSize(14); doc.setTextColor(...P.ink);
+    doc.text(s.big, cx+14, cy+27);
+    doc.setFont(undefined,'normal'); doc.setFontSize(8.5); doc.setTextColor(...P.muted);
+    doc.text(s.label, cx+14, cy+42);
+  });
+  y += 2*(cardH+gap) + 10;
+
+  // ----- Week-by-week breakdown table -----
+  const weekRows = [];
   for(let w=1; w<=TOTAL_WEEKS; w++){
-    if(y > pageHeight-60) y = newPage();
     const st = weekStatus(w);
     const quiz = student.weekQuizzes[w];
-    const quizText = quiz ? (quiz.total ? `${quiz.score}/${quiz.total}` : 'reflection') : '—';
-    doc.text(`Week ${w} (${weekMeta[w]||''}): ${st.done}/${st.total} days · quiz ${quizText}`, 50, y);
-    y += 13;
+    const quizText = quiz ? (quiz.total ? `${quiz.score}/${quiz.total}` : 'Reflection') : '—';
+    const statusText = st.pct===100 ? 'Complete' : (st.pct>0 ? 'In progress' : 'Not started');
+    weekRows.push([`Week ${w}`, weekMeta[w]||'', `${st.done}/${st.total}`, statusText, quizText]);
   }
-  y += 12;
+  if(hasAutoTable){
+    doc.autoTable({
+      startY: y, margin:{ left:40, right:40, bottom:40 },
+      head:[['Week','Topic','Days','Status','Quiz']],
+      body: weekRows,
+      theme:'striped',
+      headStyles:{ fillColor:P.blue, textColor:255, fontStyle:'bold', fontSize:9 },
+      alternateRowStyles:{ fillColor:P.zebraBlue },
+      styles:{ fontSize:8.5, cellPadding:5, textColor:P.ink }
+    });
+    y = doc.lastAutoTable.finalY + 26;
+  } else {
+    doc.setFontSize(12); doc.setTextColor(...P.blue); doc.text('Week-by-week breakdown', 40, y); y+=16;
+    doc.setFontSize(8.5); doc.setTextColor(...P.ink);
+    weekRows.forEach(r=>{ if(y>pageHeight-60){ doc.addPage(); y=60; } doc.text(r.join('  ·  '),50,y); y+=13; });
+    y += 12;
+  }
 
-  if(y > pageHeight-100) y = newPage();
-  doc.setFontSize(13); doc.text('Read Me notes', 40, y); y+=16;
-  doc.setFontSize(9);
-  readingPool.forEach(item=>{
-    if(y > pageHeight-60) y = newPage();
+  // ----- Read Me notes table -----
+  if(y > pageHeight - 140){ doc.addPage(); y = 60; }
+  doc.setFont(undefined,'bold'); doc.setFontSize(12.5); doc.setTextColor(...P.purple);
+  doc.text('Read Me Notes', 40, y); y += 8;
+  const readRows = readingPool.map(item=>{
     const isRead = student.readingSeen.includes(item.key);
     const quiz = student.contentQuizzes.reading[item.key];
-    doc.text(`${item.title}: ${isRead?'Read':'Not read'}${quiz? ' · check '+quiz.score+'/'+quiz.total : ''}`, 50, y);
-    y += 13;
+    return [item.title, isRead?'Read':'Not read', quiz? `${quiz.score}/${quiz.total}`:'—'];
   });
-  y += 12;
+  if(hasAutoTable){
+    doc.autoTable({
+      startY: y+6, margin:{ left:40, right:40, bottom:40 },
+      head:[['Section','Status','Check Score']],
+      body: readRows,
+      theme:'striped',
+      headStyles:{ fillColor:P.purple, textColor:255, fontStyle:'bold', fontSize:9 },
+      alternateRowStyles:{ fillColor:P.zebraPurple },
+      styles:{ fontSize:8.5, cellPadding:5, textColor:P.ink }
+    });
+    y = doc.lastAutoTable.finalY + 26;
+  } else {
+    doc.setFont(undefined,'normal'); doc.setFontSize(8.5); doc.setTextColor(...P.ink);
+    readRows.forEach(r=>{ if(y>pageHeight-60){ doc.addPage(); y=60; } doc.text(r.join('  ·  '),50,y); y+=13; });
+    y += 12;
+  }
 
-  if(y > pageHeight-100) y = newPage();
-  doc.setFontSize(13); doc.text('Screencasts', 40, y); y+=16;
-  doc.setFontSize(9);
-  (typeof allScreencasts !== 'undefined' ? allScreencasts : []).forEach(v=>{
-    if(y > pageHeight-60) y = newPage();
+  // ----- Screencasts table -----
+  if(y > pageHeight - 140){ doc.addPage(); y = 60; }
+  doc.setFont(undefined,'bold'); doc.setFontSize(12.5); doc.setTextColor(...P.orange);
+  doc.text('Screencasts', 40, y); y += 8;
+  const screenRows = (typeof allScreencasts !== 'undefined' ? allScreencasts : []).map(v=>{
     const watched = typeof theaterIsWatched === 'function' ? theaterIsWatched(v.id) : false;
     const quiz = student.contentQuizzes.screencasts[v.id];
-    doc.text(`${v.label}: ${watched?'Watched':'Not watched'}${quiz? ' · check '+quiz.score+'/'+quiz.total : ''}`, 50, y);
-    y += 13;
+    return [v.label, watched?'Watched':'Not watched', quiz? `${quiz.score}/${quiz.total}`:'—'];
   });
+  if(hasAutoTable){
+    doc.autoTable({
+      startY: y+6, margin:{ left:40, right:40, bottom:40 },
+      head:[['Recording','Status','Check Score']],
+      body: screenRows,
+      theme:'striped',
+      headStyles:{ fillColor:P.orange, textColor:255, fontStyle:'bold', fontSize:9 },
+      alternateRowStyles:{ fillColor:P.zebraOrange },
+      styles:{ fontSize:8.5, cellPadding:5, textColor:P.ink }
+    });
+  } else {
+    doc.setFont(undefined,'normal'); doc.setFontSize(8.5); doc.setTextColor(...P.ink);
+    screenRows.forEach(r=>{ if(y>pageHeight-60){ doc.addPage(); y=60; } doc.text(r.join('  ·  '),50,y); y+=13; });
+  }
 
-  const status = document.getElementById('lpReportStatus');
+  // ----- Stamp the watermark + footer on every page, after all content is laid out -----
+  const totalPages = doc.internal.getNumberOfPages();
+  for(let p=1; p<=totalPages; p++){
+    doc.setPage(p);
+    watermarkPage();
+    drawFooter(p, totalPages);
+  }
+
   try{
     doc.save(`${(student.name||'student').replace(/\s+/g,'_')}_Progress_Report.pdf`);
     if(status) status.textContent = 'PDF report downloaded.';
