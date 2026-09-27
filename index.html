@@ -1322,7 +1322,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
         <div class="view-head">
           <div>
             <h2>Read Me — Detailed Notes</h2>
-            <p>Step-by-step written lessons with tools, tips, and visual analogies. Each section can be downloaded on its own as a PDF. Click a section's title — or the 📖 icon — to expand it and read, or collapse it; sections you scroll past will minimize automatically. Opening a section counts toward your weekly reading check.</p>
+            <p>Step-by-step written lessons with tools, tips, and visual analogies. Each section can be downloaded on its own as a PDF. Sections start collapsed — click a section's title (or the ▾ arrow) to expand it and read, or click again to collapse it. Reading a section doesn't mark it complete on its own — use each section's "Mark as Read" button once you've read it.</p>
           </div>
         </div>
         <div class="note-section" id="new-project-menu" data-reading="new-project-menu">
@@ -1889,14 +1889,14 @@ document.getElementById('lpRowsToggle').addEventListener('click', function(){
   this.classList.toggle('open', isOpen);
   this.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
 });
-/* ================= NOTES: ACCORDION + SCROLL-MINIMIZE ================= */
-/* Each .note-section keeps its h3 + .note-actions visible at all times;
-   everything else gets wrapped into a .note-body div at runtime so it can
-   collapse. Clicking the title, or the 📖 icon beside it, toggles it
-   manually, and an IntersectionObserver auto-collapses a section once
-   you've scrolled past it (and re-expands it if you scroll back up to it)
-   so long sections don't clutter the page as you move down through Read
-   Me. */
+/* ================= NOTES / PROGRESS / ASSESSMENT: CLICK-TO-TOGGLE ACCORDION ================= */
+/* Each .note-section keeps its h3 + .note-actions visible at all times; everything
+   else gets wrapped into a .note-body div at runtime so it can collapse. Every
+   section — Read Me notes, the Progress-page tables, and the Assessment groups —
+   starts collapsed and opens only when the student clicks its title or the arrow
+   toggle. There is no scroll-triggered auto-expand/collapse: that used to fight
+   with the student's own clicks (re-opening a section the instant it scrolled
+   into view), so it's gone in favor of a single, predictable click-to-toggle. */
 function initNoteAccordion(root){
   const scope = root || document;
   scope.querySelectorAll('.note-section').forEach(section=>{
@@ -1912,14 +1912,14 @@ function initNoteAccordion(root){
       node = next;
     }
     section.appendChild(body);
+    section.classList.add('collapsed'); // every accordion starts collapsed
     const toggle = document.createElement('button');
     toggle.type = 'button';
     toggle.className = 'note-toggle';
     toggle.setAttribute('aria-label','Click to expand and read this section, or collapse it');
     toggle.title = 'Click to expand';
-    const startsCollapsed = section.classList.contains('collapsed');
-    toggle.setAttribute('aria-expanded', startsCollapsed ? 'false' : 'true');
-    toggle.innerHTML = '<span aria-hidden="true">📖</span><span class="nt-arrow" aria-hidden="true">▾</span>';
+    toggle.setAttribute('aria-expanded','false');
+    toggle.innerHTML = '<span class="nt-arrow" aria-hidden="true">▾</span>';
     h3.classList.add('note-h3-clickable');
     h3.appendChild(toggle);
     const doToggle = ()=>{
@@ -1927,31 +1927,7 @@ function initNoteAccordion(root){
       toggle.setAttribute('aria-expanded', collapsed?'false':'true');
     };
     h3.addEventListener('click', doToggle);
-    // Only the real Read Me sections (which carry data-reading) auto-expand as you
-    // scroll to them. Progress-page and Assessment-page sections are plain
-    // click-to-toggle accordions that stay collapsed until the student taps them —
-    // without this check, the observer's initial callback would immediately
-    // re-expand any section already in view the moment the tab opens, undoing
-    // the "collapsed by default" state before the student ever saw it.
-    if(noteScrollObserver && section.dataset.reading) noteScrollObserver.observe(section);
   });
-}
-let noteScrollObserver = null;
-if('IntersectionObserver' in window){
-  noteScrollObserver = new IntersectionObserver((entries)=>{
-    entries.forEach(entry=>{
-      const section = entry.target;
-      const toggle = section.querySelector('.note-toggle');
-      if(entry.isIntersecting){
-        section.classList.remove('collapsed');
-        if(toggle) toggle.setAttribute('aria-expanded','true');
-      } else if(entry.boundingClientRect.top < 0){
-        // scrolled UP and out of view (past it) -> minimize it
-        section.classList.add('collapsed');
-        if(toggle) toggle.setAttribute('aria-expanded','false');
-      }
-    });
-  }, { threshold: 0, rootMargin: '-90px 0px -55% 0px' });
 }
 initNoteAccordion();
 /* Reading sections are marked read explicitly via the "Mark as Read" button
@@ -2633,11 +2609,20 @@ function buildProgressReportDoc(trigger){
   const screencastQuizAvg = avgPct(screencastQuizEntries);
 
   // A SINGLE centered diagonal "REPORT" mark per page (not tiled/repeated).
+  // Real alpha transparency (not just a light color) so the watermark never blocks
+  // the table text it sits on top of — a light-but-opaque color was covering
+  // whatever it crossed, which is what made the Read Me table unreadable.
+  function setOpacity(val){
+    try{ doc.setGState(new doc.GState({ opacity: val })); return true; }
+    catch(e){ return false; }
+  }
   function watermarkPage(){
+    const alphaOk = setOpacity(0.12);
     doc.setFont(undefined,'bold');
-    doc.setTextColor(226,230,242);
+    doc.setTextColor(alphaOk ? 70 : 232, alphaOk ? 85 : 235, alphaOk ? 120 : 245);
     doc.setFontSize(72);
     doc.text('REPORT', pageWidth/2, pageHeight/2, { angle:35, align:'center' });
+    if(alphaOk) setOpacity(1);
     // Hidden/near-invisible forensic stamp — tiny, almost-white, tiled down the left
     // margin — carries the student's email + generation time so a copied page can
     // still be traced back to its source without being visually distracting.
@@ -2741,7 +2726,8 @@ function buildProgressReportDoc(trigger){
       theme:'striped',
       headStyles:{ fillColor:P.purple, textColor:255, fontStyle:'bold', fontSize:9 },
       alternateRowStyles:{ fillColor:P.zebraPurple },
-      styles:{ fontSize:8.5, cellPadding:5, textColor:P.ink }
+      styles:{ fontSize:8.5, cellPadding:5, textColor:P.ink, overflow:'linebreak' },
+      columnStyles:{ 0:{ cellWidth: 300 }, 1:{ cellWidth: 90 }, 2:{ cellWidth: 90 } }
     });
     y = doc.lastAutoTable.finalY + 26;
   } else {
@@ -2767,7 +2753,8 @@ function buildProgressReportDoc(trigger){
       theme:'striped',
       headStyles:{ fillColor:P.orange, textColor:255, fontStyle:'bold', fontSize:9 },
       alternateRowStyles:{ fillColor:P.zebraOrange },
-      styles:{ fontSize:8.5, cellPadding:5, textColor:P.ink }
+      styles:{ fontSize:8.5, cellPadding:5, textColor:P.ink, overflow:'linebreak' },
+      columnStyles:{ 0:{ cellWidth: 300 }, 1:{ cellWidth: 90 }, 2:{ cellWidth: 90 } }
     });
   } else {
     doc.setFont(undefined,'normal'); doc.setFontSize(8.5); doc.setTextColor(...P.ink);
