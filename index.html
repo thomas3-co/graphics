@@ -1903,6 +1903,11 @@ function initNoteAccordion(root){
     if(section.querySelector('.note-body')) return; // already set up
     const h3 = section.querySelector('h3');
     if(!h3) return;
+    // Snapshot the plain title text NOW, before the ▾ toggle arrow is appended into
+    // this h3 below — that arrow is outside the PDF font's Latin-1 character set,
+    // and once it ends up inside h3.textContent it corrupts the whole string when
+    // the PDF report reads it (that's the garbled, oddly-spaced text in the report).
+    if(!section.dataset.title) section.dataset.title = h3.textContent.trim();
     const body = document.createElement('div');
     body.className = 'note-body';
     let node = h3.nextSibling;
@@ -1991,7 +1996,7 @@ function buildItemQuiz(pool, key){
    in Read Me, including the new-project-menu section added at the top. */
 const readingPool = Array.from(document.querySelectorAll('.note-section[data-reading]')).map(el=>({
   key: el.dataset.reading,
-  title: (el.querySelector('h3') && el.querySelector('h3').textContent.trim()) || el.dataset.reading,
+  title: el.dataset.title || (el.querySelector('h3') && el.querySelector('h3').textContent.trim()) || el.dataset.reading,
   desc: (el.querySelector('p') && el.querySelector('p').textContent.trim()) || ''
 }));
 let cqPendingType = null; // 'video' | 'reading'
@@ -2591,6 +2596,7 @@ function buildProgressReportDoc(trigger){
     // Older jsPDF builds without encryption support — still generate the PDF, just without the read-only lock.
     doc = new jsPDF({ unit:'pt', format:'a4' });
   }
+  doc.setFont('helvetica','normal'); // explicit base font for the whole document
   const hasAutoTable = typeof doc.autoTable === 'function';
   const pageWidth = doc.internal.pageSize.getWidth();
   const pageHeight = doc.internal.pageSize.getHeight();
@@ -2598,6 +2604,19 @@ function buildProgressReportDoc(trigger){
   const device = getDeviceInfo();
   const stampText = `${student.email} · ${new Date().toLocaleString()}`;
   const P = { blue:[47,111,237], purple:[139,92,246], orange:[255,122,45], red:[239,71,111], deep:[28,32,48], ink:[26,29,36], muted:[110,116,130], zebraBlue:[236,242,255], zebraPurple:[245,241,255], zebraOrange:[255,241,232] };
+  // The PDF's built-in font (Helvetica/WinAnsi) only supports Latin-1 characters —
+  // any stray Unicode symbol (an arrow, an emoji) that sneaks into a title corrupts
+  // the WHOLE string's encoding, which is what produced the garbled, oddly-spaced
+  // text seen in earlier reports. Every piece of text pulled from the page's DOM or
+  // data (titles, labels) is run through this before it reaches a table cell.
+  function pdfSafeText(str){
+    return String(str==null ? '' : str)
+      .split('')
+      .filter(ch => ch.codePointAt(0) <= 0x00FF)
+      .join('')
+      .replace(/\s+/g, ' ')
+      .trim();
+  }
 
   // ----- KPI numbers, matching the web My Progress dashboard exactly -----
   const quizzesTaken = Object.keys(student.weekQuizzes).length;
@@ -2691,7 +2710,7 @@ function buildProgressReportDoc(trigger){
     const quiz = student.weekQuizzes[w];
     const quizText = quiz ? (quiz.total ? `${quiz.score}/${quiz.total}` : 'Reflection') : '—';
     const statusText = st.pct===100 ? 'Complete' : (st.pct>0 ? 'In progress' : 'Not started');
-    weekRows.push([`Week ${w}`, weekMeta[w]||'', `${st.done}/${st.total}`, statusText, quizText]);
+    weekRows.push([`Week ${w}`, pdfSafeText(weekMeta[w]||''), `${st.done}/${st.total}`, statusText, quizText]);
   }
   if(hasAutoTable){
     doc.autoTable({
@@ -2699,9 +2718,9 @@ function buildProgressReportDoc(trigger){
       head:[['Week','Topic','Days','Status','Quiz']],
       body: weekRows,
       theme:'striped',
-      headStyles:{ fillColor:P.blue, textColor:255, fontStyle:'bold', fontSize:9 },
+      headStyles:{ font:'helvetica', fillColor:P.blue, textColor:255, fontStyle:'bold', fontSize:9 },
       alternateRowStyles:{ fillColor:P.zebraBlue },
-      styles:{ fontSize:8.5, cellPadding:5, textColor:P.ink }
+      styles:{ font:'helvetica', fontStyle:'normal', fontSize:9, cellPadding:6, textColor:P.ink, valign:'middle' }
     });
     y = doc.lastAutoTable.finalY + 26;
   } else {
@@ -2718,7 +2737,7 @@ function buildProgressReportDoc(trigger){
   const readRows = readingPool.map(item=>{
     const isRead = student.readingSeen.includes(item.key);
     const quiz = student.contentQuizzes.reading[item.key];
-    return [item.title, isRead?'Read':'Not read', quiz? `${quiz.score}/${quiz.total}`:'—'];
+    return [pdfSafeText(item.title), isRead?'Read':'Not read', quiz? `${quiz.score}/${quiz.total}`:'—'];
   });
   if(hasAutoTable){
     doc.autoTable({
@@ -2726,9 +2745,9 @@ function buildProgressReportDoc(trigger){
       head:[['Section','Status','Check Score']],
       body: readRows,
       theme:'striped',
-      headStyles:{ fillColor:P.purple, textColor:255, fontStyle:'bold', fontSize:9 },
+      headStyles:{ font:'helvetica', fillColor:P.purple, textColor:255, fontStyle:'bold', fontSize:9 },
       alternateRowStyles:{ fillColor:P.zebraPurple },
-      styles:{ fontSize:8.5, cellPadding:5, textColor:P.ink, overflow:'linebreak' },
+      styles:{ font:'helvetica', fontStyle:'normal', fontSize:9, cellPadding:6, textColor:P.ink, overflow:'linebreak', valign:'middle' },
       columnStyles:{ 0:{ cellWidth: 300 }, 1:{ cellWidth: 90 }, 2:{ cellWidth: 90 } }
     });
     y = doc.lastAutoTable.finalY + 26;
@@ -2745,7 +2764,7 @@ function buildProgressReportDoc(trigger){
   const screenRows = (typeof allScreencasts !== 'undefined' ? allScreencasts : []).map(v=>{
     const watched = typeof theaterIsWatched === 'function' ? theaterIsWatched(v.id) : false;
     const quiz = student.contentQuizzes.screencasts[v.id];
-    return [v.label, watched?'Watched':'Not watched', quiz? `${quiz.score}/${quiz.total}`:'—'];
+    return [pdfSafeText(v.label), watched?'Watched':'Not watched', quiz? `${quiz.score}/${quiz.total}`:'—'];
   });
   if(hasAutoTable){
     doc.autoTable({
@@ -2753,9 +2772,9 @@ function buildProgressReportDoc(trigger){
       head:[['Recording','Status','Check Score']],
       body: screenRows,
       theme:'striped',
-      headStyles:{ fillColor:P.orange, textColor:255, fontStyle:'bold', fontSize:9 },
+      headStyles:{ font:'helvetica', fillColor:P.orange, textColor:255, fontStyle:'bold', fontSize:9 },
       alternateRowStyles:{ fillColor:P.zebraOrange },
-      styles:{ fontSize:8.5, cellPadding:5, textColor:P.ink, overflow:'linebreak' },
+      styles:{ font:'helvetica', fontStyle:'normal', fontSize:9, cellPadding:6, textColor:P.ink, overflow:'linebreak', valign:'middle' },
       columnStyles:{ 0:{ cellWidth: 300 }, 1:{ cellWidth: 90 }, 2:{ cellWidth: 90 } }
     });
   } else {
