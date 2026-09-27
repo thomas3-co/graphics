@@ -2617,10 +2617,12 @@ function buildProgressReportDoc(trigger){
     catch(e){ return false; }
   }
   function watermarkPage(){
-    const alphaOk = setOpacity(0.12);
-    doc.setFont(undefined,'bold');
-    doc.setTextColor(alphaOk ? 70 : 232, alphaOk ? 85 : 235, alphaOk ? 120 : 245);
-    doc.setFontSize(72);
+    // Kept deliberately light and thin — normal weight (not bold) plus low opacity —
+    // so it reads as a faint mark rather than competing with table text underneath it.
+    const alphaOk = setOpacity(0.055);
+    doc.setFont(undefined,'normal');
+    doc.setTextColor(alphaOk ? 60 : 236, alphaOk ? 75 : 238, alphaOk ? 110 : 246);
+    doc.setFontSize(60);
     doc.text('REPORT', pageWidth/2, pageHeight/2, { angle:35, align:'center' });
     if(alphaOk) setOpacity(1);
     // Hidden/near-invisible forensic stamp — tiny, almost-white, tiled down the left
@@ -2810,9 +2812,7 @@ function notifyInstructor(trigger){
     `Trigger: ${trigger}`,
     `Overall grade: ${g.letter} (${g.pct}%)`,
     `Lessons completed: ${student.completed.length} of ${cards.length}`,
-    `Device: ${getDeviceInfo()}`,
-    '',
-    'Full detail is in the PDF progress report generated on the student\'s device at the same time as this notification.'
+    `Device: ${getDeviceInfo()}`
   ].join('\n');
   if(GOOGLE_FORM_ACTION_URL && GOOGLE_FORM_ENTRY_ID){
     const formData = new URLSearchParams();
@@ -2821,8 +2821,10 @@ function notifyInstructor(trigger){
       .catch(()=>{ /* no-cors means we can't read the response either way; nothing more to do */ });
   } else {
     // Fallback only — remove once GOOGLE_FORM_ACTION_URL / GOOGLE_FORM_ENTRY_ID are set above.
+    // A mailto: link can't attach a file on its own, so the body just tells the
+    // student to attach the PDF that was downloaded at the same moment.
     const subject = encodeURIComponent(`Progress Report — ${student.name} (${student.email})`);
-    const body = encodeURIComponent(summary + '\n\n(The full PDF report has just been downloaded on the student\'s device — please attach it here manually before sending, since email links can\'t attach files automatically.)');
+    const body = encodeURIComponent(summary + '\n\nAttach the file you downloaded now.');
     window.location.href = `mailto:${REPORT_EMAIL}?subject=${subject}&body=${body}`;
   }
 }
