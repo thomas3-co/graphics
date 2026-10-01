@@ -183,9 +183,6 @@ button{font-family:inherit;}
 .month-block{display:none;}
 .month-block.active{display:block;}
 .week-card{margin:34px 0 10px;scroll-margin-top:75px;}
-.week-lock-note{margin-top:6px;background:#f4f5f8;border:1px dashed var(--line);border-radius:12px;padding:18px 20px;color:var(--muted);font-size:13.5px;display:flex;align-items:center;gap:12px;line-height:1.5;}
-.week-lock-note .wl-icon{font-size:20px;flex-shrink:0;}
-.week-lock-note strong{color:var(--ink);}
 .week-card h2.wk{font-size:1.35rem;margin-bottom:16px;color:var(--c-curriculum);display:flex;align-items:center;gap:10px;}
 .week-card h2.wk::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--c-curriculum);}
 .day-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;}
@@ -547,7 +544,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
           <div class="stat"><b>16</b><span>Weeks of curriculum</span></div>
           <div class="stat"><b>32</b><span>Daily lessons &amp; flip cards</span></div>
           <div class="stat"><b>3</b><span>Group projects</span></div>
-          <div class="stat"><b>2</b><span>Screencast recordings</span></div>
+          <div class="stat"><b>23</b><span>Screencast recordings</span></div>
         </div>
         <div class="section-heading">Jump to a section</div>
         <div class="home-grid">
@@ -679,24 +676,24 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
         <h2 class="wk">Week 4 — Advanced Portrait Editing</h2>
         <div class="day-grid">
         <div class="flip-card" data-day="4-1"><div class="flip-card-inner">
-        <div class="flip-card-front"><h4>Day 7: Lip &amp; Face Retouching (Dodge &amp; Burn, Healing Brush, Frequency Separation)</h4><p>Professional-level skin retouching that keeps natural texture intact.</p><span class="flip-hint">Tap to flip</span></div>
+        <div class="flip-card-front"><h4>Day 1: Lips, Teeth &amp; Eye Reflection</h4><p>Enhance portrait details for realism.</p><span class="flip-hint">Tap to flip</span></div>
         <div class="flip-card-back"><div class="vocab-title">Vocabulary</div>
-        <p><span class="vocab" tabindex="0" data-def="Separates an image into texture and tone layers so each can be edited independently.">Frequency Separation</span><span class="vocab-def"> — Separates an image into texture and tone layers so each can be edited independently.</span>,
-        <span class="vocab" tabindex="0" data-def="Blends sampled pixels with the surrounding texture and lighting to remove blemishes seamlessly.">Healing Brush</span><span class="vocab-def"> — Blends sampled pixels with the surrounding texture and lighting to remove blemishes seamlessly.</span>,
-        <span class="vocab" tabindex="0" data-def="Lightens (dodge) or darkens (burn) specific areas to sculpt contours and even out skin tone.">Dodge &amp; Burn</span><span class="vocab-def"> — Lightens (dodge) or darkens (burn) specific areas to sculpt contours and even out skin tone.</span>,
-        <span class="vocab" tabindex="0" data-def="Automatically samples nearby pixels to quickly patch small blemishes.">Spot Healing Brush</span><span class="vocab-def"> — Automatically samples nearby pixels to quickly patch small blemishes.</span></p>
+        <p><span class="vocab" tabindex="0" data-def="Brighten teeth naturally.">Teeth Whitening</span><span class="vocab-def"> — Brighten teeth naturally.</span>,
+        <span class="vocab" tabindex="0" data-def="Adjust lip tone & color.">Lip Enhancement</span><span class="vocab-def"> — Adjust lip tone & color.</span>,
+        <span class="vocab" tabindex="0" data-def="Add subtle highlights to eyes.">Eye Reflection</span><span class="vocab-def"> — Add subtle highlights to eyes.</span></p>
         <div class="vocab-title">Big Ideas</div>
-        <p class="big-ideas">Frequency Separation is the industry-standard technique for retouching skin without losing natural texture — fix tone on one layer, texture on another, and neither touches the other.</p>
+        <p class="big-ideas">Focus on subtle realism, use separate layers and masks for flexibility.</p>
         </div></div></div>
         <div class="flip-card" data-day="4-2"><div class="flip-card-inner">
-        <div class="flip-card-front"><h4>Day 8: Advanced Portrait Retouching: Teeth Whitening</h4><p>Brighten teeth naturally without tipping into an obviously fake look.</p><span class="flip-hint">Tap to flip</span></div>
+        <div class="flip-card-front flip-card-quiz-front"><h4>Day 2: Puppet Warp, Dress Change &amp; Final Project</h4><p>Advanced portrait manipulation, then apply all skills from Week 1–4.</p><span class="flip-hint" style="color:rgba(255,255,255,.75)">Tap to flip</span></div>
         <div class="flip-card-back"><div class="vocab-title">Vocabulary</div>
-        <p><span class="vocab" tabindex="0" data-def="Adjustment used to shift and desaturate yellow tones for natural-looking whitening.">Hue/Saturation</span><span class="vocab-def"> — Adjustment used to shift and desaturate yellow tones for natural-looking whitening.</span>,
-        <span class="vocab" tabindex="0" data-def="Isolates the whitening effect to just the teeth without touching the surrounding lips or skin.">Layer Mask</span><span class="vocab-def"> — Isolates the whitening effect to just the teeth without touching the surrounding lips or skin.</span>,
-        <span class="vocab" tabindex="0" data-def="Fine-tunes a specific color range, like yellows, independently of the rest of the image.">Selective Color</span><span class="vocab-def"> — Fine-tunes a specific color range, like yellows, independently of the rest of the image.</span>,
-        <span class="vocab" tabindex="0" data-def="Brightening and neutralizing yellow tones on teeth while preserving natural shading and shine.">Teeth Whitening</span><span class="vocab-def"> — Brightening and neutralizing yellow tones on teeth while preserving natural shading and shine.</span></p>
+        <p><span class="vocab" tabindex="0" data-def="Pin-based tool for flexible distortion.">Puppet Warp</span><span class="vocab-def"> — Pin-based tool for flexible distortion.</span>,
+        <span class="vocab" tabindex="0" data-def="Altering clothing colors/patterns.">Dress Change</span><span class="vocab-def"> — Altering clothing colors/patterns.</span>,
+        <span class="vocab" tabindex="0" data-def="Mesh overlay used in puppet warp.">Control Points</span><span class="vocab-def"> — Mesh overlay used in puppet warp.</span>,
+        <span class="vocab" tabindex="0" data-def="Combining learned techniques into one design.">Integration</span><span class="vocab-def"> — Combining learned techniques into one design.</span>,
+        <span class="vocab" tabindex="0" data-def="Applying advanced retouching and compositing.">Final Composition</span><span class="vocab-def"> — Applying advanced retouching and compositing.</span></p>
         <div class="vocab-title">Big Ideas</div>
-        <p class="big-ideas">Keep whitening subtle — real teeth aren't pure white. Mask precisely and desaturate before brightening so the result still looks believable.</p>
+        <p class="big-ideas">Use Puppet Warp for realistic body or cloth repositioning; maintain proportions and natural folds. Create a polished portrait project using techniques from previous weeks.</p>
         </div></div></div>
         </div></div>
         </div><!-- /month-block m1 -->
@@ -1781,7 +1778,7 @@ const weeksByMonth = { m1:[1,2,3,4], m2:[5,6,7,8], m3:[9,10,11,12], m4:[13,14,15
 function buildWeekNav(month){
   const nav = document.getElementById('weekNav');
   nav.innerHTML = '';
-  weeksByMonth[month].filter(isWeekReleased).forEach(w=>{
+  weeksByMonth[month].forEach(w=>{
     const b = document.createElement('button');
     b.className = 'week-pill';
     b.type = 'button';
@@ -1790,20 +1787,6 @@ function buildWeekNav(month){
     nav.appendChild(b);
   });
 }
-/* Hides any week-card whose content isn't released yet, and hides a whole
-   month chip if none of its weeks are released — so unreleased content is
-   fully absent from the Curriculum tab rather than shown as a placeholder. */
-function applyCurriculumRelease(){
-  for(let w=1; w<=TOTAL_WEEKS; w++){
-    const el = document.getElementById('week'+w);
-    if(el) el.style.display = isWeekReleased(w) ? '' : 'none';
-  }
-  document.querySelectorAll('#monthSwitch .chip').forEach(chip=>{
-    const hasReleased = (weeksByMonth[chip.dataset.month]||[]).some(isWeekReleased);
-    chip.style.display = hasReleased ? '' : 'none';
-  });
-}
-applyCurriculumRelease();
 buildWeekNav('m1');
 /* Projects sub-nav */
 document.getElementById('projSubnav').addEventListener('click', e=>{
@@ -1821,21 +1804,6 @@ const weekMeta = {
   13:'Coming Soon', 14:'Coming Soon', 15:'Coming Soon', 16:'Coming Soon'
 };
 const TOTAL_WEEKS = 16;
-/* ================= CONTENT RELEASE CONTROL =================
-   Controls what's currently visible to students. Weeks 1–3 are released now
-   with no date attached. Week 4 unlocks automatically the week of October 5,
-   2026 — no further edit needed, it just appears once that date arrives. Any
-   week with no entry here (5–16) stays fully hidden — not shown as "Coming
-   Soon", just absent — until you add it. Same idea for screencasts and
-   practice files below: only the ids/keys listed are visible; everything
-   else on the roster is hidden until added to these lists. */
-const ALWAYS_RELEASED_WEEKS = [1,2,3];
-const WEEK_UNLOCK_DATE = { 4: new Date('2026-10-05T00:00:00') };
-function isWeekReleased(w){
-  if(ALWAYS_RELEASED_WEEKS.includes(w)) return true;
-  const d = WEEK_UNLOCK_DATE[w];
-  return d ? new Date() >= d : false;
-}
 const cards = document.querySelectorAll('.flip-card[data-day]');
 let completed = [];
 try{ completed = JSON.parse(localStorage.getItem('completedDays')) || []; }catch(e){ completed = []; }
@@ -1849,7 +1817,6 @@ function buildLayersPanel(){
   const rows = document.getElementById('lpRows');
   rows.innerHTML = '';
   for(let w=1; w<=TOTAL_WEEKS; w++){
-    if(!isWeekReleased(w)) continue;
     const dayEls = weekDayEls(w);
     const total = dayEls.length;
     const done = Array.from(dayEls).filter(c => completed.includes(c.dataset.day)).length;
@@ -1861,7 +1828,7 @@ function buildLayersPanel(){
     row.setAttribute('aria-label', `Week ${w}: ${weekMeta[w]}, ${pct}% complete`);
     row.innerHTML = `<span class="lp-eye" aria-hidden="true">${pct===100?'●':'○'}</span>
       <span class="lp-thumb"><i style="height:${pct}%"></i></span>
-      <span class="lp-label"><b>Week ${w}</b><small>${weekMeta[w]}</small></span>
+      <span class="lp-label"><b>Week w</b><small>{weekMeta[w]}</small></span>
       <span class="lp-pct">${pct}%</span>`;
     const jump = () => {
       const monthOf = w<=4?'m1':(w<=8?'m2':(w<=12?'m3':'m4'));
@@ -2047,7 +2014,7 @@ function renderQuizBody(questions){
     <div style="margin-bottom:12px;">
       <div style="font-size:13px;font-weight:700;margin-bottom:6px;">${i+1}. ${q.prompt}</div>
       ${q.options.map((opt,oi)=>`<label style="display:block;font-size:13px;margin:4px 0;cursor:pointer;">
-        <input type="radio" name="cqq${i}" value="${oi}" data-correct="${opt.correct?'1':'0'}"> ${opt.text}
+        <input type="radio" name="cqqi"value="{oi}" data-correct="${opt.correct?'1':'0'}"> ${opt.text}
       </label>`).join('')}
     </div>`).join('');
 }
@@ -2192,38 +2159,6 @@ const REPORT_EMAIL = 'thomas@hmacademy.org';
 const GOOGLE_FORM_ACTION_URL = ''; // e.g. 'https://docs.google.com/forms/d/e/XXXXXXXX/formResponse'
 const GOOGLE_FORM_ENTRY_ID = '';   // e.g. 'entry.1234567890'
 const COURSE_START_DATE = new Date('2026-09-14T00:00:00'); // Sept 14 = Week 1, Day 1
-/* ---------- CALENDAR-DRIVEN CURRICULUM LOCK ----------
-   Weeks 1-3 are already underway and stay fully open. Every week from Week 4 on
-   unlocks automatically on its own scheduled start date (7 days per week from
-   COURSE_START_DATE — Week 4 = Oct 5, Week 5 = Oct 12, and so on), rather than
-   needing to be manually flipped on later. Until a week's date arrives, its day
-   cards are hidden and a "this week unlocks on <date>" note is shown instead —
-   the lesson content itself is left in place underneath, not deleted, so nothing
-   needs to be rebuilt when the date comes around. This re-checks on every page
-   load, not live while the page is open.
-   Weeks 11-16 already ship as "Coming Soon" placeholder content (no real lessons
-   yet), so their lock note is skipped — there's nothing to hide there. */
-const WEEKS_ALWAYS_OPEN = 3;
-function weekStartDate(w){
-  return new Date(COURSE_START_DATE.getTime() + (w-1)*7*86400000);
-}
-function applyCurriculumLocks(){
-  for(let w = WEEKS_ALWAYS_OPEN + 1; w <= TOTAL_WEEKS; w++){
-    const weekEl = document.getElementById('week'+w);
-    if(!weekEl || weekEl.querySelector('.week-lock-note')) continue;
-    const startDate = weekStartDate(w);
-    if(new Date() >= startDate) continue; // its date has arrived — leave it open
-    const isPlaceholder = /Coming Soon/i.test(weekEl.querySelector('h2.wk')?.textContent || '');
-    if(isPlaceholder) continue; // nothing real to hide yet
-    const dayGrid = weekEl.querySelector('.day-grid');
-    if(dayGrid) dayGrid.style.display = 'none';
-    const dateStr = startDate.toLocaleDateString(undefined, { weekday:'long', year:'numeric', month:'long', day:'numeric' });
-    const note = document.createElement('div');
-    note.className = 'week-lock-note';
-    note.innerHTML = `<span class="wl-icon" aria-hidden="true">🔒</span><span>This week unlocks <strong>${dateStr}</strong> — check back then!</span>`;
-    weekEl.appendChild(note);
-  }
-}
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 /* Lightweight device/browser sniff from navigator.userAgent — good enough to note
    "which device this report came from" for the instructor, not meant to be exact. */
@@ -2243,8 +2178,8 @@ function getDeviceInfo(){
     else if(/iPhone|iPad|iPod/.test(ua)) os = 'iOS';
     else if(/Linux/.test(ua)) os = 'Linux';
     const type = /Mobi|Android|iPhone|iPad/.test(ua) ? 'Mobile' : 'Desktop';
-    const res = (window.screen && window.screen.width && window.screen.height) ? `${window.screen.width}×${window.screen.height}` : '';
-    return `${type} · ${browser} on ${os}${res ? ' · '+res : ''}`;
+    const res = (window.screen && window.screen.width && window.screen.height) ? `window.screen.width×{window.screen.height}` : '';
+    return `${type} · ${browser} on os{res ? ' · '+res : ''}`;
   }catch(e){ return 'Unknown device'; }
 }
 /* ---------- SIGN-IN / DEVICE LOCK ---------- */
@@ -2427,9 +2362,9 @@ function maybeShowWeekQuiz(week){
     quiz.forEach((q,i)=>{
       const wrap = document.createElement('div');
       wrap.style.marginBottom = '12px';
-      wrap.innerHTML = `<div style="font-size:13px;font-weight:700;margin-bottom:6px;">${i+1}. What does "${q.term}" mean?</div>` +
+      wrap.innerHTML = `<div style="font-size:13px;font-weight:700;margin-bottom:6px;">i+1.Whatdoes"{q.term}" mean?</div>` +
         q.options.map((opt,oi)=>`<label style="display:block;font-size:13px;margin:4px 0;cursor:pointer;">
-          <input type="radio" name="wqq${i}" value="${oi}" data-correct="${opt===q.correct?'1':'0'}"> ${opt}
+          <input type="radio" name="wqqi"value="{oi}" data-correct="${opt===q.correct?'1':'0'}"> ${opt}
         </label>`).join('');
       body.appendChild(wrap);
     });
@@ -2495,7 +2430,7 @@ function computeGrade(){
   const quizAvg = quizzesTaken ? quizPctSum/quizzesTaken : 0;
   const readingPct = Math.min(100, (student.readingSeen.length/11)*100);
   const videoIds = Object.keys(student.videoConfirmed).filter(id=>student.videoConfirmed[id]);
-  const videoPct = Math.min(100, (videoIds.length/allScreencasts.length)*100);
+  const videoPct = Math.min(100, (videoIds.length/23)*100);
   const overall = completionPct*0.45 + quizAvg*0.25 + readingPct*0.15 + videoPct*0.15;
   let letter = 'F';
   if(overall>=90) letter='A'; else if(overall>=80) letter='B'; else if(overall>=70) letter='C'; else if(overall>=60) letter='D';
@@ -2505,7 +2440,7 @@ function updateGrade(){
   const g = computeGrade();
   const letterEl = document.getElementById('lpGradeLetter');
   const detailEl = document.getElementById('lpGradeDetail');
-  if(letterEl){ letterEl.textContent = student ? `${g.letter}  (${g.pct}%)` : '—'; }
+  if(letterEl){ letterEl.textContent = student ? `g.letter ({g.pct}%)` : '—'; }
   if(detailEl){ detailEl.textContent = g.detail; }
   const sbGrade = document.getElementById('sbGrade');
   if(sbGrade) sbGrade.textContent = student ? `${g.letter} · ${g.pct}%` : '—';
@@ -2534,27 +2469,26 @@ function renderProgressView(){
   const screencastQuizAvg = avgPct(screencastQuizEntries);
   let rows = '';
   for(let w=1; w<=TOTAL_WEEKS; w++){
-    if(!isWeekReleased(w)) continue;
     const st = weekStatus(w);
     const quiz = student.weekQuizzes[w];
     let badgeClass = 'notstarted', badgeText = 'Not started';
     if(st.pct===100){ badgeClass='done'; badgeText='Complete'; }
     else if(st.pct>0){ badgeClass='partial'; badgeText='In progress'; }
-    const quizText = quiz ? (quiz.total ? `${quiz.score}/${quiz.total} correct` : 'Reflection submitted') : '—';
-    rows += `<tr><td>Week ${w}</td><td>${weekMeta[w]||''}</td><td>${st.done}/${st.total} days</td><td><span class="pw-badge ${badgeClass}">${badgeText}</span></td><td>${quizText}</td></tr>`;
+    const quizText = quiz ? (quiz.total ? `quiz.score/{quiz.total} correct` : 'Reflection submitted') : '—';
+    rows += `<tr><td>Week w</td><td>{weekMeta[w]||''}</td><td>st.done/{st.total} days</td><td><span class="pw-badge badgeClass">{badgeText}</span></td><td>${quizText}</td></tr>`;
   }
   let readingRows = readingPool.map(item=>{
     const isRead = student.readingSeen.includes(item.key);
     const quiz = student.contentQuizzes.reading[item.key];
-    return `<tr><td>${item.title}</td><td><span class="pw-badge ${isRead?'done':'notstarted'}">${isRead?'Read':'Not read'}</span></td><td>${quiz? (quiz.score+'/'+quiz.total) : '—'}</td></tr>`;
+    return `<tr><td>${item.title}</td><td><span class="pw-badge isRead?'done':'notstarted'">{isRead?'Read':'Not read'}</span></td><td>${quiz? (quiz.score+'/'+quiz.total) : '—'}</td></tr>`;
   }).join('');
-  let screencastRows = (typeof releasedScreencasts !== 'undefined' ? releasedScreencasts : []).map(v=>{
+  let screencastRows = (typeof allScreencasts !== 'undefined' ? allScreencasts : []).map(v=>{
     const watched = typeof theaterIsWatched === 'function' ? theaterIsWatched(v.id) : false;
     const opened = typeof theaterIsOpened === 'function' ? theaterIsOpened(v.id) : false;
     const status = watched ? 'Watched' : (opened ? 'Opened' : 'Not started');
     const badgeClass = watched?'done':(opened?'partial':'notstarted');
     const quiz = student.contentQuizzes.screencasts[v.id];
-    return `<tr><td>${v.label}</td><td><span class="pw-badge ${badgeClass}">${status}</span></td><td>${quiz? (quiz.score+'/'+quiz.total) : '—'}</td></tr>`;
+    return `<tr><td>${v.label}</td><td><span class="pw-badge badgeClass">{status}</span></td><td>${quiz? (quiz.score+'/'+quiz.total) : '—'}</td></tr>`;
   }).join('');
   body.innerHTML = `
     <div class="progress-hero">
@@ -2564,17 +2498,17 @@ function renderProgressView(){
       </div>
     </div>
     <div class="progress-grid">
-      <div class="progress-card" style="--pc-accent:#2f6fed"><h4>Lessons Completed</h4><div class="pc-big">${student.completed.length}/${cards.length}</div><div class="pc-sub">across ${TOTAL_WEEKS} weeks</div></div>
-      <div class="progress-card" style="--pc-accent:#ff7a2d"><h4>Week Quizzes</h4><div class="pc-big">${quizzesTaken}/${TOTAL_WEEKS}</div><div class="pc-sub">completed automatically at week end</div></div>
+      <div class="progress-card" style="--pc-accent:#2f6fed"><h4>Lessons Completed</h4><div class="pc-big">student.completed.length/{cards.length}</div><div class="pc-sub">across ${TOTAL_WEEKS} weeks</div></div>
+      <div class="progress-card" style="--pc-accent:#ff7a2d"><h4>Week Quizzes</h4><div class="pc-big">quizzesTaken/{TOTAL_WEEKS}</div><div class="pc-sub">completed automatically at week end</div></div>
       <div class="progress-card" style="--pc-accent:#8b5cf6"><h4>Reading Opened</h4><div class="pc-big">${student.readingSeen.length}/11</div><div class="pc-sub">Read Me sections viewed</div></div>
-      <div class="progress-card" style="--pc-accent:#ff6a2c"><h4>Screencasts Watched</h4><div class="pc-big">${videosConfirmed}/${allScreencasts.length}</div><div class="pc-sub">fully watched</div></div>
-      <div class="progress-card" style="--pc-accent:#ef476f"><h4>Practice Files Opened</h4><div class="pc-big">${student.seenPractice.length}/${activePracticeFiles.length}</div><div class="pc-sub">exercise files previewed</div></div>
+      <div class="progress-card" style="--pc-accent:#ff6a2c"><h4>Screencasts Watched</h4><div class="pc-big">${videosConfirmed}/23</div><div class="pc-sub">fully watched</div></div>
+      <div class="progress-card" style="--pc-accent:#ef476f"><h4>Practice Files Opened</h4><div class="pc-big">${student.seenPractice.length}/43</div><div class="pc-sub">exercise files previewed</div></div>
       <div class="progress-card" style="--pc-accent:#5b6270"><h4>Materials Opened</h4><div class="pc-big">${(student.seenMaterials||[]).length}/23</div><div class="pc-sub">additional resources previewed</div></div>
       <div class="progress-card" style="--pc-accent:#8b5cf6"><h4>Reading Checks</h4><div class="pc-big">${readingQuizEntries.length}/11</div><div class="pc-sub">avg score ${readingQuizAvg}%</div></div>
-      <div class="progress-card" style="--pc-accent:#ff6a2c"><h4>Screencast Checks</h4><div class="pc-big">${screencastQuizEntries.length}/${allScreencasts.length}</div><div class="pc-sub">avg score ${screencastQuizAvg}%</div></div>
+      <div class="progress-card" style="--pc-accent:#ff6a2c"><h4>Screencast Checks</h4><div class="pc-big">${screencastQuizEntries.length}/23</div><div class="pc-sub">avg score ${screencastQuizAvg}%</div></div>
     </div>
     <div class="note-section collapsed" style="margin-top:22px;">
-      <h3 style="margin-top:0;"><span>Week-by-week breakdown <span class="note-count">${student.completed.length}/${cards.length} lessons</span></span></h3>
+      <h3 style="margin-top:0;"><span>Week-by-week breakdown <span class="note-count">student.completed.length/{cards.length} lessons</span></span></h3>
       <div style="overflow-x:auto;"><table class="progress-week-table">
         <thead><tr><th>Week</th><th>Topic</th><th>Days done</th><th>Status</th><th>Quiz</th></tr></thead>
         <tbody>${rows}</tbody>
@@ -2588,7 +2522,7 @@ function renderProgressView(){
       </table></div>
     </div>
     <div class="note-section collapsed">
-      <h3 style="margin-top:0;"><span>Screencasts — watched or not <span class="note-count">${videosConfirmed}/${allScreencasts.length}</span></span></h3>
+      <h3 style="margin-top:0;"><span>Screencasts — watched or not <span class="note-count">${videosConfirmed}/23</span></span></h3>
       <div style="overflow-x:auto;"><table class="progress-week-table">
         <thead><tr><th>Recording</th><th>Status</th><th>Check score</th></tr></thead>
         <tbody>${screencastRows}</tbody>
@@ -2605,22 +2539,22 @@ function renderAssessmentView(){
     body.innerHTML = `<div class="progress-signedout"><h3>Sign in to take assessments</h3><p>Assessments are generated automatically from the Read Me notes and screencast descriptions.</p></div>`;
     return;
   }
-  const pool = (typeof screencastQuizPool !== 'undefined' ? screencastQuizPool : []).filter(item=>isScreencastReleased(item.key));
+  const pool = typeof screencastQuizPool !== 'undefined' ? screencastQuizPool : [];
   const readingItems = readingPool.map(item=>{
     const quiz = student.contentQuizzes.reading[item.key];
-    const statusText = quiz ? `${quiz.score}/${quiz.total}` : 'Not taken';
+    const statusText = quiz ? `quiz.score/{quiz.total}` : 'Not taken';
     const btn = quiz
       ? `<button type="button" class="assess-btn" disabled>Completed</button>`
       : `<button type="button" class="assess-btn" onclick="assessmentStart('reading','${item.key}')">Start</button>`;
-    return `<div class="assess-row"><div class="assess-row-main"><b>${item.title}</b><span class="assess-status ${quiz?'done':''}">${statusText}</span></div>${btn}</div>`;
+    return `<div class="assess-row"><div class="assess-row-main"><b>${item.title}</b><span class="assess-status quiz?'done':''">{statusText}</span></div>${btn}</div>`;
   }).join('') || '<p style="font-size:13px;color:var(--muted);">No Read Me sections available yet.</p>';
   const videoItems = pool.map(item=>{
     const quiz = student.contentQuizzes.screencasts[item.key];
-    const statusText = quiz ? `${quiz.score}/${quiz.total}` : 'Not taken';
+    const statusText = quiz ? `quiz.score/{quiz.total}` : 'Not taken';
     const btn = quiz
       ? `<button type="button" class="assess-btn" disabled>Completed</button>`
       : `<button type="button" class="assess-btn" onclick="assessmentStart('video','${item.key}')">Start</button>`;
-    return `<div class="assess-row"><div class="assess-row-main"><b>${item.title}</b><span class="assess-status ${quiz?'done':''}">${statusText}</span></div>${btn}</div>`;
+    return `<div class="assess-row"><div class="assess-row-main"><b>${item.title}</b><span class="assess-status quiz?'done':''">{statusText}</span></div>${btn}</div>`;
   }).join('') || '<p style="font-size:13px;color:var(--muted);">No screencasts available yet.</p>';
   const readingDone = Object.keys(student.contentQuizzes.reading).length;
   const videoDone = Object.keys(student.contentQuizzes.screencasts).length;
@@ -2628,18 +2562,18 @@ function renderAssessmentView(){
   const videoPct = pool.length ? Math.round((videoDone/pool.length)*100) : 0;
   body.innerHTML = `
     <div class="assess-summary-row">
-      <div class="progress-card" style="--pc-accent:#8b5cf6;flex:1;min-width:200px;"><h4>Read Me Assessments</h4><div class="pc-big">${readingDone}/${readingPool.length}</div><div class="pc-sub">completed</div></div>
-      <div class="progress-card" style="--pc-accent:#ff6a2c;flex:1;min-width:200px;"><h4>Screencast Assessments</h4><div class="pc-big">${videoDone}/${pool.length}</div><div class="pc-sub">completed</div></div>
+      <div class="progress-card" style="--pc-accent:#8b5cf6;flex:1;min-width:200px;"><h4>Read Me Assessments</h4><div class="pc-big">readingDone/{readingPool.length}</div><div class="pc-sub">completed</div></div>
+      <div class="progress-card" style="--pc-accent:#ff6a2c;flex:1;min-width:200px;"><h4>Screencast Assessments</h4><div class="pc-big">videoDone/{pool.length}</div><div class="pc-sub">completed</div></div>
     </div>
     <div class="note-section collapsed" id="assess-reading">
-      <h3><span>Read Me Notes Assessment <span class="note-count">${readingDone}/${readingPool.length}</span></span></h3>
-      <div class="assess-progress-row"><span>${readingDone} of ${readingPool.length} completed</span><span style="color:var(--c-notes);">${readingPct}%</span></div>
+      <h3><span>Read Me Notes Assessment <span class="note-count">readingDone/{readingPool.length}</span></span></h3>
+      <div class="assess-progress-row"><span>${readingDone} of readingPool.lengthcompleted</span><spanstyle="color:var(--c-notes);">{readingPct}%</span></div>
       <div class="assess-progress-bar"><i style="background:linear-gradient(90deg,#8b5cf6,#b794f4);width:${readingPct}%;"></i></div>
       <div>${readingItems}</div>
     </div>
     <div class="note-section collapsed" id="assess-video">
-      <h3><span>Screencast Assessment <span class="note-count">${videoDone}/${pool.length}</span></span></h3>
-      <div class="assess-progress-row"><span>${videoDone} of ${pool.length} completed</span><span style="color:var(--c-screen);">${videoPct}%</span></div>
+      <h3><span>Screencast Assessment <span class="note-count">videoDone/{pool.length}</span></span></h3>
+      <div class="assess-progress-row"><span>${videoDone} of pool.lengthcompleted</span><spanstyle="color:var(--c-screen);">{videoPct}%</span></div>
       <div class="assess-progress-bar"><i style="background:linear-gradient(90deg,#ff6a2c,#ffb347);width:${videoPct}%;"></i></div>
       <div>${videoItems}</div>
     </div>`;
@@ -2749,18 +2683,18 @@ function buildProgressReportDoc(trigger){
   doc.setFontSize(9);
   doc.text(`${student.name}  ·  ${student.email}`, 98, 80);
   doc.setFontSize(8); doc.setTextColor(150,160,192);
-  doc.text(`Generated ${new Date().toLocaleString()}  ·  ${device}${trigger ? '  ·  '+trigger : ''}`, 98, 93);
+  doc.text(`Generated ${new Date().toLocaleString()}  ·  device{trigger ? '  ·  '+trigger : ''}`, 98, 93);
 
   let y = 130;
 
   // ----- Summary: colorful KPI dashboard cards (2 rows x 3) -----
   const stats = [
     { label:'Overall Grade', big:`${g.letter} · ${g.pct}%`, color:P.blue },
-    { label:'Lessons Completed', big:`${student.completed.length}/${cards.length}`, color:P.orange },
-    { label:'Week Quizzes', big:`${quizzesTaken}/${TOTAL_WEEKS}`, color:P.purple },
+    { label:'Lessons Completed', big:`student.completed.length/{cards.length}`, color:P.orange },
+    { label:'Week Quizzes', big:`quizzesTaken/{TOTAL_WEEKS}`, color:P.purple },
     { label:'Reading Opened', big:`${student.readingSeen.length}/11`, color:P.purple },
-    { label:'Screencasts Watched', big:`${videosConfirmed}/${allScreencasts.length}`, color:P.red },
-    { label:'Practice Files Opened', big:`${student.seenPractice.length}/${activePracticeFiles.length}`, color:P.blue },
+    { label:'Screencasts Watched', big:`${videosConfirmed}/23`, color:P.red },
+    { label:'Practice Files Opened', big:`${student.seenPractice.length}/43`, color:P.blue },
   ];
   const gap = 14, cardW = (pageWidth-80-2*gap)/3, cardH = 58;
   stats.forEach((s,i)=>{
@@ -2780,12 +2714,11 @@ function buildProgressReportDoc(trigger){
   // ----- Week-by-week breakdown table -----
   const weekRows = [];
   for(let w=1; w<=TOTAL_WEEKS; w++){
-    if(!isWeekReleased(w)) continue;
     const st = weekStatus(w);
     const quiz = student.weekQuizzes[w];
-    const quizText = quiz ? (quiz.total ? `${quiz.score}/${quiz.total}` : 'Reflection') : '—';
+    const quizText = quiz ? (quiz.total ? `quiz.score/{quiz.total}` : 'Reflection') : '—';
     const statusText = st.pct===100 ? 'Complete' : (st.pct>0 ? 'In progress' : 'Not started');
-    weekRows.push([`Week ${w}`, pdfSafeText(weekMeta[w]||''), `${st.done}/${st.total}`, statusText, quizText]);
+    weekRows.push([`Week w`,pdfSafeText(weekMeta[w]||''),`{st.done}/${st.total}`, statusText, quizText]);
   }
   if(hasAutoTable){
     doc.autoTable({
@@ -2812,7 +2745,7 @@ function buildProgressReportDoc(trigger){
   const readRows = readingPool.map(item=>{
     const isRead = student.readingSeen.includes(item.key);
     const quiz = student.contentQuizzes.reading[item.key];
-    return [pdfSafeText(item.title), isRead?'Read':'Not read', quiz? `${quiz.score}/${quiz.total}`:'—'];
+    return [pdfSafeText(item.title), isRead?'Read':'Not read', quiz? `quiz.score/{quiz.total}`:'—'];
   });
   if(hasAutoTable){
     doc.autoTable({
@@ -2839,7 +2772,7 @@ function buildProgressReportDoc(trigger){
   const screenRows = (typeof allScreencasts !== 'undefined' ? allScreencasts : []).map(v=>{
     const watched = typeof theaterIsWatched === 'function' ? theaterIsWatched(v.id) : false;
     const quiz = student.contentQuizzes.screencasts[v.id];
-    return [pdfSafeText(v.label), watched?'Watched':'Not watched', quiz? `${quiz.score}/${quiz.total}`:'—'];
+    return [pdfSafeText(v.label), watched?'Watched':'Not watched', quiz? `quiz.score/{quiz.total}`:'—'];
   });
   if(hasAutoTable){
     doc.autoTable({
@@ -2902,9 +2835,9 @@ function generateProgressReportPDF(trigger){
 function notifyInstructor(trigger){
   const g = computeGrade();
   const summary = [
-    `Progress update for ${student.name} (${student.email})`,
+    `Progress update for student.name({student.email})`,
     `Trigger: ${trigger}`,
-    `Overall grade: ${g.letter} (${g.pct}%)`,
+    `Overall grade: g.letter({g.pct}%)`,
     `Lessons completed: ${student.completed.length} of ${cards.length}`,
     `Device: ${getDeviceInfo()}`
   ].join('\n');
@@ -2917,9 +2850,9 @@ function notifyInstructor(trigger){
     // Fallback only — remove once GOOGLE_FORM_ACTION_URL / GOOGLE_FORM_ENTRY_ID are set above.
     // A mailto: link can't attach a file on its own, so the body just tells the
     // student to attach the PDF that was downloaded at the same moment.
-    const subject = encodeURIComponent(`Progress Report — ${student.name} (${student.email})`);
+    const subject = encodeURIComponent(`Progress Report — student.name({student.email})`);
     const body = encodeURIComponent(summary + '\n\nAttach the file you downloaded now.');
-    window.location.href = `mailto:${REPORT_EMAIL}?subject=${subject}&body=${body}`;
+    window.location.href = `mailto:REPORTEMAIL?subject={subject}&body=${body}`;
   }
 }
 /* Fires both halves of a report: a short notification to the instructor, and the
@@ -2949,7 +2882,7 @@ function checkBiweeklyReport(){
     const dueDate = new Date(COURSE_START_DATE.getTime() + periodEndsAfterWeek*7*86400000);
     if(now >= dueDate && !student.biweeklySent[p]){
       const weekLo = p*2-1, weekHi = periodEndsAfterWeek;
-      submitReportSilently(`Biweekly report — Weeks ${weekLo}-${weekHi}`);
+      submitReportSilently(`Biweekly report — Weeks weekLo-{weekHi}`);
       student.biweeklySent[p] = new Date().toISOString();
       saveStudentRecord(student);
     }
@@ -2979,7 +2912,7 @@ document.querySelectorAll('.ideaUpload').forEach(inp=>{
       const url=URL.createObjectURL(file);
       const box=document.createElement('div');
       box.className='thumb';
-      box.innerHTML=`<img src="${url}" alt="${file.name}" style="width:100%;height:100%;object-fit:cover">`;
+      box.innerHTML=`<img src="url"alt="{file.name}" style="width:100%;height:100%;object-fit:cover">`;
       parent.appendChild(box);
     });
   });
@@ -3029,7 +2962,7 @@ async function gjGeneratePDF(data){
   doc.setFontSize(16); doc.text(`1.1 Symbolic Animal: ${data.animal}`,50,y); y+=20;
   doc.text(`1.2 Members:`,50,y); y+=18;
   doc.setFontSize(14);
-  data.members.forEach(m=>{ doc.text(`- ${m.name} (${m.role||'member'})`,70,y); y+=16; });
+  data.members.forEach(m=>{ doc.text(`- m.name({m.role||'member'})`,70,y); y+=16; });
   for(const [i,idea] of data.ideas.entries()){
     y+=10;
     if(y>pageHeight-250){ doc.addPage(); drawBackground(); y=40; }
@@ -3257,7 +3190,7 @@ function epMakeList(){
     const item = document.createElement('button');
     item.type = 'button';
     item.className = 'ep-item';
-    item.innerHTML = `<span class="ep-swatch" style="background:${el.color}"></span><span><strong>${el.name}</strong> — ${el.title}</span>`;
+    item.innerHTML = `<span class="ep-swatch" style="background:el.color"></span><span><strong>{el.name}</strong> — ${el.title}</span>`;
     item.onclick = () => epSelectElement(el.id);
     epList.appendChild(item);
   });
@@ -3405,10 +3338,7 @@ const screencastPlaylist = [
   { id:'10WmX1xYIRWtgzbLgUDJJb3E9fZ8rKh25', label:'Advanced Double Exposure Techniques', desc:'Push your photo manipulation skills by blending complex textures, detailed silhouettes, and multi-layered landscape elements. Master advanced masking and color harmonization for dramatic, artistic compositions.' },
   { id:'1y13t7n5nTN_3oppd_Nx7AJ1Yfd7nSwdE', label:'How to Create Realistic T-Shirt Mockups', desc:'Build custom, fully editable apparel mockups using Smart Objects and Displacement Maps. Learn how to set up reusable template files where graphics instantly conform to garment folds, highlights, and shadow layers with a single click.' }
 ];
-/* Only recordings #1 and #2 are active right now. screencastPlaylist above keeps
-   the full list untouched — to reopen more later, just add their ids here. */
-const ACTIVE_SCREENCAST_IDS = ['1khSdxt8enMJ7NW60dp-gLxFGEKmbOzOJ', '1I2VJv2bLE7w0t_2ITY8XMzHBSGR1-UCg'];
-const allScreencasts = screencastPlaylist.filter(v => ACTIVE_SCREENCAST_IDS.includes(v.id));
+const allScreencasts = screencastPlaylist;
 const screencastQuizPool = allScreencasts.map(v=>({ key:v.id, title:v.label, desc:v.desc }));
 /* Exact runtime for each recording, in seconds — every video in this
    course already has its own slot below, all starting at null. To find a
@@ -3467,19 +3397,9 @@ const practiceIds2 = [
   '1BInYw76mSmkJ3paaWgo6n76I-P-x_xCD','1LuavYltIGhHo5Eaf6_gxk1KpkT7IGKdm','1jx7YKGr-EgZR2duJ4f8EMOtplpYbRHJ6',
   '1jG_VtUPLaxMDJmc8-uAU4sT1iuL0Dq1T'
 ];
-/* Only files #26, #27 and #32 are active right now, shown first in that order.
-   practiceIds / practiceIds2 above are untouched — to reopen more later, just add
-   their numbers to ACTIVE_PRACTICE_NUMS below. */
-const allPracticeFiles = [
-  ...practiceIds.map((id,i)=>({ id, num:i+1 })),
-  ...practiceIds2.map((id,i)=>({ id, num:practiceIds.length+i+1 }))
-];
-const ACTIVE_PRACTICE_NUMS = [26, 27, 32];
-const activePracticeFiles = ACTIVE_PRACTICE_NUMS
-  .map(n => allPracticeFiles.find(p => p.num === n))
-  .filter(Boolean);
 const pgrid = document.getElementById('practiceGrid');
-activePracticeFiles.forEach(p => pgrid.appendChild(renderMediaCard({id:p.id, label:`Practice File ${p.num}`, kind:'file', accent:'#ef476f'})));
+practiceIds.forEach((id,i)=>pgrid.appendChild(renderMediaCard({id, label:`Practice File ${i+1}`, kind:'file', accent:'#ef476f'})));
+practiceIds2.forEach((id,i)=>pgrid.appendChild(renderMediaCard({id, label:`Practice File ${practiceIds.length+i+1}`, kind:'file', accent:'#ef476f'})));
 /* ---------- ADDITIONAL MATERIALS ---------- */
 const materialIds = [
   '1ZVRAV-2bjJL6UeUwqn8lpVX0ajjTpta7','1eMdoNwin_NOt3_eI0QLacl9NG-MfiXX3','1EWIFWvDwi-IhMqeWyFrSyptnrs5PHTn1',
@@ -3591,7 +3511,7 @@ function theaterRenderSide(){
   theaterUpdateProgressSummary();
   const list = theaterFilteredList();
   const headEl = document.getElementById('theaterSideHead');
-  if(headEl) headEl.textContent = theaterFilterMode==='all' ? `Up next · ${allScreencasts.length} recordings` : `${list.length} ${theaterFilterMode} recording${list.length===1?'':'s'}`;
+  if(headEl) headEl.textContent = theaterFilterMode==='all' ? `Up next · allScreencasts.lengthrecordings`:`{list.length} theaterFilterModerecording{list.length===1?'':'s'}`;
   side.innerHTML = '';
   if(!list.length){
     side.innerHTML = '<div class="theater-empty">No recordings match your search or filter.</div>';
@@ -3749,7 +3669,6 @@ if(allScreencasts.length){
 theaterUpdateNav();
 theaterRenderSide();
 renderProgressView();
-applyCurriculumLocks(); // calendar-based — runs regardless of sign-in state
 /* Everything above this line (driveThumbUrl, renderMediaCard, allScreencasts,
    theaterRenderSide, etc.) must exist before initAuth() runs, since a
    returning student triggers enterApp() -> theaterRenderSide() immediately.
@@ -3758,3 +3677,5 @@ initAuth();
 </script>
 </body>
 </html>
+
+
