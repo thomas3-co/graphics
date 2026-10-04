@@ -679,7 +679,7 @@ img,video,iframe{max-width:100%;}
 <span class="sb-name" id="sbName"></span>
 <span class="sb-grade" id="sbGrade">—</span>
 </div>
-<button aria-controls="layersPanel" aria-expanded="false" class="panel-toggle" id="lpToggle">Layers ▸</button>
+<button aria-controls="layersPanel" aria-expanded="true" class="panel-toggle" id="lpToggle">Layers ▾</button>
 </header>
 <div class="workspace">
 <main class="canvas" id="mainContent">
@@ -1425,14 +1425,7 @@ img,video,iframe{max-width:100%;}
         .ep-submit-btn{display:inline-flex;align-items:center;gap:8px;padding:11px 16px;border-radius:11px;background:linear-gradient(90deg,var(--ep-accent),#12a394);color:#fff;font-weight:700;border:none;cursor:pointer;text-decoration:none;font-size:13.5px;margin-top:10px;}
         .ep-submit-btn:hover{opacity:.9;}
         @media(max-width:900px){.ep-main{grid-template-columns:1fr;}.ep-side{position:static;max-height:none;}.ep-grid-2{grid-template-columns:1fr;}}
-        
-/* Keep the primary menu and in-page navigation available while scrolling. */
-:root{--hma-sticky-top:64px;}
-.topbar{position:sticky;top:0;z-index:1200;}
-.week-nav,.subnav{position:sticky;top:var(--hma-sticky-top);z-index:800;background:rgba(243,245,248,.96);backdrop-filter:blur(12px);padding:9px 0;border-bottom:1px solid rgba(227,231,238,.9);}
-@media(max-width:760px){:root{--hma-sticky-top:108px;}.topbar{z-index:1200;}}
-@media(max-width:520px){:root{--hma-sticky-top:116px;}}
-</style>
+        </style>
 <div class="ep-scope">
 <div class="ep-container">
 <header>
@@ -1697,7 +1690,7 @@ img,video,iframe{max-width:100%;}
 <div id="progressBody"></div>
 </section>
 </main>
-<aside class="layers-panel collapsed" id="layersPanel">
+<aside class="layers-panel" id="layersPanel">
 <div class="lp-head"><h3>Layers — Progress</h3></div>
 <div class="lp-total" id="lpTotalPct">0%<span> complete</span></div>
 <div class="lp-bar"><i id="lpBar"></i></div>
@@ -1720,7 +1713,7 @@ img,video,iframe{max-width:100%;}
   <small>Use the backup file to move the same student progress to another phone, tablet, or computer.</small>
 </div>
 <button class="lp-signout" id="lpSignOutBtn">Sign out of this device</button>
-<div class="lp-note">Every lesson card is a "layer." Flip a card in the Curriculum tab to mark that day's lesson complete — the total above and this panel's grade &amp; report stay visible even while the weekly breakdown is collapsed; tap "Weekly breakdown" to expand it. Your progress is saved on this device. Progress reports are only created or shared when you explicitly choose “Send Progress Report.”</div>
+<div class="lp-note">Every lesson card is a "layer." Flip a card in the Curriculum tab to mark that day's lesson complete — the total above and this panel's grade &amp; report stay visible even while the weekly breakdown is collapsed; tap "Weekly breakdown" to expand it. Finishing both days in a week automatically submits that week's check-in quiz report, and a full progress report is also sent automatically every 2 weeks (Sept 14 = Week 1) to your instructor.</div>
 </aside>
 </div>
 <footer class="appfoot">
@@ -1920,7 +1913,6 @@ document.getElementById('lpToggle').addEventListener('click', function(){
   const panel = document.getElementById('layersPanel');
   const collapsed = panel.classList.toggle('collapsed');
   this.setAttribute('aria-expanded', collapsed ? 'false':'true');
-  this.textContent = collapsed ? 'Layers ▸' : 'Layers ▾';
 });
 /* Weekly-breakdown rows dropdown inside the Layers panel — collapsed by
    default (the overall % / bar / grade / report / sign-out stay visible
@@ -2632,7 +2624,7 @@ document.getElementById('wqSubmit').addEventListener('click', ()=>{
   student.weekQuizzes[week] = { score, total, reflection, completedAt:new Date().toISOString() };
   saveStudentRecord(student);
   updateGrade();
-  showToast('Weekly check-in saved. No report was sent or downloaded.');
+  submitReportSilently(`Week ${week} check-in complete`);
   setTimeout(()=>{
     modal.classList.remove('open');
     document.querySelectorAll('#wqQuizBody input').forEach(i=>i.disabled=false);
@@ -3091,7 +3083,9 @@ function notifyInstructor(trigger){
     window.location.href = `mailto:${REPORT_EMAIL}?subject=${subject}&body=${body}`;
   }
 }
-/* Explicit, student-initiated action: creates the PDF and opens the email/form flow. */
+/* Fires both halves of a report: a short notification to the instructor, and the
+   full, colorful PDF saved to the student's own device — replacing the old "one
+   giant plain-text email" approach. */
 function submitReportSilently(trigger){
   if(!student) return;
   notifyInstructor(trigger);
@@ -3101,12 +3095,24 @@ document.getElementById('lpReportBtn').addEventListener('click', ()=>{
   if(!student){ alert('Sign in first.'); return; }
   submitReportSilently('Manual send from Layers panel');
 });
-/* ---------- CONSENT-BASED REPORTING ---------- */
-/* Reports are never emailed, opened, or downloaded automatically. The explicit
-   “Send Progress Report” button is the only path that creates a report. */
-document.addEventListener('visibilitychange', ()=>{
-  if(document.visibilityState==='visible') applyCalendarWeekState();
-});
+/* ---------- CALENDAR-BASED BIWEEKLY AUTO-REPORT (Sept 14 = Week 1) ---------- */
+const BIWEEKLY_PERIODS = Math.ceil(TOTAL_WEEKS/2); // 16 weeks -> 8 two-week periods
+function checkBiweeklyReport(){
+  if(!student) return;
+  student.biweeklySent = student.biweeklySent || {};
+  const now = new Date();
+  for(let p=1; p<=BIWEEKLY_PERIODS; p++){
+    const periodEndsAfterWeek = Math.min(p*2, TOTAL_WEEKS);
+    const dueDate = new Date(COURSE_START_DATE.getTime() + periodEndsAfterWeek*7*86400000);
+    if(now >= dueDate && !student.biweeklySent[p]){
+      const weekLo = p*2-1, weekHi = periodEndsAfterWeek;
+      submitReportSilently(`Biweekly report — Weeks ${weekLo}-${weekHi}`);
+      student.biweeklySent[p] = new Date().toISOString();
+      saveStudentRecord(student);
+    }
+  }
+}
+document.addEventListener('visibilitychange', ()=>{ if(document.visibilityState==='visible'){ applyCalendarWeekState(); checkBiweeklyReport(); } });
 /* ---------- GOJO PROJECT FORM ---------- */
 document.getElementById('gjAddMemberBtn').addEventListener('click', gjAddMember);
 function gjAddMember(){
