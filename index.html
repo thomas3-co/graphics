@@ -3906,12 +3906,14 @@ if(allScreencasts.length){
 }
 theaterUpdateNav();
 theaterRenderSide();
-renderProgressView();
 /* Everything above this line (driveThumbUrl, renderMediaCard, allScreencasts,
    theaterRenderSide, etc.) must exist before initAuth() runs, since a
    returning student triggers enterApp() -> theaterRenderSide() immediately.
    That's why the actual call happens here, last. */
 initAuth();
+// Render My Progress only after the guest/student record has been initialized.
+// This prevents the page from briefly/incorrectly showing the signed-out state.
+renderProgressView();
 
 /* ================= LEARNING PLATFORM UPGRADE ================= */
 const PHASE_SUBMISSION_URL = 'https://drive.google.com/drive/folders/1DzGBJliUESjJHW6Qc-QNOM5a8VMBpQqr?usp=sharing';
