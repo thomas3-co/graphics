@@ -112,6 +112,12 @@ button{font-family:inherit;}
 .lp-total span{font-size:12px;color:#8f96a6;font-weight:500;}
 .lp-bar{height:6px;border-radius:6px;background:#2a2e38;margin:10px 0 18px;overflow:hidden;}
 .lp-bar i{display:block;height:100%;background:linear-gradient(90deg,#2f6fed,#8b5cf6);width:0%;transition:width .5s ease;}
+.lp-rows-toggle{width:100%;text-align:left;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:#dfe2ea;border-radius:9px;padding:9px 12px;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;}
+.lp-rows-toggle:hover{background:rgba(255,255,255,.1);}
+.lp-rows-toggle .lrt-arrow{display:inline-block;transition:transform .25s ease;}
+.lp-rows-toggle.open .lrt-arrow{transform:rotate(180deg);}
+#lpRows{overflow:hidden;max-height:0;opacity:0;transition:max-height .35s ease, opacity .25s ease;}
+#lpRows.open{max-height:2400px;opacity:1;margin-top:6px;}
 .lp-row{
   display:flex;align-items:center;gap:10px;padding:8px 8px;border-radius:8px;cursor:pointer;
   transition:.15s;
@@ -177,6 +183,9 @@ button{font-family:inherit;}
 .month-block{display:none;}
 .month-block.active{display:block;}
 .week-card{margin:34px 0 10px;scroll-margin-top:75px;}
+.week-lock-note{margin-top:6px;background:#f4f5f8;border:1px dashed var(--line);border-radius:12px;padding:18px 20px;color:var(--muted);font-size:13.5px;display:flex;align-items:center;gap:12px;line-height:1.5;}
+.week-lock-note .wl-icon{font-size:20px;flex-shrink:0;}
+.week-lock-note strong{color:var(--ink);}
 .week-card h2.wk{font-size:1.35rem;margin-bottom:16px;color:var(--c-curriculum);display:flex;align-items:center;gap:10px;}
 .week-card h2.wk::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--c-curriculum);}
 .day-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;}
@@ -206,6 +215,25 @@ button{font-family:inherit;}
 .practice-label{background:#2e9e5b;}
 .blue-border .flip-card-front,.blue-border .flip-card-back{border:3px solid var(--c-curriculum);}
 .flip-hint{position:absolute;bottom:10px;right:14px;font-size:10px;color:var(--muted);opacity:.6;letter-spacing:.3px;}
+/* ===== PROGRESSION LOCK SYSTEM ===== */
+.flip-card.locked .flip-card-inner{filter:grayscale(.55) brightness(.97);}
+.flip-card.locked:hover .flip-card-inner{transform:none;}
+.flip-card.locked .flip-hint{display:none;}
+.lock-badge{
+  position:absolute;top:14px;right:14px;z-index:2;
+  display:flex;align-items:center;gap:5px;
+  background:#5b6270;color:#fff;font-weight:700;font-size:.68rem;letter-spacing:.4px;
+  padding:4px 10px;border-radius:999px;box-shadow:0 4px 10px rgba(0,0,0,.18);
+}
+.lock-badge span:first-child{font-size:.82rem;}
+.app-toast{
+  position:fixed;left:50%;bottom:28px;transform:translateX(-50%) translateY(16px);
+  background:var(--ink);color:#fff;font-size:13px;font-weight:600;line-height:1.4;
+  padding:12px 20px;border-radius:12px;box-shadow:0 14px 34px rgba(0,0,0,.32);
+  opacity:0;pointer-events:none;transition:opacity .25s ease, transform .25s ease;
+  z-index:7000;max-width:88vw;text-align:center;
+}
+.app-toast.show{opacity:1;transform:translateX(-50%) translateY(0);pointer-events:auto;}
 /* ===== PROJECTS ===== */
 .subnav{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0 28px;}
 .subnav button{
@@ -251,6 +279,7 @@ button{font-family:inherit;}
 .note-toggle:hover{background:rgba(139,92,246,.16);box-shadow:0 2px 8px rgba(139,92,246,.18);}
 .note-toggle .nt-arrow{display:inline-block;transition:transform .25s ease;}
 .note-section.collapsed .note-toggle .nt-arrow{transform:rotate(-90deg);}
+.note-count{display:inline-block;margin-left:8px;font-size:11px;font-weight:700;color:var(--c-notes);background:rgba(139,92,246,.1);border:1px solid rgba(139,92,246,.25);border-radius:999px;padding:2px 10px;vertical-align:middle;}
 .note-body{overflow:hidden;max-height:8000px;opacity:1;transition:max-height .4s ease, opacity .3s ease;}
 .note-section.collapsed .note-body{max-height:0;opacity:0;pointer-events:none;}
 .note-section{scroll-margin-top:80px;}
@@ -335,9 +364,9 @@ footer.appfoot .foot-contact a:hover{text-decoration:underline;}
 /* ===== CINEMATIC THEATER PLAYER (Screencasts) ===== */
 .theater{display:flex;gap:20px;margin-top:18px;align-items:flex-start;}
 .theater-main{flex:1;min-width:0;}
-.theater-stage{background:radial-gradient(circle at 50% 25%,#2b1c12,#0f0805 78%);border-radius:20px;padding:18px;border:3px solid #ff6a2c;box-shadow:0 24px 54px rgba(20,8,2,.55),0 0 22px rgba(255,106,44,.35);transition:box-shadow .3s ease,border-color .3s ease;}
-.theater-stage.is-playing{border-color:#ffb347;box-shadow:0 24px 54px rgba(20,8,2,.6),0 0 40px rgba(255,106,44,.55);}
-.theater-player{width:100%;aspect-ratio:16/9;background:#0e1015;border-radius:14px;overflow:hidden;position:relative;box-shadow:0 0 0 1px rgba(255,255,255,.08);}
+.theater-stage{background:linear-gradient(135deg,#2f6fed,#8b5cf6 55%,#ff9b57);border-radius:20px;padding:18px;border:3px solid rgba(255,255,255,.35);box-shadow:0 24px 54px rgba(47,111,237,.30),0 0 22px rgba(139,92,246,.30);transition:box-shadow .3s ease,border-color .3s ease;}
+.theater-stage.is-playing{border-color:#fff;box-shadow:0 24px 54px rgba(47,111,237,.4),0 0 40px rgba(255,155,87,.45);}
+.theater-player{width:100%;aspect-ratio:16/9;background:#151a2e;border-radius:14px;overflow:hidden;position:relative;box-shadow:0 0 0 1px rgba(255,255,255,.14);}
 .theater-player iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block;}
 .theater-player .thumb-poster{position:absolute;inset:0;width:100%;}
 .theater-nav{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:12px;}
@@ -345,6 +374,7 @@ footer.appfoot .foot-contact a:hover{text-decoration:underline;}
 .theater-nav .tn-btn:hover{background:#eef3ff;border-color:var(--c-curriculum);}
 .theater-nav .tn-btn:disabled{opacity:.4;cursor:not-allowed;}
 .theater-nav .tn-index{font-size:12px;color:var(--muted);font-weight:600;}
+.theater-tip{margin-top:10px;font-size:12px;color:var(--muted);background:#fff;border:1px dashed var(--line);border-radius:10px;padding:9px 12px;text-align:center;line-height:1.5;}
 .theater-info{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:12px;padding:16px 18px;background:#fff;border-radius:14px;box-shadow:var(--shadow);}
 .theater-info .ti-avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#ff6a2c,#7a2e05);color:#fff;font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
 .theater-info .ti-meta{flex:1;min-width:160px;}
@@ -536,7 +566,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
           <div class="stat"><b>16</b><span>Weeks of curriculum</span></div>
           <div class="stat"><b>32</b><span>Daily lessons &amp; flip cards</span></div>
           <div class="stat"><b>3</b><span>Group projects</span></div>
-          <div class="stat"><b>23</b><span>Screencast recordings</span></div>
+          <div class="stat"><b>2</b><span>Screencast recordings</span></div>
         </div>
         <div class="section-heading">Jump to a section</div>
         <div class="home-grid">
@@ -592,92 +622,100 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
         <!-- ===== MONTH ONE ===== -->
         <div class="month-block active" data-month="m1">
         <div class="week-card" id="week1">
-        <h2 class="wk">Week 1 — Interface &amp; Layers</h2>
+        <h2 class="wk">Week 1 — Graphic Design Software &amp; Foundations</h2>
         <div class="day-grid">
         <div class="flip-card" data-day="1-1"><div class="flip-card-inner">
-        <div class="flip-card-front"><h4>Day 1: Photoshop Interface</h4><p>Intro to workspace, panels &amp; tools.</p><span class="flip-hint">Tap to flip</span></div>
+        <div class="flip-card-front"><h4>Day 1: Graphic Design Software</h4><p>A tour of the apps designers use — Photoshop, Illustrator, Photopea, Canva and more.</p><span class="flip-hint">Tap to flip</span></div>
         <div class="flip-card-back"><div class="vocab-title">Vocabulary</div>
-        <p><span class="vocab" tabindex="0" data-def="The arrangement of menus, panels, and tools.">Workspace</span><span class="vocab-def"> — The arrangement of menus, panels, and tools.</span>,
-        <span class="vocab" tabindex="0" data-def="Dockable panels like Layers, History, etc.">Panels</span><span class="vocab-def"> — Dockable panels like Layers, History, etc.</span>,
-        <span class="vocab" tabindex="0" data-def="Main editing tools.">Toolbar</span><span class="vocab-def"> — Main editing tools.</span></p>
-        <div class="big-ideas">Understanding the Photoshop interface helps you navigate efficiently.</div>
+        <p><span class="vocab" tabindex="0" data-def="Adobe's industry-standard raster photo-editing software.">Photoshop</span><span class="vocab-def"> — Adobe's industry-standard raster photo-editing software.</span>,
+        <span class="vocab" tabindex="0" data-def="Adobe's vector-based illustration software.">Illustrator</span><span class="vocab-def"> — Adobe's vector-based illustration software.</span>,
+        <span class="vocab" tabindex="0" data-def="A free, browser-based editor compatible with Photoshop files — no install needed.">Photopea</span><span class="vocab-def"> — A free, browser-based editor compatible with Photoshop files — no install needed.</span>,
+        <span class="vocab" tabindex="0" data-def="A beginner-friendly, drag-and-drop design tool for quick social/print graphics.">Canva</span><span class="vocab-def"> — A beginner-friendly, drag-and-drop design tool for quick social/print graphics.</span>,
+        <span class="vocab" tabindex="0" data-def="Adobe's page-layout software for multi-page documents like magazines and books.">InDesign</span><span class="vocab-def"> — Adobe's page-layout software for multi-page documents like magazines and books.</span></p>
+        <div class="big-ideas">Different software suits different jobs: raster editors for photos, vector tools for logos and scalable art, layout tools for multi-page documents. This class uses Photopea, a free browser-based Photoshop alternative.</div>
         </div></div></div>
         <div class="flip-card" data-day="1-2"><div class="flip-card-inner">
-        <div class="flip-card-front"><h4>Day 2: Raster vs Vector &amp; Layers</h4><p>Pixel vs math-based graphics, plus Photoshop's most essential feature.</p><span class="flip-hint">Tap to flip</span></div>
+        <div class="flip-card-front"><h4>Day 2: What is Graphic Design?</h4><p>The elements and principles that make visual communication actually work.</p><span class="flip-hint">Tap to flip</span></div>
         <div class="flip-card-back"><div class="vocab-title">Vocabulary</div>
-        <p><span class="vocab" tabindex="0" data-def="Images made of pixels.">Raster</span><span class="vocab-def"> — Images made of pixels.</span>,
-        <span class="vocab" tabindex="0" data-def="Scalable shapes defined by math.">Vector</span><span class="vocab-def"> — Scalable shapes defined by math.</span>,
-        <span class="vocab" tabindex="0" data-def="Squares that make up raster images.">Pixel</span><span class="vocab-def"> — Squares that make up raster images.</span>,
-        <span class="vocab" tabindex="0" data-def="Photoshop's building blocks.">Layer</span><span class="vocab-def"> — Photoshop's building blocks.</span>,
-        <span class="vocab" tabindex="0" data-def="Adjust visibility of a layer.">Opacity</span><span class="vocab-def"> — Adjust visibility of a layer.</span>,
-        <span class="vocab" tabindex="0" data-def="Organize multiple layers.">Group</span><span class="vocab-def"> — Organize multiple layers.</span></p>
-        <div class="big-ideas">Raster is detail-rich but not scalable; vector is scalable without losing quality. Layers allow non-linear editing and flexibility in projects.</div>
+        <p><span class="vocab" tabindex="0" data-def="Visual communication that uses images, typography and layout to convey a message.">Graphic Design</span><span class="vocab-def"> — Visual communication that uses images, typography and layout to convey a message.</span>,
+        <span class="vocab" tabindex="0" data-def="The art of arranging type so it is readable and visually appealing.">Typography</span><span class="vocab-def"> — The art of arranging type so it is readable and visually appealing.</span>,
+        <span class="vocab" tabindex="0" data-def="How elements are arranged and positioned on a page or screen.">Layout</span><span class="vocab-def"> — How elements are arranged and positioned on a page or screen.</span>,
+        <span class="vocab" tabindex="0" data-def="How visual weight is distributed across a design.">Balance</span><span class="vocab-def"> — How visual weight is distributed across a design.</span>,
+        <span class="vocab" tabindex="0" data-def="Making one element stand out by making it different from the rest.">Contrast</span><span class="vocab-def"> — Making one element stand out by making it different from the rest.</span></p>
+        <div class="big-ideas">Good graphic design isn't decoration — it's communication. Every color, font, and placement choice should serve the message you're trying to send.</div>
         </div></div></div>
         </div></div>
         <div class="week-card" id="week2">
-        <h2 class="wk">Week 2 — Non-Destructive Editing</h2>
+        <h2 class="wk">Week 2 — Photopea, Pixels &amp; Layers</h2>
         <div class="day-grid">
         <div class="flip-card" data-day="2-1"><div class="flip-card-inner">
-        <div class="flip-card-front"><h4>Day 1: Adjustment Layers</h4><p>Edit colors and tones without harm.</p><span class="flip-hint">Tap to flip</span></div>
+        <div class="flip-card-front"><h4>Day 3: Photopea Interface, Pixels &amp; Raster</h4><p>Tour the Photopea workspace, then learn what pixels and raster images actually are.</p><span class="flip-hint">Tap to flip</span></div>
         <div class="flip-card-back"><div class="vocab-title">Vocabulary</div>
-        <p><span class="vocab" tabindex="0" data-def="Special layers that apply edits non-destructively.">Adjustment Layer</span><span class="vocab-def"> — Special layers that apply edits non-destructively.</span>,
-        <span class="vocab" tabindex="0" data-def="Brightness/darkness levels of an image.">Levels</span><span class="vocab-def"> — Brightness/darkness levels of an image.</span>,
-        <span class="vocab" tabindex="0" data-def="Tone curve editor.">Curves</span><span class="vocab-def"> — Tone curve editor.</span></p>
-        <div class="big-ideas">Adjustment layers preserve original pixels while applying edits.</div>
+        <p><span class="vocab" tabindex="0" data-def="The arrangement of menus, panels and tools you work in.">Workspace</span><span class="vocab-def"> — The arrangement of menus, panels and tools you work in.</span>,
+        <span class="vocab" tabindex="0" data-def="Dockable windows like Layers, History and Properties.">Panels</span><span class="vocab-def"> — Dockable windows like Layers, History and Properties.</span>,
+        <span class="vocab" tabindex="0" data-def="The smallest square of colored light that makes up a raster image.">Pixel</span><span class="vocab-def"> — The smallest square of colored light that makes up a raster image.</span>,
+        <span class="vocab" tabindex="0" data-def="Images made of a grid of pixels — detailed, but not infinitely scalable.">Raster</span><span class="vocab-def"> — Images made of a grid of pixels — detailed, but not infinitely scalable.</span>,
+        <span class="vocab" tabindex="0" data-def="Graphics built from math-based paths — scalable to any size without blurring.">Vector</span><span class="vocab-def"> — Graphics built from math-based paths — scalable to any size without blurring.</span></p>
+        <div class="big-ideas">Photopea's layout mirrors Photoshop's, so everything you learn here transfers directly. Knowing pixel vs. raster vs. vector is the foundation every later editing decision builds on.</div>
         </div></div></div>
         <div class="flip-card" data-day="2-2"><div class="flip-card-inner">
-        <div class="flip-card-front"><h4>Day 2: Smart Objects &amp; Masks</h4><p>Protecting image quality while transforming, and hiding or revealing without erasing pixels.</p><span class="flip-hint">Tap to flip</span></div>
+        <div class="flip-card-front"><h4>Day 4: Destructive vs. Non-Destructive Editing &amp; Layers</h4><p>Why layers matter, and how to edit without ever harming your original image.</p><span class="flip-hint">Tap to flip</span></div>
         <div class="flip-card-back"><div class="vocab-title">Vocabulary</div>
-        <p><span class="vocab" tabindex="0" data-def="Container preserving source data.">Smart Object</span><span class="vocab-def"> — Container preserving source data.</span>,
-        <span class="vocab" tabindex="0" data-def="Image scaling or resizing.">Transform</span><span class="vocab-def"> — Image scaling or resizing.</span>,
-        <span class="vocab" tabindex="0" data-def="Controls visibility of parts of a layer.">Mask</span><span class="vocab-def"> — Controls visibility of parts of a layer.</span>,
-        <span class="vocab" tabindex="0" data-def="Soft edge transition.">Feather</span><span class="vocab-def"> — Soft edge transition.</span></p>
-        <div class="big-ideas">Smart Objects maintain full resolution during edits. Masks allow selective editing and reversibility.</div>
+        <p><span class="vocab" tabindex="0" data-def="Photoshop's building blocks — stacked, independent pieces of an image.">Layer</span><span class="vocab-def"> — Photoshop's building blocks — stacked, independent pieces of an image.</span>,
+        <span class="vocab" tabindex="0" data-def="Editing that permanently changes the original pixels.">Destructive Editing</span><span class="vocab-def"> — Editing that permanently changes the original pixels.</span>,
+        <span class="vocab" tabindex="0" data-def="Editing that preserves the original image and can be undone or adjusted later.">Non-Destructive Editing</span><span class="vocab-def"> — Editing that preserves the original image and can be undone or adjusted later.</span>,
+        <span class="vocab" tabindex="0" data-def="Organize multiple layers together into one folder.">Group</span><span class="vocab-def"> — Organize multiple layers together into one folder.</span>,
+        <span class="vocab" tabindex="0" data-def="Adjust how visible a layer is, from fully hidden to fully shown.">Opacity</span><span class="vocab-def"> — Adjust how visible a layer is, from fully hidden to fully shown.</span></p>
+        <div class="big-ideas">Layers let you edit non-linearly — nothing is permanent until you flatten the file. Always prefer non-destructive techniques so you can change your mind later without starting over.</div>
         </div></div></div>
         </div></div>
         <div class="week-card" id="week3">
         <h2 class="wk">Week 3 — Around the World with a Twist (Project Week)</h2>
         <div class="day-grid">
         <div class="flip-card" data-day="3-1"><div class="flip-card-inner">
-        <div class="flip-card-front"><h4>Day 1: Tools &amp; Panels</h4><p>Essential interface elements and tools.</p><span class="flip-hint">Tap to flip</span></div>
+        <div class="flip-card-front"><h4>Day 5: Removing Backgrounds &amp; Smudge Tool</h4><p>Cut a subject out cleanly, then use the Smudge Tool to erase any leftover white fringe line.</p><span class="flip-hint">Tap to flip</span></div>
         <div class="flip-card-back"><div class="vocab-title">Vocabulary</div>
-        <p><span class="vocab" tabindex="0" data-def="Displays info about document and tools.">Status Bar</span><span class="vocab-def"> — Displays info about document and tools.</span>,
-        <span class="vocab" tabindex="0" data-def="Access all commands.">Menu Bar</span><span class="vocab-def"> — Access all commands.</span>,
-        <span class="vocab" tabindex="0" data-def="Top bar that shows tool options.">Options Bar</span><span class="vocab-def"> — Top bar that shows tool options.</span></p>
-        <div class="big-ideas">Learn the layout and function of each interface element.</div>
+        <p><span class="vocab" tabindex="0" data-def="Automatically detects and separates the subject from its background.">Select Subject / Background Remover</span><span class="vocab-def"> — Automatically detects and separates the subject from its background.</span>,
+        <span class="vocab" tabindex="0" data-def="Pushes and blends pixels like wet paint — great for softening rough cutout edges.">Smudge Tool</span><span class="vocab-def"> — Pushes and blends pixels like wet paint — great for softening rough cutout edges.</span>,
+        <span class="vocab" tabindex="0" data-def="A thin leftover strip of the old background color left behind around a cutout.">Fringe / White Line</span><span class="vocab-def"> — A thin leftover strip of the old background color left behind around a cutout.</span>,
+        <span class="vocab" tabindex="0" data-def="Shrinks a selection edge inward slightly to remove leftover background pixels.">Defringe / Contract</span><span class="vocab-def"> — Shrinks a selection edge inward slightly to remove leftover background pixels.</span>,
+        <span class="vocab" tabindex="0" data-def="Hides parts of a layer non-destructively so the cutout stays fully reversible.">Layer Mask</span><span class="vocab-def"> — Hides parts of a layer non-destructively so the cutout stays fully reversible.</span></p>
+        <div class="big-ideas">Even a clean selection often leaves a faint white line around the edges. Zoom in to 200%+ and use the Smudge Tool (or Defringe/Contract) to blend that line away so the cutout sits seamlessly against its new background.</div>
         </div></div></div>
-        <div class="flip-card project-day" data-day="3-2"><div class="flip-card-inner">
-        <div class="flip-card-front"><div class="project-label">PROJECT DAY</div><h4>Day 2: ID/Passport Photos &amp; Around the World with a Twist</h4><p>Create professional ID photos, then dive into the group project — open the brief in Group Projects.</p><span class="flip-hint">Tap to flip</span></div>
+        <div class="flip-card practice-day" data-day="3-2"><div class="flip-card-inner">
+        <div class="flip-card-front"><div class="practice-label">PRACTICE DAY</div><h4>Day 6: Creating a Passport Size Photo</h4><p>Crop, retouch and format a professional passport-size photo from start to finish.</p><span class="flip-hint">Tap to flip</span></div>
         <div class="flip-card-back"><div class="vocab-title">Vocabulary</div>
-        <p><span class="vocab" tabindex="0" data-def="Removes unwanted background.">Background Remover</span><span class="vocab-def"> — Removes unwanted background.</span>,
-        <span class="vocab" tabindex="0" data-def="Adjusts image size.">Crop Tool</span><span class="vocab-def"> — Adjusts image size.</span>,
-        <span class="vocab" tabindex="0" data-def="Separates texture from tone.">Frequency Separation</span><span class="vocab-def"> — Separates texture from tone.</span>,
-        <span class="vocab" tabindex="0" data-def="Lighten/darken areas for depth.">Dodge &amp; Burn</span><span class="vocab-def"> — Lighten/darken areas for depth.</span></p>
-        <div class="big-ideas">Practice creating official ID photos using precise selection and background removal. For the group project, work non-destructively and preserve natural skin texture. Full brief and per-group rubric: Group Projects tab → "Week 3 · Around the World with a Twist".</div>
+        <p><span class="vocab" tabindex="0" data-def="Trims the canvas down to an exact size and ratio.">Crop Tool</span><span class="vocab-def"> — Trims the canvas down to an exact size and ratio.</span>,
+        <span class="vocab" tabindex="0" data-def="The standard 2x2 inch dimension required for most ID and passport photos.">Passport Size (2x2 in)</span><span class="vocab-def"> — The standard 2x2 inch dimension required for most ID and passport photos.</span>,
+        <span class="vocab" tabindex="0" data-def="Replaces the background with a flat, regulation color — usually plain white.">Solid Color Fill</span><span class="vocab-def"> — Replaces the background with a flat, regulation color — usually plain white.</span>,
+        <span class="vocab" tabindex="0" data-def="Lightens or darkens areas to even out skin tone and lighting.">Dodge &amp; Burn</span><span class="vocab-def"> — Lightens or darkens areas to even out skin tone and lighting.</span>,
+        <span class="vocab" tabindex="0" data-def="Passport photos are typically saved at 300 DPI for sharp, print-quality results.">Resolution (DPI)</span><span class="vocab-def"> — Passport photos are typically saved at 300 DPI for sharp, print-quality results.</span></p>
+        <div class="big-ideas">Passport photos follow strict formatting rules — exact size, plain background, even lighting, natural expression — so precision matters more here than creativity.</div>
+        <div class="summary-text">This week's group project — Around the World with a Twist — is introduced separately in the Group Projects tab.</div>
         </div></div></div>
         </div></div>
         <div class="week-card" id="week4">
         <h2 class="wk">Week 4 — Advanced Portrait Editing</h2>
         <div class="day-grid">
         <div class="flip-card" data-day="4-1"><div class="flip-card-inner">
-        <div class="flip-card-front"><h4>Day 1: Lips, Teeth &amp; Eye Reflection</h4><p>Enhance portrait details for realism.</p><span class="flip-hint">Tap to flip</span></div>
+        <div class="flip-card-front"><h4>Day 7: Lip &amp; Face Retouching (Dodge &amp; Burn, Healing Brush, Frequency Separation)</h4><p>Professional-level skin retouching that keeps natural texture intact.</p><span class="flip-hint">Tap to flip</span></div>
         <div class="flip-card-back"><div class="vocab-title">Vocabulary</div>
-        <p><span class="vocab" tabindex="0" data-def="Brighten teeth naturally.">Teeth Whitening</span><span class="vocab-def"> — Brighten teeth naturally.</span>,
-        <span class="vocab" tabindex="0" data-def="Adjust lip tone & color.">Lip Enhancement</span><span class="vocab-def"> — Adjust lip tone & color.</span>,
-        <span class="vocab" tabindex="0" data-def="Add subtle highlights to eyes.">Eye Reflection</span><span class="vocab-def"> — Add subtle highlights to eyes.</span></p>
+        <p><span class="vocab" tabindex="0" data-def="Separates an image into texture and tone layers so each can be edited independently.">Frequency Separation</span><span class="vocab-def"> — Separates an image into texture and tone layers so each can be edited independently.</span>,
+        <span class="vocab" tabindex="0" data-def="Blends sampled pixels with the surrounding texture and lighting to remove blemishes seamlessly.">Healing Brush</span><span class="vocab-def"> — Blends sampled pixels with the surrounding texture and lighting to remove blemishes seamlessly.</span>,
+        <span class="vocab" tabindex="0" data-def="Lightens (dodge) or darkens (burn) specific areas to sculpt contours and even out skin tone.">Dodge &amp; Burn</span><span class="vocab-def"> — Lightens (dodge) or darkens (burn) specific areas to sculpt contours and even out skin tone.</span>,
+        <span class="vocab" tabindex="0" data-def="Automatically samples nearby pixels to quickly patch small blemishes.">Spot Healing Brush</span><span class="vocab-def"> — Automatically samples nearby pixels to quickly patch small blemishes.</span></p>
         <div class="vocab-title">Big Ideas</div>
-        <p class="big-ideas">Focus on subtle realism, use separate layers and masks for flexibility.</p>
+        <p class="big-ideas">Frequency Separation is the industry-standard technique for retouching skin without losing natural texture — fix tone on one layer, texture on another, and neither touches the other.</p>
         </div></div></div>
         <div class="flip-card" data-day="4-2"><div class="flip-card-inner">
-        <div class="flip-card-front flip-card-quiz-front"><h4>Day 2: Puppet Warp, Dress Change &amp; Final Project</h4><p>Advanced portrait manipulation, then apply all skills from Week 1–4.</p><span class="flip-hint" style="color:rgba(255,255,255,.75)">Tap to flip</span></div>
+        <div class="flip-card-front"><h4>Day 8: Advanced Portrait Retouching: Teeth Whitening</h4><p>Brighten teeth naturally without tipping into an obviously fake look.</p><span class="flip-hint">Tap to flip</span></div>
         <div class="flip-card-back"><div class="vocab-title">Vocabulary</div>
-        <p><span class="vocab" tabindex="0" data-def="Pin-based tool for flexible distortion.">Puppet Warp</span><span class="vocab-def"> — Pin-based tool for flexible distortion.</span>,
-        <span class="vocab" tabindex="0" data-def="Altering clothing colors/patterns.">Dress Change</span><span class="vocab-def"> — Altering clothing colors/patterns.</span>,
-        <span class="vocab" tabindex="0" data-def="Mesh overlay used in puppet warp.">Control Points</span><span class="vocab-def"> — Mesh overlay used in puppet warp.</span>,
-        <span class="vocab" tabindex="0" data-def="Combining learned techniques into one design.">Integration</span><span class="vocab-def"> — Combining learned techniques into one design.</span>,
-        <span class="vocab" tabindex="0" data-def="Applying advanced retouching and compositing.">Final Composition</span><span class="vocab-def"> — Applying advanced retouching and compositing.</span></p>
+        <p><span class="vocab" tabindex="0" data-def="Adjustment used to shift and desaturate yellow tones for natural-looking whitening.">Hue/Saturation</span><span class="vocab-def"> — Adjustment used to shift and desaturate yellow tones for natural-looking whitening.</span>,
+        <span class="vocab" tabindex="0" data-def="Isolates the whitening effect to just the teeth without touching the surrounding lips or skin.">Layer Mask</span><span class="vocab-def"> — Isolates the whitening effect to just the teeth without touching the surrounding lips or skin.</span>,
+        <span class="vocab" tabindex="0" data-def="Fine-tunes a specific color range, like yellows, independently of the rest of the image.">Selective Color</span><span class="vocab-def"> — Fine-tunes a specific color range, like yellows, independently of the rest of the image.</span>,
+        <span class="vocab" tabindex="0" data-def="Brightening and neutralizing yellow tones on teeth while preserving natural shading and shine.">Teeth Whitening</span><span class="vocab-def"> — Brightening and neutralizing yellow tones on teeth while preserving natural shading and shine.</span></p>
         <div class="vocab-title">Big Ideas</div>
-        <p class="big-ideas">Use Puppet Warp for realistic body or cloth repositioning; maintain proportions and natural folds. Create a polished portrait project using techniques from previous weeks.</p>
+        <p class="big-ideas">Keep whitening subtle — real teeth aren't pure white. Mask precisely and desaturate before brightening so the result still looks believable.</p>
         </div></div></div>
         </div></div>
         </div><!-- /month-block m1 -->
@@ -1314,7 +1352,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
         <div class="view-head">
           <div>
             <h2>Read Me — Detailed Notes</h2>
-            <p>Step-by-step written lessons with tools, tips, and visual analogies. Each section can be downloaded on its own as a PDF. Click a section's title — or the 📖 icon — to expand it and read, or collapse it; sections you scroll past will minimize automatically. Opening a section counts toward your weekly reading check.</p>
+            <p>Step-by-step written lessons with tools, tips, and visual analogies. Each section can be downloaded on its own as a PDF. Sections start collapsed — click a section's title (or the ▾ arrow) to expand it and read, or click again to collapse it. Reading a section doesn't mark it complete on its own — use each section's "Mark as Read" button once you've read it.</p>
           </div>
         </div>
         <div class="note-section" id="new-project-menu" data-reading="new-project-menu">
@@ -1645,6 +1683,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
               <span class="tn-index" id="theaterIndex">—</span>
               <button type="button" class="tn-btn" id="theaterNextBtn">Next ▶</button>
             </div>
+            <div class="theater-tip" id="theaterTip">📌 Tip: Click <strong>Next ▶</strong> after you've finished watching a recording — that saves your progress and unlocks that recording's quick assessment check.</div>
             <div class="theater-info">
               <div class="ti-avatar" aria-hidden="true">Ps</div>
               <div class="ti-meta">
@@ -1687,8 +1726,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
       </section>
       <!-- ========== ASSESSMENT ========== -->
       <section id="assessment" class="view">
-        <div class="view-head"><div><h2>Assessment</h2>
-        <p>Questions from the Read Me notes and the screencast descriptions, organized by section. Each check can be taken once — your score is saved right away to My Progress.</p></div></div>
+        <div class="view-head"><div><h2>Assessment</h2></div></div>
         <div id="assessmentBody"></div>
       </section>
       <!-- ========== MY PROGRESS ========== -->
@@ -1702,6 +1740,9 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
       <div class="lp-head"><h3>Layers — Progress</h3></div>
       <div class="lp-total" id="lpTotalPct">0%<span> complete</span></div>
       <div class="lp-bar"><i id="lpBar"></i></div>
+      <button type="button" class="lp-rows-toggle" id="lpRowsToggle" aria-expanded="false" aria-controls="lpRows">
+        <span>Weekly breakdown</span><span class="lrt-arrow" aria-hidden="true">▾</span>
+      </button>
       <div id="lpRows"></div>
       <div class="lp-grade">
         <span>Overall Grade</span>
@@ -1709,8 +1750,9 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
         <span id="lpGradeDetail">Sign in to start tracking.</span>
       </div>
       <button class="lp-report-btn" id="lpReportBtn">✉ Send Progress Report</button>
+      <div id="lpReportStatus" style="font-size:10.5px;color:#8f96a6;margin-top:6px;min-height:12px;"></div>
       <button class="lp-signout" id="lpSignOutBtn">Sign out of this device</button>
-      <div class="lp-note">Every lesson card is a "layer." Flip a card in the Curriculum tab to mark that day's lesson complete — this panel fills in as you progress, just like opacity on a real layer. Finishing both days in a week automatically submits that week's check-in quiz report, and a full progress report is also sent automatically every 2 weeks (Sept 14 = Week 1) to your instructor.</div>
+      <div class="lp-note">Every lesson card is a "layer." Flip a card in the Curriculum tab to mark that day's lesson complete — the total above and this panel's grade &amp; report stay visible even while the weekly breakdown is collapsed; tap "Weekly breakdown" to expand it. Finishing both days in a week automatically submits that week's check-in quiz report, and a full progress report is also sent automatically every 2 weeks (Sept 14 = Week 1) to your instructor.</div>
     </aside>
   </div>
   <footer class="appfoot">
@@ -1718,6 +1760,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
     <div class="foot-contact">✉ <a href="mailto:thomas@hmacademy.org">thomas@hmacademy.org</a></div>
   </footer>
 </div><script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
 <script>
 /* ================= TAB NAVIGATION ================= */
 function goTab(name){
@@ -1757,7 +1800,7 @@ const weeksByMonth = { m1:[1,2,3,4], m2:[5,6,7,8], m3:[9,10,11,12], m4:[13,14,15
 function buildWeekNav(month){
   const nav = document.getElementById('weekNav');
   nav.innerHTML = '';
-  weeksByMonth[month].forEach(w=>{
+  weeksByMonth[month].filter(isWeekReleased).forEach(w=>{
     const b = document.createElement('button');
     b.className = 'week-pill';
     b.type = 'button';
@@ -1766,6 +1809,20 @@ function buildWeekNav(month){
     nav.appendChild(b);
   });
 }
+/* Hides any week-card whose content isn't released yet, and hides a whole
+   month chip if none of its weeks are released — so unreleased content is
+   fully absent from the Curriculum tab rather than shown as a placeholder. */
+function applyCurriculumRelease(){
+  for(let w=1; w<=TOTAL_WEEKS; w++){
+    const el = document.getElementById('week'+w);
+    if(el) el.style.display = isWeekReleased(w) ? '' : 'none';
+  }
+  document.querySelectorAll('#monthSwitch .chip').forEach(chip=>{
+    const hasReleased = (weeksByMonth[chip.dataset.month]||[]).some(isWeekReleased);
+    chip.style.display = hasReleased ? '' : 'none';
+  });
+}
+applyCurriculumRelease();
 buildWeekNav('m1');
 /* Projects sub-nav */
 document.getElementById('projSubnav').addEventListener('click', e=>{
@@ -1776,13 +1833,36 @@ document.getElementById('projSubnav').addEventListener('click', e=>{
 });
 /* ================= PROGRESS / FLIP CARDS / LAYERS PANEL ================= */
 const weekMeta = {
-  1:'Interface & Layers', 2:'Non-Destructive Editing', 3:'Around the World with a Twist',
+  1:'Graphic Design Software & Foundations', 2:'Photopea, Pixels & Layers', 3:'Around the World with a Twist',
   4:'Advanced Portrait Editing', 5:'Color Adjustment & Matching', 6:'Phone / iPad Mockup',
   7:'Vanishing Point Text', 8:'Independent Study', 9:'Gojo Pop-Out Project',
   10:'Double Exposure & Poster Design', 11:'Coming Soon', 12:'Coming Soon',
   13:'Coming Soon', 14:'Coming Soon', 15:'Coming Soon', 16:'Coming Soon'
 };
 const TOTAL_WEEKS = 16;
+/* ================= CONTENT RELEASE CONTROL =================
+   Controls what's currently visible to students. Weeks 1–3 are released now
+   with no date attached. Weeks 4–10 already have real lessons written, and
+   each one unlocks automatically on its own weekly cadence, 7 days apart,
+   counted from COURSE_START_DATE (Week 4 = Oct 5 2026, Week 5 = Oct 12, ...
+   Week 10 = Nov 16) — no further edits needed, each just appears once its
+   date arrives. Weeks not listed in WEEKS_WITH_SCHEDULED_CONTENT (currently
+   11–16, the "Coming Soon" placeholders) have no real lessons yet, so they
+   stay fully hidden — not shown as "Coming Soon", just absent — until real
+   content is written and the week number is added to that list. Same idea
+   for screencasts and practice files below: only the ids/keys listed are
+   visible; everything else on the roster is hidden until added. */
+const COURSE_START_DATE = new Date('2026-09-14T00:00:00'); // Sept 14 = Week 1, Day 1
+const ALWAYS_RELEASED_WEEKS = [1,2,3];
+const WEEKS_WITH_SCHEDULED_CONTENT = [4,5,6,7,8,9,10];
+function weekStartDate(w){
+  return new Date(COURSE_START_DATE.getTime() + (w-1)*7*86400000);
+}
+function isWeekReleased(w){
+  if(ALWAYS_RELEASED_WEEKS.includes(w)) return true;
+  if(!WEEKS_WITH_SCHEDULED_CONTENT.includes(w)) return false; // no content yet — stays hidden
+  return new Date() >= weekStartDate(w);
+}
 const cards = document.querySelectorAll('.flip-card[data-day]');
 let completed = [];
 try{ completed = JSON.parse(localStorage.getItem('completedDays')) || []; }catch(e){ completed = []; }
@@ -1792,10 +1872,60 @@ function isWeekComplete(w){
   if(!dayEls.length) return false;
   return Array.from(dayEls).every(c => completed.includes(c.dataset.day));
 }
+/* Progression lock — separate from isWeekReleased() above (which controls whether
+   a week is visible at all). This controls whether an already-visible week's
+   lessons can be marked complete: Week 1 is always open, and every later week
+   stays locked until the week right before it is fully finished. Keeps students
+   from skipping ahead and racking up completions out of order. */
+function isWeekUnlocked(w){
+  return w <= 1 || isWeekComplete(w-1);
+}
+/* Small reusable toast for feedback that doesn't need a blocking alert() —
+   used here for the "this week is still locked" message. */
+let appToastTimer = null;
+function showToast(message){
+  let el = document.getElementById('appToast');
+  if(!el){
+    el = document.createElement('div');
+    el.id = 'appToast';
+    el.className = 'app-toast';
+    el.setAttribute('role','status');
+    el.setAttribute('aria-live','polite');
+    document.body.appendChild(el);
+  }
+  el.textContent = message;
+  el.classList.add('show');
+  clearTimeout(appToastTimer);
+  appToastTimer = setTimeout(()=>el.classList.remove('show'), 3400);
+}
+/* Applies/removes the locked state + a 🔒 badge on every lesson card, based on
+   isWeekUnlocked() above. Safe to call repeatedly — it's idempotent. */
+function updateLocks(){
+  cards.forEach(card=>{
+    const week = Number(card.dataset.day.split('-')[0]);
+    const unlocked = isWeekUnlocked(week);
+    card.classList.toggle('locked', !unlocked);
+    card.setAttribute('aria-disabled', unlocked ? 'false' : 'true');
+    const front = card.querySelector('.flip-card-front');
+    if(!front) return;
+    let badge = front.querySelector('.lock-badge');
+    if(!unlocked){
+      if(!badge){
+        badge = document.createElement('div');
+        badge.className = 'lock-badge';
+        badge.innerHTML = '<span aria-hidden="true">🔒</span><span>Locked</span>';
+        front.appendChild(badge);
+      }
+    } else if(badge){
+      badge.remove();
+    }
+  });
+}
 function buildLayersPanel(){
   const rows = document.getElementById('lpRows');
   rows.innerHTML = '';
   for(let w=1; w<=TOTAL_WEEKS; w++){
+    if(!isWeekReleased(w)) continue;
     const dayEls = weekDayEls(w);
     const total = dayEls.length;
     const done = Array.from(dayEls).filter(c => completed.includes(c.dataset.day)).length;
@@ -1804,10 +1934,11 @@ function buildLayersPanel(){
     row.className = 'lp-row';
     row.setAttribute('role','button');
     row.setAttribute('tabindex','0');
-    row.setAttribute('aria-label', `Week ${w}: ${weekMeta[w]}, ${pct}% complete`);
+    const locked = !isWeekUnlocked(w);
+    row.setAttribute('aria-label', `Week ${w}: ${weekMeta[w]}, ${pct}% complete${locked ? ', locked until the previous week is finished' : ''}`);
     row.innerHTML = `<span class="lp-eye" aria-hidden="true">${pct===100?'●':'○'}</span>
       <span class="lp-thumb"><i style="height:${pct}%"></i></span>
-      <span class="lp-label"><b>Week w</b><small>{weekMeta[w]}</small></span>
+      <span class="lp-label"><b>${locked ? '🔒 ' : ''}Week ${w}</b><small>${weekMeta[w]}</small></span>
       <span class="lp-pct">${pct}%</span>`;
     const jump = () => {
       const monthOf = w<=4?'m1':(w<=8?'m2':(w<=12?'m3':'m4'));
@@ -1827,6 +1958,7 @@ function updateProgress(){
   document.getElementById('lpTotalPct').innerHTML = pct+'%<span> complete</span>';
   try{ localStorage.setItem('completedDays', JSON.stringify(completed)); }catch(e){}
   buildLayersPanel();
+  updateLocks();
 }
 function toggleCardDone(card){
   const day = card.dataset.day;
@@ -1845,15 +1977,20 @@ cards.forEach(card=>{
   card.setAttribute('tabindex','0');
   card.setAttribute('aria-label','Lesson card, tap to flip and mark complete');
   // Touch/click devices don't support :hover reliably — toggle a flipped class explicitly.
-  card.addEventListener('click', ()=>{
+  const tryFlip = ()=>{
+    if(card.classList.contains('locked')){
+      const week = Number(card.dataset.day.split('-')[0]);
+      showToast(`🔒 Week ${week} is locked — finish every lesson in Week ${week-1} first.`);
+      return;
+    }
     card.classList.toggle('flipped');
     toggleCardDone(card);
-  });
+  };
+  card.addEventListener('click', tryFlip);
   card.addEventListener('keydown', e=>{
     if(e.key==='Enter' || e.key===' '){
       e.preventDefault();
-      card.classList.toggle('flipped');
-      toggleCardDone(card);
+      tryFlip();
     }
   });
 });
@@ -1867,20 +2004,34 @@ document.getElementById('lpToggle').addEventListener('click', function(){
   const collapsed = panel.classList.toggle('collapsed');
   this.setAttribute('aria-expanded', collapsed ? 'false':'true');
 });
-/* ================= NOTES: ACCORDION + SCROLL-MINIMIZE ================= */
-/* Each .note-section keeps its h3 + .note-actions visible at all times;
-   everything else gets wrapped into a .note-body div at runtime so it can
-   collapse. Clicking the title, or the 📖 icon beside it, toggles it
-   manually, and an IntersectionObserver auto-collapses a section once
-   you've scrolled past it (and re-expands it if you scroll back up to it)
-   so long sections don't clutter the page as you move down through Read
-   Me. */
+/* Weekly-breakdown rows dropdown inside the Layers panel — collapsed by
+   default (the overall % / bar / grade / report / sign-out stay visible
+   regardless), and only opens when the student explicitly taps it. */
+document.getElementById('lpRowsToggle').addEventListener('click', function(){
+  const rows = document.getElementById('lpRows');
+  const isOpen = rows.classList.toggle('open');
+  this.classList.toggle('open', isOpen);
+  this.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+});
+/* ================= NOTES / PROGRESS / ASSESSMENT: CLICK-TO-TOGGLE ACCORDION ================= */
+/* Each .note-section keeps its h3 + .note-actions visible at all times; everything
+   else gets wrapped into a .note-body div at runtime so it can collapse. Every
+   section — Read Me notes, the Progress-page tables, and the Assessment groups —
+   starts collapsed and opens only when the student clicks its title or the arrow
+   toggle. There is no scroll-triggered auto-expand/collapse: that used to fight
+   with the student's own clicks (re-opening a section the instant it scrolled
+   into view), so it's gone in favor of a single, predictable click-to-toggle. */
 function initNoteAccordion(root){
   const scope = root || document;
   scope.querySelectorAll('.note-section').forEach(section=>{
     if(section.querySelector('.note-body')) return; // already set up
     const h3 = section.querySelector('h3');
     if(!h3) return;
+    // Snapshot the plain title text NOW, before the ▾ toggle arrow is appended into
+    // this h3 below — that arrow is outside the PDF font's Latin-1 character set,
+    // and once it ends up inside h3.textContent it corrupts the whole string when
+    // the PDF report reads it (that's the garbled, oddly-spaced text in the report).
+    if(!section.dataset.title) section.dataset.title = h3.textContent.trim();
     const body = document.createElement('div');
     body.className = 'note-body';
     let node = h3.nextSibling;
@@ -1890,13 +2041,14 @@ function initNoteAccordion(root){
       node = next;
     }
     section.appendChild(body);
+    section.classList.add('collapsed'); // every accordion starts collapsed
     const toggle = document.createElement('button');
     toggle.type = 'button';
     toggle.className = 'note-toggle';
     toggle.setAttribute('aria-label','Click to expand and read this section, or collapse it');
-    toggle.title = 'Click to read';
-    toggle.setAttribute('aria-expanded','true');
-    toggle.innerHTML = '<span aria-hidden="true">📖</span><span class="nt-arrow" aria-hidden="true">▾</span>';
+    toggle.title = 'Click to expand';
+    toggle.setAttribute('aria-expanded','false');
+    toggle.innerHTML = '<span class="nt-arrow" aria-hidden="true">▾</span>';
     h3.classList.add('note-h3-clickable');
     h3.appendChild(toggle);
     const doToggle = ()=>{
@@ -1904,25 +2056,7 @@ function initNoteAccordion(root){
       toggle.setAttribute('aria-expanded', collapsed?'false':'true');
     };
     h3.addEventListener('click', doToggle);
-    if(noteScrollObserver) noteScrollObserver.observe(section);
   });
-}
-let noteScrollObserver = null;
-if('IntersectionObserver' in window){
-  noteScrollObserver = new IntersectionObserver((entries)=>{
-    entries.forEach(entry=>{
-      const section = entry.target;
-      const toggle = section.querySelector('.note-toggle');
-      if(entry.isIntersecting){
-        section.classList.remove('collapsed');
-        if(toggle) toggle.setAttribute('aria-expanded','true');
-      } else if(entry.boundingClientRect.top < 0){
-        // scrolled UP and out of view (past it) -> minimize it
-        section.classList.add('collapsed');
-        if(toggle) toggle.setAttribute('aria-expanded','false');
-      }
-    });
-  }, { threshold: 0, rootMargin: '-90px 0px -55% 0px' });
 }
 initNoteAccordion();
 /* Reading sections are marked read explicitly via the "Mark as Read" button
@@ -1986,7 +2120,7 @@ function buildItemQuiz(pool, key){
    in Read Me, including the new-project-menu section added at the top. */
 const readingPool = Array.from(document.querySelectorAll('.note-section[data-reading]')).map(el=>({
   key: el.dataset.reading,
-  title: (el.querySelector('h3') && el.querySelector('h3').textContent.trim()) || el.dataset.reading,
+  title: el.dataset.title || (el.querySelector('h3') && el.querySelector('h3').textContent.trim()) || el.dataset.reading,
   desc: (el.querySelector('p') && el.querySelector('p').textContent.trim()) || ''
 }));
 let cqPendingType = null; // 'video' | 'reading'
@@ -1996,7 +2130,7 @@ function renderQuizBody(questions){
     <div style="margin-bottom:12px;">
       <div style="font-size:13px;font-weight:700;margin-bottom:6px;">${i+1}. ${q.prompt}</div>
       ${q.options.map((opt,oi)=>`<label style="display:block;font-size:13px;margin:4px 0;cursor:pointer;">
-        <input type="radio" name="cqqi"value="{oi}" data-correct="${opt.correct?'1':'0'}"> ${opt.text}
+        <input type="radio" name="cqq${i}" value="${oi}" data-correct="${opt.correct?'1':'0'}"> ${opt.text}
       </label>`).join('')}
     </div>`).join('');
 }
@@ -2140,8 +2274,60 @@ document.getElementById('cqSubmit').addEventListener('click', ()=>{
 const REPORT_EMAIL = 'thomas@hmacademy.org';
 const GOOGLE_FORM_ACTION_URL = ''; // e.g. 'https://docs.google.com/forms/d/e/XXXXXXXX/formResponse'
 const GOOGLE_FORM_ENTRY_ID = '';   // e.g. 'entry.1234567890'
-const COURSE_START_DATE = new Date('2026-09-14T00:00:00'); // Sept 14 = Week 1, Day 1
+/* ---------- CALENDAR-DRIVEN CURRICULUM LOCK ----------
+   Weeks 1-3 are already underway and stay fully open. Every week from Week 4 on
+   unlocks automatically on its own scheduled start date (7 days per week from
+   COURSE_START_DATE, declared earlier — Week 4 = Oct 5, Week 5 = Oct 12, and so
+   on), rather than needing to be manually flipped on later. Until a week's date
+   arrives, its day cards are hidden and a "this week unlocks on <date>" note is
+   shown instead — the lesson content itself is left in place underneath, not
+   deleted, so nothing needs to be rebuilt when the date comes around. This
+   re-checks on every page load, not live while the page is open.
+   Weeks 11-16 already ship as "Coming Soon" placeholder content (no real lessons
+   yet), so their lock note is skipped — there's nothing to hide there.
+   (weekStartDate() is the same helper already defined near COURSE_START_DATE
+   above — reused here rather than redefined.) */
+const WEEKS_ALWAYS_OPEN = 3;
+function applyCurriculumLocks(){
+  for(let w = WEEKS_ALWAYS_OPEN + 1; w <= TOTAL_WEEKS; w++){
+    const weekEl = document.getElementById('week'+w);
+    if(!weekEl || weekEl.querySelector('.week-lock-note')) continue;
+    const startDate = weekStartDate(w);
+    if(new Date() >= startDate) continue; // its date has arrived — leave it open
+    const isPlaceholder = /Coming Soon/i.test(weekEl.querySelector('h2.wk')?.textContent || '');
+    if(isPlaceholder) continue; // nothing real to hide yet
+    const dayGrid = weekEl.querySelector('.day-grid');
+    if(dayGrid) dayGrid.style.display = 'none';
+    const dateStr = startDate.toLocaleDateString(undefined, { weekday:'long', year:'numeric', month:'long', day:'numeric' });
+    const note = document.createElement('div');
+    note.className = 'week-lock-note';
+    note.innerHTML = `<span class="wl-icon" aria-hidden="true">🔒</span><span>This week unlocks <strong>${dateStr}</strong> — check back then!</span>`;
+    weekEl.appendChild(note);
+  }
+}
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+/* Lightweight device/browser sniff from navigator.userAgent — good enough to note
+   "which device this report came from" for the instructor, not meant to be exact. */
+function getDeviceInfo(){
+  try{
+    const ua = navigator.userAgent || '';
+    let browser = 'Unknown browser';
+    if(/Edg\//.test(ua)) browser = 'Edge';
+    else if(/OPR\//.test(ua)) browser = 'Opera';
+    else if(/Chrome\//.test(ua) && !/Chromium/.test(ua)) browser = 'Chrome';
+    else if(/Firefox\//.test(ua)) browser = 'Firefox';
+    else if(/Safari\//.test(ua) && !/Chrome/.test(ua)) browser = 'Safari';
+    let os = 'Unknown OS';
+    if(/Windows/.test(ua)) os = 'Windows';
+    else if(/Mac OS X/.test(ua)) os = 'macOS';
+    else if(/Android/.test(ua)) os = 'Android';
+    else if(/iPhone|iPad|iPod/.test(ua)) os = 'iOS';
+    else if(/Linux/.test(ua)) os = 'Linux';
+    const type = /Mobi|Android|iPhone|iPad/.test(ua) ? 'Mobile' : 'Desktop';
+    const res = (window.screen && window.screen.width && window.screen.height) ? `${window.screen.width}×${window.screen.height}` : '';
+    return `${type} · ${browser} on ${os}${res ? ' · '+res : ''}`;
+  }catch(e){ return 'Unknown device'; }
+}
 /* ---------- SIGN-IN / DEVICE LOCK ---------- */
 const gate = document.getElementById('signInGate');
 const siError = document.getElementById('siError');
@@ -2322,9 +2508,9 @@ function maybeShowWeekQuiz(week){
     quiz.forEach((q,i)=>{
       const wrap = document.createElement('div');
       wrap.style.marginBottom = '12px';
-      wrap.innerHTML = `<div style="font-size:13px;font-weight:700;margin-bottom:6px;">i+1.Whatdoes"{q.term}" mean?</div>` +
+      wrap.innerHTML = `<div style="font-size:13px;font-weight:700;margin-bottom:6px;">${i+1}. What does "${q.term}" mean?</div>` +
         q.options.map((opt,oi)=>`<label style="display:block;font-size:13px;margin:4px 0;cursor:pointer;">
-          <input type="radio" name="wqqi"value="{oi}" data-correct="${opt===q.correct?'1':'0'}"> ${opt}
+          <input type="radio" name="wqq${i}" value="${oi}" data-correct="${opt===q.correct?'1':'0'}"> ${opt}
         </label>`).join('');
       body.appendChild(wrap);
     });
@@ -2381,6 +2567,26 @@ document.getElementById('wqModal').addEventListener('keydown', e=>{
   if(e.key==='Escape' && document.getElementById('wqSkip').style.display!=='none') document.getElementById('wqSkip').click();
 });
 /* ---------- GRADING ---------- */
+/* Standard 0-100 letter scale with +/- bands. A student who hasn't started
+   anything yet (0%) shows "N/A" instead of a discouraging "F" — F is reserved
+   for someone who has actually been working below the passing line, not for
+   a blank slate right after signing in. */
+function pctToLetter(pct){
+  if(pct <= 0) return 'N/A';
+  if(pct >= 97) return 'A+';
+  if(pct >= 93) return 'A';
+  if(pct >= 90) return 'A-';
+  if(pct >= 87) return 'B+';
+  if(pct >= 83) return 'B';
+  if(pct >= 80) return 'B-';
+  if(pct >= 77) return 'C+';
+  if(pct >= 73) return 'C';
+  if(pct >= 70) return 'C-';
+  if(pct >= 67) return 'D+';
+  if(pct >= 63) return 'D';
+  if(pct >= 60) return 'D-';
+  return 'NI'; // "Needs Improvement" — kept short like the other grade codes, instead of a bare "F"
+}
 function computeGrade(){
   if(!student) return { pct:0, letter:'—', detail:'Sign in to start tracking.' };
   const totalLessons = cards.length;
@@ -2390,17 +2596,16 @@ function computeGrade(){
   const quizAvg = quizzesTaken ? quizPctSum/quizzesTaken : 0;
   const readingPct = Math.min(100, (student.readingSeen.length/11)*100);
   const videoIds = Object.keys(student.videoConfirmed).filter(id=>student.videoConfirmed[id]);
-  const videoPct = Math.min(100, (videoIds.length/23)*100);
+  const videoPct = Math.min(100, (videoIds.length/allScreencasts.length)*100);
   const overall = completionPct*0.45 + quizAvg*0.25 + readingPct*0.15 + videoPct*0.15;
-  let letter = 'F';
-  if(overall>=90) letter='A'; else if(overall>=80) letter='B'; else if(overall>=70) letter='C'; else if(overall>=60) letter='D';
-  return { pct: Math.round(overall), letter, detail:`${Math.round(completionPct)}% lessons · ${quizzesTaken} week quizzes` };
+  const pct = Math.round(overall);
+  return { pct, letter: pctToLetter(pct), detail:`${Math.round(completionPct)}% lessons · ${quizzesTaken} week quizzes` };
 }
 function updateGrade(){
   const g = computeGrade();
   const letterEl = document.getElementById('lpGradeLetter');
   const detailEl = document.getElementById('lpGradeDetail');
-  if(letterEl){ letterEl.textContent = student ? `g.letter ({g.pct}%)` : '—'; }
+  if(letterEl){ letterEl.textContent = student ? `${g.letter}  (${g.pct}%)` : '—'; }
   if(detailEl){ detailEl.textContent = g.detail; }
   const sbGrade = document.getElementById('sbGrade');
   if(sbGrade) sbGrade.textContent = student ? `${g.letter} · ${g.pct}%` : '—';
@@ -2429,26 +2634,27 @@ function renderProgressView(){
   const screencastQuizAvg = avgPct(screencastQuizEntries);
   let rows = '';
   for(let w=1; w<=TOTAL_WEEKS; w++){
+    if(!isWeekReleased(w)) continue;
     const st = weekStatus(w);
     const quiz = student.weekQuizzes[w];
     let badgeClass = 'notstarted', badgeText = 'Not started';
     if(st.pct===100){ badgeClass='done'; badgeText='Complete'; }
     else if(st.pct>0){ badgeClass='partial'; badgeText='In progress'; }
-    const quizText = quiz ? (quiz.total ? `quiz.score/{quiz.total} correct` : 'Reflection submitted') : '—';
-    rows += `<tr><td>Week w</td><td>{weekMeta[w]||''}</td><td>st.done/{st.total} days</td><td><span class="pw-badge badgeClass">{badgeText}</span></td><td>${quizText}</td></tr>`;
+    const quizText = quiz ? (quiz.total ? `${quiz.score}/${quiz.total} correct` : 'Reflection submitted') : '—';
+    rows += `<tr><td>Week ${w}</td><td>${weekMeta[w]||''}</td><td>${st.done}/${st.total} days</td><td><span class="pw-badge ${badgeClass}">${badgeText}</span></td><td>${quizText}</td></tr>`;
   }
   let readingRows = readingPool.map(item=>{
     const isRead = student.readingSeen.includes(item.key);
     const quiz = student.contentQuizzes.reading[item.key];
-    return `<tr><td>${item.title}</td><td><span class="pw-badge isRead?'done':'notstarted'">{isRead?'Read':'Not read'}</span></td><td>${quiz? (quiz.score+'/'+quiz.total) : '—'}</td></tr>`;
+    return `<tr><td>${item.title}</td><td><span class="pw-badge ${isRead?'done':'notstarted'}">${isRead?'Read':'Not read'}</span></td><td>${quiz? (quiz.score+'/'+quiz.total) : '—'}</td></tr>`;
   }).join('');
-  let screencastRows = (typeof allScreencasts !== 'undefined' ? allScreencasts : []).map(v=>{
+  let screencastRows = (typeof releasedScreencasts !== 'undefined' ? releasedScreencasts : []).map(v=>{
     const watched = typeof theaterIsWatched === 'function' ? theaterIsWatched(v.id) : false;
     const opened = typeof theaterIsOpened === 'function' ? theaterIsOpened(v.id) : false;
     const status = watched ? 'Watched' : (opened ? 'Opened' : 'Not started');
     const badgeClass = watched?'done':(opened?'partial':'notstarted');
     const quiz = student.contentQuizzes.screencasts[v.id];
-    return `<tr><td>${v.label}</td><td><span class="pw-badge badgeClass">{status}</span></td><td>${quiz? (quiz.score+'/'+quiz.total) : '—'}</td></tr>`;
+    return `<tr><td>${v.label}</td><td><span class="pw-badge ${badgeClass}">${status}</span></td><td>${quiz? (quiz.score+'/'+quiz.total) : '—'}</td></tr>`;
   }).join('');
   body.innerHTML = `
     <div class="progress-hero">
@@ -2458,31 +2664,31 @@ function renderProgressView(){
       </div>
     </div>
     <div class="progress-grid">
-      <div class="progress-card" style="--pc-accent:#2f6fed"><h4>Lessons Completed</h4><div class="pc-big">student.completed.length/{cards.length}</div><div class="pc-sub">across ${TOTAL_WEEKS} weeks</div></div>
-      <div class="progress-card" style="--pc-accent:#ff7a2d"><h4>Week Quizzes</h4><div class="pc-big">quizzesTaken/{TOTAL_WEEKS}</div><div class="pc-sub">completed automatically at week end</div></div>
+      <div class="progress-card" style="--pc-accent:#2f6fed"><h4>Lessons Completed</h4><div class="pc-big">${student.completed.length}/${cards.length}</div><div class="pc-sub">across ${TOTAL_WEEKS} weeks</div></div>
+      <div class="progress-card" style="--pc-accent:#ff7a2d"><h4>Week Quizzes</h4><div class="pc-big">${quizzesTaken}/${TOTAL_WEEKS}</div><div class="pc-sub">completed automatically at week end</div></div>
       <div class="progress-card" style="--pc-accent:#8b5cf6"><h4>Reading Opened</h4><div class="pc-big">${student.readingSeen.length}/11</div><div class="pc-sub">Read Me sections viewed</div></div>
-      <div class="progress-card" style="--pc-accent:#ff6a2c"><h4>Screencasts Watched</h4><div class="pc-big">${videosConfirmed}/23</div><div class="pc-sub">fully watched</div></div>
-      <div class="progress-card" style="--pc-accent:#ef476f"><h4>Practice Files Opened</h4><div class="pc-big">${student.seenPractice.length}/43</div><div class="pc-sub">exercise files previewed</div></div>
+      <div class="progress-card" style="--pc-accent:#ff6a2c"><h4>Screencasts Watched</h4><div class="pc-big">${videosConfirmed}/${allScreencasts.length}</div><div class="pc-sub">fully watched</div></div>
+      <div class="progress-card" style="--pc-accent:#ef476f"><h4>Practice Files Opened</h4><div class="pc-big">${student.seenPractice.length}/${activePracticeFiles.length}</div><div class="pc-sub">exercise files previewed</div></div>
       <div class="progress-card" style="--pc-accent:#5b6270"><h4>Materials Opened</h4><div class="pc-big">${(student.seenMaterials||[]).length}/23</div><div class="pc-sub">additional resources previewed</div></div>
       <div class="progress-card" style="--pc-accent:#8b5cf6"><h4>Reading Checks</h4><div class="pc-big">${readingQuizEntries.length}/11</div><div class="pc-sub">avg score ${readingQuizAvg}%</div></div>
-      <div class="progress-card" style="--pc-accent:#ff6a2c"><h4>Screencast Checks</h4><div class="pc-big">${screencastQuizEntries.length}/23</div><div class="pc-sub">avg score ${screencastQuizAvg}%</div></div>
+      <div class="progress-card" style="--pc-accent:#ff6a2c"><h4>Screencast Checks</h4><div class="pc-big">${screencastQuizEntries.length}/${allScreencasts.length}</div><div class="pc-sub">avg score ${screencastQuizAvg}%</div></div>
     </div>
-    <div class="note-section" style="margin-top:22px;">
-      <h3 style="margin-top:0;">Week-by-week breakdown</h3>
+    <div class="note-section collapsed" style="margin-top:22px;">
+      <h3 style="margin-top:0;"><span>Week-by-week breakdown <span class="note-count">${student.completed.length}/${cards.length} lessons</span></span></h3>
       <div style="overflow-x:auto;"><table class="progress-week-table">
         <thead><tr><th>Week</th><th>Topic</th><th>Days done</th><th>Status</th><th>Quiz</th></tr></thead>
         <tbody>${rows}</tbody>
       </table></div>
     </div>
-    <div class="note-section">
-      <h3 style="margin-top:0;">Read Me notes — read or not</h3>
+    <div class="note-section collapsed">
+      <h3 style="margin-top:0;"><span>Read Me notes — read or not <span class="note-count">${student.readingSeen.length}/11</span></span></h3>
       <div style="overflow-x:auto;"><table class="progress-week-table">
         <thead><tr><th>Section</th><th>Status</th><th>Check score</th></tr></thead>
         <tbody>${readingRows}</tbody>
       </table></div>
     </div>
-    <div class="note-section">
-      <h3 style="margin-top:0;">Screencasts — watched or not</h3>
+    <div class="note-section collapsed">
+      <h3 style="margin-top:0;"><span>Screencasts — watched or not <span class="note-count">${videosConfirmed}/${allScreencasts.length}</span></span></h3>
       <div style="overflow-x:auto;"><table class="progress-week-table">
         <thead><tr><th>Recording</th><th>Status</th><th>Check score</th></tr></thead>
         <tbody>${screencastRows}</tbody>
@@ -2499,22 +2705,22 @@ function renderAssessmentView(){
     body.innerHTML = `<div class="progress-signedout"><h3>Sign in to take assessments</h3><p>Assessments are generated automatically from the Read Me notes and screencast descriptions.</p></div>`;
     return;
   }
-  const pool = typeof screencastQuizPool !== 'undefined' ? screencastQuizPool : [];
+  const pool = (typeof screencastQuizPool !== 'undefined' ? screencastQuizPool : []).filter(item=>isScreencastReleased(item.key));
   const readingItems = readingPool.map(item=>{
     const quiz = student.contentQuizzes.reading[item.key];
-    const statusText = quiz ? `quiz.score/{quiz.total}` : 'Not taken';
+    const statusText = quiz ? `${quiz.score}/${quiz.total}` : 'Not taken';
     const btn = quiz
       ? `<button type="button" class="assess-btn" disabled>Completed</button>`
       : `<button type="button" class="assess-btn" onclick="assessmentStart('reading','${item.key}')">Start</button>`;
-    return `<div class="assess-row"><div class="assess-row-main"><b>${item.title}</b><span class="assess-status quiz?'done':''">{statusText}</span></div>${btn}</div>`;
+    return `<div class="assess-row"><div class="assess-row-main"><b>${item.title}</b><span class="assess-status ${quiz?'done':''}">${statusText}</span></div>${btn}</div>`;
   }).join('') || '<p style="font-size:13px;color:var(--muted);">No Read Me sections available yet.</p>';
   const videoItems = pool.map(item=>{
     const quiz = student.contentQuizzes.screencasts[item.key];
-    const statusText = quiz ? `quiz.score/{quiz.total}` : 'Not taken';
+    const statusText = quiz ? `${quiz.score}/${quiz.total}` : 'Not taken';
     const btn = quiz
       ? `<button type="button" class="assess-btn" disabled>Completed</button>`
       : `<button type="button" class="assess-btn" onclick="assessmentStart('video','${item.key}')">Start</button>`;
-    return `<div class="assess-row"><div class="assess-row-main"><b>${item.title}</b><span class="assess-status quiz?'done':''">{statusText}</span></div>${btn}</div>`;
+    return `<div class="assess-row"><div class="assess-row-main"><b>${item.title}</b><span class="assess-status ${quiz?'done':''}">${statusText}</span></div>${btn}</div>`;
   }).join('') || '<p style="font-size:13px;color:var(--muted);">No screencasts available yet.</p>';
   const readingDone = Object.keys(student.contentQuizzes.reading).length;
   const videoDone = Object.keys(student.contentQuizzes.screencasts).length;
@@ -2522,84 +2728,307 @@ function renderAssessmentView(){
   const videoPct = pool.length ? Math.round((videoDone/pool.length)*100) : 0;
   body.innerHTML = `
     <div class="assess-summary-row">
-      <div class="progress-card" style="--pc-accent:#8b5cf6;flex:1;min-width:200px;"><h4>Read Me Assessments</h4><div class="pc-big">readingDone/{readingPool.length}</div><div class="pc-sub">completed</div></div>
-      <div class="progress-card" style="--pc-accent:#ff6a2c;flex:1;min-width:200px;"><h4>Screencast Assessments</h4><div class="pc-big">videoDone/{pool.length}</div><div class="pc-sub">completed</div></div>
+      <div class="progress-card" style="--pc-accent:#8b5cf6;flex:1;min-width:200px;"><h4>Read Me Assessments</h4><div class="pc-big">${readingDone}/${readingPool.length}</div><div class="pc-sub">completed</div></div>
+      <div class="progress-card" style="--pc-accent:#ff6a2c;flex:1;min-width:200px;"><h4>Screencast Assessments</h4><div class="pc-big">${videoDone}/${pool.length}</div><div class="pc-sub">completed</div></div>
     </div>
-    <div class="note-section" id="assess-reading">
-      <h3>Read Me Notes Assessment</h3>
-      <div class="assess-progress-row"><span>${readingDone} of readingPool.lengthcompleted</span><spanstyle="color:var(--c-notes);">{readingPct}%</span></div>
+    <div class="note-section collapsed" id="assess-reading">
+      <h3><span>Read Me Notes Assessment <span class="note-count">${readingDone}/${readingPool.length}</span></span></h3>
+      <div class="assess-progress-row"><span>${readingDone} of ${readingPool.length} completed</span><span style="color:var(--c-notes);">${readingPct}%</span></div>
       <div class="assess-progress-bar"><i style="background:linear-gradient(90deg,#8b5cf6,#b794f4);width:${readingPct}%;"></i></div>
       <div>${readingItems}</div>
     </div>
-    <div class="note-section" id="assess-video">
-      <h3>Screencast Assessment</h3>
-      <div class="assess-progress-row"><span>${videoDone} of pool.lengthcompleted</span><spanstyle="color:var(--c-screen);">{videoPct}%</span></div>
+    <div class="note-section collapsed" id="assess-video">
+      <h3><span>Screencast Assessment <span class="note-count">${videoDone}/${pool.length}</span></span></h3>
+      <div class="assess-progress-row"><span>${videoDone} of ${pool.length} completed</span><span style="color:var(--c-screen);">${videoPct}%</span></div>
       <div class="assess-progress-bar"><i style="background:linear-gradient(90deg,#ff6a2c,#ffb347);width:${videoPct}%;"></i></div>
       <div>${videoItems}</div>
     </div>`;
   initNoteAccordion(body);
 }
-/* ---------- PROGRESS REPORT → EMAIL (auto-fires on week-quiz submit; also manual button) ---------- */
-function buildReportBody(trigger){
+/* ---------- PDF SNAPSHOT OF THE FULL DASHBOARD ----------
+   buildProgressReportDoc() builds and returns the actual PDF (does not save it) so
+   both the manual "Send Progress Report" button and the automatic triggers (week-end
+   quiz, biweekly check) can produce the exact same, fully up-to-date document.
+   It's generated with jsPDF's built-in encryption so it opens read-only in compliant
+   viewers (no user password, but modifying/copying is restricted) — that, plus a
+   single diagonal "REPORT" watermark centered on every page, is the "not editable" /
+   report-marked deliverable. A second, very faint, tiled stamp (student email +
+   timestamp, in near-white text) is layered in on every page too — it isn't meant to
+   be read at a glance, only to make a screenshotted or re-copied page traceable back
+   to whose report it came from and when it was generated. None of this is
+   unbreakable DRM — a determined person can still screenshot a PDF page — but it
+   does what a lightweight "protect against casual duplication" mark can do. */
+function buildProgressReportDoc(trigger){
+  const { jsPDF } = window.jspdf;
+  let doc;
+  try{
+    doc = new jsPDF({
+      unit:'pt', format:'a4',
+      encryption:{ userPassword:'', ownerPassword: Math.random().toString(36).slice(2)+Date.now().toString(36), userPermissions:['print'] }
+    });
+  }catch(e){
+    // Older jsPDF builds without encryption support — still generate the PDF, just without the read-only lock.
+    doc = new jsPDF({ unit:'pt', format:'a4' });
+  }
+  doc.setFont('helvetica','normal'); // explicit base font for the whole document
+  const hasAutoTable = typeof doc.autoTable === 'function';
+  const pageWidth = doc.internal.pageSize.getWidth();
+  const pageHeight = doc.internal.pageSize.getHeight();
   const g = computeGrade();
-  const lines = [];
-  lines.push(`Progress report for student.name({student.email})`);
-  if(trigger) lines.push(`Trigger: ${trigger}`);
-  lines.push(`Overall grade: g.letter({g.pct}%)`);
-  lines.push(`Lessons completed: ${student.completed.length} of ${cards.length}`);
-  lines.push('');
-  lines.push('Week-end quizzes:');
-  const wkKeys = Object.keys(student.weekQuizzes).sort((a,b)=>Number(a)-Number(b));
-  if(wkKeys.length===0){ lines.push('  (none completed yet)'); }
-  wkKeys.forEach(wk=>{
-    const q = student.weekQuizzes[wk];
-    lines.push(`  Week ${wk}: ${q.total ? `${q.score}/${q.total} vocabulary correct` : 'reflection only (no vocab this week)'}${q.reflection ? ' — "'+q.reflection.replace(/\s+/g,' ').slice(0,200)+'"' : ''}`);
+  const device = getDeviceInfo();
+  const stampText = `${student.email} · ${new Date().toLocaleString()}`;
+  const P = { blue:[47,111,237], purple:[139,92,246], orange:[255,122,45], red:[239,71,111], deep:[28,32,48], ink:[26,29,36], muted:[110,116,130], zebraBlue:[236,242,255], zebraPurple:[245,241,255], zebraOrange:[255,241,232] };
+  // The PDF's built-in font (Helvetica/WinAnsi) only supports Latin-1 characters —
+  // any stray Unicode symbol (an arrow, an emoji) that sneaks into a title corrupts
+  // the WHOLE string's encoding, which is what produced the garbled, oddly-spaced
+  // text seen in earlier reports. Every piece of text pulled from the page's DOM or
+  // data (titles, labels) is run through this before it reaches a table cell.
+  function pdfSafeText(str){
+    return String(str==null ? '' : str)
+      .split('')
+      .filter(ch => ch.codePointAt(0) <= 0x00FF)
+      .join('')
+      .replace(/\s+/g, ' ')
+      .trim();
+  }
+
+  // ----- KPI numbers, matching the web My Progress dashboard exactly -----
+  const quizzesTaken = Object.keys(student.weekQuizzes).length;
+  const videosConfirmed = Object.keys(student.videoConfirmed).filter(id=>student.videoConfirmed[id]).length;
+  const readingQuizEntries = Object.values(student.contentQuizzes.reading);
+  const screencastQuizEntries = Object.values(student.contentQuizzes.screencasts);
+  const avgPct = entries => entries.length ? Math.round(entries.reduce((s,q)=> s + (q.total ? (q.score/q.total)*100 : 0), 0) / entries.length) : 0;
+  const readingQuizAvg = avgPct(readingQuizEntries);
+  const screencastQuizAvg = avgPct(screencastQuizEntries);
+
+  // A SINGLE centered diagonal "REPORT" mark per page (not tiled/repeated).
+  // Real alpha transparency (not just a light color) so the watermark never blocks
+  // the table text it sits on top of — a light-but-opaque color was covering
+  // whatever it crossed, which is what made the Read Me table unreadable.
+  function setOpacity(val){
+    try{ doc.setGState(new doc.GState({ opacity: val })); return true; }
+    catch(e){ return false; }
+  }
+  function watermarkPage(){
+    // Kept deliberately light and thin — normal weight (not bold) plus low opacity —
+    // so it reads as a faint mark rather than competing with table text underneath it.
+    const alphaOk = setOpacity(0.055);
+    doc.setFont(undefined,'normal');
+    doc.setTextColor(alphaOk ? 60 : 236, alphaOk ? 75 : 238, alphaOk ? 110 : 246);
+    doc.setFontSize(60);
+    doc.text('REPORT', pageWidth/2, pageHeight/2, { angle:35, align:'center' });
+    if(alphaOk) setOpacity(1);
+    // Hidden/near-invisible forensic stamp — tiny, almost-white, tiled down the left
+    // margin — carries the student's email + generation time so a copied page can
+    // still be traced back to its source without being visually distracting.
+    doc.setFont(undefined,'normal');
+    doc.setTextColor(252,252,253);
+    doc.setFontSize(5);
+    for(let ty=130; ty<pageHeight; ty+=22){
+      doc.text(stampText, 16, ty);
+    }
+  }
+  function drawFooter(pageNum, totalPages){
+    doc.setFontSize(8);
+    doc.setTextColor(...P.muted);
+    doc.text('Graphic Design & Photoshop · Class of 2028 — Progress Report', 40, pageHeight-20);
+    doc.text(`Page ${pageNum} of ${totalPages}`, pageWidth-90, pageHeight-20);
+    doc.setTextColor(...P.ink);
+  }
+
+  // ----- Header banner -----
+  doc.setFillColor(...P.deep);
+  doc.rect(0,0,pageWidth,108,'F');
+  doc.setFillColor(...P.blue);
+  doc.roundedRect(40,26,44,44,10,10,'F');
+  doc.setFont(undefined,'bold'); doc.setFontSize(17); doc.setTextColor(255,255,255);
+  doc.text('Ps', 62, 54, { align:'center' });
+  doc.setFontSize(19); doc.text('Progress Report', 98, 48);
+  doc.setFont(undefined,'normal'); doc.setFontSize(10.5); doc.setTextColor(205,212,235);
+  doc.text('Graphic Design & Photoshop — Class of 2028', 98, 65);
+  doc.setFontSize(9);
+  doc.text(`${student.name}  ·  ${student.email}`, 98, 80);
+  doc.setFontSize(8); doc.setTextColor(150,160,192);
+  doc.text(`Generated ${new Date().toLocaleString()}  ·  ${device}${trigger ? '  ·  '+trigger : ''}`, 98, 93);
+
+  let y = 130;
+
+  // ----- Summary: colorful KPI dashboard cards (2 rows x 3) -----
+  const stats = [
+    { label:'Overall Grade', big:`${g.letter} · ${g.pct}%`, color:P.blue },
+    { label:'Lessons Completed', big:`${student.completed.length}/${cards.length}`, color:P.orange },
+    { label:'Week Quizzes', big:`${quizzesTaken}/${TOTAL_WEEKS}`, color:P.purple },
+    { label:'Reading Opened', big:`${student.readingSeen.length}/11`, color:P.purple },
+    { label:'Screencasts Watched', big:`${videosConfirmed}/${allScreencasts.length}`, color:P.red },
+    { label:'Practice Files Opened', big:`${student.seenPractice.length}/${activePracticeFiles.length}`, color:P.blue },
+  ];
+  const gap = 14, cardW = (pageWidth-80-2*gap)/3, cardH = 58;
+  stats.forEach((s,i)=>{
+    const col = i % 3, row = Math.floor(i/3);
+    const cx = 40 + col*(cardW+gap), cy = y + row*(cardH+gap);
+    doc.setFillColor(248,249,252);
+    doc.roundedRect(cx, cy, cardW, cardH, 8, 8, 'F');
+    doc.setFillColor(...s.color);
+    doc.roundedRect(cx, cy, 4, cardH, 2, 2, 'F');
+    doc.setFont(undefined,'bold'); doc.setFontSize(14); doc.setTextColor(...P.ink);
+    doc.text(s.big, cx+14, cy+27);
+    doc.setFont(undefined,'normal'); doc.setFontSize(8.5); doc.setTextColor(...P.muted);
+    doc.text(s.label, cx+14, cy+42);
   });
-  lines.push('');
-  lines.push('Reading material opened (Read Me sections viewed 2s+):');
-  lines.push(`  ${student.readingSeen.length} of 11 sections — ${student.readingSeen.join(', ')||'none yet'}`);
-  lines.push('');
-  lines.push('Vocabulary check (terms opened per week):');
-  const vocabWeeks = Object.keys(student.vocabSeen).sort((a,b)=>Number(a)-Number(b));
-  if(vocabWeeks.length===0){ lines.push('  (none yet)'); }
-  vocabWeeks.forEach(wk=>{ lines.push(`  Week ${wk}: ${student.vocabSeen[wk].length} terms — ${student.vocabSeen[wk].join(', ')}`); });
-  lines.push('');
-  lines.push('Screencasts marked fully watched (background dwell checkpoint reached — see note in report footer):');
-  const watched = Object.keys(student.videoConfirmed).filter(id=>student.videoConfirmed[id]);
-  lines.push(`  ${watched.length} of 23 recordings confirmed`);
-  lines.push('');
-  lines.push('Post-content check-in / assessment quizzes (2 questions each, generated from that item\'s title/description; each item can only be taken once):');
-  const rq = Object.entries(student.contentQuizzes.reading);
-  lines.push(`  Reading checks: ${rq.length} of 11 — ${rq.map(([k,q])=>`${q.score}/${q.total}`).join(', ')||'none yet'}`);
-  const vq = Object.entries(student.contentQuizzes.screencasts);
-  lines.push(`  Screencast checks: ${vq.length} of 23 — ${vq.map(([k,q])=>`${q.score}/${q.total}`).join(', ')||'none yet'}`);
-  lines.push('');
-  lines.push('Practice files opened:');
-  lines.push(`  ${student.seenPractice.length} files`);
-  lines.push('');
-  lines.push('NOTE: "Watched" is a background dwell-time estimate tracked automatically once playback starts, not a measurement read from the video player — Google Drive\'s embedded player does not expose playback progress to this page.');
-  return lines.join('\n');
+  y += 2*(cardH+gap) + 10;
+
+  // ----- Week-by-week breakdown table -----
+  const weekRows = [];
+  for(let w=1; w<=TOTAL_WEEKS; w++){
+    if(!isWeekReleased(w)) continue;
+    const st = weekStatus(w);
+    const quiz = student.weekQuizzes[w];
+    const quizText = quiz ? (quiz.total ? `${quiz.score}/${quiz.total}` : 'Reflection') : '—';
+    const statusText = st.pct===100 ? 'Complete' : (st.pct>0 ? 'In progress' : 'Not started');
+    weekRows.push([`Week ${w}`, pdfSafeText(weekMeta[w]||''), `${st.done}/${st.total}`, statusText, quizText]);
+  }
+  if(hasAutoTable){
+    doc.autoTable({
+      startY: y, margin:{ left:40, right:40, bottom:40 },
+      head:[['Week','Topic','Days','Status','Quiz']],
+      body: weekRows,
+      theme:'striped',
+      headStyles:{ font:'helvetica', fillColor:P.blue, textColor:255, fontStyle:'bold', fontSize:9 },
+      alternateRowStyles:{ fillColor:P.zebraBlue },
+      styles:{ font:'helvetica', fontStyle:'normal', fontSize:9, cellPadding:6, textColor:P.ink, valign:'middle' }
+    });
+    y = doc.lastAutoTable.finalY + 26;
+  } else {
+    doc.setFontSize(12); doc.setTextColor(...P.blue); doc.text('Week-by-week breakdown', 40, y); y+=16;
+    doc.setFontSize(8.5); doc.setTextColor(...P.ink);
+    weekRows.forEach(r=>{ if(y>pageHeight-60){ doc.addPage(); y=60; } doc.text(r.join('  ·  '),50,y); y+=13; });
+    y += 12;
+  }
+
+  // ----- Read Me notes table -----
+  if(y > pageHeight - 140){ doc.addPage(); y = 60; }
+  doc.setFont(undefined,'bold'); doc.setFontSize(12.5); doc.setTextColor(...P.purple);
+  doc.text('Read Me Notes', 40, y); y += 8;
+  const readRows = readingPool.map(item=>{
+    const isRead = student.readingSeen.includes(item.key);
+    const quiz = student.contentQuizzes.reading[item.key];
+    return [pdfSafeText(item.title), isRead?'Read':'Not read', quiz? `${quiz.score}/${quiz.total}`:'—'];
+  });
+  if(hasAutoTable){
+    doc.autoTable({
+      startY: y+6, margin:{ left:40, right:40, bottom:40 },
+      head:[['Section','Status','Check Score']],
+      body: readRows,
+      theme:'striped',
+      headStyles:{ font:'helvetica', fillColor:P.purple, textColor:255, fontStyle:'bold', fontSize:9 },
+      alternateRowStyles:{ fillColor:P.zebraPurple },
+      styles:{ font:'helvetica', fontStyle:'normal', fontSize:9, cellPadding:6, textColor:P.ink, overflow:'linebreak', valign:'middle' },
+      columnStyles:{ 0:{ cellWidth: 300 }, 1:{ cellWidth: 90 }, 2:{ cellWidth: 90 } }
+    });
+    y = doc.lastAutoTable.finalY + 26;
+  } else {
+    doc.setFont(undefined,'normal'); doc.setFontSize(8.5); doc.setTextColor(...P.ink);
+    readRows.forEach(r=>{ if(y>pageHeight-60){ doc.addPage(); y=60; } doc.text(r.join('  ·  '),50,y); y+=13; });
+    y += 12;
+  }
+
+  // ----- Screencasts table -----
+  if(y > pageHeight - 140){ doc.addPage(); y = 60; }
+  doc.setFont(undefined,'bold'); doc.setFontSize(12.5); doc.setTextColor(...P.orange);
+  doc.text('Screencasts', 40, y); y += 8;
+  const screenRows = (typeof allScreencasts !== 'undefined' ? allScreencasts : []).map(v=>{
+    const watched = typeof theaterIsWatched === 'function' ? theaterIsWatched(v.id) : false;
+    const quiz = student.contentQuizzes.screencasts[v.id];
+    return [pdfSafeText(v.label), watched?'Watched':'Not watched', quiz? `${quiz.score}/${quiz.total}`:'—'];
+  });
+  if(hasAutoTable){
+    doc.autoTable({
+      startY: y+6, margin:{ left:40, right:40, bottom:40 },
+      head:[['Recording','Status','Check Score']],
+      body: screenRows,
+      theme:'striped',
+      headStyles:{ font:'helvetica', fillColor:P.orange, textColor:255, fontStyle:'bold', fontSize:9 },
+      alternateRowStyles:{ fillColor:P.zebraOrange },
+      styles:{ font:'helvetica', fontStyle:'normal', fontSize:9, cellPadding:6, textColor:P.ink, overflow:'linebreak', valign:'middle' },
+      columnStyles:{ 0:{ cellWidth: 300 }, 1:{ cellWidth: 90 }, 2:{ cellWidth: 90 } }
+    });
+  } else {
+    doc.setFont(undefined,'normal'); doc.setFontSize(8.5); doc.setTextColor(...P.ink);
+    screenRows.forEach(r=>{ if(y>pageHeight-60){ doc.addPage(); y=60; } doc.text(r.join('  ·  '),50,y); y+=13; });
+  }
+
+  // ----- Stamp the watermark + footer on every page, after all content is laid out -----
+  const totalPages = doc.internal.getNumberOfPages();
+  for(let p=1; p<=totalPages; p++){
+    doc.setPage(p);
+    watermarkPage();
+    drawFooter(p, totalPages);
+  }
+  return doc;
 }
-/* ---------- SILENT, NON-EDITABLE SUBMISSION ---------- */
-/* Submits straight to your Google Form in the background — the student never sees
-   a compose window, so there is no draft for them to alter before it sends. If the
-   form isn't configured yet (see setup notes above), this falls back to opening an
-   editable mailto: draft so the report doesn't just silently disappear with no
-   visible result while you're still setting things up. */
-function submitReportSilently(trigger){
-  if(!student) return;
-  const reportText = `[${trigger}]\n\n` + buildReportBody(trigger);
+/* Builds the PDF above and saves it to the student's device. Used directly by the
+   "Send Progress Report" button, and also called from submitReportSilently() so
+   every automatic trigger (week-end quiz, biweekly check-in) produces a fresh PDF
+   on the student's own device at the same moment the instructor is notified. */
+function generateProgressReportPDF(trigger){
+  if(!student) { alert('Sign in first.'); return; }
+  const status = document.getElementById('lpReportStatus');
+  if(status) status.textContent = 'Building your PDF report...';
+  try{
+    const doc = buildProgressReportDoc(trigger);
+    doc.save(`${(student.name||'student').replace(/\s+/g,'_')}_Progress_Report.pdf`);
+    if(status) status.textContent = 'PDF report downloaded.';
+  }catch(err){
+    console.error(err);
+    if(status) status.textContent = 'Could not generate the PDF — please try again.';
+  }
+}
+/* ---------- SHORT NOTIFICATION TO THE INSTRUCTOR ----------
+   This used to stuff the ENTIRE report (every week, every reading section, every
+   screencast, every vocab term) into a mailto: link's body — but mailto: URLs have
+   a hard length limit in most browsers/mail clients, so a long report silently got
+   cut off mid-sentence, which is what showed up as garbled, nonsensical text on the
+   Read Me section of the report. Fixing that: this now sends only a short summary,
+   and the FULL detail lives in the PDF (see buildProgressReportDoc above), which is
+   generated and saved to the student's device at the same time.
+   NOTE ON ATTACHMENTS: a mailto: link genuinely cannot attach a file — that's a
+   browser/email-standard limitation, not something this page's code can work around
+   without a real server. The Google Form path can't attach a file either without a
+   file-upload question tied to the responder's own Google sign-in, which can't be
+   done automatically. So "attaching" the PDF here means: the PDF downloads to the
+   student's device automatically, and the short notification says so — actually
+   emailing it still needs the student (or instructor, once GOOGLE_FORM_ACTION_URL
+   is wired to something that can receive files) to attach it by hand. */
+function notifyInstructor(trigger){
+  const g = computeGrade();
+  const summary = [
+    `Progress update for ${student.name} (${student.email})`,
+    `Trigger: ${trigger}`,
+    `Overall grade: ${g.letter} (${g.pct}%)`,
+    `Lessons completed: ${student.completed.length} of ${cards.length}`,
+    `Device: ${getDeviceInfo()}`
+  ].join('\n');
   if(GOOGLE_FORM_ACTION_URL && GOOGLE_FORM_ENTRY_ID){
     const formData = new URLSearchParams();
-    formData.append(GOOGLE_FORM_ENTRY_ID, reportText);
+    formData.append(GOOGLE_FORM_ENTRY_ID, summary);
     fetch(GOOGLE_FORM_ACTION_URL, { method:'POST', mode:'no-cors', body: formData })
       .catch(()=>{ /* no-cors means we can't read the response either way; nothing more to do */ });
   } else {
     // Fallback only — remove once GOOGLE_FORM_ACTION_URL / GOOGLE_FORM_ENTRY_ID are set above.
-    const subject = encodeURIComponent(`Progress Report — student.name({student.email})`);
-    const body = encodeURIComponent(reportText);
-    window.location.href = `mailto:REPORTEMAIL?subject={subject}&body=${body}`;
+    // A mailto: link can't attach a file on its own, so the body just tells the
+    // student to attach the PDF that was downloaded at the same moment.
+    const subject = encodeURIComponent(`Progress Report — ${student.name} (${student.email})`);
+    const body = encodeURIComponent(summary + '\n\nAttach the file you downloaded now.');
+    window.location.href = `mailto:${REPORT_EMAIL}?subject=${subject}&body=${body}`;
   }
+}
+/* Fires both halves of a report: a short notification to the instructor, and the
+   full, colorful PDF saved to the student's own device — replacing the old "one
+   giant plain-text email" approach. */
+function submitReportSilently(trigger){
+  if(!student) return;
+  notifyInstructor(trigger);
+  generateProgressReportPDF(trigger);
 }
 document.getElementById('lpReportBtn').addEventListener('click', ()=>{
   if(!student){ alert('Sign in first.'); return; }
@@ -2620,13 +3049,22 @@ function checkBiweeklyReport(){
     const dueDate = new Date(COURSE_START_DATE.getTime() + periodEndsAfterWeek*7*86400000);
     if(now >= dueDate && !student.biweeklySent[p]){
       const weekLo = p*2-1, weekHi = periodEndsAfterWeek;
-      submitReportSilently(`Biweekly report — Weeks weekLo-{weekHi}`);
+      submitReportSilently(`Biweekly report — Weeks ${weekLo}-${weekHi}`);
       student.biweeklySent[p] = new Date().toISOString();
       saveStudentRecord(student);
     }
   }
 }
-document.addEventListener('visibilitychange', ()=>{ if(document.visibilityState==='visible') checkBiweeklyReport(); });
+document.addEventListener('visibilitychange', ()=>{
+  if(document.visibilityState!=='visible') return;
+  checkBiweeklyReport();
+  // A date-gated week (see WEEK_UNLOCK_DATE) may have become released while this
+  // tab sat open in the background — re-apply the gating so it shows up without
+  // the student needing to reload the page.
+  applyCurriculumRelease();
+  const activeChip = document.querySelector('#monthSwitch .chip.active');
+  if(activeChip) buildWeekNav(activeChip.dataset.month);
+});
 /* ---------- GOJO PROJECT FORM ---------- */
 document.getElementById('gjAddMemberBtn').addEventListener('click', gjAddMember);
 function gjAddMember(){
@@ -2650,7 +3088,7 @@ document.querySelectorAll('.ideaUpload').forEach(inp=>{
       const url=URL.createObjectURL(file);
       const box=document.createElement('div');
       box.className='thumb';
-      box.innerHTML=`<img src="url"alt="{file.name}" style="width:100%;height:100%;object-fit:cover">`;
+      box.innerHTML=`<img src="${url}" alt="${file.name}" style="width:100%;height:100%;object-fit:cover">`;
       parent.appendChild(box);
     });
   });
@@ -2700,7 +3138,7 @@ async function gjGeneratePDF(data){
   doc.setFontSize(16); doc.text(`1.1 Symbolic Animal: ${data.animal}`,50,y); y+=20;
   doc.text(`1.2 Members:`,50,y); y+=18;
   doc.setFontSize(14);
-  data.members.forEach(m=>{ doc.text(`- m.name({m.role||'member'})`,70,y); y+=16; });
+  data.members.forEach(m=>{ doc.text(`- ${m.name} (${m.role||'member'})`,70,y); y+=16; });
   for(const [i,idea] of data.ideas.entries()){
     y+=10;
     if(y>pageHeight-250){ doc.addPage(); drawBackground(); y=40; }
@@ -2928,7 +3366,7 @@ function epMakeList(){
     const item = document.createElement('button');
     item.type = 'button';
     item.className = 'ep-item';
-    item.innerHTML = `<span class="ep-swatch" style="background:el.color"></span><span><strong>{el.name}</strong> — ${el.title}</span>`;
+    item.innerHTML = `<span class="ep-swatch" style="background:${el.color}"></span><span><strong>${el.name}</strong> — ${el.title}</span>`;
     item.onclick = () => epSelectElement(el.id);
     epList.appendChild(item);
   });
@@ -3076,7 +3514,10 @@ const screencastPlaylist = [
   { id:'10WmX1xYIRWtgzbLgUDJJb3E9fZ8rKh25', label:'Advanced Double Exposure Techniques', desc:'Push your photo manipulation skills by blending complex textures, detailed silhouettes, and multi-layered landscape elements. Master advanced masking and color harmonization for dramatic, artistic compositions.' },
   { id:'1y13t7n5nTN_3oppd_Nx7AJ1Yfd7nSwdE', label:'How to Create Realistic T-Shirt Mockups', desc:'Build custom, fully editable apparel mockups using Smart Objects and Displacement Maps. Learn how to set up reusable template files where graphics instantly conform to garment folds, highlights, and shadow layers with a single click.' }
 ];
-const allScreencasts = screencastPlaylist;
+/* Only recordings #1 and #2 are active right now. screencastPlaylist above keeps
+   the full list untouched — to reopen more later, just add their ids here. */
+const ACTIVE_SCREENCAST_IDS = ['1khSdxt8enMJ7NW60dp-gLxFGEKmbOzOJ', '1I2VJv2bLE7w0t_2ITY8XMzHBSGR1-UCg'];
+const allScreencasts = screencastPlaylist.filter(v => ACTIVE_SCREENCAST_IDS.includes(v.id));
 const screencastQuizPool = allScreencasts.map(v=>({ key:v.id, title:v.label, desc:v.desc }));
 /* Exact runtime for each recording, in seconds — every video in this
    course already has its own slot below, all starting at null. To find a
@@ -3135,9 +3576,19 @@ const practiceIds2 = [
   '1BInYw76mSmkJ3paaWgo6n76I-P-x_xCD','1LuavYltIGhHo5Eaf6_gxk1KpkT7IGKdm','1jx7YKGr-EgZR2duJ4f8EMOtplpYbRHJ6',
   '1jG_VtUPLaxMDJmc8-uAU4sT1iuL0Dq1T'
 ];
+/* Only files #26, #27 and #32 are active right now, shown first in that order.
+   practiceIds / practiceIds2 above are untouched — to reopen more later, just add
+   their numbers to ACTIVE_PRACTICE_NUMS below. */
+const allPracticeFiles = [
+  ...practiceIds.map((id,i)=>({ id, num:i+1 })),
+  ...practiceIds2.map((id,i)=>({ id, num:practiceIds.length+i+1 }))
+];
+const ACTIVE_PRACTICE_NUMS = [26, 27, 32];
+const activePracticeFiles = ACTIVE_PRACTICE_NUMS
+  .map(n => allPracticeFiles.find(p => p.num === n))
+  .filter(Boolean);
 const pgrid = document.getElementById('practiceGrid');
-practiceIds.forEach((id,i)=>pgrid.appendChild(renderMediaCard({id, label:`Practice File ${i+1}`, kind:'file', accent:'#ef476f'})));
-practiceIds2.forEach((id,i)=>pgrid.appendChild(renderMediaCard({id, label:`Practice File ${practiceIds.length+i+1}`, kind:'file', accent:'#ef476f'})));
+activePracticeFiles.forEach(p => pgrid.appendChild(renderMediaCard({id:p.id, label:`Practice File ${p.num}`, kind:'file', accent:'#ef476f'})));
 /* ---------- ADDITIONAL MATERIALS ---------- */
 const materialIds = [
   '1ZVRAV-2bjJL6UeUwqn8lpVX0ajjTpta7','1eMdoNwin_NOt3_eI0QLacl9NG-MfiXX3','1EWIFWvDwi-IhMqeWyFrSyptnrs5PHTn1',
@@ -3249,7 +3700,7 @@ function theaterRenderSide(){
   theaterUpdateProgressSummary();
   const list = theaterFilteredList();
   const headEl = document.getElementById('theaterSideHead');
-  if(headEl) headEl.textContent = theaterFilterMode==='all' ? `Up next · allScreencasts.lengthrecordings`:`{list.length} theaterFilterModerecording{list.length===1?'':'s'}`;
+  if(headEl) headEl.textContent = theaterFilterMode==='all' ? `Up next · ${allScreencasts.length} recordings` : `${list.length} ${theaterFilterMode} recording${list.length===1?'':'s'}`;
   side.innerHTML = '';
   if(!list.length){
     side.innerHTML = '<div class="theater-empty">No recordings match your search or filter.</div>';
@@ -3407,6 +3858,7 @@ if(allScreencasts.length){
 theaterUpdateNav();
 theaterRenderSide();
 renderProgressView();
+applyCurriculumLocks(); // calendar-based — runs regardless of sign-in state
 /* Everything above this line (driveThumbUrl, renderMediaCard, allScreencasts,
    theaterRenderSide, etc.) must exist before initAuth() runs, since a
    returning student triggers enterApp() -> theaterRenderSide() immediately.
@@ -3415,4 +3867,3 @@ initAuth();
 </script>
 </body>
 </html>
-
