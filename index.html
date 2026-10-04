@@ -2498,8 +2498,8 @@ function renderProgressView(){
       </div>
     </div>
     <div class="progress-grid">
-      <div class="progress-card" style="--pc-accent:#2f6fed"><h4>Lessons Completed</h4><div class="pc-big">student.completed.length/{cards.length}</div><div class="pc-sub">across ${TOTAL_WEEKS} weeks</div></div>
-      <div class="progress-card" style="--pc-accent:#ff7a2d"><h4>Week Quizzes</h4><div class="pc-big">quizzesTaken/{TOTAL_WEEKS}</div><div class="pc-sub">completed automatically at week end</div></div>
+      <div class="progress-card" style="--pc-accent:#2f6fed"><h4>Lessons Completed</h4><div class="pc-big">${student.completed.length}/${cards.length}</div><div class="pc-sub">across ${TOTAL_WEEKS} weeks</div></div>
+      <div class="progress-card" style="--pc-accent:#ff7a2d"><h4>Week Quizzes</h4><div class="pc-big">${quizzesTaken}/${TOTAL_WEEKS}</div><div class="pc-sub">completed automatically at week end</div></div>
       <div class="progress-card" style="--pc-accent:#8b5cf6"><h4>Reading Opened</h4><div class="pc-big">${student.readingSeen.length}/11</div><div class="pc-sub">Read Me sections viewed</div></div>
       <div class="progress-card" style="--pc-accent:#ff6a2c"><h4>Screencasts Watched</h4><div class="pc-big">${videosConfirmed}/23</div><div class="pc-sub">fully watched</div></div>
       <div class="progress-card" style="--pc-accent:#ef476f"><h4>Practice Files Opened</h4><div class="pc-big">${student.seenPractice.length}/43</div><div class="pc-sub">exercise files previewed</div></div>
@@ -2508,7 +2508,7 @@ function renderProgressView(){
       <div class="progress-card" style="--pc-accent:#ff6a2c"><h4>Screencast Checks</h4><div class="pc-big">${screencastQuizEntries.length}/23</div><div class="pc-sub">avg score ${screencastQuizAvg}%</div></div>
     </div>
     <div class="note-section collapsed" style="margin-top:22px;">
-      <h3 style="margin-top:0;"><span>Week-by-week breakdown <span class="note-count">student.completed.length/{cards.length} lessons</span></span></h3>
+      <h3 style="margin-top:0;"><span>Week-by-week breakdown <span class="note-count">${student.completed.length}/${cards.length} lessons</span></span></h3>
       <div style="overflow-x:auto;"><table class="progress-week-table">
         <thead><tr><th>Week</th><th>Topic</th><th>Days done</th><th>Status</th><th>Quiz</th></tr></thead>
         <tbody>${rows}</tbody>
