@@ -117,6 +117,7 @@ button{font-family:inherit;}
   transition:.15s;
 }
 .lp-row:hover{background:rgba(255,255,255,.06);}
+.lp-row.locked{opacity:.55;}
 .lp-eye{width:16px;text-align:center;color:#7d8494;font-size:12px;}
 .lp-thumb{
   width:34px;height:26px;border-radius:5px;background:#12141a;border:1px solid #333844;
@@ -206,6 +207,12 @@ button{font-family:inherit;}
 .practice-label{background:#2e9e5b;}
 .blue-border .flip-card-front,.blue-border .flip-card-back{border:3px solid var(--c-curriculum);}
 .flip-hint{position:absolute;bottom:10px;right:14px;font-size:10px;color:var(--muted);opacity:.6;letter-spacing:.3px;}
+/* ===== LOCKED WEEKS + TOAST ===== */
+.flip-card.locked .flip-card-inner{cursor:not-allowed;filter:grayscale(1);opacity:.55;}
+.flip-card.locked:hover .flip-card-inner{transform:none;}
+.lock-badge{position:absolute;top:14px;right:14px;z-index:3;background:#1a1d24;color:#fff;font-size:.7rem;font-weight:700;padding:4px 10px;border-radius:7px;}
+.toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%) translateY(20px);background:#1a1d24;color:#fff;padding:12px 18px;border-radius:12px;font-size:13px;font-weight:600;opacity:0;pointer-events:none;transition:.3s;z-index:7000;max-width:90vw;}
+.toast.show{opacity:1;transform:translateX(-50%);}
 /* ===== PROJECTS ===== */
 .subnav{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0 28px;}
 .subnav button{
@@ -579,7 +586,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
         <div class="view-head">
           <div>
             <h2>Curriculum</h2>
-            <p>Class meets 2 days per week. Tap any card to flip it and mark that lesson complete. Progress is saved automatically. Finishing both days in a week pops up that week's check-in quiz.</p>
+            <p>Class meets 2 days per week. Tap any card to flip it and mark that lesson complete. Progress is saved automatically. Weeks unlock in order: finish every lesson in one week to open the next. Finishing both days in a week pops up that week's check-in quiz.</p>
           </div>
           <div class="month-switch" id="monthSwitch">
             <button class="chip active" data-month="m1">Month One · Weeks 1–4</button>
@@ -646,8 +653,8 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
         <span class="vocab" tabindex="0" data-def="Top bar that shows tool options.">Options Bar</span><span class="vocab-def"> — Top bar that shows tool options.</span></p>
         <div class="big-ideas">Learn the layout and function of each interface element.</div>
         </div></div></div>
-        <div class="flip-card project-day" data-day="3-2"><div class="flip-card-inner">
-        <div class="flip-card-front"><div class="project-label">PROJECT DAY</div><h4>Day 2: ID/Passport Photos &amp; Around the World with a Twist</h4><p>Create professional ID photos, then dive into the group project — open the brief in Group Projects.</p><span class="flip-hint">Tap to flip</span></div>
+        <div class="flip-card practice-day" data-day="3-2"><div class="flip-card-inner">
+        <div class="flip-card-front"><div class="practice-label">PRACTICE DAY</div><h4>Day 2: ID/Passport Photos &amp; Around the World with a Twist</h4><p>Create professional ID photos, then dive into the group project — open the brief in Group Projects.</p><span class="flip-hint">Tap to flip</span></div>
         <div class="flip-card-back"><div class="vocab-title">Vocabulary</div>
         <p><span class="vocab" tabindex="0" data-def="Removes unwanted background.">Background Remover</span><span class="vocab-def"> — Removes unwanted background.</span>,
         <span class="vocab" tabindex="0" data-def="Adjusts image size.">Crop Tool</span><span class="vocab-def"> — Adjusts image size.</span>,
@@ -1710,14 +1717,16 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
       </div>
       <button class="lp-report-btn" id="lpReportBtn">✉ Send Progress Report</button>
       <button class="lp-signout" id="lpSignOutBtn">Sign out of this device</button>
-      <div class="lp-note">Every lesson card is a "layer." Flip a card in the Curriculum tab to mark that day's lesson complete — this panel fills in as you progress, just like opacity on a real layer. Finishing both days in a week automatically submits that week's check-in quiz report, and a full progress report is also sent automatically every 2 weeks (Sept 14 = Week 1) to your instructor.</div>
+      <div class="lp-note">Every lesson card is a "layer." Flip a card in the Curriculum tab to mark that day's lesson complete — this panel fills in as you progress, just like opacity on a real layer. Weeks unlock in order (🔒 = finish the week before it first). Finishing both days in a week automatically submits that week's check-in quiz report, and a full progress report is also sent automatically every 2 weeks (Sept 14 = Week 1) to your instructor.</div>
     </aside>
   </div>
   <footer class="appfoot">
     Graphic Design &amp; Photoshop — Class of 2028
     <div class="foot-contact">✉ <a href="mailto:thomas@hmacademy.org">thomas@hmacademy.org</a></div>
   </footer>
-</div><script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
 /* ================= TAB NAVIGATION ================= */
 function goTab(name){
@@ -1751,6 +1760,7 @@ document.getElementById('monthSwitch').addEventListener('click', e=>{
   document.querySelectorAll('#monthSwitch .chip').forEach(c=>c.classList.toggle('active', c===chip));
   document.querySelectorAll('.month-block').forEach(m=>m.classList.toggle('active', m.dataset.month===chip.dataset.month));
   buildWeekNav(chip.dataset.month);
+  if(typeof applyWeekLocks === 'function') applyWeekLocks();
 });
 /* Week pill nav, generated per month */
 const weeksByMonth = { m1:[1,2,3,4], m2:[5,6,7,8], m3:[9,10,11,12], m4:[13,14,15,16] };
@@ -1792,24 +1802,78 @@ function isWeekComplete(w){
   if(!dayEls.length) return false;
   return Array.from(dayEls).every(c => completed.includes(c.dataset.day));
 }
+/* ===== RELEASE + LOCK SYSTEM =====
+   Two separate layers:
+   1. isWeekReleased(w) — is the week published yet? Weeks with no real content
+      (11–16) stay fully hidden instead of showing "Coming Soon" placeholders.
+      Week 4 is configured to appear automatically on Oct 5, 2026.
+   2. isWeekUnlocked(w) — Week 1 is always open; every later week stays locked
+      until every lesson in the week before it is marked done.
+   Add a week number to WEEKS_WITH_CONTENT once its lessons are written. */
+const WEEKS_WITH_CONTENT = new Set([1,2,3,4,5,6,7,8,9,10]);
+const WEEK_RELEASE_DATES = { 4:'2026-10-05' }; // optional per-week unlock date (device local time)
+function isWeekReleased(w){
+  if(!WEEKS_WITH_CONTENT.has(w)) return false;
+  const d = WEEK_RELEASE_DATES[w];
+  return !d || new Date() >= new Date(d + 'T00:00:00');
+}
+function isWeekUnlocked(w){ return w===1 || isWeekComplete(w-1); }
+let toastTimer = null;
+function showToast(msg){
+  const t = document.getElementById('toast'); if(!t) return;
+  t.textContent = msg; t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=>t.classList.remove('show'), 3200);
+}
+function applyWeekLocks(){
+  for(let w=1; w<=TOTAL_WEEKS; w++){
+    const wk = document.getElementById('week'+w); if(!wk) continue;
+    const released = isWeekReleased(w);
+    const locked = released && !isWeekUnlocked(w);
+    wk.style.display = released ? '' : 'none';
+    weekDayEls(w).forEach(c=>{
+      c.classList.toggle('locked', locked);
+      c.setAttribute('aria-disabled', locked ? 'true' : 'false');
+      const front = c.querySelector('.flip-card-front');
+      let b = c.querySelector('.lock-badge');
+      if(locked && !b && front){
+        b = document.createElement('span');
+        b.className = 'lock-badge';
+        b.textContent = '🔒 LOCKED';
+        front.appendChild(b);
+      }
+      if(!locked && b) b.remove();
+    });
+  }
+  document.querySelectorAll('.week-pill').forEach(p=>{
+    const n = Number(p.textContent.replace(/\D/g,''));
+    p.style.display = isWeekReleased(n) ? '' : 'none';
+  });
+  document.querySelectorAll('#monthSwitch .chip').forEach(ch=>{
+    ch.style.display = weeksByMonth[ch.dataset.month].some(isWeekReleased) ? '' : 'none';
+  });
+}
 function buildLayersPanel(){
   const rows = document.getElementById('lpRows');
   rows.innerHTML = '';
   for(let w=1; w<=TOTAL_WEEKS; w++){
+    if(!isWeekReleased(w)) continue;
+    const locked = !isWeekUnlocked(w);
     const dayEls = weekDayEls(w);
     const total = dayEls.length;
     const done = Array.from(dayEls).filter(c => completed.includes(c.dataset.day)).length;
     const pct = total ? Math.round((done/total)*100) : 0;
     const row = document.createElement('div');
-    row.className = 'lp-row';
+    row.className = 'lp-row' + (locked ? ' locked' : '');
     row.setAttribute('role','button');
     row.setAttribute('tabindex','0');
-    row.setAttribute('aria-label', `Week ${w}: ${weekMeta[w]}, ${pct}% complete`);
-    row.innerHTML = `<span class="lp-eye" aria-hidden="true">${pct===100?'●':'○'}</span>
+    row.setAttribute('aria-label', `Week ${w}: ${weekMeta[w]}, ${locked ? 'locked' : pct+'% complete'}`);
+    row.innerHTML = `<span class="lp-eye" aria-hidden="true">${locked ? '🔒' : (pct===100 ? '●' : '○')}</span>
       <span class="lp-thumb"><i style="height:${pct}%"></i></span>
-      <span class="lp-label"><b>Week w</b><small>{weekMeta[w]}</small></span>
-      <span class="lp-pct">${pct}%</span>`;
+      <span class="lp-label"><b>Week ${w}</b><small>${weekMeta[w]}</small></span>
+      <span class="lp-pct">${locked ? '' : pct+'%'}</span>`;
     const jump = () => {
+      if(locked){ showToast(`Finish Week ${w-1} first to unlock Week ${w}.`); return; }
       const monthOf = w<=4?'m1':(w<=8?'m2':(w<=12?'m3':'m4'));
       document.querySelector('.chip[data-month="'+monthOf+'"]').click();
       goTab('curriculum');
@@ -1819,6 +1883,7 @@ function buildLayersPanel(){
     row.onkeydown = (e)=>{ if(e.key==='Enter' || e.key===' '){ e.preventDefault(); jump(); } };
     rows.appendChild(row);
   }
+  applyWeekLocks();
 }
 function updateProgress(){
   const total = cards.length;
@@ -1839,21 +1904,26 @@ function toggleCardDone(card){
     if(wasComplete) maybeShowWeekQuiz(week);
   }
 }
+function tryFlip(card){
+  const w = Number(card.dataset.day.split('-')[0]);
+  if(!isWeekUnlocked(w)){
+    showToast(`Finish all lessons in Week ${w-1} first to unlock Week ${w}.`);
+    return;
+  }
+  card.classList.toggle('flipped');
+  toggleCardDone(card);
+}
 cards.forEach(card=>{
   if(completed.includes(card.dataset.day)) card.classList.add('done');
   card.setAttribute('role','button');
   card.setAttribute('tabindex','0');
   card.setAttribute('aria-label','Lesson card, tap to flip and mark complete');
   // Touch/click devices don't support :hover reliably — toggle a flipped class explicitly.
-  card.addEventListener('click', ()=>{
-    card.classList.toggle('flipped');
-    toggleCardDone(card);
-  });
+  card.addEventListener('click', ()=>tryFlip(card));
   card.addEventListener('keydown', e=>{
     if(e.key==='Enter' || e.key===' '){
       e.preventDefault();
-      card.classList.toggle('flipped');
-      toggleCardDone(card);
+      tryFlip(card);
     }
   });
 });
@@ -1925,6 +1995,32 @@ if('IntersectionObserver' in window){
   }, { threshold: 0, rootMargin: '-90px 0px -55% 0px' });
 }
 initNoteAccordion();
+/* ---------- Per-section PDF download (Read Me) ---------- */
+function downloadSectionPDF(id, title){
+  const sec = document.getElementById(id);
+  if(!sec) return;
+  if(!window.jspdf){ alert('The PDF library is still loading — please try again in a moment.'); return; }
+  const clone = sec.cloneNode(true);
+  clone.querySelectorAll('.note-actions,.note-toggle').forEach(n=>n.remove());
+  const h = clone.querySelector('h3'); if(h) h.remove();
+  const text = clone.textContent
+    .replace(/—/g,'-').replace(/→/g,'->').replace(/[“”]/g,'"').replace(/[‘’]/g,"'")
+    .replace(/[^\x00-\xFF]/g,'')
+    .replace(/[ \t]+/g,' ').replace(/\n\s*\n+/g,'\n').trim();
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({unit:'pt', format:'a4'});
+  const W = doc.internal.pageSize.getWidth(), H = doc.internal.pageSize.getHeight(), M = 48;
+  let y = M;
+  doc.setFont('helvetica','bold'); doc.setFontSize(18);
+  doc.splitTextToSize(title.replace(/[^\x00-\xFF]/g,''), W-2*M).forEach(l=>{ doc.text(l, M, y); y += 24; });
+  y += 6;
+  doc.setFont('helvetica','normal'); doc.setFontSize(11);
+  doc.splitTextToSize(text, W-2*M).forEach(l=>{
+    if(y > H-M){ doc.addPage(); y = M; }
+    doc.text(l, M, y); y += 15;
+  });
+  doc.save(title.replace(/[^\w]+/g,'_') + '.pdf');
+}
 /* Reading sections are marked read explicitly via the "Mark as Read" button
    on each section — the same explicit-action pattern as pressing Play on a
    screencast, rather than a passive "was this on screen for 2 seconds"
@@ -1996,7 +2092,7 @@ function renderQuizBody(questions){
     <div style="margin-bottom:12px;">
       <div style="font-size:13px;font-weight:700;margin-bottom:6px;">${i+1}. ${q.prompt}</div>
       ${q.options.map((opt,oi)=>`<label style="display:block;font-size:13px;margin:4px 0;cursor:pointer;">
-        <input type="radio" name="cqqi"value="{oi}" data-correct="${opt.correct?'1':'0'}"> ${opt.text}
+        <input type="radio" name="cq${i}" value="${oi}" data-correct="${opt.correct?'1':'0'}"> ${opt.text}
       </label>`).join('')}
     </div>`).join('');
 }
@@ -2081,7 +2177,8 @@ document.getElementById('cqSubmit').addEventListener('click', ()=>{
    - No server here. "Device lock" is enforced with localStorage in THIS
      browser only — it stops casual re-enrollment with a different email
      on the same browser, but clearing site data or a private window
-     resets it. Real enforcement needs a backend.
+     resets it. Real enforcement needs a backend. The same is true of the
+     week lock system and the Oct 5 release date (device clock).
    - Google Drive's embedded player is a different origin, so this page
      genuinely cannot read live playback position. "Watched" on the
      Screencasts page is calculated from each recording's own runtime
@@ -2166,6 +2263,7 @@ function loadStudentRecord(email){
       rec.videoConfirmed = rec.videoConfirmed || {};
       rec.seenScreencasts = rec.seenScreencasts || [];
       rec.seenPractice = rec.seenPractice || [];
+      rec.seenMaterials = rec.seenMaterials || [];
       rec.biweeklySent = rec.biweeklySent || {};
       rec.contentQuizzes = rec.contentQuizzes || { screencasts:{}, reading:{} };
       rec.contentQuizzes.screencasts = rec.contentQuizzes.screencasts || {};
@@ -2322,9 +2420,9 @@ function maybeShowWeekQuiz(week){
     quiz.forEach((q,i)=>{
       const wrap = document.createElement('div');
       wrap.style.marginBottom = '12px';
-      wrap.innerHTML = `<div style="font-size:13px;font-weight:700;margin-bottom:6px;">i+1.Whatdoes"{q.term}" mean?</div>` +
+      wrap.innerHTML = `<div style="font-size:13px;font-weight:700;margin-bottom:6px;">${i+1}. What does "${q.term}" mean?</div>` +
         q.options.map((opt,oi)=>`<label style="display:block;font-size:13px;margin:4px 0;cursor:pointer;">
-          <input type="radio" name="wqqi"value="{oi}" data-correct="${opt===q.correct?'1':'0'}"> ${opt}
+          <input type="radio" name="wq${i}" value="${oi}" data-correct="${opt===q.correct?'1':'0'}"> ${opt}
         </label>`).join('');
       body.appendChild(wrap);
     });
@@ -2381,6 +2479,14 @@ document.getElementById('wqModal').addEventListener('keydown', e=>{
   if(e.key==='Escape' && document.getElementById('wqSkip').style.display!=='none') document.getElementById('wqSkip').click();
 });
 /* ---------- GRADING ---------- */
+/* One place that converts a 0-100 percentage into a letter. Used by the Layers
+   panel, the student badge, My Progress and the progress report (PDF/email). */
+function pctToLetter(p){
+  const scale = [[97,'A+'],[93,'A'],[90,'A-'],[87,'B+'],[83,'B'],[80,'B-'],
+                 [77,'C+'],[73,'C'],[70,'C-'],[67,'D+'],[63,'D'],[60,'D-']];
+  for(const [min,letter] of scale) if(p >= min) return letter;
+  return 'NI'; // below 60 = Needs Improvement
+}
 function computeGrade(){
   if(!student) return { pct:0, letter:'—', detail:'Sign in to start tracking.' };
   const totalLessons = cards.length;
@@ -2392,15 +2498,14 @@ function computeGrade(){
   const videoIds = Object.keys(student.videoConfirmed).filter(id=>student.videoConfirmed[id]);
   const videoPct = Math.min(100, (videoIds.length/23)*100);
   const overall = completionPct*0.45 + quizAvg*0.25 + readingPct*0.15 + videoPct*0.15;
-  let letter = 'F';
-  if(overall>=90) letter='A'; else if(overall>=80) letter='B'; else if(overall>=70) letter='C'; else if(overall>=60) letter='D';
-  return { pct: Math.round(overall), letter, detail:`${Math.round(completionPct)}% lessons · ${quizzesTaken} week quizzes` };
+  const pct = Math.round(overall);
+  return { pct, letter: pctToLetter(pct), detail:`${Math.round(completionPct)}% lessons · ${quizzesTaken} week quizzes` };
 }
 function updateGrade(){
   const g = computeGrade();
   const letterEl = document.getElementById('lpGradeLetter');
   const detailEl = document.getElementById('lpGradeDetail');
-  if(letterEl){ letterEl.textContent = student ? `g.letter ({g.pct}%)` : '—'; }
+  if(letterEl){ letterEl.textContent = student ? `${g.letter} (${g.pct}%)` : '—'; }
   if(detailEl){ detailEl.textContent = g.detail; }
   const sbGrade = document.getElementById('sbGrade');
   if(sbGrade) sbGrade.textContent = student ? `${g.letter} · ${g.pct}%` : '—';
@@ -2429,18 +2534,19 @@ function renderProgressView(){
   const screencastQuizAvg = avgPct(screencastQuizEntries);
   let rows = '';
   for(let w=1; w<=TOTAL_WEEKS; w++){
+    if(!isWeekReleased(w)) continue; // unreleased weeks stay hidden here too
     const st = weekStatus(w);
     const quiz = student.weekQuizzes[w];
     let badgeClass = 'notstarted', badgeText = 'Not started';
     if(st.pct===100){ badgeClass='done'; badgeText='Complete'; }
     else if(st.pct>0){ badgeClass='partial'; badgeText='In progress'; }
-    const quizText = quiz ? (quiz.total ? `quiz.score/{quiz.total} correct` : 'Reflection submitted') : '—';
-    rows += `<tr><td>Week w</td><td>{weekMeta[w]||''}</td><td>st.done/{st.total} days</td><td><span class="pw-badge badgeClass">{badgeText}</span></td><td>${quizText}</td></tr>`;
+    const quizText = quiz ? (quiz.total ? `${quiz.score}/${quiz.total} correct` : 'Reflection submitted') : '—';
+    rows += `<tr><td>Week ${w}</td><td>${weekMeta[w]||''}</td><td>${st.done}/${st.total} days</td><td><span class="pw-badge ${badgeClass}">${badgeText}</span></td><td>${quizText}</td></tr>`;
   }
   let readingRows = readingPool.map(item=>{
     const isRead = student.readingSeen.includes(item.key);
     const quiz = student.contentQuizzes.reading[item.key];
-    return `<tr><td>${item.title}</td><td><span class="pw-badge isRead?'done':'notstarted'">{isRead?'Read':'Not read'}</span></td><td>${quiz? (quiz.score+'/'+quiz.total) : '—'}</td></tr>`;
+    return `<tr><td>${item.title}</td><td><span class="pw-badge ${isRead?'done':'notstarted'}">${isRead?'Read':'Not read'}</span></td><td>${quiz? (quiz.score+'/'+quiz.total) : '—'}</td></tr>`;
   }).join('');
   let screencastRows = (typeof allScreencasts !== 'undefined' ? allScreencasts : []).map(v=>{
     const watched = typeof theaterIsWatched === 'function' ? theaterIsWatched(v.id) : false;
@@ -2448,7 +2554,7 @@ function renderProgressView(){
     const status = watched ? 'Watched' : (opened ? 'Opened' : 'Not started');
     const badgeClass = watched?'done':(opened?'partial':'notstarted');
     const quiz = student.contentQuizzes.screencasts[v.id];
-    return `<tr><td>${v.label}</td><td><span class="pw-badge badgeClass">{status}</span></td><td>${quiz? (quiz.score+'/'+quiz.total) : '—'}</td></tr>`;
+    return `<tr><td>${v.label}</td><td><span class="pw-badge ${badgeClass}">${status}</span></td><td>${quiz? (quiz.score+'/'+quiz.total) : '—'}</td></tr>`;
   }).join('');
   body.innerHTML = `
     <div class="progress-hero">
@@ -2458,8 +2564,8 @@ function renderProgressView(){
       </div>
     </div>
     <div class="progress-grid">
-      <div class="progress-card" style="--pc-accent:#2f6fed"><h4>Lessons Completed</h4><div class="pc-big">student.completed.length/{cards.length}</div><div class="pc-sub">across ${TOTAL_WEEKS} weeks</div></div>
-      <div class="progress-card" style="--pc-accent:#ff7a2d"><h4>Week Quizzes</h4><div class="pc-big">quizzesTaken/{TOTAL_WEEKS}</div><div class="pc-sub">completed automatically at week end</div></div>
+      <div class="progress-card" style="--pc-accent:#2f6fed"><h4>Lessons Completed</h4><div class="pc-big">${student.completed.length}/${cards.length}</div><div class="pc-sub">across ${TOTAL_WEEKS} weeks</div></div>
+      <div class="progress-card" style="--pc-accent:#ff7a2d"><h4>Week Quizzes</h4><div class="pc-big">${quizzesTaken}/${TOTAL_WEEKS}</div><div class="pc-sub">completed automatically at week end</div></div>
       <div class="progress-card" style="--pc-accent:#8b5cf6"><h4>Reading Opened</h4><div class="pc-big">${student.readingSeen.length}/11</div><div class="pc-sub">Read Me sections viewed</div></div>
       <div class="progress-card" style="--pc-accent:#ff6a2c"><h4>Screencasts Watched</h4><div class="pc-big">${videosConfirmed}/23</div><div class="pc-sub">fully watched</div></div>
       <div class="progress-card" style="--pc-accent:#ef476f"><h4>Practice Files Opened</h4><div class="pc-big">${student.seenPractice.length}/43</div><div class="pc-sub">exercise files previewed</div></div>
@@ -2502,19 +2608,19 @@ function renderAssessmentView(){
   const pool = typeof screencastQuizPool !== 'undefined' ? screencastQuizPool : [];
   const readingItems = readingPool.map(item=>{
     const quiz = student.contentQuizzes.reading[item.key];
-    const statusText = quiz ? `quiz.score/{quiz.total}` : 'Not taken';
+    const statusText = quiz ? `${quiz.score}/${quiz.total}` : 'Not taken';
     const btn = quiz
       ? `<button type="button" class="assess-btn" disabled>Completed</button>`
       : `<button type="button" class="assess-btn" onclick="assessmentStart('reading','${item.key}')">Start</button>`;
-    return `<div class="assess-row"><div class="assess-row-main"><b>${item.title}</b><span class="assess-status quiz?'done':''">{statusText}</span></div>${btn}</div>`;
+    return `<div class="assess-row"><div class="assess-row-main"><b>${item.title}</b><span class="assess-status ${quiz?'done':''}">${statusText}</span></div>${btn}</div>`;
   }).join('') || '<p style="font-size:13px;color:var(--muted);">No Read Me sections available yet.</p>';
   const videoItems = pool.map(item=>{
     const quiz = student.contentQuizzes.screencasts[item.key];
-    const statusText = quiz ? `quiz.score/{quiz.total}` : 'Not taken';
+    const statusText = quiz ? `${quiz.score}/${quiz.total}` : 'Not taken';
     const btn = quiz
       ? `<button type="button" class="assess-btn" disabled>Completed</button>`
       : `<button type="button" class="assess-btn" onclick="assessmentStart('video','${item.key}')">Start</button>`;
-    return `<div class="assess-row"><div class="assess-row-main"><b>${item.title}</b><span class="assess-status quiz?'done':''">{statusText}</span></div>${btn}</div>`;
+    return `<div class="assess-row"><div class="assess-row-main"><b>${item.title}</b><span class="assess-status ${quiz?'done':''}">${statusText}</span></div>${btn}</div>`;
   }).join('') || '<p style="font-size:13px;color:var(--muted);">No screencasts available yet.</p>';
   const readingDone = Object.keys(student.contentQuizzes.reading).length;
   const videoDone = Object.keys(student.contentQuizzes.screencasts).length;
@@ -2522,18 +2628,18 @@ function renderAssessmentView(){
   const videoPct = pool.length ? Math.round((videoDone/pool.length)*100) : 0;
   body.innerHTML = `
     <div class="assess-summary-row">
-      <div class="progress-card" style="--pc-accent:#8b5cf6;flex:1;min-width:200px;"><h4>Read Me Assessments</h4><div class="pc-big">readingDone/{readingPool.length}</div><div class="pc-sub">completed</div></div>
-      <div class="progress-card" style="--pc-accent:#ff6a2c;flex:1;min-width:200px;"><h4>Screencast Assessments</h4><div class="pc-big">videoDone/{pool.length}</div><div class="pc-sub">completed</div></div>
+      <div class="progress-card" style="--pc-accent:#8b5cf6;flex:1;min-width:200px;"><h4>Read Me Assessments</h4><div class="pc-big">${readingDone}/${readingPool.length}</div><div class="pc-sub">completed</div></div>
+      <div class="progress-card" style="--pc-accent:#ff6a2c;flex:1;min-width:200px;"><h4>Screencast Assessments</h4><div class="pc-big">${videoDone}/${pool.length}</div><div class="pc-sub">completed</div></div>
     </div>
     <div class="note-section" id="assess-reading">
       <h3>Read Me Notes Assessment</h3>
-      <div class="assess-progress-row"><span>${readingDone} of readingPool.lengthcompleted</span><spanstyle="color:var(--c-notes);">{readingPct}%</span></div>
+      <div class="assess-progress-row"><span>${readingDone} of ${readingPool.length} completed</span><span style="color:var(--c-notes);">${readingPct}%</span></div>
       <div class="assess-progress-bar"><i style="background:linear-gradient(90deg,#8b5cf6,#b794f4);width:${readingPct}%;"></i></div>
       <div>${readingItems}</div>
     </div>
     <div class="note-section" id="assess-video">
       <h3>Screencast Assessment</h3>
-      <div class="assess-progress-row"><span>${videoDone} of pool.lengthcompleted</span><spanstyle="color:var(--c-screen);">{videoPct}%</span></div>
+      <div class="assess-progress-row"><span>${videoDone} of ${pool.length} completed</span><span style="color:var(--c-screen);">${videoPct}%</span></div>
       <div class="assess-progress-bar"><i style="background:linear-gradient(90deg,#ff6a2c,#ffb347);width:${videoPct}%;"></i></div>
       <div>${videoItems}</div>
     </div>`;
@@ -2543,9 +2649,9 @@ function renderAssessmentView(){
 function buildReportBody(trigger){
   const g = computeGrade();
   const lines = [];
-  lines.push(`Progress report for student.name({student.email})`);
+  lines.push(`Progress report for ${student.name} (${student.email})`);
   if(trigger) lines.push(`Trigger: ${trigger}`);
-  lines.push(`Overall grade: g.letter({g.pct}%)`);
+  lines.push(`Overall grade: ${g.letter} (${g.pct}%)`);
   lines.push(`Lessons completed: ${student.completed.length} of ${cards.length}`);
   lines.push('');
   lines.push('Week-end quizzes:');
@@ -2556,7 +2662,7 @@ function buildReportBody(trigger){
     lines.push(`  Week ${wk}: ${q.total ? `${q.score}/${q.total} vocabulary correct` : 'reflection only (no vocab this week)'}${q.reflection ? ' — "'+q.reflection.replace(/\s+/g,' ').slice(0,200)+'"' : ''}`);
   });
   lines.push('');
-  lines.push('Reading material opened (Read Me sections viewed 2s+):');
+  lines.push('Reading material opened (Read Me sections marked read):');
   lines.push(`  ${student.readingSeen.length} of 11 sections — ${student.readingSeen.join(', ')||'none yet'}`);
   lines.push('');
   lines.push('Vocabulary check (terms opened per week):');
@@ -2596,9 +2702,9 @@ function submitReportSilently(trigger){
       .catch(()=>{ /* no-cors means we can't read the response either way; nothing more to do */ });
   } else {
     // Fallback only — remove once GOOGLE_FORM_ACTION_URL / GOOGLE_FORM_ENTRY_ID are set above.
-    const subject = encodeURIComponent(`Progress Report — student.name({student.email})`);
+    const subject = encodeURIComponent(`Progress Report — ${student.name} (${student.email})`);
     const body = encodeURIComponent(reportText);
-    window.location.href = `mailto:REPORTEMAIL?subject={subject}&body=${body}`;
+    window.location.href = `mailto:${REPORT_EMAIL}?subject=${subject}&body=${body}`;
   }
 }
 document.getElementById('lpReportBtn').addEventListener('click', ()=>{
@@ -2620,7 +2726,7 @@ function checkBiweeklyReport(){
     const dueDate = new Date(COURSE_START_DATE.getTime() + periodEndsAfterWeek*7*86400000);
     if(now >= dueDate && !student.biweeklySent[p]){
       const weekLo = p*2-1, weekHi = periodEndsAfterWeek;
-      submitReportSilently(`Biweekly report — Weeks weekLo-{weekHi}`);
+      submitReportSilently(`Biweekly report — Weeks ${weekLo}-${weekHi}`);
       student.biweeklySent[p] = new Date().toISOString();
       saveStudentRecord(student);
     }
@@ -2650,7 +2756,7 @@ document.querySelectorAll('.ideaUpload').forEach(inp=>{
       const url=URL.createObjectURL(file);
       const box=document.createElement('div');
       box.className='thumb';
-      box.innerHTML=`<img src="url"alt="{file.name}" style="width:100%;height:100%;object-fit:cover">`;
+      box.innerHTML=`<img src="${url}" alt="${file.name}" style="width:100%;height:100%;object-fit:cover">`;
       parent.appendChild(box);
     });
   });
@@ -2700,7 +2806,7 @@ async function gjGeneratePDF(data){
   doc.setFontSize(16); doc.text(`1.1 Symbolic Animal: ${data.animal}`,50,y); y+=20;
   doc.text(`1.2 Members:`,50,y); y+=18;
   doc.setFontSize(14);
-  data.members.forEach(m=>{ doc.text(`- m.name({m.role||'member'})`,70,y); y+=16; });
+  data.members.forEach(m=>{ doc.text(`- ${m.name} (${m.role||'member'})`,70,y); y+=16; });
   for(const [i,idea] of data.ideas.entries()){
     y+=10;
     if(y>pageHeight-250){ doc.addPage(); drawBackground(); y=40; }
@@ -2928,7 +3034,7 @@ function epMakeList(){
     const item = document.createElement('button');
     item.type = 'button';
     item.className = 'ep-item';
-    item.innerHTML = `<span class="ep-swatch" style="background:el.color"></span><span><strong>{el.name}</strong> — ${el.title}</span>`;
+    item.innerHTML = `<span class="ep-swatch" style="background:${el.color}"></span><span><strong>${el.name}</strong> — ${el.title}</span>`;
     item.onclick = () => epSelectElement(el.id);
     epList.appendChild(item);
   });
@@ -3249,7 +3355,7 @@ function theaterRenderSide(){
   theaterUpdateProgressSummary();
   const list = theaterFilteredList();
   const headEl = document.getElementById('theaterSideHead');
-  if(headEl) headEl.textContent = theaterFilterMode==='all' ? `Up next · allScreencasts.lengthrecordings`:`{list.length} theaterFilterModerecording{list.length===1?'':'s'}`;
+  if(headEl) headEl.textContent = theaterFilterMode==='all' ? `Up next · ${allScreencasts.length} recordings` : `${list.length} ${theaterFilterMode} recording${list.length===1?'':'s'}`;
   side.innerHTML = '';
   if(!list.length){
     side.innerHTML = '<div class="theater-empty">No recordings match your search or filter.</div>';
@@ -3415,5 +3521,3 @@ initAuth();
 </script>
 </body>
 </html>
-
-
