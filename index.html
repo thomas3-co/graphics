@@ -536,6 +536,47 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
 .practice-step{min-width:140px;padding:13px 12px;border:1px solid #dfe5ee;border-radius:13px;background:#fff}.practice-step span{display:inline-flex;width:25px;height:25px;align-items:center;justify-content:center;border-radius:50%;background:#edf2f8;color:#526173;font-weight:800;margin-right:7px}.practice-step b{font-size:12px}.practice-step small{display:block;color:#758195;margin:6px 0 0 33px}.practice-step.done-step{border-color:#bfe3cf;background:#f4fcf7}.practice-step.done-step span{background:#1f9d61;color:#fff}.practice-step.active-step{border-color:#b8cdf7;box-shadow:0 3px 12px rgba(47,111,237,.12)}.practice-arrow{color:#98a3b3;font-weight:800}.assignment-board{margin:5px 0 20px}.assignment-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}.assignment-card{background:#fff;border:1px solid #e1e7f0;border-radius:16px;padding:17px;box-shadow:0 4px 15px rgba(30,50,80,.05)}.assignment-card h3{margin:0 0 6px;font-size:16px}.assignment-card p{font-size:13px;color:#657184;line-height:1.55}.assignment-meta{display:flex;flex-wrap:wrap;gap:6px;margin:9px 0}.assignment-chip{font-size:11px;border-radius:99px;background:#f1f5f9;padding:4px 8px;color:#536173}.assignment-checks{margin:10px 0;padding-left:18px;font-size:12px;color:#586577;line-height:1.7}.assignment-status{display:flex;justify-content:space-between;align-items:center;gap:10px;border-top:1px solid #edf0f5;padding-top:11px}.assignment-status select{border:1px solid #d6deea;border-radius:8px;padding:7px;background:#fff}.assignment-saved{font-size:11px;color:#16804c;font-weight:700}
 .home-workflow{margin:24px 0 30px;padding:22px;border:1px solid #dfe6f0;border-radius:20px;background:linear-gradient(135deg,#ffffff,#f7faff);box-shadow:0 10px 28px rgba(25,45,80,.08)}.workflow-head{display:flex;justify-content:space-between;gap:20px;align-items:flex-start}.workflow-head h2{margin:4px 0 7px;font-size:21px}.workflow-head p{margin:0;max-width:760px;color:#647084;font-size:13px;line-height:1.6}.workflow-percent{min-width:90px;text-align:center;background:#eef5ff;border:1px solid #d5e4ff;border-radius:14px;padding:10px}.workflow-percent strong{display:block;font-size:24px;color:#2f6fed}.workflow-percent span{font-size:11px;color:#657184}.workflow-progress{height:8px;background:#e9eef5;border-radius:99px;overflow:hidden;margin:17px 0}.workflow-progress i{display:block;height:100%;background:linear-gradient(90deg,#2f6fed,#06b6d4);border-radius:inherit;transition:width .3s}.workflow-steps{display:flex;align-items:stretch;gap:7px;overflow-x:auto;padding:3px 1px 8px}.workflow-home-step{min-width:190px;flex:1;display:flex;align-items:center;gap:10px;text-align:left;border:1px solid #dfe5ee;border-radius:14px;background:#fff;padding:13px;cursor:pointer;color:inherit;transition:.18s}.workflow-home-step:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 7px 18px rgba(30,50,80,.09);border-color:#b9cdf2}.workflow-home-step:focus-visible{outline:3px solid rgba(47,111,237,.25)}.workflow-home-step.wf-active{border-color:#9fc0f6;box-shadow:0 4px 16px rgba(47,111,237,.12)}.workflow-home-step.wf-done{background:#f4fcf7;border-color:#b9e3cc}.workflow-home-step.wf-done .wf-num{background:#1f9d61;color:#fff}.workflow-home-step.wf-locked{opacity:.52;cursor:not-allowed;background:#f6f8fb}.wf-num{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#edf2f8;color:#526173;font-weight:800;flex:0 0 30px}.wf-copy{min-width:0;flex:1}.wf-copy b{display:block;font-size:12px}.wf-copy small{display:block;margin-top:4px;color:#788496;font-size:10.5px;line-height:1.35}.wf-arrow{font-weight:900;color:#7d8a9b}.wf-connector{font-size:24px;color:#a2adba;align-self:center}.workflow-foot{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-top:12px;font-size:12px;color:#667286}.workflow-foot .hbtn{padding:8px 12px}
 .glossary-toolbar{display:flex;align-items:center;gap:10px;margin-bottom:15px}.glossary-toolbar input{flex:1;max-width:680px;padding:12px 14px;border:1px solid #d8e0ec;border-radius:12px;font:inherit;outline:none}.glossary-toolbar input:focus{border-color:#2f6fed;box-shadow:0 0 0 3px rgba(47,111,237,.12)}.toolbar-count{font-size:12px;color:#6c7788}.glossary-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.glossary-card{background:#fff;border:1px solid #e1e6ee;border-radius:14px;padding:15px;transition:.18s}.glossary-card:hover{transform:translateY(-2px);box-shadow:0 7px 18px rgba(25,45,80,.08)}.glossary-term{font-weight:800;color:#17345f;font-size:15px}.glossary-def{font-size:13px;line-height:1.55;color:#647084;margin-top:7px}.glossary-source{font-size:11px;color:#8a94a5;margin-top:10px}
+
+/* ===== HOME MY STATUS — polished student dashboard ===== */
+.home-status-panel{margin:24px 0 28px}
+.home-status-panel .my-status-card{position:relative;overflow:hidden;background:linear-gradient(135deg,#101827 0%,#182d52 55%,#293e72 100%);color:#fff;border:1px solid rgba(255,255,255,.12);box-shadow:0 18px 45px rgba(22,39,72,.22)}
+.home-status-panel .my-status-card:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 90% 10%,rgba(56,189,248,.25),transparent 30%),radial-gradient(circle at 10% 90%,rgba(167,139,250,.22),transparent 30%);pointer-events:none}
+.home-status-panel .status-head,.home-status-panel .status-grid,.home-status-panel .status-foot,.home-status-panel .status-bar{position:relative;z-index:1}
+.home-status-panel .status-head{display:flex;justify-content:space-between;gap:24px;align-items:center}
+.home-status-panel .hero-eyebrow{color:#93c5fd}
+.home-status-panel .status-head h2{color:#fff;margin:4px 0 7px;font-size:25px}
+.home-status-panel .status-head p{color:#c7d2e4;max-width:680px}
+.home-status-panel .status-total{min-width:116px;height:116px;border-radius:50%;display:flex;flex-direction:column;justify-content:center;align-items:center;border:6px solid rgba(255,255,255,.14);background:rgba(255,255,255,.07);box-shadow:inset 0 0 0 5px rgba(56,189,248,.08)}
+.home-status-panel .status-total b{font-size:25px}.home-status-panel .status-total span{font-size:11px;color:#c7d2e4}
+.home-status-panel .status-bar{height:9px;background:rgba(255,255,255,.13);border-radius:99px;overflow:hidden;margin:18px 0}
+.home-status-panel .status-bar i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#38bdf8,#8b5cf6,#f472b6);transition:width .45s ease}
+.home-status-panel .status-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.home-status-panel .status-link-card{min-width:0;text-align:left;display:flex;flex-direction:column;gap:8px;padding:14px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.07);color:#fff;border-radius:14px;cursor:pointer;transition:.18s}
+.home-status-panel .status-link-card:hover{transform:translateY(-2px);background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.25)}
+.home-status-panel .status-link-card .status-icon{width:28px;height:28px;display:grid;place-items:center;border-radius:9px;background:rgba(255,255,255,.12);font-weight:800}
+.home-status-panel .status-link-card.status-done .status-icon{background:#10b981;color:#fff}
+.home-status-panel .status-link-card b{font-size:12px}.home-status-panel .status-link-card small{display:block;color:#bdc9da;font-size:10px;line-height:1.4;min-height:28px}.home-status-panel .status-link-card strong{font-size:10px;color:#93c5fd}
+.home-status-panel .status-foot{display:flex;justify-content:space-between;gap:14px;align-items:center;margin-top:14px;padding-top:13px;border-top:1px solid rgba(255,255,255,.12);color:#c7d2e4;font-size:11px}
+.home-status-panel .status-foot .hbtn{color:#fff;border-color:rgba(255,255,255,.22);background:rgba(255,255,255,.07)}
+@media(max-width:900px){.home-status-panel .status-grid{grid-template-columns:repeat(2,1fr)}.home-status-panel .status-head{align-items:flex-start}.home-status-panel .status-total{min-width:92px;height:92px}}
+@media(max-width:620px){.home-status-panel .status-head{flex-direction:column}.home-status-panel .status-grid{grid-template-columns:1fr}.home-status-panel .status-foot{flex-direction:column;align-items:flex-start}}
+/* ===== READ ME CARDS OPEN ON CLICK ===== */
+.readme-lesson-card,.readme-step-card{cursor:pointer;position:relative;transition:.2s ease;overflow:hidden}
+.readme-lesson-card:after,.readme-step-card:after{content:'CLICK TO OPEN';position:absolute;right:12px;top:12px;font-size:8px;font-weight:800;letter-spacing:.08em;color:#6d5ce7;background:#f1efff;border:1px solid #ddd7ff;border-radius:99px;padding:4px 7px}
+.readme-lesson-card.is-open:after,.readme-step-card.is-open:after{content:'CLICK TO CLOSE';color:#047857;background:#ecfdf5;border-color:#bbf7d0}
+.readme-lesson-card .note-steps,.readme-lesson-card .big-ideas,.readme-step-card .note-steps,.readme-step-card .big-ideas{display:none}
+.readme-lesson-card.is-open .note-steps,.readme-lesson-card.is-open .big-ideas,.readme-step-card.is-open .note-steps,.readme-step-card.is-open .big-ideas{display:block}
+.readme-lesson-card.is-open,.readme-step-card.is-open{box-shadow:0 12px 28px rgba(47,111,237,.12);border-color:#b9c9ed}
+/* ===== THIN CINEMATIC SCREENCAST BORDER ===== */
+.theater-stage{border-width:2px!important;border-style:solid!important;border-radius:14px!important;padding:3px!important}
+.theater-player{border-radius:10px!important;overflow:hidden}
+/* ===== GLOSSARY LIVE SUGGESTIONS ===== */
+.glossary-search-wrap{position:relative;flex:1;max-width:680px}
+.glossary-search-wrap input{width:100%!important;max-width:none!important}
+.glossary-suggestions{position:absolute;left:0;right:0;top:calc(100% + 7px);z-index:50;background:#fff;border:1px solid #dce3ee;border-radius:14px;box-shadow:0 16px 35px rgba(15,17,23,.14);display:none;overflow:hidden}
+.glossary-suggestions.open{display:block}
+.glossary-suggestion{width:100%;display:flex;justify-content:space-between;gap:12px;text-align:left;padding:11px 13px;border:0;border-bottom:1px solid #eef1f5;background:#fff;cursor:pointer}
+.glossary-suggestion:last-child{border-bottom:0}.glossary-suggestion:hover{background:#f5f8ff}.glossary-suggestion b{font-size:12px;color:#17345f}.glossary-suggestion span{font-size:10px;color:#7a8494;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:55%}
 .teacher-note{padding:11px 14px;background:#fff8e8;border:1px solid #f3ddb0;border-radius:12px;color:#775b22;font-size:12px;margin-bottom:15px}.teacher-summary{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}.teacher-stat{padding:15px;border-radius:14px;background:#fff;border:1px solid #e1e7f0}.teacher-stat strong{display:block;font-size:23px}.teacher-stat span{font-size:11px;color:#687587}.teacher-table-wrap{overflow:auto;border:1px solid #e1e7f0;border-radius:14px;background:#fff}.teacher-table{width:100%;border-collapse:collapse;font-size:12px;min-width:760px}.teacher-table th,.teacher-table td{padding:11px 12px;border-bottom:1px solid #edf0f4;text-align:left}.teacher-table th{background:#f7f9fc;color:#4d5c70}.teacher-table tr:last-child td{border-bottom:0}.teacher-actions{display:flex;gap:9px;margin-top:14px;flex-wrap:wrap}
 .course-search{display:none;position:fixed;inset:0;z-index:10001}.course-search.open{display:block}.search-backdrop{position:absolute;inset:0;background:rgba(11,25,45,.5);backdrop-filter:blur(5px)}.search-dialog{position:relative;width:min(760px,calc(100% - 28px));max-height:82vh;margin:8vh auto 0;background:#fff;border-radius:20px;box-shadow:0 25px 80px rgba(0,0,0,.25);overflow:hidden}.search-head{display:flex;justify-content:space-between;align-items:center;padding:20px 22px 12px}.search-head h3{margin:4px 0;font-size:20px}.icon-close{border:0;background:#f1f4f8;border-radius:10px;width:34px;height:34px;font-size:22px;cursor:pointer}.course-search-input{display:block;width:calc(100% - 44px);margin:0 22px 14px;padding:13px 15px;border:1px solid #d5deeb;border-radius:12px;font:inherit}.search-results{max-height:55vh;overflow:auto;padding:0 22px 22px}.search-result{display:block;width:100%;text-align:left;border:1px solid #e2e7ef;background:#fff;border-radius:12px;padding:12px 14px;margin:8px 0;cursor:pointer}.search-result:hover{border-color:#9db9ec;background:#f7faff}.search-result b{display:block;color:#17345f}.search-result span{font-size:12px;color:#697588}.search-empty{padding:25px;text-align:center;color:#7a8595}
 .a11y-panel{display:none;position:fixed;inset:0;z-index:10000;background:rgba(11,25,45,.45)}.a11y-panel.open{display:grid;place-items:center}.a11y-card{width:min(420px,calc(100% - 30px));background:#fff;border-radius:18px;padding:20px;box-shadow:0 20px 60px rgba(0,0,0,.22)}.a11y-head{display:flex;justify-content:space-between;align-items:center}.a11y-head h3{margin:0}.a11y-toggle{display:flex;gap:10px;padding:13px 0;border-bottom:1px solid #edf0f4;font-size:14px}.a11y-card p{font-size:11px;color:#788496}.large-text .view,.large-text .tab{font-size:1.08em}.reduce-motion *{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}.completion-toast{position:fixed;left:50%;bottom:28px;z-index:10002;transform:translate(-50%,20px);opacity:0;background:#16345e;color:#fff;padding:11px 16px;border-radius:12px;font-size:13px;font-weight:700;pointer-events:none;transition:.2s}.completion-toast.show{opacity:1;transform:translate(-50%,0)}
@@ -613,7 +654,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
 <button aria-selected="false" class="tab" data-tab="practice" role="tab">Practice</button>
 <button aria-selected="false" class="tab" data-tab="materials" role="tab">Additional Materials</button>
 <button aria-selected="false" class="tab" data-tab="assessment" role="tab">Assessment</button>
-<button aria-selected="false" class="tab" data-tab="glossary" role="tab">Glossary</button><button aria-selected="false" class="tab" data-tab="assistive" role="tab">Quick Assistive Touch</button></nav>
+<button aria-selected="false" class="tab" data-tab="glossary" role="tab">Glossary</button></nav>
 <button class="progress-nav-btn" id="progressNavBtn" type="button">My Status</button>
 <div class="student-badge" id="studentBadge" style="display:none;">
 <span class="sb-name" id="sbName"></span>
@@ -1439,7 +1480,6 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
 <p>Week 1 builds the file-handling habits you need before editing: create or open the correct document, save an editable working file, and export a finished copy in the format your project requires.</p>
 <div class="readme-grid">
 <article class="readme-lesson-card">
-<div class="readme-card-icon">01</div>
 <div><h4>How to Open</h4>
 <p>Use <strong>File → Open</strong> to bring an existing image or Photoshop document into the workspace. You can also open a file from the start screen or drag a supported file into the editor.</p>
 <ol class="note-steps">
@@ -1450,7 +1490,6 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
 </div>
 </article>
 <article class="readme-lesson-card">
-<div class="readme-card-icon">02</div>
 <div><h4>How to Save</h4>
 <p><strong>Save</strong> protects your editable working file. For Photoshop projects, save the working version as a <strong>PSD</strong> so layers and editability remain available.</p>
 <ol class="note-steps">
@@ -1461,7 +1500,6 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
 </div>
 </article>
 <article class="readme-lesson-card">
-<div class="readme-card-icon">03</div>
 <div><h4>How to Export</h4>
 <p><strong>Export</strong> creates a delivery copy for a specific use. Use <strong>File → Export → Export As</strong> when you need a JPG, PNG, or another final image format.</p>
 <ol class="note-steps">
@@ -1493,21 +1531,18 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
 <p>Week 2 explains what happens when an edit changes the original pixels directly, why that can become difficult to undo later, and how a non-destructive workflow keeps the original information available.</p>
 <div class="readme-grid">
 <article class="readme-lesson-card">
-<div class="readme-card-icon">A</div>
 <div><h4>Destructive Editing</h4>
 <p>A <strong>destructive edit</strong> permanently changes the pixels or content you are working on. If you later need the original detail, you may have to undo many steps or reopen an earlier version.</p>
 <div class="note-tool"><strong>Example:</strong> painting directly on the only copy of a raster layer and then saving over the original can remove information from that working layer.</div>
 </div>
 </article>
 <article class="readme-lesson-card">
-<div class="readme-card-icon">B</div>
 <div><h4>Non-Destructive Editing</h4>
 <p>A <strong>non-destructive workflow</strong> keeps the original information available while edits are applied through layers, masks, adjustment layers, smart objects, or other reversible methods.</p>
 <div class="note-tool"><strong>Goal:</strong> make an edit, inspect the result, and still be able to change or remove that edit without rebuilding the entire image.</div>
 </div>
 </article>
 <article class="readme-lesson-card">
-<div class="readme-card-icon">C</div>
 <div><h4>Raster Images &amp; Pixels</h4>
 <p>A <strong>raster image</strong> is built from a grid of tiny picture elements called <strong>pixels</strong>. Each pixel stores color information that contributes to the complete photograph or graphic.</p>
 <div class="note-tool"><strong>Important:</strong> when a raster image is enlarged too far, individual pixels become more visible and the image can lose apparent sharpness.</div>
@@ -1613,17 +1648,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
 <div id="assessmentBody"></div>
 </section>
 <!-- ========== MY PROGRESS ========== -->
-<section class="view" id="glossary"><div class="view-head"><div><h2>Photoshop Glossary</h2><p>Search course vocabulary, definitions, and where each term is taught.</p></div></div><div class="glossary-toolbar"><label class="sr-only" for="glossarySearch">Search glossary</label><input autocomplete="off" id="glossarySearch" placeholder="Search a term, definition, or lesson…" type="search"/><span class="toolbar-count" id="glossaryCount"></span></div><div class="glossary-grid" id="glossaryGrid"></div></section><section class="view" id="assistive">
-<div class="view-head"><div><h2>Quick Assistive Touch</h2><p>Fast accessibility help for students using iPhone or iPad.</p></div></div>
-<div class="assistive-card" style="max-width:900px;margin:0 auto;">
-<div class="assistive-badge">ACCESSIBILITY QUICK HELP</div>
-<h3>Turn on AssistiveTouch</h3>
-<p>On iPhone or iPad, go to <strong>Settings → Accessibility → Touch → AssistiveTouch</strong>, then turn AssistiveTouch on. You can also add AssistiveTouch to the Accessibility Shortcut for faster access.</p>
-<div class="assistive-actions"><a class="hbtn primary" href="https://support.apple.com/guide/iphone/use-assistivetouch-iph96b21954/27/ios/27" target="_blank" rel="noopener">Open Apple AssistiveTouch Guide</a><button class="hbtn ghost" type="button" onclick="goTab('progress')">Back to My Status</button></div>
-<div class="assistive-grid"><div><b>Quick uses</b><span>Home, Control Center, screenshots, volume, gestures and Siri.</span></div><div><b>Custom gestures</b><span>Create gestures for repeated multi-finger or touch actions.</span></div><div><b>Pointer support</b><span>Use compatible mouse, trackpad and pointer devices.</span></div></div>
-</div>
-</section>
-<section class="view" id="progress">
+<section class="view" id="glossary"><div class="view-head"><div><h2>Photoshop Glossary</h2><p>Search course vocabulary, definitions, and where each term is taught.</p></div></div><div class="glossary-toolbar"><label class="sr-only" for="glossarySearch">Search glossary</label><div class="glossary-search-wrap"><input autocomplete="off" id="glossarySearch" placeholder="Search a term, definition, or lesson…" type="search"/><div class="glossary-suggestions" id="glossarySuggestions" aria-live="polite"></div></div><span class="toolbar-count" id="glossaryCount"></span></div><div class="glossary-grid" id="glossaryGrid"></div></section><section class="view" id="progress">
 <div class="view-head"><div><h2>My Status</h2>
 <p>Live progress toward your grade — lessons, assessments, Read Me, Screencasts, Practice, Projects, and daily evaluation.</p></div></div>
 <div id="progressBody"></div><div id="myProgressStatusPanel"></div>
@@ -3712,10 +3737,23 @@ function theaterPlay(id, label){
 }
 function theaterStep(delta){
   const idx = allScreencasts.findIndex(v=>v.id===theaterCurrentId);
-  const nextIdx = idx + delta;
+  if(idx<0) return;
+  // The Next button is the student's explicit "I finished watching" action.
+  // It marks the current recording watched and opens its 5-question check.
+  // The student then clicks Next again after submitting the check.
+  if(delta>0 && !theaterIsWatched(theaterCurrentId)){
+    theaterMarkWatched(theaterCurrentId);
+    return;
+  }
+  if(delta>0 && student && !(student.contentQuizzes?.screencasts||{})[theaterCurrentId]){
+    const meta=allScreencasts.find(v=>v.id===theaterCurrentId);
+    maybeShowContentQuiz('video',theaterCurrentId,screencastQuizPool,`Finished watching "${meta?meta.label:'this recording'}". Quick 5-question check:`);
+    return;
+  }
+  const nextIdx=idx+delta;
   if(nextIdx<0 || nextIdx>=allScreencasts.length || nextIdx>=2) return;
-  const v = allScreencasts[nextIdx];
-  theaterPlay(v.id, v.label);
+  const v=allScreencasts[nextIdx];
+  theaterPlay(v.id,v.label);
 }
 document.getElementById('theaterPrevBtn').addEventListener('click', ()=>theaterStep(-1));
 document.getElementById('theaterNextBtn').addEventListener('click', ()=>theaterStep(1));
@@ -3748,11 +3786,11 @@ const PHASE_PROJECTS = [
  {id:'phase1', title:'Phase 1 — Photoshop Foundations Project', short:'Phase 1 Project', week:3,
   submitUrl:'https://drive.google.com/drive/folders/1DzGBJliUESjJHW6Qc-QNOM5a8VMBpQqr?usp=sharing',
   desc:'Complete the learning path, finish the required project, then submit your final files to the Phase 1 Google Drive folder.',
-  checks:['Complete the Read Me','Watch the released screencast','Open Quick Assistive Touch','Finish the 7-question assessment','Submit the project files']},
+  checks:['Complete the Read Me','Watch the released screencast','Finish the 7-question assessment','Submit the project files']},
  {id:'phase2', title:'Phase 2 — Next Project', short:'Phase 2 Project', week:4,
   submitUrl:'https://drive.google.com/drive/folders/1DzGBJliUESjJHW6Qc-QNOM5a8VMBpQqr?usp=sharing',
   desc:'The same five-step learning path starts again for the next project when Phase 1 is submitted.',
-  checks:['Complete the Read Me','Watch the released screencast','Open Quick Assistive Touch','Finish the 7-question assessment','Submit the project files']}
+  checks:['Complete the Read Me','Watch the released screencast','Finish the 7-question assessment','Submit the project files']}
 ];
 const HM_ASSIGNMENTS = [
  {id:'w1-file-workflow',week:1,title:'File Workflow Practice',desc:'Open a supplied image, save an editable PSD, then export a delivery copy without replacing the master file.',skills:['Open','Save','PSD','Export'],checks:['Correct file opened','PSD saved','Final JPG/PNG exported']},
@@ -3776,17 +3814,14 @@ function renderMyProgressStatus(){
  const home=document.getElementById('homeMyStatus');
  const progress=document.getElementById('myProgressStatusPanel');
  if(!student){
-   const html=`<section class="my-status-card"><div><div class="hero-eyebrow">MY STATUS</div><h2>Sign in to see your live course status</h2><p>Your Read Me, Screencast, Assessment, Practice, and Project status will appear here.</p></div><button class="hbtn primary" type="button" onclick="goTab('progress')">Open My Status</button></section>`;
+   const html=`<section class="my-status-card"><div><div class="hero-eyebrow">MY STATUS</div><h2>Sign in to see your live course status</h2><p>Your Read Me, Screencast, Assessment, Practice, Project, and daily evaluation progress will appear here.</p></div><button class="hbtn primary" type="button" onclick="goTab('progress')">Open My Status →</button></section>`;
    if(home) home.innerHTML=html; if(progress) progress.innerHTML=html; return;
  }
- const readDone=Object.keys(student.contentQuizzes?.reading||{}).length;
- const readTotal=readingPool.length;
- const videoDone=Object.keys(student.contentQuizzes?.screencasts||{}).length;
- const videoTotal=Math.min(2,(typeof screencastQuizPool!=='undefined'?screencastQuizPool.length:0));
+ const readDone=Object.keys(student.contentQuizzes?.reading||{}).length, readTotal=readingPool.length;
+ const videoDone=Object.keys(student.contentQuizzes?.screencasts||{}).length, videoTotal=Math.min(2,(typeof screencastQuizPool!=='undefined'?screencastQuizPool.length:0));
  const final=student.finalAssessment;
  const practiceDone=Object.values(student.assignmentStatus||{}).some(v=>v==='In progress'||v==='Submitted') || (student.seenPractice||[]).length>0;
- const phase=hmCurrentPhase();
- const submitted=!!(phase && phase.id && student.projectPhases && student.projectPhases[phase.id] && student.projectPhases[phase.id].submitted);
+ const phase=hmCurrentPhase(); const submitted=!!(phase&&student.projectPhases&&student.projectPhases[phase.id]?.submitted);
  const items=[
   {label:'Read Me',sub:`${readDone}/${readTotal} checks`,done:readDone>=readTotal,tab:'notes'},
   {label:'Screencasts',sub:`${videoDone}/${videoTotal} checks`,done:videoDone>=videoTotal,tab:'screencasts'},
@@ -3794,12 +3829,12 @@ function renderMyProgressStatus(){
   {label:'Practice',sub:practiceDone?'Practice started':'Practice not started',done:practiceDone,tab:'practice'},
   {label:'Project',sub:submitted?'Submitted':'Project submission pending',done:submitted,tab:'progress'}
  ];
- const completed=items.filter(x=>x.done).length;
- const pct=Math.round(completed/items.length*100);
- const cards=items.map((x,i)=>{const action=x.label==='Project' ? `hmWorkflowAction(phase,5)` : `goTab('${x.tab}')`; return `<button class="status-link-card ${x.done?'status-done':''}" type="button" onclick="${action}"><span class="status-icon">${x.done?'✓':i+1}</span><span><b>${x.label}</b><small>${x.sub}</small></span><strong>${x.done?'Done':'Open'} →</strong></button>`;}).join('');
- const html=`<section class="my-status-card"><div class="status-head"><div><div class="hero-eyebrow">MY STATUS</div><h2>My Status</h2><p>Your live course status and progress. Jump directly to Read Me, Screencasts, Assessment, Practice, or your current Project.</p></div><div class="status-total"><b>${completed}/5</b><span>${pct}% complete</span></div></div><div class="status-bar"><i style="width:${pct}%"></i></div><div class="status-grid">${cards}</div><div class="status-foot"><span>Daily/Class Evaluation: <b>${getDailyEvaluation().earned.toFixed(1)} / ${getDailyEvaluation().possible.toFixed(1)}</b> · ${getDailyEvaluation().totalDays} class days × 0.7</span><button class="hbtn ghost" type="button" onclick="goTab('progress')">View full My Status</button></div></section>`;
+ const completed=items.filter(x=>x.done).length, pct=Math.round(completed/items.length*100), ev=getDailyEvaluation();
+ const cards=items.map((x,i)=>{const action=x.label==='Project'&&phase?`hmWorkflowAction(phase,5)`:`goTab('${x.tab}')`; return `<button class="status-link-card ${x.done?'status-done':''}" type="button" onclick="${action}"><span class="status-icon">${x.done?'✓':i+1}</span><span><b>${x.label}</b><small>${x.sub}</small></span><strong>${x.done?'Completed':'Open'} →</strong></button>`;}).join('');
+ const html=`<section class="my-status-card"><div class="status-head"><div><div class="hero-eyebrow">MY STATUS · LIVE</div><h2>Track everything from one place</h2><p>Use these linked cards to jump straight to the work that still needs your attention.</p></div><div class="status-total"><b>${pct}%</b><span>${completed}/5 areas</span></div></div><div class="status-bar"><i style="width:${pct}%"></i></div><div class="status-grid">${cards}</div><div class="status-foot"><span>Daily/Class Evaluation: <b>${ev.earned.toFixed(1)} / ${ev.possible.toFixed(1)}</b> · ${ev.totalDays} class days × 0.7</span><button class="hbtn ghost" type="button" onclick="goTab('progress')">Open full My Status →</button></div></section>`;
  if(home) home.innerHTML=html; if(progress) progress.innerHTML=html;
 }
+
 function renderAssignments(){
  const el=document.getElementById('assignmentBoard'); if(!el) return;
  el.innerHTML='<div class="assignment-grid">'+HM_ASSIGNMENTS.map(a=>{
@@ -3943,7 +3978,23 @@ function closeCourseSearch(){const m=document.getElementById('courseSearch');m.c
 function showToast(msg){const e=document.getElementById('completionToast');if(!e)return;e.textContent=msg;e.classList.add('show');clearTimeout(window.__toastTimer);window.__toastTimer=setTimeout(()=>e.classList.remove('show'),2400);}
 function initLearningUpgrade(){
  renderAssignments();renderMyProgressStatus();renderGlossary();
- document.getElementById('glossarySearch')?.addEventListener('input',e=>renderGlossary(e.target.value)); document.getElementById('globalSearchBtn')?.addEventListener('click',openCourseSearch);document.querySelectorAll('[data-close-search]').forEach(x=>x.addEventListener('click',closeCourseSearch));document.getElementById('courseSearchInput')?.addEventListener('input',e=>renderCourseSearch(e.target.value));
+ // Read Me lesson cards open their detailed steps only when the card itself is clicked.
+ document.querySelectorAll('.readme-lesson-card,.readme-step-card').forEach(card=>{
+   card.setAttribute('role','button'); card.setAttribute('tabindex','0');
+   const toggle=()=>card.classList.toggle('is-open');
+   card.addEventListener('click',e=>{ if(e.target.closest('button,a,input,select')) return; toggle(); });
+   card.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){e.preventDefault();toggle();} });
+ });
+ document.getElementById('glossarySearch')?.addEventListener('input',e=>{
+   const q=e.target.value.trim().toLowerCase(); renderGlossary(e.target.value);
+   const box=document.getElementById('glossarySuggestions'); if(!box)return;
+   if(!q){box.classList.remove('open');box.innerHTML='';return;}
+   const rows=hmCollectGlossary().filter(x=>(x.term+' '+x.def+' '+x.source).toLowerCase().includes(q)).slice(0,6);
+   box.innerHTML=rows.length?rows.map(x=>`<button class="glossary-suggestion" type="button"><b>${x.term}</b><span>${x.source}</span></button>`).join(''):`<div class="glossary-suggestion"><b>No matching term</b><span>Try another word</span></div>`;
+   box.classList.add('open');
+   box.querySelectorAll('button').forEach((b,i)=>b.addEventListener('click',()=>{const term=rows[i]; if(!term)return; e.target.value=term.term; renderGlossary(term.term); box.classList.remove('open'); setTimeout(()=>document.querySelector('#glossaryGrid .glossary-card')?.scrollIntoView({behavior:'smooth',block:'center'}),80);}));
+ });
+ document.addEventListener('click',e=>{if(!e.target.closest('.glossary-search-wrap'))document.getElementById('glossarySuggestions')?.classList.remove('open');}); document.getElementById('globalSearchBtn')?.addEventListener('click',openCourseSearch);document.querySelectorAll('[data-close-search]').forEach(x=>x.addEventListener('click',closeCourseSearch));document.getElementById('courseSearchInput')?.addEventListener('input',e=>renderCourseSearch(e.target.value));
  document.addEventListener('keydown',e=>{if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='k'){e.preventDefault();openCourseSearch();}if(e.key==='Escape')closeCourseSearch();});
  const ab=document.getElementById('a11yBtn'),ap=document.getElementById('a11yPanel'),ac=document.getElementById('a11yClose');ab?.addEventListener('click',()=>{ap.classList.add('open');ap.setAttribute('aria-hidden','false');});ac?.addEventListener('click',()=>{ap.classList.remove('open');ap.setAttribute('aria-hidden','true');});
  const rm=document.getElementById('reduceMotionToggle'),lt=document.getElementById('largeTextToggle');try{rm.checked=localStorage.getItem('hm_reduce_motion')==='1';lt.checked=localStorage.getItem('hm_large_text')==='1';}catch(e){} document.documentElement.classList.toggle('reduce-motion',rm.checked);document.documentElement.classList.toggle('large-text',lt.checked);rm.addEventListener('change',()=>{document.documentElement.classList.toggle('reduce-motion',rm.checked);localStorage.setItem('hm_reduce_motion',rm.checked?'1':'0');});lt.addEventListener('change',()=>{document.documentElement.classList.toggle('large-text',lt.checked);localStorage.setItem('hm_large_text',lt.checked?'1':'0');});
