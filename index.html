@@ -1842,18 +1842,26 @@ const weekMeta = {
 const TOTAL_WEEKS = 16;
 /* ================= CONTENT RELEASE CONTROL =================
    Controls what's currently visible to students. Weeks 1–3 are released now
-   with no date attached. Week 4 unlocks automatically the week of October 5,
-   2026 — no further edit needed, it just appears once that date arrives. Any
-   week with no entry here (5–16) stays fully hidden — not shown as "Coming
-   Soon", just absent — until you add it. Same idea for screencasts and
-   practice files below: only the ids/keys listed are visible; everything
-   else on the roster is hidden until added to these lists. */
+   with no date attached. Weeks 4–10 already have real lessons written, and
+   each one unlocks automatically on its own weekly cadence, 7 days apart,
+   counted from COURSE_START_DATE (Week 4 = Oct 5 2026, Week 5 = Oct 12, ...
+   Week 10 = Nov 16) — no further edits needed, each just appears once its
+   date arrives. Weeks not listed in WEEKS_WITH_SCHEDULED_CONTENT (currently
+   11–16, the "Coming Soon" placeholders) have no real lessons yet, so they
+   stay fully hidden — not shown as "Coming Soon", just absent — until real
+   content is written and the week number is added to that list. Same idea
+   for screencasts and practice files below: only the ids/keys listed are
+   visible; everything else on the roster is hidden until added. */
+const COURSE_START_DATE = new Date('2026-09-14T00:00:00'); // Sept 14 = Week 1, Day 1
 const ALWAYS_RELEASED_WEEKS = [1,2,3];
-const WEEK_UNLOCK_DATE = { 4: new Date('2026-10-05T00:00:00') };
+const WEEKS_WITH_SCHEDULED_CONTENT = [4,5,6,7,8,9,10];
+function weekStartDate(w){
+  return new Date(COURSE_START_DATE.getTime() + (w-1)*7*86400000);
+}
 function isWeekReleased(w){
   if(ALWAYS_RELEASED_WEEKS.includes(w)) return true;
-  const d = WEEK_UNLOCK_DATE[w];
-  return d ? new Date() >= d : false;
+  if(!WEEKS_WITH_SCHEDULED_CONTENT.includes(w)) return false; // no content yet — stays hidden
+  return new Date() >= weekStartDate(w);
 }
 const cards = document.querySelectorAll('.flip-card[data-day]');
 let completed = [];
@@ -2266,22 +2274,20 @@ document.getElementById('cqSubmit').addEventListener('click', ()=>{
 const REPORT_EMAIL = 'thomas@hmacademy.org';
 const GOOGLE_FORM_ACTION_URL = ''; // e.g. 'https://docs.google.com/forms/d/e/XXXXXXXX/formResponse'
 const GOOGLE_FORM_ENTRY_ID = '';   // e.g. 'entry.1234567890'
-const COURSE_START_DATE = new Date('2026-09-14T00:00:00'); // Sept 14 = Week 1, Day 1
 /* ---------- CALENDAR-DRIVEN CURRICULUM LOCK ----------
    Weeks 1-3 are already underway and stay fully open. Every week from Week 4 on
    unlocks automatically on its own scheduled start date (7 days per week from
-   COURSE_START_DATE — Week 4 = Oct 5, Week 5 = Oct 12, and so on), rather than
-   needing to be manually flipped on later. Until a week's date arrives, its day
-   cards are hidden and a "this week unlocks on <date>" note is shown instead —
-   the lesson content itself is left in place underneath, not deleted, so nothing
-   needs to be rebuilt when the date comes around. This re-checks on every page
-   load, not live while the page is open.
+   COURSE_START_DATE, declared earlier — Week 4 = Oct 5, Week 5 = Oct 12, and so
+   on), rather than needing to be manually flipped on later. Until a week's date
+   arrives, its day cards are hidden and a "this week unlocks on <date>" note is
+   shown instead — the lesson content itself is left in place underneath, not
+   deleted, so nothing needs to be rebuilt when the date comes around. This
+   re-checks on every page load, not live while the page is open.
    Weeks 11-16 already ship as "Coming Soon" placeholder content (no real lessons
-   yet), so their lock note is skipped — there's nothing to hide there. */
+   yet), so their lock note is skipped — there's nothing to hide there.
+   (weekStartDate() is the same helper already defined near COURSE_START_DATE
+   above — reused here rather than redefined.) */
 const WEEKS_ALWAYS_OPEN = 3;
-function weekStartDate(w){
-  return new Date(COURSE_START_DATE.getTime() + (w-1)*7*86400000);
-}
 function applyCurriculumLocks(){
   for(let w = WEEKS_ALWAYS_OPEN + 1; w <= TOTAL_WEEKS; w++){
     const weekEl = document.getElementById('week'+w);
