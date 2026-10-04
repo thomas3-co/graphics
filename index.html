@@ -275,15 +275,19 @@ button{font-family:inherit;}
 }
 /* ===== NOTE ACCORDION / SCROLL-MINIMIZE ===== */
 .note-h3-clickable{cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:10px;user-select:none;}
-.note-toggle{background:rgba(139,92,246,.08);border:1px solid rgba(139,92,246,.18);color:var(--c-notes);font-size:14px;cursor:pointer;flex-shrink:0;transition:background .2s ease,box-shadow .2s ease;line-height:1;padding:6px 10px;border-radius:8px;display:inline-flex;align-items:center;gap:5px;}
-.note-toggle:hover{background:rgba(139,92,246,.16);box-shadow:0 2px 8px rgba(139,92,246,.18);}
-.note-toggle .nt-arrow{display:inline-block;transition:transform .25s ease;}
-.note-section.collapsed .note-toggle .nt-arrow{transform:rotate(-90deg);}
+.note-toggle{display:none!important;}
+
 .note-count{display:inline-block;margin-left:8px;font-size:11px;font-weight:700;color:var(--c-notes);background:rgba(139,92,246,.1);border:1px solid rgba(139,92,246,.25);border-radius:999px;padding:2px 10px;vertical-align:middle;}
 .note-body{overflow:hidden;max-height:8000px;opacity:1;transition:max-height .4s ease, opacity .3s ease;}
 .note-section.collapsed .note-body{max-height:0;opacity:0;pointer-events:none;}
 .note-section{scroll-margin-top:80px;}
 .note-section.collapsed{padding-bottom:20px;}
+.readme-click-card{cursor:pointer;}
+.readme-click-card:focus-visible{outline:3px solid rgba(47,111,237,.35);outline-offset:3px;}
+.readme-click-card.collapsed .note-body{max-height:0;opacity:0;overflow:hidden;pointer-events:none;}
+.readme-click-card:not(.collapsed) .note-body{max-height:100000px;opacity:1;overflow:visible;}
+.readme-click-card .note-actions,.readme-click-card .note-dl,.readme-click-card .note-mark{cursor:pointer;}
+
 /* ===== ASSESSMENT PAGE ===== */
 .assess-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--line);flex-wrap:wrap;}
 .assess-row:last-child{border-bottom:none;}
@@ -606,7 +610,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
 <button aria-selected="false" class="tab" data-tab="materials" role="tab">Additional Materials</button>
 <button aria-selected="false" class="tab" data-tab="assessment" role="tab">Assessment</button>
 <button aria-selected="false" class="tab" data-tab="glossary" role="tab">Glossary</button><button aria-selected="false" class="tab" data-tab="assistive" role="tab">Quick Assistive Touch</button></nav>
-<button class="progress-nav-btn" id="progressNavBtn" type="button">My Progress</button>
+<button class="progress-nav-btn" id="progressNavBtn" type="button">My Status</button>
 <div class="student-badge" id="studentBadge" style="display:none;">
 <span class="sb-name" id="sbName"></span>
 <span class="sb-grade" id="sbGrade">—</span>
@@ -634,7 +638,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
 </div>
 <div id="homeMyStatus" class="home-status-panel"></div>
 
-<div class="section-heading">Jump to a section</div>
+<div class="section-heading">My Status &amp; Course Navigation</div>
 <div class="home-grid">
 <div class="home-card" onclick="goTab('curriculum')" onkeydown="if(event.key==='Enter')goTab('curriculum')" role="button" style="--accent:#2f6fed" tabindex="0">
 <h4>Curriculum</h4>
@@ -646,11 +650,11 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
 </div>
 <div class="home-card" onclick="goTab('notes')" onkeydown="if(event.key==='Enter')goTab('notes')" role="button" style="--accent:#8b5cf6" tabindex="0">
 <h4>Read Me Notes</h4>
-<p>Deep-dive written lessons with tools, tips, analogies and step-by-step instructions — downloadable as PDF.</p>
+<p>Click any Read Me card to open it. Finish the 5-question check to record your score.</p>
 </div>
 <div class="home-card" onclick="goTab('screencasts')" onkeydown="if(event.key==='Enter')goTab('screencasts')" role="button" style="--accent:#ff6a2c" tabindex="0">
 <h4>Screencasts</h4>
-<p>Every recorded class walkthrough — plays right inside the page in a cinema-style player.</p>
+<p>Watch the released recording. When it is marked watched, the 5-question check pops up automatically.</p>
 </div>
 <div class="home-card" onclick="goTab('practice')" onkeydown="if(event.key==='Enter')goTab('practice')" role="button" style="--accent:#ef476f" tabindex="0">
 <h4>Practice</h4>
@@ -665,8 +669,8 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
 <p>5-question Read Me/Screencast checks plus a separate 7-question application assessment.</p>
 </div>
 <div class="home-card" onclick="goTab('progress')" onkeydown="if(event.key==='Enter')goTab('progress')" role="button" style="--accent:#2f6fed" tabindex="0">
-<h4>My Progress</h4>
-<p>Your grade, completed lessons, week quizzes, reading, and screencasts — all in one place.</p>
+<h4>My Status</h4>
+<p>Live progress for Read Me, Screencasts, Assessment, Practice, Project, and daily evaluation.</p>
 </div>
 </div>
 </section>
@@ -1611,13 +1615,13 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
 <div class="assistive-badge">ACCESSIBILITY QUICK HELP</div>
 <h3>Turn on AssistiveTouch</h3>
 <p>On iPhone or iPad, go to <strong>Settings → Accessibility → Touch → AssistiveTouch</strong>, then turn AssistiveTouch on. You can also add AssistiveTouch to the Accessibility Shortcut for faster access.</p>
-<div class="assistive-actions"><a class="hbtn primary" href="https://support.apple.com/guide/iphone/use-assistivetouch-iph96b21954/27/ios/27" target="_blank" rel="noopener">Open Apple AssistiveTouch Guide</a><button class="hbtn ghost" type="button" onclick="goTab('progress')">Back to My Progress</button></div>
+<div class="assistive-actions"><a class="hbtn primary" href="https://support.apple.com/guide/iphone/use-assistivetouch-iph96b21954/27/ios/27" target="_blank" rel="noopener">Open Apple AssistiveTouch Guide</a><button class="hbtn ghost" type="button" onclick="goTab('progress')">Back to My Status</button></div>
 <div class="assistive-grid"><div><b>Quick uses</b><span>Home, Control Center, screenshots, volume, gestures and Siri.</span></div><div><b>Custom gestures</b><span>Create gestures for repeated multi-finger or touch actions.</span></div><div><b>Pointer support</b><span>Use compatible mouse, trackpad and pointer devices.</span></div></div>
 </div>
 </section>
 <section class="view" id="progress">
-<div class="view-head"><div><h2>My Progress</h2>
-<p>Everything tracked toward your grade — lessons, week-end quizzes, reading, vocabulary, and screencasts.</p></div></div>
+<div class="view-head"><div><h2>My Status</h2>
+<p>Live progress toward your grade — lessons, assessments, Read Me, Screencasts, Practice, Projects, and daily evaluation.</p></div></div>
 <div id="progressBody"></div><div id="myProgressStatusPanel"></div>
 </section>
 </main>
@@ -1875,20 +1879,28 @@ function initNoteAccordion(root){
     }
     section.appendChild(body);
     section.classList.add('collapsed'); // every accordion starts collapsed
-    const toggle = document.createElement('button');
-    toggle.type = 'button';
-    toggle.className = 'note-toggle';
-    toggle.setAttribute('aria-label','Click to expand and read this section, or collapse it');
-    toggle.title = 'Click to expand';
-    toggle.setAttribute('aria-expanded','false');
-    toggle.innerHTML = '<span class="nt-arrow" aria-hidden="true">▾</span>';
-    h3.classList.add('note-h3-clickable');
-    h3.appendChild(toggle);
-    const doToggle = ()=>{
-      const collapsed = section.classList.toggle('collapsed');
-      toggle.setAttribute('aria-expanded', collapsed?'false':'true');
-    };
-    h3.addEventListener('click', doToggle);
+    const isReadMe = !!section.closest('#notes');
+    const doToggle = ()=> section.classList.toggle('collapsed');
+    if(isReadMe){
+      // No arrow/icon: the entire Read Me card is the control.
+      // Buttons/links/vocabulary inside the card keep their own actions.
+      section.classList.add('readme-click-card');
+      section.setAttribute('role','button');
+      section.setAttribute('tabindex','0');
+      section.setAttribute('aria-expanded','false');
+      section.addEventListener('click', (ev)=>{
+        if(ev.target.closest('button,a,input,select,textarea,label,.vocab,.note-actions')) return;
+        doToggle();
+        section.setAttribute('aria-expanded', section.classList.contains('collapsed')?'false':'true');
+      });
+      section.addEventListener('keydown', (ev)=>{
+        if(ev.key==='Enter' || ev.key===' '){ ev.preventDefault(); doToggle(); section.setAttribute('aria-expanded', section.classList.contains('collapsed')?'false':'true'); }
+      });
+    } else {
+      // Keep the other accordion areas clickable by their heading, without an icon.
+      h3.style.cursor='pointer';
+      h3.addEventListener('click', doToggle);
+    }
   });
 }
 initNoteAccordion();
@@ -2107,7 +2119,8 @@ document.getElementById('cqSubmit').addEventListener('click',()=>{
  if(cqPendingType==='final'){if(student.finalAssessment){modal.classList.remove('open');return;}student.finalAssessment={score,total:names.length,completedAt:new Date().toISOString()};}
  else{const bucket=cqPendingType==='video'?'screencasts':'reading';if(student.contentQuizzes[bucket][cqPendingKey]){modal.classList.remove('open');return;}student.contentQuizzes[bucket][cqPendingKey]={score,total:names.length,completedAt:new Date().toISOString()};}
  saveStudentRecord(student);
- if(cqPendingType==='reading'){ const el=document.getElementById('reading-score-'+cqPendingKey); if(el) el.textContent=`Check ${score}/${names.length}`; }
+ if(cqPendingType==='reading'){ const el=document.getElementById('reading-score-'+cqPendingKey); if(el) el.textContent=`Check ${score}/${names.length}`; refreshReadMeScoreTags(); }
+ if(cqPendingType==='video'){ theaterRenderSide(); }
  updateGrade();modal.classList.remove('open');cqPendingType=null;cqPendingKey=null;cqExpectedCount=5;renderAssessmentView();renderProgressView();renderMyProgressStatus();
 });
 /* =====================================================================
@@ -3759,7 +3772,7 @@ function renderMyProgressStatus(){
  const home=document.getElementById('homeMyStatus');
  const progress=document.getElementById('myProgressStatusPanel');
  if(!student){
-   const html=`<section class="my-status-card"><div><div class="hero-eyebrow">MY STATUS</div><h2>Sign in to see your live course status</h2><p>Your Read Me, Screencast, Assessment, Practice, and Project status will appear here.</p></div><button class="hbtn primary" type="button" onclick="goTab('progress')">Open My Progress</button></section>`;
+   const html=`<section class="my-status-card"><div><div class="hero-eyebrow">MY STATUS</div><h2>Sign in to see your live course status</h2><p>Your Read Me, Screencast, Assessment, Practice, and Project status will appear here.</p></div><button class="hbtn primary" type="button" onclick="goTab('progress')">Open My Status</button></section>`;
    if(home) home.innerHTML=html; if(progress) progress.innerHTML=html; return;
  }
  const readDone=Object.keys(student.contentQuizzes?.reading||{}).length;
@@ -3780,7 +3793,7 @@ function renderMyProgressStatus(){
  const completed=items.filter(x=>x.done).length;
  const pct=Math.round(completed/items.length*100);
  const cards=items.map((x,i)=>{const action=x.label==='Project' ? `hmWorkflowAction(phase,5)` : `goTab('${x.tab}')`; return `<button class="status-link-card ${x.done?'status-done':''}" type="button" onclick="${action}"><span class="status-icon">${x.done?'✓':i+1}</span><span><b>${x.label}</b><small>${x.sub}</small></span><strong>${x.done?'Done':'Open'} →</strong></button>`;}).join('');
- const html=`<section class="my-status-card"><div class="status-head"><div><div class="hero-eyebrow">MY STATUS</div><h2>My Progress</h2><p>One place to see what is finished and jump directly to Read Me, Screencasts, Assessment, Practice, and Project.</p></div><div class="status-total"><b>${completed}/5</b><span>${pct}% complete</span></div></div><div class="status-bar"><i style="width:${pct}%"></i></div><div class="status-grid">${cards}</div><div class="status-foot"><span>Daily/Class Evaluation: <b>${getDailyEvaluation().earned.toFixed(1)} / ${getDailyEvaluation().possible.toFixed(1)}</b> · ${getDailyEvaluation().totalDays} class days × 0.7</span><button class="hbtn ghost" type="button" onclick="goTab('progress')">View full My Progress</button></div></section>`;
+ const html=`<section class="my-status-card"><div class="status-head"><div><div class="hero-eyebrow">MY STATUS</div><h2>My Status</h2><p>Your live course status and progress. Jump directly to Read Me, Screencasts, Assessment, Practice, or your current Project.</p></div><div class="status-total"><b>${completed}/5</b><span>${pct}% complete</span></div></div><div class="status-bar"><i style="width:${pct}%"></i></div><div class="status-grid">${cards}</div><div class="status-foot"><span>Daily/Class Evaluation: <b>${getDailyEvaluation().earned.toFixed(1)} / ${getDailyEvaluation().possible.toFixed(1)}</b> · ${getDailyEvaluation().totalDays} class days × 0.7</span><button class="hbtn ghost" type="button" onclick="goTab('progress')">View full My Status</button></div></section>`;
  if(home) home.innerHTML=html; if(progress) progress.innerHTML=html;
 }
 function renderAssignments(){
@@ -3792,21 +3805,135 @@ function renderAssignments(){
  }).join('')+'</div>';
  el.querySelectorAll('[data-assignment-status]').forEach(s=>s.addEventListener('change',e=>hmSetAssignment(e.target.dataset.assignmentStatus,e.target.value)));
 }
+// Additional Photoshop terminology, paraphrased from current Adobe Photoshop Help resources.
+const ADOBE_PHOTOSHOP_GLOSSARY = [
+ ['Workspace','The organized Photoshop environment containing the document window, tools, options bar, panels, and related controls.'],
+ ['Application Bar','The top area of Photoshop that contains application-level controls, menus, workspace controls, and other commands.'],
+ ['Document Window','The area where the active image or document is displayed and edited.'],
+ ['Panels','Dockable Photoshop interface areas used to inspect and modify settings, layers, properties, and other information.'],
+ ['Tools Panel','The collection of Photoshop tools used to create, select, paint, retouch, transform, and edit artwork.'],
+ ['Options Bar','The contextual controls that change according to the currently selected Photoshop tool.'],
+ ['Contextual Task Bar','A floating bar that presents relevant next actions and settings for the current task.'],
+ ['Layers Panel','The panel used to organize, select, hide, lock, reorder, and edit document layers.'],
+ ['Layer Mask','A non-destructive grayscale mask that controls which portions of a layer are visible.'],
+ ['Adjustment Layer','A non-destructive layer used to change image color or tone without permanently changing the source pixels.'],
+ ['Smart Object','A container that preserves source content so transformations and certain edits can be changed later.'],
+ ['Smart Filter','A filter applied to a Smart Object in a way that remains editable rather than permanently changing the source pixels.'],
+ ['Blend Mode','A rule that controls how pixels from one layer interact visually with pixels on layers below it.'],
+ ['Opacity','A control that determines how transparent or solid a layer, group, or effect appears.'],
+ ['Fill','A layer property controlling the opacity of the layer contents, distinct from some layer effects.'],
+ ['Selection','A defined area of an image that limits where an edit can affect pixels or content.'],
+ ['Quick Selection Tool','A selection tool that detects and expands along edges as you paint over an area.'],
+ ['Object Selection Tool','A tool that identifies and selects an object or region in an image.'],
+ ['Magic Wand Tool','A selection tool that selects pixels with similar colors in a chosen area.'],
+ ['Lasso Tool','A freehand selection tool for drawing an irregular selection boundary.'],
+ ['Pen Tool','A path-drawing tool used to create precise vector paths and selections.'],
+ ['Path','A vector outline made from anchor points and segments that can be edited independently of pixels.'],
+ ['Anchor Point','A point that controls the shape and direction of a vector path segment.'],
+ ['Free Transform','A command for scaling, rotating, skewing, distorting, or otherwise transforming selected content.'],
+ ['Crop Tool','A tool for trimming the visible canvas and defining a new composition boundary.'],
+ ['Content-Aware Fill','A feature that analyzes surrounding image information to fill a selected area with visually appropriate pixels.'],
+ ['Remove Tool','A retouching tool designed to remove unwanted objects or distractions from an image.'],
+ ['Spot Healing Brush','A retouching tool that blends sampled information automatically to repair small imperfections.'],
+ ['Healing Brush','A retouching tool that uses sampled pixels while adapting texture and shading to the destination.'],
+ ['Patch Tool','A retouching tool that replaces a selected area using pixels from another area or a chosen pattern.'],
+ ['Background Eraser Tool','A tool that removes pixels based on sampled color and tolerance, often for separating a subject from a background.'],
+ ['Magic Eraser Tool','A tool that removes similarly colored pixels from an area and can create transparency.'],
+ ['Blur Tool','A painting tool that softens edges and image detail where it is applied.'],
+ ['Sharpen Tool','A painting tool that increases local edge contrast to make detail appear sharper.'],
+ ['Smudge Tool','A tool that pushes and blends pixels as though wet paint were being dragged.'],
+ ['Dodge Tool','A retouching tool that lightens selected image areas.'],
+ ['Burn Tool','A retouching tool that darkens selected image areas.'],
+ ['Sponge Tool','A retouching tool that changes color saturation in selected areas.'],
+ ['Clone Stamp Tool','A retouching tool that paints sampled pixels from one location onto another.'],
+ ['Pattern Stamp Tool','A painting tool that applies a selected pattern to an image.'],
+ ['Gradient Tool','A tool that creates gradual transitions between colors or transparency.'],
+ ['Paint Bucket Tool','A tool that fills an area with a chosen color or pattern.'],
+ ['Brush Tool','A painting tool that applies color using a configurable brush tip and settings.'],
+ ['Eraser Tool','A tool that removes pixels from a raster layer or reduces content according to the layer context.'],
+ ['Type Tool','A group of tools used to create and edit text in Photoshop.'],
+ ['Character Panel','A panel for controlling font, size, spacing, color, and other character-level type settings.'],
+ ['Glyph','A specific visual form of a character in a typeface.'],
+ ['Typeface','A family or design system of related letterforms from which individual fonts are produced.'],
+ ['OpenType','A modern font format supporting advanced typographic features and broad character sets.'],
+ ['TrueType','A font technology that stores outlines and supports scalable type.'],
+ ['Font','A particular design, weight, width, and style of type used to display characters.'],
+ ['Rasterize','Convert editable vector, type, or other supported content into pixel-based raster content.'],
+ ['Anti-Aliasing','A rendering technique that smooths jagged edges by blending edge pixels.'],
+ ['Resolution','The amount of image detail represented by pixels per unit or, in print workflows, pixels per inch.'],
+ ['Pixels Per Inch (PPI)','A measure of pixel density used to describe raster image resolution.'],
+ ['Color Mode','The model used to represent color information, such as RGB, CMYK, Grayscale, or Lab.'],
+ ['RGB','A color model that represents color using red, green, and blue channels.'],
+ ['CMYK','A print-oriented color model based on cyan, magenta, yellow, and black channels.'],
+ ['Grayscale','A color mode that represents an image using shades of gray rather than multiple color channels.'],
+ ['Alpha Channel','A channel that stores transparency or selection information associated with an image.'],
+ ['Channel','A component containing grayscale information for a color, mask, or other image data.'],
+ ['Histogram','A graph showing the distribution of brightness or tonal values in an image.'],
+ ['Camera Raw','A Photoshop workflow and file format environment for processing raw photographic image data before detailed editing.'],
+ ['Raw Image','A minimally processed camera capture containing a large amount of original sensor information.'],
+ ['Non-Destructive Workflow','An editing approach that keeps original image information available for later changes.'],
+ ['Destructive Workflow','An editing approach that permanently changes source pixels or content.'],
+ ['Content-Aware','A Photoshop technology that uses surrounding image information to create or extend pixels.'],
+ ['Generative Fill','A Photoshop feature that uses generative AI to add, remove, or modify image content from a selection and prompt.'],
+ ['Generative Expand','A feature that extends the canvas and generates new image content to fill the added area.'],
+ ['Remove Background','A workflow or feature for separating a foreground subject from its original background.'],
+ ['Select Subject','A Photoshop command that automatically identifies and selects the main subject in an image.'],
+ ['Object Finder','A Photoshop selection capability that helps identify selectable objects in an image.'],
+ ['Neural Filter','A category of AI-powered Photoshop filters for specialized image adjustments and transformations.'],
+ ['Camera Raw Filter','A filter that opens Camera Raw controls for editing a Photoshop document or layer.'],
+ ['Filter Gallery','A Photoshop interface for previewing and applying collections of artistic and other filters.'],
+ ['Gaussian Blur','A blur filter that softens detail using a Gaussian distribution and is often used for depth and smoothing.'],
+ ['Minimum Filter','A filter that contracts light areas and can be useful for reducing a narrow light fringe around a cut-out.'],
+ ['Layer Style','A collection of editable visual effects such as shadows, strokes, glows, and overlays applied to a layer.'],
+ ['Drop Shadow','A layer effect that simulates a shadow offset behind an object.'],
+ ['Stroke','A layer effect that adds a colored or patterned outline around content.'],
+ ['Inner Shadow','A layer effect that creates a shadow inside the edges of a layer.'],
+ ['Outer Glow','A layer effect that creates a glow around the outside of content.'],
+ ['Clipping Mask','A relationship in which one layer uses the transparency or shape of another layer to control its visible area.'],
+ ['Group','A container that organizes multiple layers so they can be managed together.'],
+ ['Artboard','A separate design area within a Photoshop document, useful for multiple layouts or variations.'],
+ ['Guide','A non-printing alignment aid used to position content precisely.'],
+ ['Grid','A non-printing set of lines used to help align and measure content.'],
+ ['Ruler','A measurement aid used to judge position and spacing in a document.'],
+ ['Snap','A behavior that helps content align to guides, grids, edges, or other objects.'],
+ ['Canvas','The working area that contains the visible document composition.'],
+ ['Canvas Extension','Additional canvas area added around existing image content.'],
+ ['Image Size','A command for changing pixel dimensions and related print-resolution settings.'],
+ ['Canvas Size','A command for changing the dimensions of the canvas without directly scaling the existing image pixels.'],
+ ['Resample','Change the number of pixels in an image by adding or removing pixels.'],
+ ['Interpolation','The mathematical method Photoshop uses to estimate pixel values during resizing or resampling.'],
+ ['Export As','A Photoshop command for creating an output copy in formats such as PNG, JPG, or GIF.'],
+ ['Quick Export','A streamlined Photoshop command for exporting a document using a predefined format and settings.'],
+ ['Save a Copy','A command that creates a separate copy while preserving the active working document.'],
+ ['Cloud Document','A Photoshop document stored and synchronized through Adobe cloud storage.'],
+ ['Version History','A record of saved versions that can help recover or compare earlier states of a cloud document.']
+];
+
 const EXTENDED_GLOSSARY = [
  ['Adobe Photoshop','Raster-based image editing and compositing software used throughout this course.'],['Canvas','The working area where a Photoshop document is displayed.'],['Document','A Photoshop file containing the canvas, layers, guides, and image data.'],['Pixel','A tiny picture element that makes up a raster image.'],['Raster Image','An image made from a grid of pixels.'],['Vector','Graphics defined by paths and mathematical shapes rather than pixels.'],['Resolution','The amount of image detail, commonly measured in pixels or pixels per inch.'],['PPI','Pixels per inch; a resolution measurement commonly used for digital and print images.'],['DPI','Dots per inch; a print-output measurement often discussed with image resolution.'],['RGB','Red, Green, Blue color mode used primarily for screens.'],['CMYK','Cyan, Magenta, Yellow, Black color mode used for many print workflows.'],['Color Mode','The system used to represent and manage color in a document.'],['Layer','A separate editable level in a Photoshop document.'],['Layer Panel','The panel used to organize, hide, reorder, lock, and edit layers.'],['Background Layer','A base layer that often contains the original image or background.'],['Smart Object','A container that preserves source content for non-destructive transformations and filters.'],['Layer Mask','A grayscale mask that controls which parts of a layer are visible.'],['Clipping Mask','A layer relationship that confines one layer to the visible shape of another.'],['Adjustment Layer','A non-destructive layer used to change color or tone.'],['Opacity','How transparent or solid a layer or object appears.'],['Fill','The amount of solid color or content visible inside a layer.'],['Blend Mode','A rule that controls how a layer blends with layers beneath it.'],['Normal Blend Mode','The default blend mode that displays a layer without special blending.'],['Multiply','A blend mode that darkens by multiplying pixel values.'],['Screen','A blend mode that generally lightens an image.'],['Overlay','A contrast-enhancing blend mode that combines Multiply and Screen behavior.'],['Soft Light','A softer contrast blend mode useful for subtle lighting changes.'],['Hard Light','A stronger contrast blend mode based on Multiply or Screen behavior.'],['Group','A folder-like container used to organize layers.'],['Layer Style','An effect such as a shadow, stroke, glow, or bevel applied to a layer.'],['Drop Shadow','A layer effect that creates a shadow behind an object.'],['Stroke','An outline applied around a layer or shape.'],['Selection','An active area chosen for editing, moving, masking, or transforming.'],['Marquee Tool','A selection tool for rectangular or elliptical areas.'],['Lasso Tool','A family of tools for drawing freehand or geometric selections.'],['Quick Selection Tool','A brush-based tool that selects areas based on image edges and color.'],['Object Selection Tool','A tool that automatically detects and selects a subject or object.'],['Magic Wand Tool','A selection tool that selects similarly colored pixels.'],['Select and Mask','A workspace for refining selections and masks, especially around complex edges.'],['Feather','Softening the edge of a selection so the transition is less sharp.'],['Inverse Selection','A command that switches selected pixels to unselected pixels and vice versa.'],['Transform','A command used to move, scale, rotate, skew, distort, or warp content.'],['Free Transform','A flexible transformation command for scaling and rotating content.'],['Scale','Changing the size of an object or image.'],['Rotate','Turning content around a reference point.'],['Crop','Removing unwanted outer areas of an image.'],['Crop Ratio','The proportional relationship between width and height during cropping.'],['Content-Aware Fill','A feature that fills a selected area by analyzing surrounding image content.'],['Healing Brush','A retouching tool that blends sampled pixels with surrounding texture and tone.'],['Spot Healing Brush','A retouching tool that automatically samples nearby pixels to remove small imperfections.'],['Clone Stamp','A tool that paints sampled pixels from one area onto another.'],['Patch Tool','A retouching tool that replaces an area using pixels from another area.'],['Smudge Tool','A tool that drags and blends pixels to soften or reshape small areas.'],['Brush Tool','A painting tool controlled by brush size, hardness, opacity, and dynamics.'],['Brush Size','The diameter of the active brush tip.'],['Brush Hardness','Controls how sharp or soft a brush edge appears.'],['Brush Dynamics','Brush settings that can vary size, angle, roundness, opacity, or flow.'],['Eraser Tool','A tool used to remove pixels from a raster layer.'],['Gradient Tool','A tool for creating smooth transitions between colors or transparency.'],['Eyedropper Tool','A tool that samples a color from the image.'],['Foreground Color','The currently selected primary painting color.'],['Background Color','The secondary color used by several Photoshop tools and commands.'],['Pen Tool','A path-drawing tool used for precise shapes and selections.'],['Path','A vector-based line or shape made from anchor points and segments.'],['Anchor Point','A point that defines the shape and direction of a vector path.'],['Shape Layer','A vector shape stored as an editable layer.'],['Typography','The design and arrangement of written type.'],['Type Tool','Photoshop’s tool for creating editable text layers.'],['Kerning','Adjusting spacing between individual letter pairs.'],['Leading','The vertical spacing between lines of type.'],['Tracking','Adjusting overall spacing across a range of characters.'],['Alignment','Positioning elements consistently relative to an edge, center, guide, or other object.'],['Guide','A non-printing visual reference used to align content.'],['Grid','A repeating layout guide used to position objects consistently.'],['Ruler','A measurement reference shown along the edges of the workspace.'],['Smart Guides','Temporary alignment guides that appear when objects line up with other elements.'],['Artboard','A separate canvas area used to create multiple designs in one document.'],['Bleed','Extra artwork extending beyond the final trim edge for print production.'],['Print Layout','The arrangement of artwork for final physical output.'],['Exact Dimensions','The precise width and height required for an image or printed design.'],['Passport Size Image','A photo prepared to required passport dimensions and presentation rules.'],['Photo Grid Guides','Guides used to arrange multiple photos consistently in a layout.'],['Non-Destructive Editing','Editing that preserves the original pixels or source information so changes can be revised.'],['Destructive Editing','Editing that permanently changes pixels or source content.'],['Rasterize','Converting editable or vector content into pixels.'],['Smart Filter','A filter applied to a Smart Object so its settings remain editable.'],['Filter','An effect or processing command that changes image appearance or detail.'],['Gaussian Blur','A blur filter that softens detail and can create depth-of-field effects.'],['Blur','Reducing image detail or edge sharpness.'],['Sharpen','Increasing apparent edge contrast to make detail look clearer.'],['Noise','Random pixel variation that can be added or removed from an image.'],['Minimum Filter','A filter that contracts light areas or selections and can help reduce a thin white fringe.'],['White Fringe','A bright halo left around a cut-out subject from the original background.'],['Subject Edge','The boundary between a foreground subject and its background.'],['Background Removal','Separating a subject from its original background.'],['Hair or Fur Edges','Fine, complex subject edges that require careful selection and masking.'],['Background Integration','Adjusting a cut-out subject so it visually belongs in a new environment.'],['Compositing','Combining multiple visual elements into one believable image.'],['Perspective','The visual system that makes objects appear smaller or differently shaped with distance.'],['Lighting Match','Adjusting brightness, color, and direction so combined elements share the same lighting.'],['Color Match','Adjusting color and tone so elements from different sources look consistent.'],['Depth of Field','The range of distance that appears acceptably sharp in a photograph.'],['Foreground','The part of a composition that appears closest to the viewer.'],['Midground','The visual area between foreground and background.'],['Background','The visual area farthest behind the main subject.'],['Export','Creating a final file in a chosen format for delivery or use outside Photoshop.'],['Save As','Saving a document under a chosen name, location, or format.'],['PSD','Photoshop’s native document format that preserves editable layers and features.'],['JPEG','A compressed image format commonly used for photographs and web delivery.'],['PNG','An image format that supports lossless compression and transparency.'],['TIFF','A high-quality raster format often used for print and professional imaging.'],['File Naming','A consistent naming system that makes project files easy to identify.'],['Version','A saved iteration of a project used to preserve progress or alternatives.'],['History Panel','A panel showing recent editing states that can be revisited.'],['Undo','A command that reverses a recent operation.'],['Redo','A command that restores an operation that was undone.'],['Workspace','The arrangement of Photoshop panels, tools, menus, and document windows.'],['Tool Options Bar','The area that displays settings for the currently selected tool.'],['Properties Panel','A contextual panel showing editable settings for selected content.'],['Navigator','A panel used to preview and move around a document view.'],['Zoom','Changing how large or small the document appears on screen without changing its actual dimensions.'],['Pan','Moving the view around the document without moving the artwork.'],['Pixel Dimensions','The width and height of a raster image measured in pixels.'],['Aspect Ratio','The proportional relationship between an image’s width and height.'],['Interpolation','The method used to calculate new pixels when an image is resized.'],['Resampling','Changing the number of pixels in an image.'],['Image Size','A command for changing pixel dimensions, resolution, and print size.'],['Canvas Size','A command for changing the working canvas without directly resizing the existing pixels.'],['Dodge Tool','A tool used to lighten selected areas.'],['Burn Tool','A tool used to darken selected areas.'],['Sponge Tool','A tool used to adjust color saturation in an area.'],['Gradient Map','An adjustment that maps tones to a chosen gradient.'],['Curves','A tonal adjustment that gives precise control over brightness and contrast.'],['Levels','A tonal adjustment using black point, midtone, and white point controls.'],['Hue/Saturation','An adjustment for changing color hue, saturation, and lightness.'],['Brightness/Contrast','An adjustment for controlling overall brightness and contrast.'],['Color Balance','An adjustment for shifting color relationships in shadows, midtones, and highlights.'],['Desaturate','Removing color information to create a grayscale-like result.'],['Mask Density','A layer-mask property controlling how strongly the mask affects visibility.'],['Mask Feather','Softening a layer-mask edge.'],['Layer Lock','Preventing selected layer properties from being changed accidentally.'],['Linked Layers','Layers linked so they can be moved or transformed together.'],['Alignment Guides','Visual guides used to line objects up precisely.'],['Smart Object Workflow','Using Smart Objects to preserve source information during transformations and filters.'],['Final Delivery','The correctly prepared file or files submitted for the intended use.']
 ];
 function hmCollectGlossary(){
- const out=EXTENDED_GLOSSARY.map(x=>({term:x[0],def:x[1],source:'Photoshop & Graphic Design Glossary'}));
+ const out=ADOBE_PHOTOSHOP_GLOSSARY.concat(EXTENDED_GLOSSARY).map(x=>({term:x[0],def:x[1],source:'Photoshop & Graphic Design Glossary'}));
  document.querySelectorAll('.note-section[data-reading]').forEach(sec=>{ const title=sec.querySelector('h3')?.innerText||'Course Notes'; sec.querySelectorAll('.vocab').forEach(v=>out.push({term:v.textContent.trim(),def:v.dataset.def||v.nextElementSibling?.textContent.replace(/^\s*[—-]\s*/,'').trim()||'',source:title})); });
  (window.screencastQuizVocabulary||[]).forEach(v=>{ (v.terms||[]).forEach(x=>out.push({term:x.term,def:x.def,source:v.title||'Screencast'})); });
  const seen=new Set(); return out.filter(x=>{const k=x.term.toLowerCase();if(!x.term||seen.has(k))return false;seen.add(k);return true;}).sort((a,b)=>a.term.localeCompare(b.term));
 }
 function renderGlossary(filter=''){ const grid=document.getElementById('glossaryGrid'); if(!grid)return; const all=hmCollectGlossary(), q=filter.toLowerCase().trim(); const rows=all.filter(x=>(x.term+' '+x.def+' '+x.source).toLowerCase().includes(q)); const count=document.getElementById('glossaryCount'); if(count)count.textContent=`${rows.length} term${rows.length===1?'':'s'}`; grid.innerHTML=rows.length?rows.map(x=>`<article class="glossary-card"><div class="glossary-term">${x.term}</div><div class="glossary-def">${x.def}</div><div class="glossary-source">${x.source}</div></article>`).join(''):'<div class="search-empty">No glossary terms match your search.</div>'; }
 function hmSearchIndex(){
- const rows=[]; document.querySelectorAll('.view').forEach(view=>{ const id=view.id; const heading=view.querySelector('h2,h1')?.textContent?.trim()||id; const text=view.innerText.replace(/\s+/g,' ').trim(); if(text) rows.push({title:heading,tab:id,text:text.slice(0,500)}); });
- return rows.concat(hmCollectGlossary().map(x=>({title:x.term,tab:'glossary',text:x.def+' · '+x.source})));
+ const rows=[];
+ document.querySelectorAll('.view').forEach(view=>{
+   const id=view.id;
+   const heading=view.querySelector('h2,h1')?.textContent?.trim()||id;
+   const text=view.innerText.replace(/\s+/g,' ').trim();
+   if(text) rows.push({title:heading,tab:id,text});
+   view.querySelectorAll('h3,h4,.readme-lesson-card,.flip-card-front,.theater-item,.assignment-card,.glossary-card').forEach(el=>{
+     const t=el.innerText?.replace(/\s+/g,' ').trim();
+     if(t) rows.push({title:(el.querySelector('h4,h3,.ti-label,.glossary-term')?.textContent||heading).trim(),tab:id,text:t});
+   });
+ });
+ return rows.concat(hmCollectGlossary().map(x=>({title:x.term,tab:'glossary',text:x.term+' — '+x.def+' · '+x.source})));
 }
-function renderCourseSearch(q=''){ const out=document.getElementById('courseSearchResults'); if(!out)return; q=q.trim().toLowerCase(); if(!q){out.innerHTML='<div class="search-empty">Start typing to search lessons, notes, vocabulary, screencasts, and resources.</div>';return;} const rows=hmSearchIndex().filter(x=>(x.title+' '+x.text).toLowerCase().includes(q)).slice(0,18); out.innerHTML=rows.length?rows.map((x,i)=>`<button class="search-result" type="button" data-search-tab="${x.tab}"><b>${x.title}</b><span>${x.text.slice(0,170)}${x.text.length>170?'…':''}</span></button>`).join(''):'<div class="search-empty">No matching course content.</div>'; out.querySelectorAll('.search-result').forEach((b,i)=>b.addEventListener('click',()=>{const tab=b.dataset.searchTab; closeCourseSearch(); if(document.getElementById(tab)) goTab(tab);})); }
+function renderCourseSearch(q=''){ const out=document.getElementById('courseSearchResults'); if(!out)return; q=q.trim().toLowerCase(); if(!q){out.innerHTML='<div class="search-empty">Start typing to search lessons, notes, vocabulary, screencasts, and resources.</div>';return;} const rows=hmSearchIndex().filter(x=>(x.title+' '+x.text).toLowerCase().includes(q)).slice(0,30); out.innerHTML=rows.length?rows.map((x,i)=>`<button class="search-result" type="button" data-search-tab="${x.tab}"><b>${x.title}</b><span>${x.text.slice(0,170)}${x.text.length>170?'…':''}</span></button>`).join(''):'<div class="search-empty">No matching course content.</div>'; out.querySelectorAll('.search-result').forEach((b,i)=>b.addEventListener('click',()=>{const tab=b.dataset.searchTab; closeCourseSearch(); if(document.getElementById(tab)) goTab(tab);})); }
 function openCourseSearch(){ const m=document.getElementById('courseSearch'),i=document.getElementById('courseSearchInput'); m.classList.add('open');m.setAttribute('aria-hidden','false');setTimeout(()=>i.focus(),20);renderCourseSearch(i.value); }
 function closeCourseSearch(){const m=document.getElementById('courseSearch');m.classList.remove('open');m.setAttribute('aria-hidden','true');}
 function showToast(msg){const e=document.getElementById('completionToast');if(!e)return;e.textContent=msg;e.classList.add('show');clearTimeout(window.__toastTimer);window.__toastTimer=setTimeout(()=>e.classList.remove('show'),2400);}
