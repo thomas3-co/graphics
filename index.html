@@ -451,17 +451,48 @@ footer.appfoot .foot-contact a:hover{text-decoration:underline;}
 .student-badge{display:flex;align-items:center;gap:10px;color:#fff;font-size:12px;white-space:nowrap;}
 .student-badge .sb-grade{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:9px;padding:6px 10px;font-weight:800;font-family:'Poppins',sans-serif;}
 .student-badge .sb-name{opacity:.85;}
-/* ===== WEEKLY QUESTION MODAL ===== */
-.wq-modal{position:fixed;inset:0;z-index:4000;background:rgba(10,10,15,.55);display:none;align-items:center;justify-content:center;padding:20px;}
+/* ===== WEEKLY / CONTENT QUIZ MODALS ===== */
+.wq-modal{position:fixed;inset:0;z-index:4000;background:rgba(10,10,15,.68);display:none;align-items:center;justify-content:center;padding:18px;backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px);}
 .wq-modal.open{display:flex;}
-.wq-box{background:#fff;border-radius:18px;padding:28px;max-width:420px;width:100%;box-shadow:0 30px 70px rgba(0,0,0,.35);}
-.wq-box .wq-tag{font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--c-curriculum);}
-.wq-box h3{margin:8px 0 14px;font-size:1.1rem;}
+.wq-box{background:#fff;border-radius:22px;width:min(760px,96vw);max-height:min(88vh,900px);display:flex;flex-direction:column;overflow:hidden;box-shadow:0 35px 100px rgba(0,0,0,.42);border:1px solid rgba(255,255,255,.8);}
+.wq-box .wq-head{padding:22px 26px 16px;background:linear-gradient(180deg,#f8faff 0%,#fff 100%);border-bottom:1px solid var(--line);flex:0 0 auto;}
+.wq-box .wq-tag{font-size:10px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;color:var(--c-curriculum);display:inline-flex;align-items:center;gap:7px;background:#eef4ff;border:1px solid #dbe7ff;padding:6px 9px;border-radius:999px;}
+.wq-box .wq-tag:before{content:'✓';width:16px;height:16px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;background:var(--c-curriculum);color:#fff;font-size:9px;}
+.wq-box h3{margin:10px 0 12px;font-size:1.22rem;line-height:1.35;color:var(--ink);}
+.wq-progress{height:7px;background:#e9edf4;border-radius:999px;overflow:hidden;}
+.wq-progress i{display:block;height:100%;width:0;background:linear-gradient(90deg,#2f6fed,#8b5cf6);border-radius:999px;transition:width .25s ease;}
+.wq-progress-row{display:flex;justify-content:space-between;align-items:center;margin-top:7px;font-size:11px;color:var(--muted);font-weight:600;}
+.wq-scroll{overflow-y:auto;overscroll-behavior:contain;padding:18px 26px 22px;min-height:0;flex:1;scrollbar-width:thin;}
+.wq-scroll::-webkit-scrollbar{width:9px;}
+.wq-scroll::-webkit-scrollbar-thumb{background:#cbd3df;border-radius:999px;border:3px solid #fff;}
+.wq-question{padding:16px 17px;margin:0 0 12px;border:1px solid var(--line);border-radius:15px;background:#fff;box-shadow:0 3px 12px rgba(15,17,23,.045);transition:border-color .2s,box-shadow .2s,background .2s;}
+.wq-question:focus-within{border-color:#9db9f7;box-shadow:0 5px 18px rgba(47,111,237,.10);}
+.wq-qtop{display:flex;gap:11px;align-items:flex-start;margin-bottom:11px;}
+.wq-qnum{flex:0 0 29px;width:29px;height:29px;border-radius:9px;background:#eef4ff;color:var(--c-curriculum);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px;}
+.wq-qtext{font-size:13.5px;font-weight:750;line-height:1.5;color:var(--ink);padding-top:3px;}
+.wq-option{display:flex;align-items:flex-start;gap:10px;padding:10px 11px;margin:7px 0;border:1px solid #e5e9f0;border-radius:11px;background:#fafbfc;cursor:pointer;transition:.16s ease;}
+.wq-option:hover{border-color:#b8caf0;background:#f7f9ff;}
+.wq-option:has(input:checked){border-color:#7ea5ef;background:#eef4ff;box-shadow:0 0 0 2px rgba(47,111,237,.08);}
+.wq-option input{margin-top:3px;accent-color:var(--c-curriculum);width:16px;height:16px;flex:0 0 auto;}
+.wq-option span{font-size:12.5px;line-height:1.45;color:#303642;}
+.wq-box .wq-footer{padding:14px 20px 16px;background:#fff;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:14px;flex:0 0 auto;}
+.wq-status{font-size:11.5px;color:var(--muted);font-weight:600;}
+.wq-box .wq-actions{display:flex;gap:9px;justify-content:flex-end;}
+.wq-box button{border:none;border-radius:11px;padding:10px 16px;font-weight:750;font-size:12.5px;cursor:pointer;}
+.wq-box .wq-skip{background:#f2f4f7;color:var(--muted);}
+.wq-box .wq-submit{background:linear-gradient(135deg,#2f6fed,#6f5ce7);color:#fff;box-shadow:0 6px 16px rgba(47,111,237,.22);}
+.wq-box .wq-submit:hover{transform:translateY(-1px);box-shadow:0 8px 20px rgba(47,111,237,.28);}
 .wq-box textarea{width:100%;min-height:90px;border-radius:10px;border:1px solid var(--line);padding:10px 12px;font-family:inherit;font-size:13.5px;resize:vertical;margin-bottom:12px;}
-.wq-box .wq-actions{display:flex;gap:10px;justify-content:flex-end;}
-.wq-box button{border:none;border-radius:10px;padding:10px 16px;font-weight:700;font-size:13px;cursor:pointer;}
-.wq-box .wq-skip{background:transparent;color:var(--muted);}
-.wq-box .wq-submit{background:var(--c-curriculum);color:#fff;}
+@media(max-width:640px){
+  .wq-modal{padding:8px;}
+  .wq-box{width:100%;max-height:94vh;border-radius:18px;}
+  .wq-box .wq-head{padding:17px 17px 13px;}
+  .wq-scroll{padding:13px 13px 18px;}
+  .wq-box .wq-footer{padding:11px 13px;align-items:stretch;flex-direction:column;}
+  .wq-status{font-size:10.5px;}
+  .wq-box .wq-actions{width:100%;}
+  .wq-box .wq-actions button{flex:1;}
+}
 /* ===== PROGRESS REPORT PANEL EXTRAS ===== */
 .lp-grade{margin-top:14px;padding:12px;border-radius:10px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);}
 .lp-grade b{display:block;font-size:1.4rem;font-family:'Poppins',sans-serif;color:#fff;}
@@ -522,11 +553,20 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
 <!-- ========== CONTENT CHECK-IN MODAL (pops after a screencast or reading is completed) ========== -->
 <div class="wq-modal" id="cqModal" role="dialog" aria-modal="true" aria-labelledby="cqHeading">
   <div class="wq-box">
-    <div class="wq-tag" id="cqTag">Quick Check</div>
-    <h3 id="cqHeading">Nice work! Quick 2-question check:</h3>
-    <div id="cqQuizBody"></div>
-    <div class="wq-actions">
-      <button class="wq-submit" id="cqSubmit" type="button">Submit</button>
+    <div class="wq-head">
+      <div class="wq-tag" id="cqTag">Quick Check</div>
+      <h3 id="cqHeading">Knowledge Check</h3>
+      <div class="wq-progress" aria-hidden="true"><i id="cqProgressBar"></i></div>
+      <div class="wq-progress-row"><span id="cqProgressText">0 of 7 answered</span><span>7 questions</span></div>
+    </div>
+    <div class="wq-scroll" id="cqQuizScroll">
+      <div id="cqQuizBody"></div>
+    </div>
+    <div class="wq-footer">
+      <div class="wq-status" id="cqStatus">Answer all 7 questions to submit.</div>
+      <div class="wq-actions">
+        <button class="wq-submit" id="cqSubmit" type="button">Submit Quiz</button>
+      </div>
     </div>
   </div>
 </div>
@@ -1941,12 +1981,39 @@ let cqPendingType = null; // 'video' | 'reading'
 let cqPendingKey = null;
 function renderQuizBody(questions){
   return questions.map((q,i)=>`
-    <div style="margin-bottom:12px;">
-      <div style="font-size:13px;font-weight:700;margin-bottom:6px;">${i+1}. ${q.prompt}</div>
-      ${q.options.map((opt,oi)=>`<label style="display:block;font-size:13px;margin:4px 0;cursor:pointer;">
-        <input type="radio" name="cqqi${i}" value="${oi}" data-correct="${opt.correct?'1':'0'}"> ${opt.text}
-      </label>`).join('')}
-    </div>`).join('');
+    <section class="wq-question" data-question-index="${i}" aria-labelledby="cq-q-${i}">
+      <div class="wq-qtop">
+        <div class="wq-qnum" aria-hidden="true">${i+1}</div>
+        <div class="wq-qtext" id="cq-q-${i}">${q.prompt}</div>
+      </div>
+      <div class="wq-options">
+        ${q.options.map((opt,oi)=>`<label class="wq-option">
+          <input type="radio" name="cqqi${i}" value="${oi}" data-correct="${opt.correct?'1':'0'}">
+          <span>${opt.text}</span>
+        </label>`).join('')}
+      </div>
+    </section>`).join('');
+}
+function updateContentQuizProgress(){
+  const body=document.getElementById('cqQuizBody');
+  if(!body) return;
+  const groups={};
+  body.querySelectorAll('input[type=radio]').forEach(r=>{groups[r.name]=groups[r.name]||[];groups[r.name].push(r);});
+  const total=Object.keys(groups).length || 7;
+  const answered=Object.values(groups).filter(g=>g.some(r=>r.checked)).length;
+  const pct=Math.round((answered/total)*100);
+  const bar=document.getElementById('cqProgressBar');
+  const text=document.getElementById('cqProgressText');
+  const status=document.getElementById('cqStatus');
+  if(bar) bar.style.width=pct+'%';
+  if(text) text.textContent=`${answered} of ${total} answered`;
+  if(status) status.textContent=answered===total ? 'All 7 answered — ready to submit.' : `Answer ${total-answered} more question${total-answered===1?'':'s'} to submit.`;
+}
+function setupContentQuizInteractions(){
+  const body=document.getElementById('cqQuizBody');
+  if(!body || body.dataset.bound==='1') return;
+  body.dataset.bound='1';
+  body.addEventListener('change', updateContentQuizProgress);
 }
 function maybeShowContentQuiz(type, key, pool, headingText){
   if(!student) return;
@@ -1960,6 +2027,9 @@ function maybeShowContentQuiz(type, key, pool, headingText){
   document.getElementById('cqTag').textContent = type==='video' ? 'Screencast Check' : 'Reading Check';
   document.getElementById('cqHeading').textContent = headingText;
   document.getElementById('cqQuizBody').innerHTML = renderQuizBody(questions);
+  setupContentQuizInteractions();
+  updateContentQuizProgress();
+  document.getElementById('cqQuizScroll').scrollTop = 0;
   document.getElementById('cqModal').classList.add('open');
   const firstInput = document.querySelector('#cqQuizBody input');
   if(firstInput) firstInput.focus();
@@ -1986,6 +2056,9 @@ function assessmentStart(type, key){
   document.getElementById('cqTag').textContent = type==='video' ? 'Screencast Assessment' : 'Read Me Assessment';
   document.getElementById('cqHeading').textContent = `Assessment: ${item.title}`;
   document.getElementById('cqQuizBody').innerHTML = renderQuizBody(questions);
+  setupContentQuizInteractions();
+  updateContentQuizProgress();
+  document.getElementById('cqQuizScroll').scrollTop = 0;
   document.getElementById('cqModal').classList.add('open');
   const firstInput = document.querySelector('#cqQuizBody input');
   if(firstInput) firstInput.focus();
@@ -1996,10 +2069,16 @@ document.getElementById('cqSubmit').addEventListener('click', ()=>{
   const groups = {};
   document.querySelectorAll('#cqQuizBody input[type=radio]').forEach(r=>{ groups[r.name] = groups[r.name]||[]; groups[r.name].push(r); });
   const names = Object.keys(groups);
-  if(!names.length){ modal.classList.remove('open'); return; }
+  if(names.length !== 7){ alert('This quiz should contain 7 questions. Please reopen the check if it does not.'); return; }
   for(const name of names){
     const checked = groups[name].find(r=>r.checked);
-    if(!checked){ alert('Please answer both questions before submitting.'); return; }
+    if(!checked){
+      const idx = Number(name.replace('cqqi',''));
+      const target = document.querySelector(`[data-question-index=\"${idx}\"]`);
+      if(target) target.scrollIntoView({behavior:'smooth',block:'center'});
+      alert('Please answer all 7 questions before submitting.');
+      return;
+    }
   }
   let score = 0;
   names.forEach(name=>{
