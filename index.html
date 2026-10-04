@@ -516,6 +516,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
   .canvas{padding:22px 14px 60px;}
   .layers-panel{width:88vw;max-width:320px;}
 }
+.assistive-card{background:#fff;border:1px solid #dfe6f0;border-radius:20px;padding:24px;box-shadow:0 10px 28px rgba(25,45,80,.07)}.assistive-badge{display:inline-flex;padding:5px 9px;border-radius:999px;background:#eef5ff;color:#2f6fed;font-size:10px;font-weight:800;letter-spacing:.08em}.assistive-card h3{margin:12px 0 8px;font-size:22px}.assistive-card p{color:#657184;line-height:1.65;font-size:13px}.assistive-actions{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0}.assistive-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}.assistive-grid>div{padding:14px;border:1px solid #e4e9f1;border-radius:14px;background:#f8fafc}.assistive-grid b{display:block;font-size:12px}.assistive-grid span{display:block;margin-top:6px;color:#697589;font-size:11px;line-height:1.45}.progress-tag{display:inline-flex;align-items:center;gap:4px;border-radius:999px;padding:4px 8px;font-size:10px;font-weight:800;letter-spacing:.02em;white-space:nowrap}.progress-tag.done{background:#eaf8f0;color:#17804c}.progress-tag.pending{background:#f1f4f8;color:#687487}.eval-summary{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0}.eval-card{flex:1;min-width:170px;background:#fff;border:1px solid #e1e7ef;border-radius:14px;padding:14px}.eval-card b{display:block;font-size:18px}.eval-card span{display:block;margin-top:4px;color:#6d7889;font-size:11px}.project-progress-wrap{margin-top:22px}.project-progress-wrap .home-workflow{margin-top:0}.workflow-home-step{min-width:180px}.final-assessment-card{margin-top:16px;border:1px solid #dfe5ee;border-radius:16px;padding:17px;background:#fff}.final-assessment-card.ready{border-color:#b9e3cc;background:#f7fcf9}.final-assessment-card h4{margin:0 0 6px}.final-assessment-card p{margin:0;color:#687487;font-size:12px;line-height:1.5}.assessment-total-badge{display:inline-flex;margin-top:9px;padding:4px 8px;border-radius:999px;background:#eef5ff;color:#2f6fed;font-size:10px;font-weight:800}
 </style>
 <style>
 /* Professional learning-platform upgrades — intentionally no dark/light theme switch. */
@@ -604,7 +605,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
 <button aria-selected="false" class="tab" data-tab="practice" role="tab">Practice Files</button>
 <button aria-selected="false" class="tab" data-tab="materials" role="tab">Additional Materials</button>
 <button aria-selected="false" class="tab" data-tab="assessment" role="tab">Assessment</button>
-<button aria-selected="false" class="tab" data-tab="glossary" role="tab">Glossary</button></nav>
+<button aria-selected="false" class="tab" data-tab="glossary" role="tab">Glossary</button><button aria-selected="false" class="tab" data-tab="assistive" role="tab">Quick Assistive Touch</button></nav>
 <button class="progress-nav-btn" id="progressNavBtn" type="button">My Progress</button>
 <div class="student-badge" id="studentBadge" style="display:none;">
 <span class="sb-name" id="sbName"></span>
@@ -631,7 +632,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
 <div class="stat"><b>3</b><span>Group projects</span></div>
 <div class="stat"><b>23</b><span>Screencast recordings</span></div>
 </div>
-<div class="home-learning" id="homeLearningPanel"></div>
+
 <div class="section-heading">Jump to a section</div>
 <div class="home-grid">
 <div class="home-card" onclick="goTab('curriculum')" onkeydown="if(event.key==='Enter')goTab('curriculum')" role="button" style="--accent:#2f6fed" tabindex="0">
@@ -1592,9 +1593,6 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
 <section class="view" id="practice">
 <div class="view-head"><div><h2>Practice Files</h2>
 <p>Downloadable source images and exercise files — tap the thumbnail to preview right inside the card, then download to practice.</p></div></div>
-<div aria-label="Learning workflow" class="practice-flow">
-<div class="practice-step done-step"><span>1</span><b>Read Me</b><small>Learn the concept</small></div><div class="practice-arrow">→</div><div class="practice-step"><span>2</span><b>Screencast</b><small>Watch the technique</small></div><div class="practice-arrow">→</div><div class="practice-step active-step"><span>3</span><b>Practice</b><small>Make it yourself</small></div><div class="practice-arrow">→</div><div class="practice-step"><span>4</span><b>5-Question Check</b><small>Prove what you know</small></div><div class="practice-arrow">→</div><div class="practice-step"><span>5</span><b>Complete</b><small>Track your progress</small></div>
-</div>
 <div class="assignment-board" id="assignmentBoard"></div>
 <div class="media-grid" id="practiceGrid"></div>
 </section>
@@ -1610,10 +1608,20 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
 <div id="assessmentBody"></div>
 </section>
 <!-- ========== MY PROGRESS ========== -->
-<section class="view" id="glossary"><div class="view-head"><div><h2>Photoshop Glossary</h2><p>Search course vocabulary, definitions, and where each term is taught.</p></div></div><div class="glossary-toolbar"><label class="sr-only" for="glossarySearch">Search glossary</label><input autocomplete="off" id="glossarySearch" placeholder="Search a term, definition, or lesson…" type="search"/><span class="toolbar-count" id="glossaryCount"></span></div><div class="glossary-grid" id="glossaryGrid"></div></section><section class="view" id="progress">
+<section class="view" id="glossary"><div class="view-head"><div><h2>Photoshop Glossary</h2><p>Search course vocabulary, definitions, and where each term is taught.</p></div></div><div class="glossary-toolbar"><label class="sr-only" for="glossarySearch">Search glossary</label><input autocomplete="off" id="glossarySearch" placeholder="Search a term, definition, or lesson…" type="search"/><span class="toolbar-count" id="glossaryCount"></span></div><div class="glossary-grid" id="glossaryGrid"></div></section><section class="view" id="assistive">
+<div class="view-head"><div><h2>Quick Assistive Touch</h2><p>Fast accessibility help for students using iPhone or iPad.</p></div></div>
+<div class="assistive-card" style="max-width:900px;margin:0 auto;">
+<div class="assistive-badge">ACCESSIBILITY QUICK HELP</div>
+<h3>Turn on AssistiveTouch</h3>
+<p>On iPhone or iPad, go to <strong>Settings → Accessibility → Touch → AssistiveTouch</strong>, then turn AssistiveTouch on. You can also add AssistiveTouch to the Accessibility Shortcut for faster access.</p>
+<div class="assistive-actions"><a class="hbtn primary" href="https://support.apple.com/guide/iphone/use-assistivetouch-iph96b21954/27/ios/27" target="_blank" rel="noopener">Open Apple AssistiveTouch Guide</a><button class="hbtn ghost" type="button" onclick="goTab('progress')">Back to My Progress</button></div>
+<div class="assistive-grid"><div><b>Quick uses</b><span>Home, Control Center, screenshots, volume, gestures and Siri.</span></div><div><b>Custom gestures</b><span>Create gestures for repeated multi-finger or touch actions.</span></div><div><b>Pointer support</b><span>Use compatible mouse, trackpad and pointer devices.</span></div></div>
+</div>
+</section>
+<section class="view" id="progress">
 <div class="view-head"><div><h2>My Progress</h2>
 <p>Everything tracked toward your grade — lessons, week-end quizzes, reading, vocabulary, and screencasts.</p></div></div>
-<div id="progressBody"></div>
+<div id="progressBody"></div><div id="projectWorkflowPanel"></div>
 </section>
 </main>
 <aside class="layers-panel" id="layersPanel">
@@ -1968,7 +1976,8 @@ const readingPool = Array.from(document.querySelectorAll('.note-section[data-rea
   title: el.dataset.title || (el.querySelector('h3') && el.querySelector('h3').textContent.trim()) || el.dataset.reading,
   desc: (el.querySelector('p') && el.querySelector('p').textContent.trim()) || ''
 }));
-let cqPendingType = null; // 'video' | 'reading'
+let cqPendingType = null; // 'video' | 'reading' | 'final'
+let cqExpectedCount = 5;
 let cqPendingKey = null;
 function renderQuizBody(questions){
   return questions.map((q,i)=>`
@@ -1990,7 +1999,7 @@ function updateContentQuizProgress(){
   if(!body) return;
   const groups={};
   body.querySelectorAll('input[type=radio]').forEach(r=>{groups[r.name]=groups[r.name]||[];groups[r.name].push(r);});
-  const total=Object.keys(groups).length || 5;
+  const total=Object.keys(groups).length || cqExpectedCount;
   const answered=Object.values(groups).filter(g=>g.some(r=>r.checked)).length;
   const pct=Math.round((answered/total)*100);
   const bar=document.getElementById('cqProgressBar');
@@ -1998,7 +2007,7 @@ function updateContentQuizProgress(){
   const status=document.getElementById('cqStatus');
   if(bar) bar.style.width=pct+'%';
   if(text) text.textContent=`${answered} of ${total} answered`;
-  if(status) status.textContent=answered===total ? 'All 5 answered — ready to submit.' : `Answer ${total-answered} more question${total-answered===1?'':'s'} to submit.`;
+  if(status) status.textContent=answered===total ? `All ${total} answered — ready to submit.` : `Answer ${total-answered} more question${total-answered===1?'':'s'} to submit.`;
 }
 function setupContentQuizInteractions(){
   const body=document.getElementById('cqQuizBody');
@@ -2010,6 +2019,7 @@ function maybeShowContentQuiz(type, key, pool, headingText){
   if(!student) return;
   const bucket = type === 'video' ? 'screencasts' : 'reading';
   if(student.contentQuizzes[bucket][key]) return; // already completed this one
+  cqExpectedCount = 5;
   if(document.getElementById('wqModal').classList.contains('open')) return; // don't stack on the weekly check-in
   const questions = buildItemQuiz(pool, key, type);
   if(!questions.length) return;
@@ -2030,67 +2040,57 @@ function maybeShowContentQuiz(type, key, pool, headingText){
    and "Screencasts" groups. Each check can only be taken once — once a
    score is recorded, it's locked in as "Completed" and feeds My Progress;
    there is no retake. */
-function assessmentStart(type, key){
-  if(!student){ alert('Sign in first.'); return; }
-  const bucket = type === 'video' ? 'screencasts' : 'reading';
-  if(student.contentQuizzes[bucket][key]){
-    alert("This check has already been completed and can't be retaken — your score is already saved to My Progress.");
-    return;
-  }
-  const pool = type === 'video' ? screencastQuizPool : readingPool;
-  const item = pool.find(p=>p.key===key);
-  if(!item) return;
-  const questions = buildItemQuiz(pool, key, type);
-  if(!questions.length){ alert('Not enough content published yet to build this assessment.'); return; }
-  cqPendingType = type;
-  cqPendingKey = key;
-  document.getElementById('cqTag').textContent = type==='video' ? 'Screencast Assessment' : 'Read Me Assessment';
-  document.getElementById('cqHeading').textContent = `Assessment: ${item.title}`;
-  document.getElementById('cqQuizBody').innerHTML = renderQuizBody(questions);
-  setupContentQuizInteractions();
-  updateContentQuizProgress();
-  document.getElementById('cqQuizScroll').scrollTop = 0;
-  document.getElementById('cqModal').classList.add('open');
-  const firstInput = document.querySelector('#cqQuizBody input');
-  if(firstInput) firstInput.focus();
+function buildFinalAssessmentQuestions(){
+ const pool=[
+ ['A cut-out subject has a thin white halo. Which workflow is strongest?',['Refine the edge, use Minimum carefully, then inspect the result at 100% before final compositing','Flatten the image and increase saturation','Use only Crop and export JPEG','Increase canvas size until the halo disappears'],0],
+ ['You need to edit a portrait while keeping original pixels recoverable. Which approach is best?',['Use Smart Objects, masks, and adjustment layers','Paint directly on the only source layer','Flatten after every edit','Export JPEG before every change'],0],
+ ['A new background looks pasted behind a subject. What should be matched first?',['Perspective, lighting, color and depth cues','Only the filename','Only the document size','Only the zoom percentage'],0],
+ ['A passport photo must meet an exact physical size. What should be verified before export?',['Crop ratio, dimensions, resolution and alignment','Only the file name','Only the layer count','Only the zoom percentage'],0],
+ ['Which statement best describes a raster image?',['It is built from pixels and can lose detail when enlarged too far','It is made only from mathematical paths','It can never be resized','It contains no color information'],0],
+ ['Which file is the best editable Photoshop master?',['A PSD with organized editable layers','A flattened JPEG','A screenshot','A PNG used as the only working file'],0],
+ ['Why inspect a composite both at high zoom and at normal viewing size?',['To catch edge problems while still judging overall realism','To make the file larger','To replace all layers with one layer','To change RGB to CMYK automatically'],0],
+ ['Which action is non-destructive?',['Applying a Smart Filter to a Smart Object','Erasing pixels from the only source layer','Flattening the document','Painting permanently over the original'],0],
+ ['What is a useful role for Gaussian Blur in a world composition?',['Soften appropriate areas to support believable depth','Remove every background pixel','Convert raster graphics to vectors','Set passport dimensions'],0],
+ ['What should a final delivery workflow preserve?',['An editable master plus a correctly exported delivery copy','Only a screenshot','Only a browser preview','Only a temporary working file'],0],
+ ['Which practice most improves file management?',['Use clear names and intentional versions of the editable master','Overwrite the only copy repeatedly','Keep files unnamed','Export without saving a master'],0],
+ ['A subject is sharper than a soft new environment. What is the best response?',['Use controlled blur and tonal/color matching so the subject shares the scene depth','Sharpen the background heavily','Add a border around the subject','Crop away the environment'],0]
+ ];
+ return shuffleArr(pool).slice(0,7).map(([prompt,opts,correct])=>({prompt,options:shuffleArr(opts.map((text,i)=>({text,correct:i===correct})))}));
 }
-document.getElementById('cqSubmit').addEventListener('click', ()=>{
-  const modal = document.getElementById('cqModal');
-  if(!student || !cqPendingType || !cqPendingKey){ modal.classList.remove('open'); return; }
-  const groups = {};
-  document.querySelectorAll('#cqQuizBody input[type=radio]').forEach(r=>{ groups[r.name] = groups[r.name]||[]; groups[r.name].push(r); });
-  const names = Object.keys(groups);
-  if(names.length !== 5){ alert('This quiz should contain 5 questions. Please reopen the check if it does not.'); return; }
-  for(const name of names){
-    const checked = groups[name].find(r=>r.checked);
-    if(!checked){
-      const idx = Number(name.replace('cqqi',''));
-      const target = document.querySelector(`[data-question-index=\"${idx}\"]`);
-      if(target) target.scrollIntoView({behavior:'smooth',block:'center'});
-      alert('Please answer all 5 questions before submitting.');
-      return;
-    }
-  }
-  let score = 0;
-  names.forEach(name=>{
-    const checked = groups[name].find(r=>r.checked);
-    if(checked && checked.dataset.correct==='1') score++;
-  });
-  const bucket = cqPendingType==='video' ? 'screencasts' : 'reading';
-  if(student.contentQuizzes[bucket][cqPendingKey]){
-    // Already recorded (e.g. a duplicate submit) — don't overwrite a locked-in score.
-    modal.classList.remove('open');
-    cqPendingType = null;
-    cqPendingKey = null;
-    return;
-  }
-  student.contentQuizzes[bucket][cqPendingKey] = { score, total: names.length, completedAt:new Date().toISOString() };
-  saveStudentRecord(student);
-  updateGrade();
-  modal.classList.remove('open');
-  cqPendingType = null;
-  cqPendingKey = null;
-  if(document.getElementById('assessment').classList.contains('active')) renderAssessmentView();
+function assessmentStartFinal(){
+ if(!student){alert('Sign in first.');return;}
+ if(student.finalAssessment){alert('The final 7-question assessment is already completed and cannot be retaken.');return;}
+ cqPendingType='final';cqPendingKey='final';cqExpectedCount=7;
+ document.getElementById('cqTag').textContent='Final Assessment';
+ document.getElementById('cqHeading').textContent='7-Question Photoshop Application Assessment';
+ document.getElementById('cqQuizBody').innerHTML=renderQuizBody(buildFinalAssessmentQuestions());
+ setupContentQuizInteractions();updateContentQuizProgress();document.getElementById('cqQuizScroll').scrollTop=0;
+ document.getElementById('cqModal').classList.add('open');
+ const firstInput=document.querySelector('#cqQuizBody input');if(firstInput)firstInput.focus();
+}
+function assessmentStart(type,key){
+ if(type==='final'){assessmentStartFinal();return;}
+ if(!student){alert('Sign in first.');return;}
+ const bucket=type==='video'?'screencasts':'reading';
+ if(student.contentQuizzes[bucket][key]){alert('This check has already been completed and cannot be retaken.');return;}
+ const pool=type==='video'?screencastQuizPool:readingPool;const item=pool.find(p=>p.key===key);if(!item)return;
+ cqPendingType=type;cqPendingKey=key;cqExpectedCount=5;
+ document.getElementById('cqTag').textContent=type==='video'?'Screencast Check':'Read Me Check';
+ document.getElementById('cqHeading').textContent=`5-Question Check: ${item.title}`;
+ document.getElementById('cqQuizBody').innerHTML=renderQuizBody(buildItemQuiz(pool,key,type));
+ setupContentQuizInteractions();updateContentQuizProgress();document.getElementById('cqQuizScroll').scrollTop=0;
+ document.getElementById('cqModal').classList.add('open');
+ const firstInput=document.querySelector('#cqQuizBody input');if(firstInput)firstInput.focus();
+}
+document.getElementById('cqSubmit').addEventListener('click',()=>{
+ const modal=document.getElementById('cqModal');if(!student||!cqPendingType||!cqPendingKey){modal.classList.remove('open');return;}
+ const groups={};document.querySelectorAll('#cqQuizBody input[type=radio]').forEach(r=>{groups[r.name]=groups[r.name]||[];groups[r.name].push(r);});
+ const names=Object.keys(groups),expected=cqExpectedCount||5;if(names.length!==expected){alert(`This assessment should contain ${expected} questions.`);return;}
+ for(const name of names){const checked=groups[name].find(r=>r.checked);if(!checked){const idx=Number(name.replace('cqqi',''));const target=document.querySelector(`[data-question-index="${idx}"]`);if(target)target.scrollIntoView({behavior:'smooth',block:'center'});alert(`Please answer all ${expected} questions before submitting.`);return;}}
+ let score=0;names.forEach(name=>{const checked=groups[name].find(r=>r.checked);if(checked&&checked.dataset.correct==='1')score++});
+ if(cqPendingType==='final'){if(student.finalAssessment){modal.classList.remove('open');return;}student.finalAssessment={score,total:names.length,completedAt:new Date().toISOString()};}
+ else{const bucket=cqPendingType==='video'?'screencasts':'reading';if(student.contentQuizzes[bucket][cqPendingKey]){modal.classList.remove('open');return;}student.contentQuizzes[bucket][cqPendingKey]={score,total:names.length,completedAt:new Date().toISOString()};}
+ saveStudentRecord(student);updateGrade();modal.classList.remove('open');cqPendingType=null;cqPendingKey=null;cqExpectedCount=5;renderAssessmentView();renderProgressView();renderProjectWorkflow();
 });
 /* =====================================================================
    SIGN-IN + DEVICE LOCK + WEEK-END QUIZ + GRADING + AUTO PROGRESS REPORT
@@ -2210,11 +2210,13 @@ function loadStudentRecord(email){
       rec.contentQuizzes.screencasts = rec.contentQuizzes.screencasts || {};
       rec.contentQuizzes.reading = rec.contentQuizzes.reading || {};
       rec.assignmentStatus = rec.assignmentStatus || {};
+      rec.finalAssessment = rec.finalAssessment || null;
+      rec.projectPhases = rec.projectPhases || {};
       rec.lastSavedAt = rec.lastSavedAt || null;
       return rec;
     }
   }catch(e){}
-  return { name:'', email:email.trim().toLowerCase(), completed:[], weekQuizzes:{}, readingSeen:[], vocabSeen:{}, videoConfirmed:{}, seenScreencasts:[], seenPractice:[], seenMaterials:[], biweeklySent:{}, assignmentStatus:{}, contentQuizzes:{ screencasts:{}, reading:{} }, signedInAt:new Date().toISOString(), lastSavedAt:null };
+  return { name:'', email:email.trim().toLowerCase(), completed:[], weekQuizzes:{}, readingSeen:[], vocabSeen:{}, videoConfirmed:{}, seenScreencasts:[], seenPractice:[], seenMaterials:[], biweeklySent:{}, assignmentStatus:{}, finalAssessment:null, projectPhases:{}, contentQuizzes:{ screencasts:{}, reading:{} }, signedInAt:new Date().toISOString(), lastSavedAt:null };
 }
 function saveStudentRecord(rec){ try{ if(!rec || window.__guestPreview || rec.email==='guest-preview@local') return; rec.lastSavedAt = new Date().toISOString(); localStorage.setItem(studentKey(rec.email), JSON.stringify(rec)); localStorage.setItem('hm_last_saved_at', rec.lastSavedAt); }catch(e){ console.error(e); } }
 let student = null; // active record for this session
@@ -2289,6 +2291,8 @@ function initAuth(){
     completed: [],
     readingSeen: [],
     contentQuizzes: { reading: {}, screencasts: {} },
+    finalAssessment: null,
+    projectPhases: {},
     grade: null,
     device: null
   };
@@ -2435,6 +2439,19 @@ document.getElementById('wqSubmit').addEventListener('click', ()=>{
 document.getElementById('wqModal').addEventListener('keydown', e=>{
   if(e.key==='Escape' && document.getElementById('wqSkip').style.display!=='none') document.getElementById('wqSkip').click();
 });
+/* ---------- DAILY / CLASS EVALUATION ---------- */
+const DAILY_EVAL_POINTS = 0.7;
+function getDailyEvaluation(){
+  const completedDays=student&&Array.isArray(student.completed)?student.completed.length:0;
+  const totalDays=cards.length;
+  const earned=Math.round(completedDays*DAILY_EVAL_POINTS*10)/10;
+  const possible=Math.round(totalDays*DAILY_EVAL_POINTS*10)/10;
+  return {completedDays,totalDays,earned,possible,perDay:DAILY_EVAL_POINTS};
+}
+function dailyEvaluationTag(day){
+  const done=!!(student&&student.completed&&student.completed.includes(day));
+  return `<span class="progress-tag ${done?'done':'pending'}">${done?'0.7 / 0.7':'0.0 / 0.7'}</span>`;
+}
 /* ---------- GRADING ---------- */
 function computeGrade(){
   if(!student) return { pct:0, letter:'—', detail:'Sign in to start tracking.' };
@@ -2446,7 +2463,10 @@ function computeGrade(){
   const readingPct = Math.min(100, (student.readingSeen.length/3)*100);
   const videoIds = Object.keys(student.videoConfirmed).filter(id=>student.videoConfirmed[id]);
   const videoPct = Math.min(100, (videoIds.length/2)*100);
-  const overall = completionPct*0.45 + quizAvg*0.25 + readingPct*0.15 + videoPct*0.15;
+  const finalPct=student.finalAssessment&&student.finalAssessment.total?(student.finalAssessment.score/student.finalAssessment.total)*100:0;
+  const finalWeight=student.finalAssessment?0.20:0;
+  const baseWeight=1-finalWeight;
+  const overall=(completionPct*0.40+quizAvg*0.20+readingPct*0.10+videoPct*0.10)*baseWeight+finalPct*finalWeight;
   // Standard +/- grading scale. Keep all grade logic centralized here.
   let letter = 'NI';
   if(overall >= 97) letter='A+';
@@ -2461,7 +2481,7 @@ function computeGrade(){
   else if(overall >= 67) letter='D+';
   else if(overall >= 63) letter='D';
   else if(overall >= 60) letter='D-';
-  return { pct: Math.round(overall), letter, detail:`${Math.round(completionPct)}% lessons · ${quizzesTaken} week quizzes` };
+  return { pct: Math.round(overall), letter, detail:`${Math.round(completionPct)}% lessons · ${quizzesTaken} week quizzes · ${student.finalAssessment?student.finalAssessment.score+'/'+student.finalAssessment.total:'Final assessment pending'}` };
 }
 function updateGrade(){
   const g = computeGrade();
@@ -2472,6 +2492,7 @@ function updateGrade(){
   const sbGrade = document.getElementById('sbGrade');
   if(sbGrade) sbGrade.textContent = student ? `${g.letter} · ${g.pct}%` : '—';
   renderProgressView();
+  renderProjectWorkflow();
 }
 function weekStatus(w){
   const dayEls = weekDayEls(w);
@@ -2507,13 +2528,12 @@ function renderProgressView(){
   let readingRows = readingPool.map(item=>{
     const isRead = student.readingSeen.includes(item.key);
     const quiz = student.contentQuizzes.reading[item.key];
-    return `<tr><td>${item.title}</td><td><span class="pw-badge ${isRead?'done':'notstarted'}">${isRead?'Read':'Not read'}</span></td><td>${quiz? (quiz.score+'/'+quiz.total) : '—'}</td></tr>`;
+    return `<tr><td>${item.title}</td><td><span class="pw-badge ${isRead?'done':'notstarted'}">${isRead?'READ':'NOT READ'}</span></td><td>${quiz? (quiz.score+'/'+quiz.total) : '—'}</td></tr>`;
   }).join('');
   let screencastRows = (typeof allScreencasts !== 'undefined' ? allScreencasts : []).map(v=>{
     const watched = typeof theaterIsWatched === 'function' ? theaterIsWatched(v.id) : false;
-    const opened = typeof theaterIsOpened === 'function' ? theaterIsOpened(v.id) : false;
-    const status = watched ? 'Watched' : (opened ? 'Opened' : 'Not started');
-    const badgeClass = watched?'done':(opened?'partial':'notstarted');
+    const status = watched ? 'Watched' : 'Not watched';
+    const badgeClass = watched?'done':'notstarted';
     const quiz = student.contentQuizzes.screencasts[v.id];
     return `<tr><td>${v.label}</td><td><span class="pw-badge ${badgeClass}">${status}</span></td><td>${quiz? (quiz.score+'/'+quiz.total) : '—'}</td></tr>`;
   }).join('');
@@ -2529,17 +2549,21 @@ function renderProgressView(){
       <div class="progress-card" style="--pc-accent:#ff7a2d"><h4>Week Quizzes</h4><div class="pc-big">${quizzesTaken}/${TOTAL_WEEKS}</div><div class="pc-sub">completed automatically at week end</div></div>
       <div class="progress-card" style="--pc-accent:#8b5cf6"><h4>Reading Opened</h4><div class="pc-big">${student.readingSeen.length}/3</div><div class="pc-sub">Read Me sections viewed</div></div>
       <div class="progress-card" style="--pc-accent:#ff6a2c"><h4>Screencasts Watched</h4><div class="pc-big">${videosConfirmed}/2</div><div class="pc-sub">fully watched</div></div>
-      <div class="progress-card" style="--pc-accent:#ef476f"><h4>Practice Files Opened</h4><div class="pc-big">${student.seenPractice.length}/43</div><div class="pc-sub">exercise files previewed</div></div>
       <div class="progress-card" style="--pc-accent:#5b6270"><h4>Materials Opened</h4><div class="pc-big">${(student.seenMaterials||[]).length}/23</div><div class="pc-sub">additional resources previewed</div></div>
       <div class="progress-card" style="--pc-accent:#8b5cf6"><h4>Reading Checks</h4><div class="pc-big">${readingQuizEntries.length}/3</div><div class="pc-sub">avg score ${readingQuizAvg}%</div></div>
       <div class="progress-card" style="--pc-accent:#ff6a2c"><h4>Screencast Checks</h4><div class="pc-big">${screencastQuizEntries.length}/2</div><div class="pc-sub">avg score ${screencastQuizAvg}%</div></div>
     </div>
+    <div class="eval-summary"><div class="eval-card"><b>${getDailyEvaluation().earned.toFixed(1)} / ${getDailyEvaluation().possible.toFixed(1)}</b><span>Daily/Class Evaluation · 0.7 points per completed class day</span></div><div class="eval-card"><b>${getDailyEvaluation().completedDays}/${getDailyEvaluation().totalDays} days</b><span>Evaluation days counted</span></div><div class="eval-card"><b>${student.finalAssessment?student.finalAssessment.score+'/'+student.finalAssessment.total:'Pending'}</b><span>Final 7-question assessment</span></div></div>
     <div class="note-section collapsed" style="margin-top:22px;">
       <h3 style="margin-top:0;"><span>Week-by-week breakdown <span class="note-count">${student.completed.length}/${cards.length} lessons</span></span></h3>
       <div style="overflow-x:auto;"><table class="progress-week-table">
         <thead><tr><th>Week</th><th>Topic</th><th>Days done</th><th>Status</th><th>Quiz</th></tr></thead>
         <tbody>${rows}</tbody>
       </table></div>
+    </div>
+    <div class="note-section collapsed">
+      <h3 style="margin-top:0;"><span>Class / Day Evaluation <span class="note-count">${getDailyEvaluation().earned.toFixed(1)}/${getDailyEvaluation().possible.toFixed(1)}</span></span></h3>
+      <div style="overflow-x:auto;"><table class="progress-week-table"><thead><tr><th>Class Day</th><th>Lesson</th><th>Evaluation</th></tr></thead><tbody>${Array.from(cards).map(c=>`<tr><td>${c.dataset.day}</td><td>${(c.querySelector('.wk')?.textContent||'Class lesson').replace(/\s+/g,' ').trim()}</td><td>${dailyEvaluationTag(c.dataset.day)}</td></tr>`).join('')}</tbody></table></div>
     </div>
     <div class="note-section collapsed">
       <h3 style="margin-top:0;"><span>Read Me notes — read or not <span class="note-count">${student.readingSeen.length}/3</span></span></h3>
@@ -2560,51 +2584,14 @@ function renderProgressView(){
 }
 /* ---------- ASSESSMENT PAGE ---------- */
 function renderAssessmentView(){
-  const body = document.getElementById('assessmentBody');
-  if(!body) return;
-  if(!student){
-    body.innerHTML = `<div class="progress-signedout"><h3>Sign in to take assessments</h3><p>Assessments are generated automatically from the Read Me notes and screencast descriptions.</p></div>`;
-    return;
-  }
-  const pool = typeof screencastQuizPool !== 'undefined' ? screencastQuizPool.slice(0,2) : [];
-  const readingItems = readingPool.map(item=>{
-    const quiz = student.contentQuizzes.reading[item.key];
-    const statusText = quiz ? `${quiz.score}/${quiz.total}` : 'Not taken';
-    const btn = quiz
-      ? `<button type="button" class="assess-btn" disabled>Completed</button>`
-      : `<button type="button" class="assess-btn" onclick="assessmentStart('reading','${item.key}')">Start</button>`;
-    return `<div class="assess-row"><div class="assess-row-main"><b>${item.title}</b><span class="assess-status ${quiz?'done':''}">${statusText}</span></div>${btn}</div>`;
-  }).join('') || '<p style="font-size:13px;color:var(--muted);">No Read Me sections available yet.</p>';
-  const videoItems = pool.map(item=>{
-    const quiz = student.contentQuizzes.screencasts[item.key];
-    const statusText = quiz ? `${quiz.score}/${quiz.total}` : 'Not taken';
-    const btn = quiz
-      ? `<button type="button" class="assess-btn" disabled>Completed</button>`
-      : `<button type="button" class="assess-btn" onclick="assessmentStart('video','${item.key}')">Start</button>`;
-    return `<div class="assess-row"><div class="assess-row-main"><b>${item.title}</b><span class="assess-status ${quiz?'done':''}">${statusText}</span></div>${btn}</div>`;
-  }).join('') || '<p style="font-size:13px;color:var(--muted);">No screencasts available yet.</p>';
-  const readingDone = Object.keys(student.contentQuizzes.reading).length;
-  const videoDone = Object.keys(student.contentQuizzes.screencasts).length;
-  const readingPct = readingPool.length ? Math.round((readingDone/readingPool.length)*100) : 0;
-  const videoPct = pool.length ? Math.round((videoDone/pool.length)*100) : 0;
-  body.innerHTML = `
-    <div class="assess-summary-row">
-      <div class="progress-card" style="--pc-accent:#8b5cf6;flex:1;min-width:200px;"><h4>Read Me Assessments</h4><div class="pc-big">${readingDone}/${readingPool.length}</div><div class="pc-sub">completed</div></div>
-      <div class="progress-card" style="--pc-accent:#ff6a2c;flex:1;min-width:200px;"><h4>Screencast Assessments</h4><div class="pc-big">${videoDone}/${pool.length}</div><div class="pc-sub">completed</div></div>
-    </div>
-    <div class="note-section collapsed" id="assess-reading">
-      <h3><span>Read Me Notes Assessment <span class="note-count">${readingDone}/${readingPool.length}</span></span></h3>
-      <div class="assess-progress-row"><span>${readingDone} of ${readingPool.length} completed</span><span style="color:var(--c-notes);">${readingPct}%</span></div>
-      <div class="assess-progress-bar"><i style="background:linear-gradient(90deg,#8b5cf6,#b794f4);width:${readingPct}%;"></i></div>
-      <div>${readingItems}</div>
-    </div>
-    <div class="note-section collapsed" id="assess-video">
-      <h3><span>Screencast Assessment <span class="note-count">${videoDone}/${pool.length}</span></span></h3>
-      <div class="assess-progress-row"><span>${videoDone} of ${pool.length} completed</span><span style="color:var(--c-screen);">${videoPct}%</span></div>
-      <div class="assess-progress-bar"><i style="background:linear-gradient(90deg,#ff6a2c,#ffb347);width:${videoPct}%;"></i></div>
-      <div>${videoItems}</div>
-    </div>`;
-  initNoteAccordion(body);
+ const body=document.getElementById('assessmentBody');if(!body)return;if(!student){body.innerHTML='<div class="progress-signedout"><h3>Sign in to take assessments</h3><p>Read Me and Screencast checks are 5 questions each. The main Assessment is a separate 7-question application test.</p></div>';return;}
+ const readingDone=Object.keys(student.contentQuizzes.reading||{}).length,videoDone=Object.keys(student.contentQuizzes.screencasts||{}).length,final=student.finalAssessment;
+ const videoTotal=Math.min(2,(typeof screencastQuizPool!=='undefined'?screencastQuizPool.length:0));const totalChecks=readingPool.length+videoTotal,checksDone=readingDone+videoDone;const allFinished=checksDone>=totalChecks&&!!final;
+ const finalText=final?`${final.score}/${final.total} · ${Math.round(final.score/final.total*100)}%`:'Not finished';
+ body.innerHTML=`<div class="assess-summary-row"><div class="progress-card" style="--pc-accent:#8b5cf6;flex:1;min-width:200px;"><h4>Read Me Checks</h4><div class="pc-big">${readingDone}/${readingPool.length}</div><div class="pc-sub">5 questions each</div></div><div class="progress-card" style="--pc-accent:#ff6a2c;flex:1;min-width:200px;"><h4>Screencast Checks</h4><div class="pc-big">${videoDone}/${videoTotal}</div><div class="pc-sub">5 questions each</div></div><div class="progress-card" style="--pc-accent:#2f6fed;flex:1;min-width:200px;"><h4>Main Assessment</h4><div class="pc-big">${final?final.score+'/'+final.total:'0/7'}</div><div class="pc-sub">7 application questions</div></div></div>
+ <div class="final-assessment-card ${final?'ready':''}"><div class="assessment-total-badge">${allFinished?'ALL ASSESSMENTS FINISHED':'ASSESSMENT TRACKING'}</div><h4>Final 7-Question Application Assessment</h4><p>This assessment tests application and decision-making. Its questions are intentionally different from the Read Me and Screencast checks.</p><div style="margin-top:12px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;"><span class="progress-tag ${final?'done':'pending'}">${final?'Completed':'Not finished'}</span><strong style="font-size:13px;">${finalText}</strong>${final?'':'<button type="button" class="assess-btn" onclick="assessmentStart(\"final\",\"final\")">Start 7-Question Assessment</button>'}</div></div>
+ <div class="note-section collapsed" style="margin-top:16px;"><h3><span>Quick-check completion <span class="note-count">${checksDone}/${totalChecks}</span></span></h3><div class="eval-summary"><div class="eval-card"><b>${readingDone}/${readingPool.length}</b><span>Read Me checks finished</span></div><div class="eval-card"><b>${videoDone}/${videoTotal}</b><span>Screencast checks finished</span></div><div class="eval-card"><b>${allFinished?'Complete':'In progress'}</b><span>All assessment requirements</span></div></div></div>`;
+ initNoteAccordion(body);
 }
 /* ---------- PDF SNAPSHOT OF THE FULL DASHBOARD ----------
    buildProgressReportDoc() builds and returns the actual PDF (does not save it) so
@@ -2721,7 +2708,7 @@ function buildProgressReportDoc(trigger){
     { label:'Week Quizzes', big:`${quizzesTaken}/${TOTAL_WEEKS}`, color:P.purple },
     { label:'Reading Opened', big:`${student.readingSeen.length}/3`, color:P.purple },
     { label:'Screencasts Watched', big:`${videosConfirmed}/2`, color:P.red },
-    { label:'Practice Files Opened', big:`${student.seenPractice.length}/43`, color:P.blue },
+    { label:'Daily/Class Evaluation', big:`${getDailyEvaluation().earned.toFixed(1)}/${getDailyEvaluation().possible.toFixed(1)}`, color:P.blue },
   ];
   const gap = 14, cardW = (pageWidth-80-2*gap)/3, cardH = 58;
   stats.forEach((s,i)=>{
@@ -2772,7 +2759,7 @@ function buildProgressReportDoc(trigger){
   const readRows = readingPool.map(item=>{
     const isRead = student.readingSeen.includes(item.key);
     const quiz = student.contentQuizzes.reading[item.key];
-    return [pdfSafeText(item.title), isRead?'Read':'Not read', quiz? `${quiz.score}/${quiz.total}`:'—'];
+    return [pdfSafeText(item.title), isRead?'READ':'NOT READ', quiz? `${quiz.score}/${quiz.total}`:'—'];
   });
   if(hasAutoTable){
     doc.autoTable({
@@ -2799,7 +2786,7 @@ function buildProgressReportDoc(trigger){
   const screenRows = (typeof allScreencasts !== 'undefined' ? allScreencasts : []).map(v=>{
     const watched = typeof theaterIsWatched === 'function' ? theaterIsWatched(v.id) : false;
     const quiz = student.contentQuizzes.screencasts[v.id];
-    return [pdfSafeText(v.label), watched?'Watched':'Not watched', quiz? `${quiz.score}/${quiz.total}`:'—'];
+    return [pdfSafeText(v.label), watched?'WATCHED':'NOT WATCHED', quiz? `${quiz.score}/${quiz.total}`:'—'];
   });
   if(hasAutoTable){
     doc.autoTable({
@@ -2816,6 +2803,13 @@ function buildProgressReportDoc(trigger){
     doc.setFont(undefined,'normal'); doc.setFontSize(8.5); doc.setTextColor(...P.ink);
     screenRows.forEach(r=>{ if(y>pageHeight-60){ doc.addPage(); y=60; } doc.text(r.join('  ·  '),50,y); y+=13; });
   }
+
+  if(y > pageHeight-150){ doc.addPage(); y=60; }
+  doc.setFont(undefined,'bold'); doc.setFontSize(12.5); doc.setTextColor(...P.blue); doc.text('Final Assessment + Class Evaluation',40,y); y+=18;
+  const finalText=student.finalAssessment?`${student.finalAssessment.score}/${student.finalAssessment.total} (${Math.round(student.finalAssessment.score/student.finalAssessment.total*100)}%)`:'NOT FINISHED';
+  const ev=getDailyEvaluation();doc.setFont(undefined,'normal');doc.setFontSize(9);doc.setTextColor(...P.ink);
+  doc.text(`Final 7-question assessment: ${finalText}`,40,y);y+=14;
+  doc.text(`Daily/Class Evaluation: ${ev.completedDays} completed class days x 0.7 = ${ev.earned.toFixed(1)} / ${ev.possible.toFixed(1)}`,40,y);y+=18;
 
   // ----- Stamp the watermark + footer on every page, after all content is laid out -----
   const totalPages = doc.internal.getNumberOfPages();
@@ -3280,7 +3274,7 @@ function renderMediaCard({ id, label, kind, accent, trackKey }){
       </button>
     </div>
     <div class="media-body">
-      <div class="mb-top"><b>${label}</b><span class="chk" data-role="chk">not opened</span></div>
+      <div class="mb-top"><b>${label}</b><span class="chk seen" data-role="chk">Instructor resource</span></div>
       ${kind==='video' ? '<button type="button" class="chk" data-role="watchbtn" style="cursor:pointer;display:none;">Mark watched</button>' : ''}
       <a href="${openUrl}" target="_blank" rel="noopener">Open in Google Drive →</a>
     </div>`;
@@ -3301,7 +3295,7 @@ function renderMediaCard({ id, label, kind, accent, trackKey }){
     iframe.setAttribute('allowfullscreen','true');
     iframe.addEventListener('load', ()=>{ thumb.innerHTML=''; thumb.appendChild(iframe); }, { once:true });
     setTimeout(()=>{ if(!thumb.contains(iframe)){ thumb.innerHTML=''; thumb.appendChild(iframe); } }, 600);
-    chk.textContent = 'opened ✓';
+    chk.textContent = 'Instructor resource';
     chk.classList.add('seen');
     if(student){
       const seenKey = trackKey || (kind==='video' ? 'seenScreencasts' : 'seenPractice');
@@ -3564,7 +3558,6 @@ function theaterRenderSide(){
   side.innerHTML = '';
   availableList.forEach(v=>{
     const watched = theaterIsWatched(v.id);
-    const opened = theaterIsOpened(v.id);
     const isActive = theaterCurrentId===v.id;
     const item = document.createElement('button');
     item.type = 'button';
@@ -3579,7 +3572,7 @@ function theaterRenderSide(){
       </div>
       <div class="ti-body">
         <span class="ti-label">${v.label}</span>
-        ${watched ? '<span class="ti-watched">✓ Watched</span>' : (opened ? '<span class="ti-status">Opened</span>' : '')}
+        ${watched ? '<span class="ti-watched">✓ Watched</span>' : '<span class="ti-status">Instructor release</span>'}
       </div>`;
     item.addEventListener('click', ()=>theaterPlay(v.id, v.label));
     side.appendChild(item);
@@ -3734,11 +3727,11 @@ const PHASE_PROJECTS = [
  {id:'phase1', title:'Phase 1 — Photoshop Foundations Project', short:'Phase 1 Project', week:3,
   submitUrl:'https://drive.google.com/drive/folders/1DzGBJliUESjJHW6Qc-QNOM5a8VMBpQqr?usp=sharing',
   desc:'Complete the learning path, finish the required project, then submit your final files to the Phase 1 Google Drive folder.',
-  checks:['Complete the Read Me','Watch the released screencast','Finish the practice task','Pass the 5-question check','Submit the project files']},
+  checks:['Complete the Read Me','Watch the released screencast','Open Quick Assistive Touch','Finish the 7-question assessment','Submit the project files']},
  {id:'phase2', title:'Phase 2 — Next Project', short:'Phase 2 Project', week:4,
   submitUrl:'https://drive.google.com/drive/folders/1DzGBJliUESjJHW6Qc-QNOM5a8VMBpQqr?usp=sharing',
   desc:'The same five-step learning path starts again for the next project when Phase 1 is submitted.',
-  checks:['Complete the Read Me','Watch the released screencast','Finish the practice task','Pass the 5-question check','Submit the project files']}
+  checks:['Complete the Read Me','Watch the released screencast','Open Quick Assistive Touch','Finish the 7-question assessment','Submit the project files']}
 ];
 const HM_ASSIGNMENTS = [
  {id:'w1-file-workflow',week:1,title:'File Workflow Practice',desc:'Open a supplied image, save an editable PSD, then export a delivery copy without replacing the master file.',skills:['Open','Save','PSD','Export'],checks:['Correct file opened','PSD saved','Final JPG/PNG exported']},
@@ -3755,51 +3748,13 @@ function hmCurrentPhase(){
   for(const phase of PHASE_PROJECTS){ const st=hmPhaseState(phase.id); if(!st.submitted) return phase; }
   return PHASE_PROJECTS[PHASE_PROJECTS.length-1];
 }
-function hmStepDone(phase,step){
-  const st=hmPhaseState(phase.id);
-  if(step===1) return !!(student && student.readingSeen && student.readingSeen.length);
-  if(step===2) return !!(student && student.videoConfirmed && Object.values(student.videoConfirmed).some(Boolean));
-  if(step===3) return !!(student && student.seenPractice && student.seenPractice.length) || !!(student && student.assignmentStatus && Object.values(student.assignmentStatus).some(v=>v==='In progress'||v==='Submitted'));
-  if(step===4) return !!(student && student.contentQuizzes && (Object.keys(student.contentQuizzes.reading||{}).length || Object.keys(student.contentQuizzes.screencasts||{}).length));
-  if(step===5) return !!st.submitted;
-  return false;
-}
-function hmMarkPhaseSubmitted(id){
-  const phase=PHASE_PROJECTS.find(x=>x.id===id); if(!phase)return;
-  const st=hmPhaseState(id); st.submitted=true; st.submittedAt=new Date().toISOString(); hmSetPhaseState(id,st);
-  if(student){student.projectPhases=student.projectPhases||{};student.projectPhases[id]=st;saveStudentRecord(student);}
-  renderHomeLearning(); showToast('Project submission recorded. Your next project workflow has started.');
-}
-function hmWorkflowAction(phase,step){
-  if(step===1){goTab('notes');return;}
-  if(step===2){goTab('screencasts');return;}
-  if(step===3){goTab('practice');return;}
-  if(step===4){goTab('assessment');return;}
-  if(step===5){
-    window.open(phase.submitUrl,'_blank','noopener');
-    setTimeout(()=>{if(confirm('After you finish uploading your project files, click OK to mark the project as submitted.')) hmMarkPhaseSubmitted(phase.id);},300);
-  }
-}
-function renderHomeLearning(){
- const el=document.getElementById('homeLearningPanel'); if(!el)return;
- const phase=hmCurrentPhase();
- const steps=['Read Me','Screencast','Practice','5-Question Check','Project Submission'];
- const done=steps.map((_,i)=>hmStepDone(phase,i+1));
- const completedCount=done.filter(Boolean).length;
- const pct=Math.round(completedCount/5*100);
- const nextIndex=done.findIndex(x=>!x);
- const activeIndex=nextIndex<0?4:nextIndex;
- const cards=steps.map((label,i)=>{
-   const isDone=done[i], locked=i>activeIndex && !isDone;
-   const icon=isDone?'✓':String(i+1);
-   const action=locked?'':` onclick="hmWorkflowAction(PHASE_PROJECTS[${PHASE_PROJECTS.findIndex(x=>x.id===phase.id)}],${i+1})"`;
-   return `<button class="workflow-home-step ${isDone?'wf-done':''} ${i===activeIndex&&!isDone?'wf-active':''} ${locked?'wf-locked':''}" type="button" ${locked?'disabled':''}${action} aria-label="${label}: ${isDone?'completed':locked?'locked':'open'}"><span class="wf-num">${icon}</span><span class="wf-copy"><b>${label}</b><small>${isDone?'Completed':locked?'Complete the previous step first':i===4?'Open the project submission folder':'Open this step'}</small></span><span class="wf-arrow">${isDone?'✓':'→'}</span></button>`;
- }).join('<div class="wf-connector" aria-hidden="true">›</div>');
- el.innerHTML=`<section class="home-workflow" aria-label="Five-step learning workflow"><div class="workflow-head"><div><div class="hero-eyebrow">YOUR PROJECT WORKFLOW</div><h2>${phase.title}</h2><p>${phase.desc}</p></div><div class="workflow-percent"><strong>${pct}%</strong><span>${completedCount}/5 complete</span></div></div><div class="workflow-progress"><i style="width:${pct}%"></i></div><div class="workflow-steps">${cards}</div><div class="workflow-foot"><span>${nextIndex<0?'Phase complete — ready for the next project.':`Next: ${steps[activeIndex]}`}</span><button class="hbtn ghost" type="button" onclick="goTab('${activeIndex===0?'notes':activeIndex===1?'screencasts':activeIndex===2?'practice':activeIndex===3?'assessment':'projects'}')">Open current step</button></div></section>`;
-}
+function hmStepDone(phase,step){const st=hmPhaseState(phase.id);if(step===1)return !!(student&&student.readingSeen&&student.readingSeen.length);if(step===2)return !!(student&&student.videoConfirmed&&Object.values(student.videoConfirmed).some(Boolean));if(step===3)return !!(student&&student.finalAssessment);if(step===4)return !!(student&&student.finalAssessment);if(step===5)return !!st.submitted;return false;}
+function hmMarkPhaseSubmitted(id){const phase=PHASE_PROJECTS.find(x=>x.id===id);if(!phase)return;const st=hmPhaseState(id);st.submitted=true;st.submittedAt=new Date().toISOString();hmSetPhaseState(id,st);if(student){student.projectPhases=student.projectPhases||{};student.projectPhases[id]=st;saveStudentRecord(student);}renderProjectWorkflow();showToast('Project submission recorded. Your next project workflow has started.');}
+function hmWorkflowAction(phase,step){if(step===1){goTab('notes');return;}if(step===2){goTab('screencasts');return;}if(step===3){goTab('assistive');return;}if(step===4){goTab('assessment');return;}if(step===5){window.open(phase.submitUrl,'_blank','noopener');setTimeout(()=>{if(confirm('After you finish uploading your project files, click OK to mark the project as submitted.'))hmMarkPhaseSubmitted(phase.id);},300);}}
+function renderProjectWorkflow(){const el=document.getElementById('projectWorkflowPanel');if(!el)return;const phase=hmCurrentPhase();const steps=['Read Me','Screencast','Quick Assistive Touch','7-Question Assessment','Project Submission'];const done=steps.map((_,i)=>hmStepDone(phase,i+1));const completedCount=done.filter(Boolean).length;const pct=Math.round(completedCount/5*100);const nextIndex=done.findIndex(x=>!x);const activeIndex=nextIndex<0?4:nextIndex;const cards=steps.map((label,i)=>{const isDone=done[i],locked=i>activeIndex&&!isDone,icon=isDone?'✓':String(i+1),action=locked?'':` onclick="hmWorkflowAction(PHASE_PROJECTS[${PHASE_PROJECTS.findIndex(x=>x.id===phase.id)}],${i+1})"`;return `<button class="workflow-home-step ${isDone?'wf-done':''} ${i===activeIndex&&!isDone?'wf-active':''} ${locked?'wf-locked':''}" type="button" ${locked?'disabled':''}${action}><span class="wf-num">${icon}</span><span class="wf-copy"><b>${label}</b><small>${isDone?'Completed':locked?'Complete the previous step first':i===4?'Open the project submission folder':'Open this step'}</small></span><span class="wf-arrow">${isDone?'✓':'→'}</span></button>`;}).join('<div class="wf-connector" aria-hidden="true">›</div>');el.innerHTML=`<div class="project-progress-wrap"><section class="home-workflow" aria-label="Project workflow"><div class="workflow-head"><div><div class="hero-eyebrow">PROJECT WORKFLOW</div><h2>${phase.title}</h2><p>${phase.desc}</p></div><div class="workflow-percent"><strong>${pct}%</strong><span>${completedCount}/5 complete</span></div></div><div class="workflow-progress"><i style="width:${pct}%"></i></div><div class="workflow-steps">${cards}</div><div class="workflow-foot"><span>${nextIndex<0?'Phase complete — ready for the next project.':`Next: ${steps[activeIndex]}`}</span><button class="hbtn ghost" type="button" onclick="goTab('${activeIndex===0?'notes':activeIndex===1?'screencasts':activeIndex===2?'assistive':'assessment'}')">Open current step</button></div></section></div>`;}
 function hmSetAssignment(id,status){
  if(!student || window.__guestPreview){ showToast('Sign in to save assignment progress.'); return; }
- student.assignmentStatus = student.assignmentStatus || {}; student.assignmentStatus[id]=status; student.seenPractice=student.seenPractice||[]; if(!student.seenPractice.includes(id))student.seenPractice.push(id); saveStudentRecord(student); renderAssignments(); renderHomeLearning(); if(typeof renderProgressView==='function') renderProgressView(); showToast(status==='Submitted'?'Assignment marked ready for submission.':'Assignment status saved.');
+ student.assignmentStatus = student.assignmentStatus || {}; student.assignmentStatus[id]=status; student.seenPractice=student.seenPractice||[]; if(!student.seenPractice.includes(id))student.seenPractice.push(id); saveStudentRecord(student); renderAssignments(); renderProjectWorkflow(); if(typeof renderProgressView==='function') renderProgressView(); showToast(status==='Submitted'?'Assignment marked ready for submission.':'Assignment status saved.');
 }
 function renderAssignments(){
  const el=document.getElementById('assignmentBoard'); if(!el) return;
@@ -3829,9 +3784,8 @@ function openCourseSearch(){ const m=document.getElementById('courseSearch'),i=d
 function closeCourseSearch(){const m=document.getElementById('courseSearch');m.classList.remove('open');m.setAttribute('aria-hidden','true');}
 function showToast(msg){const e=document.getElementById('completionToast');if(!e)return;e.textContent=msg;e.classList.add('show');clearTimeout(window.__toastTimer);window.__toastTimer=setTimeout(()=>e.classList.remove('show'),2400);}
 function initLearningUpgrade(){
- renderAssignments();renderHomeLearning();renderGlossary();
- document.getElementById('glossarySearch')?.addEventListener('input',e=>renderGlossary(e.target.value));document.getElementById('teacherExportBtn')?.addEventListener('click',exportTeacherCSV);document.getElementById('teacherClearBtn')?.addEventListener('click',()=>{if(confirm('Clear locally saved student records from this browser? This cannot be undone.')){Object.keys(localStorage).filter(k=>k.startsWith('hm_student_')).forEach(k=>localStorage.removeItem(k));renderTeacher();showToast('Local class records cleared.');}});
- document.getElementById('globalSearchBtn')?.addEventListener('click',openCourseSearch);document.querySelectorAll('[data-close-search]').forEach(x=>x.addEventListener('click',closeCourseSearch));document.getElementById('courseSearchInput')?.addEventListener('input',e=>renderCourseSearch(e.target.value));
+ renderAssignments();renderProjectWorkflow();renderGlossary();
+ document.getElementById('glossarySearch')?.addEventListener('input',e=>renderGlossary(e.target.value)); document.getElementById('globalSearchBtn')?.addEventListener('click',openCourseSearch);document.querySelectorAll('[data-close-search]').forEach(x=>x.addEventListener('click',closeCourseSearch));document.getElementById('courseSearchInput')?.addEventListener('input',e=>renderCourseSearch(e.target.value));
  document.addEventListener('keydown',e=>{if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='k'){e.preventDefault();openCourseSearch();}if(e.key==='Escape')closeCourseSearch();});
  const ab=document.getElementById('a11yBtn'),ap=document.getElementById('a11yPanel'),ac=document.getElementById('a11yClose');ab?.addEventListener('click',()=>{ap.classList.add('open');ap.setAttribute('aria-hidden','false');});ac?.addEventListener('click',()=>{ap.classList.remove('open');ap.setAttribute('aria-hidden','true');});
  const rm=document.getElementById('reduceMotionToggle'),lt=document.getElementById('largeTextToggle');try{rm.checked=localStorage.getItem('hm_reduce_motion')==='1';lt.checked=localStorage.getItem('hm_large_text')==='1';}catch(e){} document.documentElement.classList.toggle('reduce-motion',rm.checked);document.documentElement.classList.toggle('large-text',lt.checked);rm.addEventListener('change',()=>{document.documentElement.classList.toggle('reduce-motion',rm.checked);localStorage.setItem('hm_reduce_motion',rm.checked?'1':'0');});lt.addEventListener('change',()=>{document.documentElement.classList.toggle('large-text',lt.checked);localStorage.setItem('hm_large_text',lt.checked?'1':'0');});
