@@ -185,11 +185,6 @@ button{font-family:inherit;}
 .week-card{margin:34px 0 10px;scroll-margin-top:75px;}
 .week-card h2.wk{font-size:1.35rem;margin-bottom:16px;color:var(--c-curriculum);display:flex;align-items:center;gap:10px;}
 .week-card h2.wk::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--c-curriculum);}
-.week-card.future-week{opacity:.46;filter:grayscale(.9);position:relative;}
-.week-card.future-week::after{content:"Locked until this calendar week";position:absolute;top:8px;right:0;background:#e7e9ee;color:#727887;border-radius:999px;padding:5px 9px;font-size:10.5px;font-weight:800;letter-spacing:.2px;}
-.week-card.future-week .flip-card{pointer-events:none;}
-.week-date{font-size:.72rem;font-weight:700;color:#7b8292;background:#eef1f6;border:1px solid #dfe3ea;border-radius:999px;padding:4px 8px;white-space:nowrap;}
-.week-card.current-week .week-date{color:#2f6fed;background:#eef4ff;border-color:#cddcff;}
 .day-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;}
 .flip-card{background:transparent;width:100%;height:380px;perspective:1200px;opacity:0;transform:translateY(30px);transition:all .6s ease-out;}
 .flip-card.visible{opacity:1;transform:translateY(0);}
@@ -225,6 +220,40 @@ button{font-family:inherit;}
 .subnav button.active{background:var(--c-projects);border-color:var(--c-projects);color:#fff;}
 .proj-view{display:none;}
 .proj-view.active{display:block;animation:fade .4s ease;}
+/* ===== COURSE RELEASE / WEEK UI ===== */
+.week-card{position:relative;}
+.week-date{display:inline-flex;align-items:center;gap:6px;margin-left:auto;padding:5px 10px;border-radius:999px;background:rgba(47,111,237,.08);color:#52627a;font-size:.72rem;font-weight:800;letter-spacing:.15px;white-space:nowrap;}
+.week-card.current-week .week-date{background:#eaf2ff;color:#1d5fd0;box-shadow:0 0 0 3px rgba(47,111,237,.08);}
+.week-card.current-week h2.wk::after{content:'CURRENT';font-size:.62rem;font-weight:900;letter-spacing:.7px;color:#fff;background:#2f6fed;border-radius:999px;padding:4px 8px;}
+.week-card.course-week-locked{min-height:190px;background:linear-gradient(135deg,#f3f4f6,#e8eaee);border:1px solid #d9dde5;border-radius:18px;padding:26px;box-shadow:none;overflow:hidden;}
+.week-card.course-week-locked h2.wk{color:#9aa2af;margin:0;}
+.week-card.course-week-locked h2.wk::before{background:#b7bdc7;}
+.week-lock-card{display:flex;align-items:center;gap:16px;margin-top:12px;padding:18px 20px;border:1px dashed #c5cad3;border-radius:14px;background:rgba(255,255,255,.58);color:#737b89;}
+.week-lock-icon{width:42px;height:42px;border-radius:13px;background:#dfe3e9;display:grid;place-items:center;font-size:20px;flex:0 0 auto;}
+.week-lock-card strong{display:block;color:#626a77;font-size:14px;margin-bottom:3px;}
+.week-lock-card span{font-size:12px;line-height:1.45;}
+.week-pill.is-locked{display:none;}
+.month-chip-locked{opacity:.42;cursor:not-allowed!important;filter:grayscale(1);}
+/* Read Me visual hierarchy */
+.note-week-badge{display:inline-flex;align-items:center;gap:7px;margin:0 0 10px;padding:6px 10px;border-radius:999px;background:linear-gradient(135deg,#f1edff,#fff);border:1px solid rgba(139,92,246,.18);color:#6847c7;font-size:11px;font-weight:900;letter-spacing:.35px;text-transform:uppercase;}
+.note-section.week1-note{border-top-color:#2f6fed;}
+.note-section.week2-note{border-top-color:#7c5cff;}
+.note-section.week3-note{border-top-color:#ff7a2d;}
+.note-lesson-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:16px 0;}
+.note-lesson-card{padding:15px;border-radius:14px;background:linear-gradient(180deg,#fafbff,#f4f6fb);border:1px solid #e3e7ef;}
+.note-lesson-card strong{display:block;margin-bottom:5px;color:#252a35;font-size:13px;}
+.note-lesson-card span{font-size:12px;color:#687183;line-height:1.5;}
+@media(max-width:700px){.week-date{margin-left:0}.week-card h2.wk{flex-wrap:wrap}.note-lesson-grid{grid-template-columns:1fr}}
+/* Screencast release UI */
+.theater-release-banner{margin:0 0 18px;padding:16px 18px;border-radius:16px;background:linear-gradient(135deg,#111827,#25345a);color:#fff;display:flex;align-items:center;justify-content:space-between;gap:14px;box-shadow:0 10px 30px rgba(15,23,42,.14);}
+.theater-release-banner .trb-title{font-weight:900;font-size:14px;margin-bottom:3px;}
+.theater-release-banner .trb-sub{font-size:11.5px;color:#cbd5e1;line-height:1.45;}
+.theater-release-count{padding:8px 11px;border-radius:999px;background:rgba(255,255,255,.1);font-size:11px;font-weight:900;white-space:nowrap;}
+.theater-item.theater-locked{display:none!important;}
+.theater-locked-panel{padding:26px;text-align:center;border:1px dashed #cbd2dc;border-radius:18px;background:linear-gradient(180deg,#f7f8fa,#eef0f3);color:#737b89;}
+.theater-locked-panel .tlp-icon{font-size:30px;margin-bottom:8px;}
+.theater-locked-panel strong{display:block;color:#4f5662;margin-bottom:5px;}
+
 /* ===== NOTES ===== */
 .note-section{background:#fff;border-radius:16px;box-shadow:var(--shadow);margin-bottom:24px;padding:26px 28px;position:relative;border-top:5px solid var(--c-notes);transition:box-shadow .25s ease,transform .25s ease;}
 .note-section:hover{box-shadow:0 16px 38px rgba(139,92,246,.16);transform:translateY(-2px);}
@@ -385,9 +414,6 @@ footer.appfoot .foot-contact a:hover{text-decoration:underline;}
 .theater-list{overflow-y:auto;display:flex;flex-direction:column;gap:4px;padding-right:2px;flex:1;min-height:0;}
 .theater-item{display:flex;gap:10px;align-items:flex-start;background:transparent;border:none;border-radius:10px;padding:6px;cursor:pointer;text-align:left;position:relative;transition:background .15s ease,transform .15s ease;}
 .theater-item:hover{background:#eef1f6;}
-.theater-item.locked{opacity:.42;filter:grayscale(.9);cursor:not-allowed;}
-.theater-item.locked:hover{background:transparent;}
-.theater-item .ti-lock{display:block;font-size:10.5px;color:#8a90a0;font-weight:700;margin-top:4px;}
 .theater-item.active{background:#e4ecff;box-shadow:inset 0 0 0 1px rgba(47,111,237,.25);}
 .theater-item .ti-thumb{position:relative;width:112px;height:66px;border-radius:8px;overflow:hidden;flex-shrink:0;background:linear-gradient(135deg,#ff6a2c,#7a2e05);display:flex;align-items:center;justify-content:center;color:#fff;font-size:15px;}
 .theater-item .ti-thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
@@ -659,7 +685,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
         <h2 class="wk">Week 3 — Around the World with a Twist (Project Week)</h2>
         <div class="day-grid">
         <div class="flip-card" data-day="3-1"><div class="flip-card-inner">
-        <div class="flip-card-front"><h4>Day 5: Removing Backgrounds &amp; Smudge Tool</h4><p>Cut a subject out cleanly, then use the Smudge Tool to erase any leftover white fringe line.</p><span class="flip-hint">Tap to flip</span></div>
+        <div class="flip-card-front"><h4>Day 5: Removing Backgrounds</h4><p>Cut a subject out cleanly and prepare the layer mask for a realistic composite.</p><span class="flip-hint">Tap to flip</span></div>
         <div class="flip-card-back"><div class="vocab-title">Vocabulary</div>
         <p><span class="vocab" tabindex="0" data-def="Automatically detects and separates the subject from its background.">Select Subject / Background Remover</span><span class="vocab-def"> — Automatically detects and separates the subject from its background.</span>,
         <span class="vocab" tabindex="0" data-def="Pushes and blends pixels like wet paint — great for softening rough cutout edges.">Smudge Tool</span><span class="vocab-def"> — Pushes and blends pixels like wet paint — great for softening rough cutout edges.</span>,
@@ -669,15 +695,21 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
         <div class="big-ideas">Even a clean selection often leaves a faint white line around the edges. Zoom in to 200%+ and use the Smudge Tool (or Defringe/Contract) to blend that line away so the cutout sits seamlessly against its new background.</div>
         </div></div></div>
         <div class="flip-card" data-day="3-2"><div class="flip-card-inner">
-        <div class="flip-card-front"><h4>Day 6: Removing Backgrounds, Placing in the World &amp; Gaussian Blur</h4><p>Remove a subject from its original background, place it naturally into a new world scene, then use Gaussian Blur to match depth and focus.</p><span class="flip-hint">Tap to flip</span></div>
+        <div class="flip-card-front"><h4>Day 6: Smudge Tool, Minimum &amp; Gaussian Blur</h4><p>Clean the removed-background edge, remove the white line with Filter → Other → Minimum, then match the subject to the world background with subtle blur.</p><span class="flip-hint">Tap to flip</span></div>
         <div class="flip-card-back"><div class="vocab-title">Vocabulary</div>
-        <p><span class="vocab" tabindex="0" data-def="Separates the main subject cleanly from the original background.">Background Removal</span><span class="vocab-def"> — Separates the main subject cleanly from the original background.</span>,
-        <span class="vocab" tabindex="0" data-def="Moves a cut-out subject into a new image or environment and blends it with the scene.">Compositing</span><span class="vocab-def"> — Moves a cut-out subject into a new image or environment and blends it with the scene.</span>,
-        <span class="vocab" tabindex="0" data-def="A soft blur that reduces detail and simulates depth or distance.">Gaussian Blur</span><span class="vocab-def"> — A soft blur that reduces detail and simulates depth or distance.</span>,
-        <span class="vocab" tabindex="0" data-def="The visual relationship between foreground, subject and background elements in a composite.">Depth of Field</span><span class="vocab-def"> — The visual relationship between foreground, subject and background elements in a composite.</span>,
-        <span class="vocab" tabindex="0" data-def="Adjusts the edges and mask of a cut-out so the subject blends naturally into its new environment.">Layer Mask</span><span class="vocab-def"> — Adjusts the edges and mask of a cut-out so the subject blends naturally into its new environment.</span></p>
-        <div class="big-ideas">A convincing composite depends on more than a clean cut-out. Match scale, lighting, color and sharpness, then apply Gaussian Blur selectively so distant parts of the scene feel farther away and the subject belongs in the new world.</div>
-        <div class="summary-text">Week 3 project work: remove the background, place the subject into the Around the World scene, and use Gaussian Blur where needed to create realistic depth.</div>
+        <p><span class="vocab" tabindex="0" data-def="Blends and pushes pixels to soften rough edges.">Smudge Tool</span><span class="vocab-def"> — Blends and pushes pixels to soften rough edges.</span>,
+        <span class="vocab" tabindex="0" data-def="A filter found under Filter → Other that contracts a mask edge to remove a thin fringe.">Minimum</span><span class="vocab-def"> — A filter found under Filter → Other that contracts a mask edge to remove a thin fringe.</span>,
+        <span class="vocab" tabindex="0" data-def="A blur filter used subtly to match depth and soften an edge or layer.">Gaussian Blur</span><span class="vocab-def"> — A blur filter used subtly to match depth and soften an edge or layer.</span>,
+        <span class="vocab" tabindex="0" data-def="A thin strip of the old background left around a cutout.">White Fringe</span><span class="vocab-def"> — A thin strip of the old background left around a cutout.</span>,
+        <span class="vocab" tabindex="0" data-def="A non-destructive boundary that hides pixels without deleting the original.">Layer Mask</span><span class="vocab-def"> — A non-destructive boundary that hides pixels without deleting the original.</span></p>
+        <ol class="note-steps">
+          <li>Zoom in and inspect the cutout edge.</li>
+          <li>Select the layer mask and go to <strong>Filter → Other → Minimum</strong>.</li>
+          <li>Use the smallest useful radius so the white line disappears without shrinking the subject too much.</li>
+          <li>Use the <strong>Smudge Tool</strong> for small edge corrections.</li>
+          <li>Place the subject into the world background and add a <strong>subtle Gaussian Blur</strong> only where needed to match depth.</li>
+        </ol>
+        <div class="big-ideas">The best composite is usually the one where the edge treatment is invisible. Minimum removes the fringe, Smudge repairs small imperfections, and Gaussian Blur helps the subject belong to the new scene.</div>
         </div></div></div>
         </div></div>
         <div class="week-card" id="week4">
@@ -687,11 +719,11 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
         <div class="flip-card-front"><h4>Day 1: Creating a Passport Size Photo</h4><p>Crop, retouch and format a professional passport-size photo from start to finish.</p><span class="flip-hint">Tap to flip</span></div>
         <div class="flip-card-back"><div class="vocab-title">Vocabulary</div>
         <p><span class="vocab" tabindex="0" data-def="Trims the canvas down to an exact size and ratio.">Crop Tool</span><span class="vocab-def"> — Trims the canvas down to an exact size and ratio.</span>,
-        <span class="vocab" tabindex="0" data-def="The standard 2x2 inch dimension required for most ID and passport photos.">Passport Size (2x2 in)</span><span class="vocab-def"> — The standard 2x2 inch dimension required for most ID and passport photos.</span>,
-        <span class="vocab" tabindex="0" data-def="Replaces the background with a flat, regulation color — usually plain white.">Solid Color Fill</span><span class="vocab-def"> — Replaces the background with a flat, regulation color — usually plain white.</span>,
-        <span class="vocab" tabindex="0" data-def="Lightens or darkens areas to even out skin tone and lighting.">Dodge &amp; Burn</span><span class="vocab-def"> — Lightens or darkens areas to even out skin tone and lighting.</span>,
-        <span class="vocab" tabindex="0" data-def="Passport photos are typically saved at 300 DPI for sharp, print-quality results.">Resolution (DPI)</span><span class="vocab-def"> — Passport photos are typically saved at 300 DPI for sharp, print-quality results.</span></p>
-        <div class="big-ideas">Passport photos follow strict formatting rules — exact size, plain background, even lighting, natural expression — so precision matters more here than creativity.</div>
+        <span class="vocab" tabindex="0" data-def="The standard passport-photo dimensions used for the class exercise.">Passport Size (1.5 × 2 in)</span><span class="vocab-def"> — The standard passport-photo dimensions used for the class exercise.</span>,
+        <span class="vocab" tabindex="0" data-def="Replaces the background with a clean, flat color.">Solid Color Fill</span><span class="vocab-def"> — Replaces the background with a clean, flat color.</span>,
+        <span class="vocab" tabindex="0" data-def="Lightens or darkens areas to balance exposure and skin tone.">Dodge &amp; Burn</span><span class="vocab-def"> — Lightens or darkens areas to balance exposure and skin tone.</span>,
+        <span class="vocab" tabindex="0" data-def="Pixel density used for print output.">Resolution (DPI)</span><span class="vocab-def"> — Pixel density used for print output.</span></p>
+        <div class="big-ideas">Passport photos need exact dimensions, a clean background, even lighting and a professional crop. Work non-destructively so the final image can still be corrected before export.</div>
         </div></div></div>
         <div class="flip-card" data-day="4-2"><div class="flip-card-inner">
         <div class="flip-card-front flip-card-quiz-front"><h4>Day 2: Puppet Warp, Dress Change &amp; Final Project</h4><p>Advanced portrait manipulation, then apply all skills from Week 1–4.</p><span class="flip-hint" style="color:rgba(255,255,255,.75)">Tap to flip</span></div>
@@ -1421,11 +1453,12 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
           <div class="note-tip"><strong>Tip:</strong> Always keep a "backup layer" for original images to prevent accidental mistakes.</div>
           <div class="note-visual"><strong>Visual Example:</strong> Imagine a blank canvas as a plate. Each layer is a separate ingredient. Masks are lids that cover parts of layers without deleting them. Smart Objects are frozen ingredients you can use later without changing the original taste.</div>
         </div>
-        <div class="note-section" id="open-save-export" data-reading="open-save-export">
+        <div class="note-section week1-note" id="open-save-export" data-reading="open-save-export">
           <div class="note-actions">
           <button class="note-dl" onclick="downloadSectionPDF('open-save-export','How to Open, Save and Export Files in Photoshop')">Download PDF</button>
           <button class="note-mark" data-reading-key="open-save-export" onclick="markReadingRead('open-save-export', this)"><span class="nm-circle" aria-hidden="true"></span><span class="nm-label">Mark as Read</span></button>
           </div>
+          <div class="note-week-badge">Week 1 · File Basics</div>
           <h3>How to Open, Save and Export Files in Photoshop</h3>
           <p>Save and export is the loop every Photoshop project runs on: open a file, work on it in layers, save the layered version, then export a flat copy for wherever it is going. Skip the middle step and you can never revise the edit; skip the last one and you have a file nobody else can open.</p>
           <p>Photoshop's file handling trips people up more often than any of its tools, and always in the same way: the finished JPEG exists, the layered version does not, and the only way to change anything is to start over.</p>
@@ -1556,22 +1589,54 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
           <div class="note-tip"><strong>Tip:</strong> Learn Photopea shortcuts; most match Photoshop for faster workflow.</div>
           <div class="note-visual"><strong>Visual Example:</strong> Picture carrying a small, foldable art studio in your laptop browser, with all brushes, layers, and panels ready.</div>
         </div>
-        <div class="note-section" id="removing-bg" data-reading="removing-bg">
+        <div class="note-section week2-note" id="week2-core" data-reading="week2-core">
           <div class="note-actions">
-          <button class="note-dl" onclick="downloadSectionPDF('removing-bg','Removing Backgrounds and Subjects')">Download PDF</button>
+          <button class="note-dl" onclick="downloadSectionPDF('week2-core','Week 2 — Destructive vs Non-Destructive Editing & Raster Pixels')">Download PDF</button>
+          <button class="note-mark" data-reading-key="week2-core" onclick="markReadingRead('week2-core', this)"><span class="nm-circle" aria-hidden="true"></span><span class="nm-label">Mark as Read</span></button>
+          </div>
+          <div class="note-week-badge">Week 2 · Editing Foundations</div>
+          <h3>Destructive vs Non-Destructive Editing &amp; Raster Pixels</h3>
+          <p>Week 2 is about understanding what Photoshop is actually changing: individual pixels, layers, masks and editable adjustments.</p>
+          <div class="note-lesson-grid">
+            <div class="note-lesson-card"><strong>Destructive editing</strong><span>Changes the original pixels permanently. Examples include painting directly on the original layer, erasing pixels, or flattening too early.</span></div>
+            <div class="note-lesson-card"><strong>Non-destructive editing</strong><span>Preserves the original image so the edit can be changed later. Use Layer Masks, Adjustment Layers, Smart Objects and duplicate backup layers.</span></div>
+            <div class="note-lesson-card"><strong>Raster / pixel</strong><span>A raster image is built from a grid of pixels. Photos are raster images, so enlarging them too far reveals the individual pixels.</span></div>
+            <div class="note-lesson-card"><strong>Why pixels matter</strong><span>Selections, brushes, erasers and many retouching tools change pixels. Work on copies or masks whenever you need the original to remain safe.</span></div>
+          </div>
+          <ol class="note-steps">
+            <li><strong>Raster</strong> means the image is represented by pixels arranged in a grid.</li>
+            <li><strong>Pixel</strong> is the smallest individual image unit in a raster picture.</li>
+            <li><strong>Destructive:</strong> paint/erase directly on the original and the pixel information is changed.</li>
+            <li><strong>Non-destructive:</strong> use masks, adjustment layers, Smart Objects and duplicate layers so the original can be recovered or adjusted.</li>
+            <li><strong>Practice:</strong> duplicate a photo, make one destructive edit on the copy, then recreate the same visual result non-destructively with a mask or adjustment layer.</li>
+          </ol>
+          <div class="note-tip"><strong>Rule for this course:</strong> Keep an untouched backup layer at the bottom of your stack. If you can change your mind later without starting over, you are probably working non-destructively.</div>
+        </div>
+        <div class="note-section week3-note" id="removing-bg" data-reading="removing-bg">
+          <div class="note-actions">
+          <button class="note-dl" onclick="downloadSectionPDF('removing-bg','Week 3 — Removing Backgrounds, Smudge Tool & Minimum')">Download PDF</button>
           <button class="note-mark" data-reading-key="removing-bg" onclick="markReadingRead('removing-bg', this)"><span class="nm-circle" aria-hidden="true"></span><span class="nm-label">Mark as Read</span></button>
           </div>
-          <h3>Removing Backgrounds and Subjects</h3>
-          <p>Essential for product design, e-commerce, social media, and composites.</p>
+          <div class="note-week-badge">Week 3 · Removing Backgrounds</div>
+          <h3>Removing Backgrounds &amp; Smudge Tool</h3>
+          <p>Learn to remove a background cleanly, place the subject into the <strong>Around the World</strong> composition, and finish the edge so no distracting white line remains.</p>
+          <div class="note-lesson-grid">
+            <div class="note-lesson-card"><strong>01 · Remove the background</strong><span>Use Select Subject / Background Remover, then refine the selection and keep the result on a Layer Mask.</span></div>
+            <div class="note-lesson-card"><strong>02 · Clean the edge</strong><span>Zoom to 200% or more and inspect the subject for white or old-background fringe.</span></div>
+            <div class="note-lesson-card"><strong>03 · Filter → Other → Minimum</strong><span>Use <strong>Filter → Other → Minimum</strong> with a small radius to contract the mask edge and remove the thin white line.</span></div>
+            <div class="note-lesson-card"><strong>04 · Smudge + Gaussian Blur</strong><span>Use the Smudge Tool for small edge cleanup, then add a subtle Gaussian Blur where needed so the subject matches the depth of the new world scene.</span></div>
+          </div>
           <ol class="note-steps">
-            <li>Select the subject using <strong>Quick Selection Tool</strong> or <strong>Select Subject</strong>.</li>
-            <li>Refine edges using <strong>Select and Mask</strong>.</li>
-            <li>Apply <strong>Layer Mask</strong> to hide the background non-destructively.</li>
-            <li>Use <strong>Refine Edge Brush</strong> for hair or intricate details.</li>
+            <li><strong>Select the subject</strong> with Select Subject / Background Remover.</li>
+            <li><strong>Refine the mask</strong> around hair, clothing and other detailed edges.</li>
+            <li><strong>Remove the white line:</strong> select the layer mask, then go to <strong>Filter → Other → Minimum</strong>. Start with a very small radius and increase only until the white fringe disappears.</li>
+            <li><strong>Smudge the edge</strong> gently where the cutout still looks rough. Work at high zoom and use a soft brush.</li>
+            <li><strong>Place the subject in the world</strong> and check scale, lighting and edge sharpness against the new background.</li>
+            <li><strong>Add a subtle Gaussian Blur</strong> to the appropriate subject/edge layer when the foreground needs to match the scene's depth. Keep it subtle — the goal is realism, not a visibly blurred person.</li>
           </ol>
-          <div class="note-tool"><strong>Analogy:</strong> Digital scissors that are reversible.</div>
-          <div class="note-tip"><strong>Tip:</strong> Check edges at 200% zoom for perfection.</div>
-          <div class="note-visual"><strong>Visual Example:</strong> Imagine cutting a portrait out of a magazine but having invisible scissors that allow you to adjust edges after cutting.</div>
+          <div class="note-tool"><strong>Photoshop / Photopea path:</strong> Background removal → Layer Mask → select mask → <strong>Filter → Other → Minimum</strong>. This contracts the mask slightly and is especially useful for removing a thin light fringe left by the original background.</div>
+          <div class="note-tip"><strong>Pro Tip:</strong> Never overdo Minimum. If the radius is too large, the subject becomes visibly smaller. Make the smallest change that removes the white line, then use Smudge only for the remaining problem areas.</div>
+          <div class="note-visual"><strong>Final check:</strong> Put the cutout over the world background. If the edge is too sharp compared with the scene, add a very small Gaussian Blur and match the subject's scale, lighting and contrast to the background.</div>
         </div>
         <div class="note-section" id="passport" data-reading="passport">
           <div class="note-actions">
@@ -1659,9 +1724,10 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
       </section>
       <!-- ========== SCREENCASTS (CINEMATIC THEATER PLAYER) ========== -->
       <section id="screencasts" class="view">
-        <div class="view-head"><div><h2>Screencasts</h2><p>For now, the first two recordings are available. Additional recordings are shown in gray until they are released.</p></div></div>
+        <div class="view-head"><div><h2>Screencasts</h2></div></div>
         <div class="theater" id="screencastTheater">
           <div class="theater-main">
+            <div class="theater-release-banner" id="theaterReleaseBanner"><div><div class="trb-title">🎬 Screencasts · Released for this week</div><div class="trb-sub">Only the first two recordings are available now. More recordings unlock with the course schedule.</div></div><div class="theater-release-count" id="theaterReleaseCount">2 available</div></div>
             <div class="theater-stage" id="theaterStage">
               <div class="theater-player" id="theaterPlayerWrap"></div>
             </div>
@@ -1791,12 +1857,15 @@ function buildWeekNav(month){
     const b = document.createElement('button');
     b.className = 'week-pill';
     b.type = 'button';
-    b.textContent = 'Week ' + w;
-    b.onclick = () => document.getElementById('week'+w).scrollIntoView({behavior:'smooth', block:'start'});
+    const currentWeek = (typeof COURSE_START_DATE !== 'undefined') ? courseWeekForDate() : 0;
+    if(w>currentWeek) return;
+    b.textContent = `Week ${w} · ${formatWeekRange(w)}`;
+    b.onclick = () => document.getElementById('week'+w)?.scrollIntoView({behavior:'smooth', block:'start'});
     nav.appendChild(b);
   });
 }
 buildWeekNav('m1');
+setTimeout(()=>{ decorateReadMeOrder(); applyCourseReleaseState(); }, 0);
 /* Projects sub-nav */
 document.getElementById('projSubnav').addEventListener('click', e=>{
   const btn = e.target.closest('button');
@@ -1813,36 +1882,6 @@ const weekMeta = {
   13:'Coming Soon', 14:'Coming Soon', 15:'Coming Soon', 16:'Coming Soon'
 };
 const TOTAL_WEEKS = 16;
-const COURSE_START_DATE = new Date('2026-09-14T00:00:00'); // Monday, Sept 14, 2026 = Week 1
-function courseWeekNumber(date=new Date()){
-  const d = new Date(date); d.setHours(0,0,0,0);
-  const start = new Date(COURSE_START_DATE); start.setHours(0,0,0,0);
-  return Math.floor((d-start)/86400000/7)+1;
-}
-function weekDateRange(w){
-  const start = new Date(COURSE_START_DATE);
-  start.setDate(start.getDate() + (w-1)*7);
-  const end = new Date(start); end.setDate(end.getDate()+6);
-  const opts={month:'short',day:'numeric'};
-  return `${start.toLocaleDateString(undefined,opts)}–${end.toLocaleDateString(undefined,opts)}`;
-}
-function isCourseWeekOpen(w){ return w <= courseWeekNumber(new Date()); }
-function applyCalendarWeekState(){
-  const current = courseWeekNumber(new Date());
-  for(let w=1; w<=TOTAL_WEEKS; w++){
-    const card=document.getElementById('week'+w);
-    if(!card) continue;
-    const heading=card.querySelector('.wk');
-    if(heading){
-      let dateEl=heading.querySelector('.week-date');
-      if(!dateEl){ dateEl=document.createElement('span'); dateEl.className='week-date'; heading.appendChild(dateEl); }
-      dateEl.textContent=weekDateRange(w);
-    }
-    card.classList.toggle('future-week', w>current);
-    card.classList.toggle('current-week', w===current);
-    card.setAttribute('aria-disabled', w>current ? 'true':'false');
-  }
-}
 const cards = document.querySelectorAll('.flip-card[data-day]');
 let completed = [];
 try{ completed = JSON.parse(localStorage.getItem('completedDays')) || []; }catch(e){ completed = []; }
@@ -1867,7 +1906,7 @@ function buildLayersPanel(){
     row.setAttribute('aria-label', `Week ${w}: ${weekMeta[w]}, ${pct}% complete`);
     row.innerHTML = `<span class="lp-eye" aria-hidden="true">${pct===100?'●':'○'}</span>
       <span class="lp-thumb"><i style="height:${pct}%"></i></span>
-      <span class="lp-label"><b>Week ${w} · ${weekDateRange(w)}</b><small>${weekMeta[w]}</small></span>
+      <span class="lp-label"><b>Week ${w}</b><small>${weekMeta[w]}</small></span>
       <span class="lp-pct">${pct}%</span>`;
     const jump = () => {
       const monthOf = w<=4?'m1':(w<=8?'m2':(w<=12?'m3':'m4'));
@@ -1906,14 +1945,10 @@ cards.forEach(card=>{
   card.setAttribute('aria-label','Lesson card, tap to flip and mark complete');
   // Touch/click devices don't support :hover reliably — toggle a flipped class explicitly.
   card.addEventListener('click', ()=>{
-    const week = Number(card.dataset.day.split('-')[0]);
-    if(!isCourseWeekOpen(week)) return;
     card.classList.toggle('flipped');
     toggleCardDone(card);
   });
   card.addEventListener('keydown', e=>{
-    const week = Number(card.dataset.day.split('-')[0]);
-    if(!isCourseWeekOpen(week)) return;
     if(e.key==='Enter' || e.key===' '){
       e.preventDefault();
       card.classList.toggle('flipped');
@@ -1925,7 +1960,6 @@ const cardObserver = new IntersectionObserver(entries=>{
   entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('visible'); });
 },{threshold:0.15});
 cards.forEach(c=>cardObserver.observe(c));
-applyCalendarWeekState();
 updateProgress();
 document.getElementById('lpToggle').addEventListener('click', function(){
   const panel = document.getElementById('layersPanel');
@@ -2058,7 +2092,7 @@ function renderQuizBody(questions){
     <div style="margin-bottom:12px;">
       <div style="font-size:13px;font-weight:700;margin-bottom:6px;">${i+1}. ${q.prompt}</div>
       ${q.options.map((opt,oi)=>`<label style="display:block;font-size:13px;margin:4px 0;cursor:pointer;">
-        <input type="radio" name="cqqi" value="${oi}" data-correct="${opt.correct?'1':'0'}"> ${opt.text}
+        <input type="radio" name="cqqi"value="{oi}" data-correct="${opt.correct?'1':'0'}"> ${opt.text}
       </label>`).join('')}
     </div>`).join('');
 }
@@ -2202,6 +2236,71 @@ document.getElementById('cqSubmit').addEventListener('click', ()=>{
 const REPORT_EMAIL = 'thomas@hmacademy.org';
 const GOOGLE_FORM_ACTION_URL = ''; // e.g. 'https://docs.google.com/forms/d/e/XXXXXXXX/formResponse'
 const GOOGLE_FORM_ENTRY_ID = '';   // e.g. 'entry.1234567890'
+const COURSE_START_DATE = new Date('2026-09-14T00:00:00'); // Sept 14 = Week 1, Day 1
+const RELEASE_DAY_MS = 7 * 86400000;
+function courseWeekForDate(date=new Date()){
+  const local = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+  const start = new Date(COURSE_START_DATE.getFullYear(), COURSE_START_DATE.getMonth(), COURSE_START_DATE.getDate());
+  const diff = Math.floor((local-start)/RELEASE_DAY_MS);
+  return Math.max(0, Math.min(TOTAL_WEEKS, diff+1));
+}
+function formatWeekRange(w){
+  const a = new Date(COURSE_START_DATE.getTime() + (w-1)*RELEASE_DAY_MS);
+  const b = new Date(a.getTime() + 6*86400000);
+  const fmt = d => d.toLocaleDateString(undefined,{month:'short',day:'numeric'});
+  return `${fmt(a)}–${fmt(b)}, ${a.getFullYear()}`;
+}
+function applyCourseReleaseState(){
+  const currentWeek = courseWeekForDate();
+  document.querySelectorAll('.week-card[id^="week"]').forEach(card=>{
+    const w = Number(card.id.replace('week',''));
+    if(!w) return;
+    const h = card.querySelector('h2.wk');
+    if(h){
+      let date = h.querySelector('.week-date');
+      if(!date){ date=document.createElement('span'); date.className='week-date'; h.appendChild(date); }
+      date.textContent = formatWeekRange(w);
+    }
+    if(!card.dataset.originalHtml) card.dataset.originalHtml = card.innerHTML;
+    const locked = w > currentWeek;
+    card.classList.toggle('course-week-locked', locked);
+    card.classList.toggle('current-week', w===currentWeek);
+    if(locked){
+      card.innerHTML = `<h2 class="wk">Week ${w} <span class="week-date">${formatWeekRange(w)}</span></h2>
+        <div class="week-lock-card"><div class="week-lock-icon" aria-hidden="true">🔒</div><div><strong>Course content locked</strong><span>This week's lessons will open automatically on ${new Date(COURSE_START_DATE.getTime()+(w-1)*RELEASE_DAY_MS).toLocaleDateString(undefined,{month:'long',day:'numeric',year:'numeric'})}.</span></div></div>`;
+    }else if(card.dataset.originalHtml){
+      card.innerHTML = card.dataset.originalHtml;
+    }
+  });
+  // Rebuild the week navigation so future course content is not exposed through the nav.
+  const activeMonth = document.querySelector('#monthSwitch .chip.active')?.dataset.month || 'm1';
+  buildWeekNav(activeMonth);
+  document.querySelectorAll('#monthSwitch .chip').forEach(chip=>{
+    const weeks = weeksByMonth[chip.dataset.month] || [];
+    const available = weeks.some(w=>w<=currentWeek);
+    chip.classList.toggle('month-chip-locked', !available);
+    chip.disabled = !available;
+  });
+  // Read Me is intentionally aligned with the same release calendar.
+  document.querySelectorAll('#notes .note-section[data-reading]').forEach(n=>{
+    const w = Number(n.dataset.week || 0);
+    if(w) n.style.display = w<=currentWeek ? '' : 'none';
+  });
+}
+function decorateReadMeOrder(){
+  const notes = document.getElementById('notes');
+  if(!notes) return;
+  const first = document.getElementById('open-save-export');
+  const second = document.getElementById('week2-core');
+  const third = document.getElementById('removing-bg');
+  if(first) notes.insertBefore(first, notes.querySelector('.view-head').nextElementSibling);
+  if(second) notes.insertBefore(second, first ? first.nextElementSibling : null);
+  if(third) notes.insertBefore(third, second ? second.nextElementSibling : null);
+  if(first) first.dataset.week='1';
+  if(second) second.dataset.week='2';
+  if(third) third.dataset.week='3';
+}
+
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 /* Lightweight device/browser sniff from navigator.userAgent — good enough to note
    "which device this report came from" for the instructor, not meant to be exact. */
@@ -2314,6 +2413,8 @@ function enterApp(){
   updateGrade();
   checkBiweeklyReport();
   theaterRenderSide();
+  decorateReadMeOrder();
+  applyCourseReleaseState();
 }
 function initAuth(){
   const cur = getCurrentStudent();
@@ -2405,9 +2506,9 @@ function maybeShowWeekQuiz(week){
     quiz.forEach((q,i)=>{
       const wrap = document.createElement('div');
       wrap.style.marginBottom = '12px';
-      wrap.innerHTML = `<div style="font-size:13px;font-weight:700;margin-bottom:6px;">${i+1}. What does "${q.term}" mean?</div>` +
+      wrap.innerHTML = `<div style="font-size:13px;font-weight:700;margin-bottom:6px;">i+1.Whatdoes"{q.term}" mean?</div>` +
         q.options.map((opt,oi)=>`<label style="display:block;font-size:13px;margin:4px 0;cursor:pointer;">
-          <input type="radio" name="wqqi" value="${oi}" data-correct="${opt===q.correct?'1':'0'}"> ${opt}
+          <input type="radio" name="wqqi"value="{oi}" data-correct="${opt===q.correct?'1':'0'}"> ${opt}
         </label>`).join('');
       body.appendChild(wrap);
     });
@@ -2530,7 +2631,7 @@ function renderProgressView(){
     if(st.pct===100){ badgeClass='done'; badgeText='Complete'; }
     else if(st.pct>0){ badgeClass='partial'; badgeText='In progress'; }
     const quizText = quiz ? (quiz.total ? `${quiz.score}/${quiz.total} correct` : 'Reflection submitted') : '—';
-    rows += `<tr><td>Week ${w} · ${weekDateRange(w)}</td><td>${weekMeta[w]||''}</td><td>${st.done}/${st.total} days</td><td><span class="pw-badge ${badgeClass}">${badgeText}</span></td><td>${quizText}</td></tr>`;
+    rows += `<tr><td>Week ${w}</td><td>${weekMeta[w]||''}</td><td>${st.done}/${st.total} days</td><td><span class="pw-badge ${badgeClass}">${badgeText}</span></td><td>${quizText}</td></tr>`;
   }
   let readingRows = readingPool.map(item=>{
     const isRead = student.readingSeen.includes(item.key);
@@ -2594,7 +2695,7 @@ function renderAssessmentView(){
     body.innerHTML = `<div class="progress-signedout"><h3>Sign in to take assessments</h3><p>Assessments are generated automatically from the Read Me notes and screencast descriptions.</p></div>`;
     return;
   }
-  const pool = typeof screencastQuizPool !== 'undefined' ? screencastQuizPool.slice(0,2) : [];
+  const pool = typeof screencastQuizPool !== 'undefined' ? screencastQuizPool : [];
   const readingItems = readingPool.map(item=>{
     const quiz = student.contentQuizzes.reading[item.key];
     const statusText = quiz ? `${quiz.score}/${quiz.total}` : 'Not taken';
@@ -2617,18 +2718,18 @@ function renderAssessmentView(){
   const videoPct = pool.length ? Math.round((videoDone/pool.length)*100) : 0;
   body.innerHTML = `
     <div class="assess-summary-row">
-      <div class="progress-card" style="--pc-accent:#8b5cf6;flex:1;min-width:200px;"><h4>Read Me Assessments</h4><div class="pc-big">${readingDone}/${readingPool.length}</div><div class="pc-sub">completed</div></div>
-      <div class="progress-card" style="--pc-accent:#ff6a2c;flex:1;min-width:200px;"><h4>Screencast Assessments</h4><div class="pc-big">${videoDone}/${pool.length}</div><div class="pc-sub">completed</div></div>
+      <div class="progress-card" style="--pc-accent:#8b5cf6;flex:1;min-width:200px;"><h4>Read Me Assessments</h4><div class="pc-big">readingDone/{readingPool.length}</div><div class="pc-sub">completed</div></div>
+      <div class="progress-card" style="--pc-accent:#ff6a2c;flex:1;min-width:200px;"><h4>Screencast Assessments</h4><div class="pc-big">videoDone/{pool.length}</div><div class="pc-sub">completed</div></div>
     </div>
     <div class="note-section collapsed" id="assess-reading">
-      <h3><span>Read Me Notes Assessment <span class="note-count">${readingDone}/${readingPool.length}</span></span></h3>
-      <div class="assess-progress-row"><span>${readingDone} of ${readingPool.length} completed</span><span style="color:var(--c-notes);">${readingPct}%</span></div>
+      <h3><span>Read Me Notes Assessment <span class="note-count">readingDone/{readingPool.length}</span></span></h3>
+      <div class="assess-progress-row"><span>${readingDone} of readingPool.lengthcompleted</span><spanstyle="color:var(--c-notes);">{readingPct}%</span></div>
       <div class="assess-progress-bar"><i style="background:linear-gradient(90deg,#8b5cf6,#b794f4);width:${readingPct}%;"></i></div>
       <div>${readingItems}</div>
     </div>
     <div class="note-section collapsed" id="assess-video">
-      <h3><span>Screencast Assessment <span class="note-count">${videoDone}/${pool.length}</span></span></h3>
-      <div class="assess-progress-row"><span>${videoDone} of ${pool.length} completed</span><span style="color:var(--c-screen);">${videoPct}%</span></div>
+      <h3><span>Screencast Assessment <span class="note-count">videoDone/{pool.length}</span></span></h3>
+      <div class="assess-progress-row"><span>${videoDone} of pool.lengthcompleted</span><spanstyle="color:var(--c-screen);">{videoPct}%</span></div>
       <div class="assess-progress-bar"><i style="background:linear-gradient(90deg,#ff6a2c,#ffb347);width:${videoPct}%;"></i></div>
       <div>${videoItems}</div>
     </div>`;
@@ -2738,7 +2839,7 @@ function buildProgressReportDoc(trigger){
   doc.setFontSize(9);
   doc.text(`${student.name}  ·  ${student.email}`, 98, 80);
   doc.setFontSize(8); doc.setTextColor(150,160,192);
-  doc.text(`Generated ${new Date().toLocaleString()}  ·  Device: ${device}${trigger ? '  ·  '+trigger : ''}`, 98, 93);
+  doc.text(`Generated ${new Date().toLocaleString()}  ·  device{trigger ? '  ·  '+trigger : ''}`, 98, 93);
 
   let y = 130;
 
@@ -2746,7 +2847,7 @@ function buildProgressReportDoc(trigger){
   const stats = [
     { label:'Overall Grade', big:`${g.letter} · ${g.pct}%`, color:P.blue },
     { label:'Lessons Completed', big:`${student.completed.length}/${cards.length}`, color:P.orange },
-    { label:'Week Quizzes', big:`${quizzesTaken}/${TOTAL_WEEKS}`, color:P.purple },
+    { label:'Week Quizzes', big:`quizzesTaken/{TOTAL_WEEKS}`, color:P.purple },
     { label:'Reading Opened', big:`${student.readingSeen.length}/11`, color:P.purple },
     { label:'Screencasts Watched', big:`${videosConfirmed}/23`, color:P.red },
     { label:'Practice Files Opened', big:`${student.seenPractice.length}/43`, color:P.blue },
@@ -2771,9 +2872,9 @@ function buildProgressReportDoc(trigger){
   for(let w=1; w<=TOTAL_WEEKS; w++){
     const st = weekStatus(w);
     const quiz = student.weekQuizzes[w];
-    const quizText = quiz ? (quiz.total ? `${quiz.score}/${quiz.total} correct` : 'Reflection submitted') : 'Not taken';
+    const quizText = quiz ? (quiz.total ? `${quiz.score}/${quiz.total}` : 'Reflection') : '—';
     const statusText = st.pct===100 ? 'Complete' : (st.pct>0 ? 'In progress' : 'Not started');
-    weekRows.push([`Week ${w} · ${weekDateRange(w)}`,pdfSafeText(weekMeta[w]||''),`${st.done}/${st.total}`, statusText, quizText]);
+    weekRows.push([`Week ${w}`,pdfSafeText(weekMeta[w]||''),`${st.done}/${st.total}`, statusText, quizText]);
   }
   if(hasAutoTable){
     doc.autoTable({
@@ -2907,7 +3008,7 @@ function notifyInstructor(trigger){
     // student to attach the PDF that was downloaded at the same moment.
     const subject = encodeURIComponent(`Progress Report — ${student.name} (${student.email})`);
     const body = encodeURIComponent(summary + '\n\nAttach the file you downloaded now.');
-    window.location.href = `mailto:${REPORT_EMAIL}?subject=${subject}&body=${body}`;
+    window.location.href = `mailto:REPORTEMAIL?subject={subject}&body=${body}`;
   }
 }
 /* Fires both halves of a report: a short notification to the instructor, and the
@@ -2924,6 +3025,10 @@ document.getElementById('lpReportBtn').addEventListener('click', ()=>{
 });
 /* ---------- CALENDAR-BASED BIWEEKLY AUTO-REPORT (Sept 14 = Week 1) ---------- */
 const BIWEEKLY_PERIODS = Math.ceil(TOTAL_WEEKS/2); // 16 weeks -> 8 two-week periods
+function courseWeekNumber(date){
+  const diffDays = Math.floor((date - COURSE_START_DATE) / 86400000);
+  return Math.floor(diffDays/7) + 1; // 1-indexed; <=0 means before the course starts
+}
 function checkBiweeklyReport(){
   if(!student) return;
   student.biweeklySent = student.biweeklySent || {};
@@ -2933,13 +3038,13 @@ function checkBiweeklyReport(){
     const dueDate = new Date(COURSE_START_DATE.getTime() + periodEndsAfterWeek*7*86400000);
     if(now >= dueDate && !student.biweeklySent[p]){
       const weekLo = p*2-1, weekHi = periodEndsAfterWeek;
-      submitReportSilently(`Biweekly report — Weeks ${weekLo}-${weekHi}`);
+      submitReportSilently(`Biweekly report — Weeks weekLo-{weekHi}`);
       student.biweeklySent[p] = new Date().toISOString();
       saveStudentRecord(student);
     }
   }
 }
-document.addEventListener('visibilitychange', ()=>{ if(document.visibilityState==='visible'){ applyCalendarWeekState(); checkBiweeklyReport(); } });
+document.addEventListener('visibilitychange', ()=>{ if(document.visibilityState==='visible') checkBiweeklyReport(); });
 /* ---------- GOJO PROJECT FORM ---------- */
 document.getElementById('gjAddMemberBtn').addEventListener('click', gjAddMember);
 function gjAddMember(){
@@ -2963,7 +3068,7 @@ document.querySelectorAll('.ideaUpload').forEach(inp=>{
       const url=URL.createObjectURL(file);
       const box=document.createElement('div');
       box.className='thumb';
-      box.innerHTML=`<img src="${url}" alt="${file.name}" style="width:100%;height:100%;object-fit:cover">`;
+      box.innerHTML=`<img src="url"alt="{file.name}" style="width:100%;height:100%;object-fit:cover">`;
       parent.appendChild(box);
     });
   });
@@ -3241,7 +3346,7 @@ function epMakeList(){
     const item = document.createElement('button');
     item.type = 'button';
     item.className = 'ep-item';
-    item.innerHTML = `<span class="ep-swatch" style="background:el.color"></span><span><strong>${el.name}</strong> — ${el.title}</span>`;
+    item.innerHTML = `<span class="ep-swatch" style="background:el.color"></span><span><strong>{el.name}</strong> — ${el.title}</span>`;
     item.onclick = () => epSelectElement(el.id);
     epList.appendChild(item);
   });
@@ -3556,11 +3661,23 @@ function theaterFilteredList(){
     return true;
   });
 }
+function isScreencastReleased(index){ return index < 2; }
+function renderScreencastReleaseUI(){
+  const side=document.getElementById('theaterSide');
+  const count=document.getElementById('theaterReleaseCount');
+  if(count) count.textContent='2 available';
+  if(side && !side.querySelector('.theater-locked-panel')){
+    const lock=document.createElement('div');
+    lock.className='theater-locked-panel';
+    lock.innerHTML='<div class="tlp-icon">🔒</div><strong>More screencasts are locked</strong><span>Additional recordings will appear automatically as the corresponding course weeks open.</span>';
+    side.appendChild(lock);
+  }
+}
 function theaterRenderSide(){
   const side = document.getElementById('theaterSide');
   if(!side) return;
   theaterUpdateProgressSummary();
-  const list = theaterFilteredList();
+  const list = theaterFilteredList().filter(v=>isScreencastReleased(allScreencasts.indexOf(v)));
   const headEl = document.getElementById('theaterSideHead');
   if(headEl) headEl.textContent = theaterFilterMode==='all' ? `Up next · ${allScreencasts.length} recordings` : `${list.length} ${theaterFilterMode} recording${list.length===1?'':'s'}`;
   side.innerHTML = '';
@@ -3574,10 +3691,8 @@ function theaterRenderSide(){
     const isActive = theaterCurrentId===v.id;
     const item = document.createElement('button');
     item.type = 'button';
-    const available = isScreencastAvailable(v.id);
-    item.className = 'theater-item' + (isActive ? ' active' : '') + (available ? '' : ' locked');
-    item.setAttribute('aria-label', available ? `Play ${v.label}` : `${v.label} — available later`);
-    item.setAttribute('aria-disabled', available ? 'false' : 'true');
+    item.className = 'theater-item' + (isActive ? ' active' : '');
+    item.setAttribute('aria-label', `Play ${v.label}`);
     item.innerHTML = `<div class="ti-thumb">
         <span aria-hidden="true">▶</span>
         <img src="${driveThumbUrl(v.id)}" alt="" loading="lazy" onerror="this.style.display='none'">
@@ -3587,11 +3702,12 @@ function theaterRenderSide(){
       </div>
       <div class="ti-body">
         <span class="ti-label">${v.label}</span>
-        ${!available ? '<span class="ti-lock">Available later</span>' : (watched ? '<span class="ti-watched">✓ Watched</span>' : (opened ? '<span class="ti-status">Opened</span>' : ''))}
+        ${watched ? '<span class="ti-watched">✓ Watched</span>' : (opened ? '<span class="ti-status">Opened</span>' : '')}
       </div>`;
     item.addEventListener('click', ()=>theaterPlay(v.id, v.label));
     side.appendChild(item);
   });
+  renderScreencastReleaseUI();
 }
 document.getElementById('theaterSearchInput').addEventListener('input', e=>{
   theaterSearchTerm = e.target.value.toLowerCase().trim();
@@ -3631,9 +3747,7 @@ function theaterLoadIframe(id, label){
    on the poster for the currently-selected recording. Only from here does
    the video actually load AND the watch-progress timer start — simply
    picking a recording from the side list does not start the clock. */
-function isScreencastAvailable(id){ return allScreencasts.findIndex(v=>v.id===id) < 2; }
 function theaterBeginPlayback(id, label){
-  if(!isScreencastAvailable(id)) return;
   theaterCurrentId = id;
   theaterLoadIframe(id, label);
   theaterStartWatchTracking(id);
@@ -3664,7 +3778,7 @@ function theaterUpdateNav(){
   const indexEl = document.getElementById('theaterIndex');
   if(idx<0){ prevBtn.disabled = true; nextBtn.disabled = true; indexEl.textContent = '—'; return; }
   prevBtn.disabled = idx<=0;
-  nextBtn.disabled = idx>=Math.min(1,allScreencasts.length-1);
+  nextBtn.disabled = idx>=allScreencasts.length-1;
   indexEl.textContent = `Screencast ${idx+1} of ${allScreencasts.length}`;
 }
 function theaterMarkWatched(id){
@@ -3679,7 +3793,8 @@ function theaterMarkWatched(id){
   maybeShowContentQuiz('video', id, screencastQuizPool, `Nice work watching "${meta ? meta.label : 'this recording'}"! Quick 2-question check:`);
 }
 function theaterPlay(id, label){
-  if(!isScreencastAvailable(id)) return;
+  const releaseIndex = allScreencasts.findIndex(v=>v.id===id);
+  if(releaseIndex<0 || !isScreencastReleased(releaseIndex)) return;
   theaterCurrentId = id;
   // Selecting a recording only loads its poster/details — the watch-progress
   // timer doesn't start until the student presses Play (theaterBeginPlayback).
@@ -3701,8 +3816,9 @@ function theaterPlay(id, label){
 function theaterStep(delta){
   const idx = allScreencasts.findIndex(v=>v.id===theaterCurrentId);
   const nextIdx = idx + delta;
-  if(nextIdx<0 || nextIdx>=allScreencasts.length || nextIdx>=2) return;
+  if(nextIdx<0 || nextIdx>=allScreencasts.length) return;
   const v = allScreencasts[nextIdx];
+  if(!isScreencastReleased(nextIdx)) return;
   theaterPlay(v.id, v.label);
 }
 document.getElementById('theaterPrevBtn').addEventListener('click', ()=>theaterStep(-1));
