@@ -1828,7 +1828,7 @@ function buildLayersPanel(){
     row.setAttribute('aria-label', `Week ${w}: ${weekMeta[w]}, ${pct}% complete`);
     row.innerHTML = `<span class="lp-eye" aria-hidden="true">${pct===100?'●':'○'}</span>
       <span class="lp-thumb"><i style="height:${pct}%"></i></span>
-      <span class="lp-label"><b>Week w</b><small>{weekMeta[w]}</small></span>
+      <span class="lp-label"><b>Week ${w}</b><small>${weekMeta[w]}</small></span>
       <span class="lp-pct">${pct}%</span>`;
     const jump = () => {
       const monthOf = w<=4?'m1':(w<=8?'m2':(w<=12?'m3':'m4'));
@@ -2432,15 +2432,27 @@ function computeGrade(){
   const videoIds = Object.keys(student.videoConfirmed).filter(id=>student.videoConfirmed[id]);
   const videoPct = Math.min(100, (videoIds.length/23)*100);
   const overall = completionPct*0.45 + quizAvg*0.25 + readingPct*0.15 + videoPct*0.15;
-  let letter = 'F';
-  if(overall>=90) letter='A'; else if(overall>=80) letter='B'; else if(overall>=70) letter='C'; else if(overall>=60) letter='D';
+  // Standard +/- grading scale. Keep all grade logic centralized here.
+  let letter = 'NI';
+  if(overall >= 97) letter='A+';
+  else if(overall >= 93) letter='A';
+  else if(overall >= 90) letter='A-';
+  else if(overall >= 87) letter='B+';
+  else if(overall >= 83) letter='B';
+  else if(overall >= 80) letter='B-';
+  else if(overall >= 77) letter='C+';
+  else if(overall >= 73) letter='C';
+  else if(overall >= 70) letter='C-';
+  else if(overall >= 67) letter='D+';
+  else if(overall >= 63) letter='D';
+  else if(overall >= 60) letter='D-';
   return { pct: Math.round(overall), letter, detail:`${Math.round(completionPct)}% lessons · ${quizzesTaken} week quizzes` };
 }
 function updateGrade(){
   const g = computeGrade();
   const letterEl = document.getElementById('lpGradeLetter');
   const detailEl = document.getElementById('lpGradeDetail');
-  if(letterEl){ letterEl.textContent = student ? `g.letter ({g.pct}%)` : '—'; }
+  if(letterEl){ letterEl.textContent = student ? `${g.letter} (${g.pct}%)` : '—'; }
   if(detailEl){ detailEl.textContent = g.detail; }
   const sbGrade = document.getElementById('sbGrade');
   if(sbGrade) sbGrade.textContent = student ? `${g.letter} · ${g.pct}%` : '—';
@@ -2474,13 +2486,13 @@ function renderProgressView(){
     let badgeClass = 'notstarted', badgeText = 'Not started';
     if(st.pct===100){ badgeClass='done'; badgeText='Complete'; }
     else if(st.pct>0){ badgeClass='partial'; badgeText='In progress'; }
-    const quizText = quiz ? (quiz.total ? `quiz.score/{quiz.total} correct` : 'Reflection submitted') : '—';
-    rows += `<tr><td>Week w</td><td>{weekMeta[w]||''}</td><td>st.done/{st.total} days</td><td><span class="pw-badge badgeClass">{badgeText}</span></td><td>${quizText}</td></tr>`;
+    const quizText = quiz ? (quiz.total ? `${quiz.score}/${quiz.total} correct` : 'Reflection submitted') : '—';
+    rows += `<tr><td>Week ${w}</td><td>${weekMeta[w]||''}</td><td>${st.done}/${st.total} days</td><td><span class="pw-badge ${badgeClass}">${badgeText}</span></td><td>${quizText}</td></tr>`;
   }
   let readingRows = readingPool.map(item=>{
     const isRead = student.readingSeen.includes(item.key);
     const quiz = student.contentQuizzes.reading[item.key];
-    return `<tr><td>${item.title}</td><td><span class="pw-badge isRead?'done':'notstarted'">{isRead?'Read':'Not read'}</span></td><td>${quiz? (quiz.score+'/'+quiz.total) : '—'}</td></tr>`;
+    return `<tr><td>${item.title}</td><td><span class="pw-badge ${isRead?'done':'notstarted'}">${isRead?'Read':'Not read'}</span></td><td>${quiz? (quiz.score+'/'+quiz.total) : '—'}</td></tr>`;
   }).join('');
   let screencastRows = (typeof allScreencasts !== 'undefined' ? allScreencasts : []).map(v=>{
     const watched = typeof theaterIsWatched === 'function' ? theaterIsWatched(v.id) : false;
@@ -2488,7 +2500,7 @@ function renderProgressView(){
     const status = watched ? 'Watched' : (opened ? 'Opened' : 'Not started');
     const badgeClass = watched?'done':(opened?'partial':'notstarted');
     const quiz = student.contentQuizzes.screencasts[v.id];
-    return `<tr><td>${v.label}</td><td><span class="pw-badge badgeClass">{status}</span></td><td>${quiz? (quiz.score+'/'+quiz.total) : '—'}</td></tr>`;
+    return `<tr><td>${v.label}</td><td><span class="pw-badge ${badgeClass}">${status}</span></td><td>${quiz? (quiz.score+'/'+quiz.total) : '—'}</td></tr>`;
   }).join('');
   body.innerHTML = `
     <div class="progress-hero">
@@ -2542,19 +2554,19 @@ function renderAssessmentView(){
   const pool = typeof screencastQuizPool !== 'undefined' ? screencastQuizPool : [];
   const readingItems = readingPool.map(item=>{
     const quiz = student.contentQuizzes.reading[item.key];
-    const statusText = quiz ? `quiz.score/{quiz.total}` : 'Not taken';
+    const statusText = quiz ? `${quiz.score}/${quiz.total}` : 'Not taken';
     const btn = quiz
       ? `<button type="button" class="assess-btn" disabled>Completed</button>`
       : `<button type="button" class="assess-btn" onclick="assessmentStart('reading','${item.key}')">Start</button>`;
-    return `<div class="assess-row"><div class="assess-row-main"><b>${item.title}</b><span class="assess-status quiz?'done':''">{statusText}</span></div>${btn}</div>`;
+    return `<div class="assess-row"><div class="assess-row-main"><b>${item.title}</b><span class="assess-status ${quiz?'done':''}">${statusText}</span></div>${btn}</div>`;
   }).join('') || '<p style="font-size:13px;color:var(--muted);">No Read Me sections available yet.</p>';
   const videoItems = pool.map(item=>{
     const quiz = student.contentQuizzes.screencasts[item.key];
-    const statusText = quiz ? `quiz.score/{quiz.total}` : 'Not taken';
+    const statusText = quiz ? `${quiz.score}/${quiz.total}` : 'Not taken';
     const btn = quiz
       ? `<button type="button" class="assess-btn" disabled>Completed</button>`
       : `<button type="button" class="assess-btn" onclick="assessmentStart('video','${item.key}')">Start</button>`;
-    return `<div class="assess-row"><div class="assess-row-main"><b>${item.title}</b><span class="assess-status quiz?'done':''">{statusText}</span></div>${btn}</div>`;
+    return `<div class="assess-row"><div class="assess-row-main"><b>${item.title}</b><span class="assess-status ${quiz?'done':''}">${statusText}</span></div>${btn}</div>`;
   }).join('') || '<p style="font-size:13px;color:var(--muted);">No screencasts available yet.</p>';
   const readingDone = Object.keys(student.contentQuizzes.reading).length;
   const videoDone = Object.keys(student.contentQuizzes.screencasts).length;
@@ -2690,7 +2702,7 @@ function buildProgressReportDoc(trigger){
   // ----- Summary: colorful KPI dashboard cards (2 rows x 3) -----
   const stats = [
     { label:'Overall Grade', big:`${g.letter} · ${g.pct}%`, color:P.blue },
-    { label:'Lessons Completed', big:`student.completed.length/{cards.length}`, color:P.orange },
+    { label:'Lessons Completed', big:`${student.completed.length}/${cards.length}`, color:P.orange },
     { label:'Week Quizzes', big:`quizzesTaken/{TOTAL_WEEKS}`, color:P.purple },
     { label:'Reading Opened', big:`${student.readingSeen.length}/11`, color:P.purple },
     { label:'Screencasts Watched', big:`${videosConfirmed}/23`, color:P.red },
@@ -2716,9 +2728,9 @@ function buildProgressReportDoc(trigger){
   for(let w=1; w<=TOTAL_WEEKS; w++){
     const st = weekStatus(w);
     const quiz = student.weekQuizzes[w];
-    const quizText = quiz ? (quiz.total ? `quiz.score/{quiz.total}` : 'Reflection') : '—';
+    const quizText = quiz ? (quiz.total ? `${quiz.score}/${quiz.total}` : 'Reflection') : '—';
     const statusText = st.pct===100 ? 'Complete' : (st.pct>0 ? 'In progress' : 'Not started');
-    weekRows.push([`Week w`,pdfSafeText(weekMeta[w]||''),`{st.done}/${st.total}`, statusText, quizText]);
+    weekRows.push([`Week ${w}`,pdfSafeText(weekMeta[w]||''),`${st.done}/${st.total}`, statusText, quizText]);
   }
   if(hasAutoTable){
     doc.autoTable({
@@ -2745,7 +2757,7 @@ function buildProgressReportDoc(trigger){
   const readRows = readingPool.map(item=>{
     const isRead = student.readingSeen.includes(item.key);
     const quiz = student.contentQuizzes.reading[item.key];
-    return [pdfSafeText(item.title), isRead?'Read':'Not read', quiz? `quiz.score/{quiz.total}`:'—'];
+    return [pdfSafeText(item.title), isRead?'Read':'Not read', quiz? `${quiz.score}/${quiz.total}`:'—'];
   });
   if(hasAutoTable){
     doc.autoTable({
@@ -2772,7 +2784,7 @@ function buildProgressReportDoc(trigger){
   const screenRows = (typeof allScreencasts !== 'undefined' ? allScreencasts : []).map(v=>{
     const watched = typeof theaterIsWatched === 'function' ? theaterIsWatched(v.id) : false;
     const quiz = student.contentQuizzes.screencasts[v.id];
-    return [pdfSafeText(v.label), watched?'Watched':'Not watched', quiz? `quiz.score/{quiz.total}`:'—'];
+    return [pdfSafeText(v.label), watched?'Watched':'Not watched', quiz? `${quiz.score}/${quiz.total}`:'—'];
   });
   if(hasAutoTable){
     doc.autoTable({
@@ -2835,9 +2847,9 @@ function generateProgressReportPDF(trigger){
 function notifyInstructor(trigger){
   const g = computeGrade();
   const summary = [
-    `Progress update for student.name({student.email})`,
+    `Progress update for ${student.name} (${student.email})`,
     `Trigger: ${trigger}`,
-    `Overall grade: g.letter({g.pct}%)`,
+    `Overall grade: ${g.letter} (${g.pct}%)`,
     `Lessons completed: ${student.completed.length} of ${cards.length}`,
     `Device: ${getDeviceInfo()}`
   ].join('\n');
@@ -2850,7 +2862,7 @@ function notifyInstructor(trigger){
     // Fallback only — remove once GOOGLE_FORM_ACTION_URL / GOOGLE_FORM_ENTRY_ID are set above.
     // A mailto: link can't attach a file on its own, so the body just tells the
     // student to attach the PDF that was downloaded at the same moment.
-    const subject = encodeURIComponent(`Progress Report — student.name({student.email})`);
+    const subject = encodeURIComponent(`Progress Report — ${student.name} (${student.email})`);
     const body = encodeURIComponent(summary + '\n\nAttach the file you downloaded now.');
     window.location.href = `mailto:REPORTEMAIL?subject={subject}&body=${body}`;
   }
