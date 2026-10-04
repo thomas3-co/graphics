@@ -314,6 +314,10 @@ footer.appfoot{position:relative;z-index:10;text-align:center;color:var(--muted)
 footer.appfoot .foot-contact{display:inline-flex;align-items:center;gap:8px;margin-top:6px;font-weight:700;}
 footer.appfoot .foot-contact a{color:var(--c-curriculum);text-decoration:none;}
 footer.appfoot .foot-contact a:hover{text-decoration:underline;}
+footer.appfoot .foot-classroom{display:flex;justify-content:center;align-items:center;gap:16px;flex-wrap:wrap;margin-top:10px;font-size:12px;font-weight:700;}
+footer.appfoot .foot-classroom a{color:var(--c-curriculum);text-decoration:none;}
+footer.appfoot .foot-classroom a:hover{text-decoration:underline;}
+@media(max-width:760px){footer.appfoot .foot-classroom{flex-direction:column;gap:7px;}}
 /* ===== PROGRESS PAGE ===== */
 .progress-hero{background:linear-gradient(135deg,#1c2030,#2f6fed 150%);color:#fff;border-radius:20px;padding:30px 32px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;box-shadow:var(--shadow);}
 .progress-hero .ph-grade b{font-size:2.4rem;font-family:'Poppins',sans-serif;display:block;}
@@ -1722,6 +1726,11 @@ img,video,iframe{max-width:100%;}
 <footer class="appfoot">
     Graphic Design &amp; Photoshop — Class of 2028
     <div class="foot-contact">✉ <a href="mailto:thomas@hmacademy.org">thomas@hmacademy.org</a></div>
+    <div class="foot-classroom" aria-label="Google Classroom links">
+      <a href="https://classroom.google.com/c/ODg5MDAyNjgwNDU5?cjc=gigvadsd" target="_blank" rel="noopener noreferrer">Section B — Google Classroom</a>
+      <a href="https://classroom.google.com/c/ODg5MDA0NTM0Mjc5?cjc=547gadfs" target="_blank" rel="noopener noreferrer">Section C — Google Classroom</a>
+      <a href="https://classroom.google.com/c/ODg5MDAzNjk4NTky?cjc=f7ese2pk" target="_blank" rel="noopener noreferrer">Section D — Google Classroom</a>
+    </div>
 </footer>
 </div><script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
