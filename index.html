@@ -185,6 +185,11 @@ button{font-family:inherit;}
 .week-card{margin:34px 0 10px;scroll-margin-top:75px;}
 .week-card h2.wk{font-size:1.35rem;margin-bottom:16px;color:var(--c-curriculum);display:flex;align-items:center;gap:10px;}
 .week-card h2.wk::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--c-curriculum);}
+.week-card.future-week{opacity:.46;filter:grayscale(.9);position:relative;}
+.week-card.future-week::after{content:"Locked until this calendar week";position:absolute;top:8px;right:0;background:#e7e9ee;color:#727887;border-radius:999px;padding:5px 9px;font-size:10.5px;font-weight:800;letter-spacing:.2px;}
+.week-card.future-week .flip-card{pointer-events:none;}
+.week-date{font-size:.72rem;font-weight:700;color:#7b8292;background:#eef1f6;border:1px solid #dfe3ea;border-radius:999px;padding:4px 8px;white-space:nowrap;}
+.week-card.current-week .week-date{color:#2f6fed;background:#eef4ff;border-color:#cddcff;}
 .day-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;}
 .flip-card{background:transparent;width:100%;height:380px;perspective:1200px;opacity:0;transform:translateY(30px);transition:all .6s ease-out;}
 .flip-card.visible{opacity:1;transform:translateY(0);}
@@ -380,6 +385,9 @@ footer.appfoot .foot-contact a:hover{text-decoration:underline;}
 .theater-list{overflow-y:auto;display:flex;flex-direction:column;gap:4px;padding-right:2px;flex:1;min-height:0;}
 .theater-item{display:flex;gap:10px;align-items:flex-start;background:transparent;border:none;border-radius:10px;padding:6px;cursor:pointer;text-align:left;position:relative;transition:background .15s ease,transform .15s ease;}
 .theater-item:hover{background:#eef1f6;}
+.theater-item.locked{opacity:.42;filter:grayscale(.9);cursor:not-allowed;}
+.theater-item.locked:hover{background:transparent;}
+.theater-item .ti-lock{display:block;font-size:10.5px;color:#8a90a0;font-weight:700;margin-top:4px;}
 .theater-item.active{background:#e4ecff;box-shadow:inset 0 0 0 1px rgba(47,111,237,.25);}
 .theater-item .ti-thumb{position:relative;width:112px;height:66px;border-radius:8px;overflow:hidden;flex-shrink:0;background:linear-gradient(135deg,#ff6a2c,#7a2e05);display:flex;align-items:center;justify-content:center;color:#fff;font-size:15px;}
 .theater-item .ti-thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
@@ -600,7 +608,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
         <!-- ===== MONTH ONE ===== -->
         <div class="month-block active" data-month="m1">
         <div class="week-card" id="week1">
-        <h2 class="wk">Week 1 · Sep 14–20 — Graphic Design Software &amp; Foundations</h2>
+        <h2 class="wk">Week 1 — Graphic Design Software &amp; Foundations</h2>
         <div class="day-grid">
         <div class="flip-card" data-day="1-1"><div class="flip-card-inner">
         <div class="flip-card-front"><h4>Day 1: Graphic Design Software</h4><p>A tour of the apps designers use — Photoshop, Illustrator, Photopea, Canva and more.</p><span class="flip-hint">Tap to flip</span></div>
@@ -624,7 +632,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
         </div></div></div>
         </div></div>
         <div class="week-card" id="week2">
-        <h2 class="wk">Week 2 · Sep 21–27 — Photopea, Pixels &amp; Layers</h2>
+        <h2 class="wk">Week 2 — Photopea, Pixels &amp; Layers</h2>
         <div class="day-grid">
         <div class="flip-card" data-day="2-1"><div class="flip-card-inner">
         <div class="flip-card-front"><h4>Day 3: Photopea Interface, Pixels &amp; Raster</h4><p>Tour the Photopea workspace, then learn what pixels and raster images actually are.</p><span class="flip-hint">Tap to flip</span></div>
@@ -648,7 +656,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
         </div></div></div>
         </div></div>
         <div class="week-card" id="week3">
-        <h2 class="wk">Week 3 · Sep 28–Oct 4 — Around the World with a Twist (Project Week)</h2>
+        <h2 class="wk">Week 3 — Around the World with a Twist (Project Week)</h2>
         <div class="day-grid">
         <div class="flip-card" data-day="3-1"><div class="flip-card-inner">
         <div class="flip-card-front"><h4>Day 5: Removing Backgrounds &amp; Smudge Tool</h4><p>Cut a subject out cleanly, then use the Smudge Tool to erase any leftover white fringe line.</p><span class="flip-hint">Tap to flip</span></div>
@@ -661,7 +669,22 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
         <div class="big-ideas">Even a clean selection often leaves a faint white line around the edges. Zoom in to 200%+ and use the Smudge Tool (or Defringe/Contract) to blend that line away so the cutout sits seamlessly against its new background.</div>
         </div></div></div>
         <div class="flip-card" data-day="3-2"><div class="flip-card-inner">
-        <div class="flip-card-front"><h4>Day 6: Creating a Passport Size Photo</h4><p>Crop, retouch and format a professional passport-size photo from start to finish.</p><span class="flip-hint">Tap to flip</span></div>
+        <div class="flip-card-front"><h4>Day 6: Removing Backgrounds, Placing in the World &amp; Gaussian Blur</h4><p>Remove a subject from its original background, place it naturally into a new world scene, then use Gaussian Blur to match depth and focus.</p><span class="flip-hint">Tap to flip</span></div>
+        <div class="flip-card-back"><div class="vocab-title">Vocabulary</div>
+        <p><span class="vocab" tabindex="0" data-def="Separates the main subject cleanly from the original background.">Background Removal</span><span class="vocab-def"> — Separates the main subject cleanly from the original background.</span>,
+        <span class="vocab" tabindex="0" data-def="Moves a cut-out subject into a new image or environment and blends it with the scene.">Compositing</span><span class="vocab-def"> — Moves a cut-out subject into a new image or environment and blends it with the scene.</span>,
+        <span class="vocab" tabindex="0" data-def="A soft blur that reduces detail and simulates depth or distance.">Gaussian Blur</span><span class="vocab-def"> — A soft blur that reduces detail and simulates depth or distance.</span>,
+        <span class="vocab" tabindex="0" data-def="The visual relationship between foreground, subject and background elements in a composite.">Depth of Field</span><span class="vocab-def"> — The visual relationship between foreground, subject and background elements in a composite.</span>,
+        <span class="vocab" tabindex="0" data-def="Adjusts the edges and mask of a cut-out so the subject blends naturally into its new environment.">Layer Mask</span><span class="vocab-def"> — Adjusts the edges and mask of a cut-out so the subject blends naturally into its new environment.</span></p>
+        <div class="big-ideas">A convincing composite depends on more than a clean cut-out. Match scale, lighting, color and sharpness, then apply Gaussian Blur selectively so distant parts of the scene feel farther away and the subject belongs in the new world.</div>
+        <div class="summary-text">Week 3 project work: remove the background, place the subject into the Around the World scene, and use Gaussian Blur where needed to create realistic depth.</div>
+        </div></div></div>
+        </div></div>
+        <div class="week-card" id="week4">
+        <h2 class="wk">Week 4 — Advanced Portrait Editing</h2>
+        <div class="day-grid">
+        <div class="flip-card" data-day="4-1"><div class="flip-card-inner">
+        <div class="flip-card-front"><h4>Day 1: Creating a Passport Size Photo</h4><p>Crop, retouch and format a professional passport-size photo from start to finish.</p><span class="flip-hint">Tap to flip</span></div>
         <div class="flip-card-back"><div class="vocab-title">Vocabulary</div>
         <p><span class="vocab" tabindex="0" data-def="Trims the canvas down to an exact size and ratio.">Crop Tool</span><span class="vocab-def"> — Trims the canvas down to an exact size and ratio.</span>,
         <span class="vocab" tabindex="0" data-def="The standard 2x2 inch dimension required for most ID and passport photos.">Passport Size (2x2 in)</span><span class="vocab-def"> — The standard 2x2 inch dimension required for most ID and passport photos.</span>,
@@ -669,20 +692,6 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
         <span class="vocab" tabindex="0" data-def="Lightens or darkens areas to even out skin tone and lighting.">Dodge &amp; Burn</span><span class="vocab-def"> — Lightens or darkens areas to even out skin tone and lighting.</span>,
         <span class="vocab" tabindex="0" data-def="Passport photos are typically saved at 300 DPI for sharp, print-quality results.">Resolution (DPI)</span><span class="vocab-def"> — Passport photos are typically saved at 300 DPI for sharp, print-quality results.</span></p>
         <div class="big-ideas">Passport photos follow strict formatting rules — exact size, plain background, even lighting, natural expression — so precision matters more here than creativity.</div>
-        <div class="summary-text">This week's group project — Around the World with a Twist — is introduced separately in the Group Projects tab.</div>
-        </div></div></div>
-        </div></div>
-        <div class="week-card" id="week4">
-        <h2 class="wk">Week 4 · Oct 5–11 — Advanced Portrait Editing</h2>
-        <div class="day-grid">
-        <div class="flip-card" data-day="4-1"><div class="flip-card-inner">
-        <div class="flip-card-front"><h4>Day 1: Lips, Teeth &amp; Eye Reflection</h4><p>Enhance portrait details for realism.</p><span class="flip-hint">Tap to flip</span></div>
-        <div class="flip-card-back"><div class="vocab-title">Vocabulary</div>
-        <p><span class="vocab" tabindex="0" data-def="Brighten teeth naturally.">Teeth Whitening</span><span class="vocab-def"> — Brighten teeth naturally.</span>,
-        <span class="vocab" tabindex="0" data-def="Adjust lip tone & color.">Lip Enhancement</span><span class="vocab-def"> — Adjust lip tone & color.</span>,
-        <span class="vocab" tabindex="0" data-def="Add subtle highlights to eyes.">Eye Reflection</span><span class="vocab-def"> — Add subtle highlights to eyes.</span></p>
-        <div class="vocab-title">Big Ideas</div>
-        <p class="big-ideas">Focus on subtle realism, use separate layers and masks for flexibility.</p>
         </div></div></div>
         <div class="flip-card" data-day="4-2"><div class="flip-card-inner">
         <div class="flip-card-front flip-card-quiz-front"><h4>Day 2: Puppet Warp, Dress Change &amp; Final Project</h4><p>Advanced portrait manipulation, then apply all skills from Week 1–4.</p><span class="flip-hint" style="color:rgba(255,255,255,.75)">Tap to flip</span></div>
@@ -700,7 +709,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
         <!-- ===== MONTH TWO ===== -->
         <div class="month-block" data-month="m2">
         <div class="week-card" id="week5">
-          <h2 class="wk">Week 5 · Oct 12–18 — Advanced Color Adjustment &amp; Matching</h2>
+          <h2 class="wk">Week 5 — Advanced Color Adjustment &amp; Matching</h2>
           <div class="day-grid">
             <div class="flip-card project-day" data-day="5-1"><div class="flip-card-inner">
               <div class="flip-card-front"><div class="project-label">PROJECT DAY</div><h4>Day 1: Color Fill for Clothing Change</h4><p>Use Color Fill Adjustment Layer to change outfit color naturally.</p><span class="flip-hint">Tap to flip</span></div>
@@ -716,7 +725,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
           </div>
         </div>
         <div class="week-card" id="week6">
-          <h2 class="wk">Week 6 · Oct 19–25 — Phone / iPad Mockup (Project Week)</h2>
+          <h2 class="wk">Week 6 — Phone / iPad Mockup (Project Week)</h2>
           <div class="day-grid">
             <div class="flip-card project-day" data-day="6-1"><div class="flip-card-inner">
               <div class="flip-card-front"><div class="project-label">PROJECT DAY</div><h4>Day 1: Mockup Project</h4><p>Create a mobile or poster mockup using smart objects.</p><span class="flip-hint">Tap to flip</span></div>
@@ -737,7 +746,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
           </div>
         </div>
         <div class="week-card" id="week7">
-          <h2 class="wk">Week 7 · Oct 26–Nov 1 — Text on Any Surface with Vanishing Point</h2>
+          <h2 class="wk">Week 7 — Text on Any Surface with Vanishing Point</h2>
           <div class="day-grid">
             <div class="flip-card blue-border" data-day="7-1"><div class="flip-card-inner">
               <div class="flip-card-front"><h4>Day 1: Text on Any Surface (Vanishing Point)</h4><p>Apply realistic text on walls, floors, or objects using the Vanishing Point filter.</p><span class="flip-hint">Tap to flip</span></div>
@@ -759,7 +768,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
           </div>
         </div>
         <div class="week-card" id="week8">
-          <h2 class="wk">Week 8 · Nov 2–8 — Independent Study &amp; Project Refinement</h2>
+          <h2 class="wk">Week 8 — Independent Study &amp; Project Refinement</h2>
           <div class="day-grid">
             <div class="flip-card" data-day="8-1"><div class="flip-card-inner">
               <div class="flip-card-front"><h4>Day 1: Independent Study &amp; Practice</h4><p>Spend today refining your previous Photoshop projects.</p><span class="flip-hint">Tap to flip</span></div>
@@ -784,7 +793,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
         <!-- ===== MONTH THREE ===== -->
         <div class="month-block" data-month="m3">
         <div class="week-card" id="week9">
-          <h2 class="wk">Week 9 · Nov 9–15 — Gojo Pop-Out Project</h2>
+          <h2 class="wk">Week 9 — Gojo Pop-Out Project</h2>
           <div class="day-grid">
             <div class="flip-card project-day" data-day="9-1"><div class="flip-card-inner">
               <div class="flip-card-front"><div class="project-label">PROJECT DAY</div><h4>Day 1: Neon Text Effect</h4><p>Create glowing neon text with light blending.</p><span class="flip-hint">Tap to flip</span></div>
@@ -797,7 +806,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
           </div>
         </div>
         <div class="week-card" id="week10">
-          <h2 class="wk">Week 10 · Nov 16–22 — Double Exposure &amp; Poster Design</h2>
+          <h2 class="wk">Week 10 — Double Exposure &amp; Poster Design</h2>
           <div class="day-grid">
             <div class="flip-card project-day" data-day="10-1"><div class="flip-card-inner">
               <div class="flip-card-front"><div class="project-label">PROJECT DAY</div><h4>Day 1: Double Exposure – Basics</h4><p>Learn how to merge two images creatively.</p><span class="flip-hint">Tap to flip</span></div>
@@ -810,7 +819,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
           </div>
         </div>
         <div class="week-card" id="week11">
-          <h2 class="wk">Week 11 · Nov 23–29 — Coming Soon</h2>
+          <h2 class="wk">Week 11 — Coming Soon</h2>
           <div class="day-grid">
             <div class="flip-card" data-day="11-1"><div class="flip-card-inner">
               <div class="flip-card-front"><h4>Day 1: To be added</h4><p>Lesson content for this day hasn't been added yet.</p><span class="flip-hint">Tap to flip</span></div>
@@ -823,7 +832,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
           </div>
         </div>
         <div class="week-card" id="week12">
-          <h2 class="wk">Week 12 · Nov 30–Dec 6 — Coming Soon</h2>
+          <h2 class="wk">Week 12 — Coming Soon</h2>
           <div class="day-grid">
             <div class="flip-card" data-day="12-1"><div class="flip-card-inner">
               <div class="flip-card-front"><h4>Day 1: To be added</h4><p>Lesson content for this day hasn't been added yet.</p><span class="flip-hint">Tap to flip</span></div>
@@ -839,7 +848,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
         <!-- ===== MONTH FOUR ===== -->
         <div class="month-block" data-month="m4">
         <div class="week-card" id="week13">
-          <h2 class="wk">Week 13 · Dec 7–13 — Coming Soon</h2>
+          <h2 class="wk">Week 13 — Coming Soon</h2>
           <div class="day-grid">
             <div class="flip-card" data-day="13-1"><div class="flip-card-inner">
               <div class="flip-card-front"><h4>Day 1: To be added</h4><p>Lesson content for this day hasn't been added yet.</p><span class="flip-hint">Tap to flip</span></div>
@@ -852,7 +861,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
           </div>
         </div>
         <div class="week-card" id="week14">
-          <h2 class="wk">Week 14 · Dec 14–20 — Coming Soon</h2>
+          <h2 class="wk">Week 14 — Coming Soon</h2>
           <div class="day-grid">
             <div class="flip-card" data-day="14-1"><div class="flip-card-inner">
               <div class="flip-card-front"><h4>Day 1: To be added</h4><p>Lesson content for this day hasn't been added yet.</p><span class="flip-hint">Tap to flip</span></div>
@@ -865,7 +874,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
           </div>
         </div>
         <div class="week-card" id="week15">
-          <h2 class="wk">Week 15 · Dec 21–27 — Coming Soon</h2>
+          <h2 class="wk">Week 15 — Coming Soon</h2>
           <div class="day-grid">
             <div class="flip-card" data-day="15-1"><div class="flip-card-inner">
               <div class="flip-card-front"><h4>Day 1: To be added</h4><p>Lesson content for this day hasn't been added yet.</p><span class="flip-hint">Tap to flip</span></div>
@@ -878,7 +887,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
           </div>
         </div>
         <div class="week-card" id="week16">
-          <h2 class="wk">Week 16 · Dec 28–Jan 3 — Coming Soon</h2>
+          <h2 class="wk">Week 16 — Coming Soon</h2>
           <div class="day-grid">
             <div class="flip-card" data-day="16-1"><div class="flip-card-inner">
               <div class="flip-card-front"><h4>Day 1: To be added</h4><p>Lesson content for this day hasn't been added yet.</p><span class="flip-hint">Tap to flip</span></div>
@@ -1650,7 +1659,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
       </section>
       <!-- ========== SCREENCASTS (CINEMATIC THEATER PLAYER) ========== -->
       <section id="screencasts" class="view">
-        <div class="view-head"><div><h2>Screencasts</h2></div></div>
+        <div class="view-head"><div><h2>Screencasts</h2><p>For now, the first two recordings are available. Additional recordings are shown in gray until they are released.</p></div></div>
         <div class="theater" id="screencastTheater">
           <div class="theater-main">
             <div class="theater-stage" id="theaterStage">
@@ -1797,13 +1806,43 @@ document.getElementById('projSubnav').addEventListener('click', e=>{
 });
 /* ================= PROGRESS / FLIP CARDS / LAYERS PANEL ================= */
 const weekMeta = {
-  1:'Sep 14–20 · Graphic Design Software & Foundations', 2:'Sep 21–27 · Photopea, Pixels & Layers', 3:'Sep 28–Oct 4 · Around the World with a Twist',
-  4:'Oct 5–11 · Advanced Portrait Editing', 5:'Oct 12–18 · Color Adjustment & Matching', 6:'Oct 19–25 · Phone / iPad Mockup',
-  7:'Oct 26–Nov 1 · Vanishing Point Text', 8:'Nov 2–8 · Independent Study', 9:'Nov 9–15 · Gojo Pop-Out Project',
-  10:'Nov 16–22 · Double Exposure & Poster Design', 11:'Nov 23–29 · Coming Soon', 12:'Nov 30–Dec 6 · Coming Soon',
-  13:'Dec 7–13 · Coming Soon', 14:'Dec 14–20 · Coming Soon', 15:'Dec 21–27 · Coming Soon', 16:'Dec 28–Jan 3 · Coming Soon'
+  1:'Graphic Design Software & Foundations', 2:'Photopea, Pixels & Layers', 3:'Around the World with a Twist',
+  4:'Advanced Portrait Editing', 5:'Color Adjustment & Matching', 6:'Phone / iPad Mockup',
+  7:'Vanishing Point Text', 8:'Independent Study', 9:'Gojo Pop-Out Project',
+  10:'Double Exposure & Poster Design', 11:'Coming Soon', 12:'Coming Soon',
+  13:'Coming Soon', 14:'Coming Soon', 15:'Coming Soon', 16:'Coming Soon'
 };
 const TOTAL_WEEKS = 16;
+const COURSE_START_DATE = new Date('2026-09-14T00:00:00'); // Monday, Sept 14, 2026 = Week 1
+function courseWeekNumber(date=new Date()){
+  const d = new Date(date); d.setHours(0,0,0,0);
+  const start = new Date(COURSE_START_DATE); start.setHours(0,0,0,0);
+  return Math.floor((d-start)/86400000/7)+1;
+}
+function weekDateRange(w){
+  const start = new Date(COURSE_START_DATE);
+  start.setDate(start.getDate() + (w-1)*7);
+  const end = new Date(start); end.setDate(end.getDate()+6);
+  const opts={month:'short',day:'numeric'};
+  return `${start.toLocaleDateString(undefined,opts)}–${end.toLocaleDateString(undefined,opts)}`;
+}
+function isCourseWeekOpen(w){ return w <= courseWeekNumber(new Date()); }
+function applyCalendarWeekState(){
+  const current = courseWeekNumber(new Date());
+  for(let w=1; w<=TOTAL_WEEKS; w++){
+    const card=document.getElementById('week'+w);
+    if(!card) continue;
+    const heading=card.querySelector('.wk');
+    if(heading){
+      let dateEl=heading.querySelector('.week-date');
+      if(!dateEl){ dateEl=document.createElement('span'); dateEl.className='week-date'; heading.appendChild(dateEl); }
+      dateEl.textContent=weekDateRange(w);
+    }
+    card.classList.toggle('future-week', w>current);
+    card.classList.toggle('current-week', w===current);
+    card.setAttribute('aria-disabled', w>current ? 'true':'false');
+  }
+}
 const cards = document.querySelectorAll('.flip-card[data-day]');
 let completed = [];
 try{ completed = JSON.parse(localStorage.getItem('completedDays')) || []; }catch(e){ completed = []; }
@@ -1828,7 +1867,7 @@ function buildLayersPanel(){
     row.setAttribute('aria-label', `Week ${w}: ${weekMeta[w]}, ${pct}% complete`);
     row.innerHTML = `<span class="lp-eye" aria-hidden="true">${pct===100?'●':'○'}</span>
       <span class="lp-thumb"><i style="height:${pct}%"></i></span>
-      <span class="lp-label"><b>Week ${w}</b><small>${weekMeta[w]}</small></span>
+      <span class="lp-label"><b>Week ${w} · ${weekDateRange(w)}</b><small>${weekMeta[w]}</small></span>
       <span class="lp-pct">${pct}%</span>`;
     const jump = () => {
       const monthOf = w<=4?'m1':(w<=8?'m2':(w<=12?'m3':'m4'));
@@ -1867,10 +1906,14 @@ cards.forEach(card=>{
   card.setAttribute('aria-label','Lesson card, tap to flip and mark complete');
   // Touch/click devices don't support :hover reliably — toggle a flipped class explicitly.
   card.addEventListener('click', ()=>{
+    const week = Number(card.dataset.day.split('-')[0]);
+    if(!isCourseWeekOpen(week)) return;
     card.classList.toggle('flipped');
     toggleCardDone(card);
   });
   card.addEventListener('keydown', e=>{
+    const week = Number(card.dataset.day.split('-')[0]);
+    if(!isCourseWeekOpen(week)) return;
     if(e.key==='Enter' || e.key===' '){
       e.preventDefault();
       card.classList.toggle('flipped');
@@ -1882,6 +1925,7 @@ const cardObserver = new IntersectionObserver(entries=>{
   entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('visible'); });
 },{threshold:0.15});
 cards.forEach(c=>cardObserver.observe(c));
+applyCalendarWeekState();
 updateProgress();
 document.getElementById('lpToggle').addEventListener('click', function(){
   const panel = document.getElementById('layersPanel');
@@ -2014,7 +2058,7 @@ function renderQuizBody(questions){
     <div style="margin-bottom:12px;">
       <div style="font-size:13px;font-weight:700;margin-bottom:6px;">${i+1}. ${q.prompt}</div>
       ${q.options.map((opt,oi)=>`<label style="display:block;font-size:13px;margin:4px 0;cursor:pointer;">
-        <input type="radio" name="cqqi"value="{oi}" data-correct="${opt.correct?'1':'0'}"> ${opt.text}
+        <input type="radio" name="cqqi" value="${oi}" data-correct="${opt.correct?'1':'0'}"> ${opt.text}
       </label>`).join('')}
     </div>`).join('');
 }
@@ -2158,7 +2202,6 @@ document.getElementById('cqSubmit').addEventListener('click', ()=>{
 const REPORT_EMAIL = 'thomas@hmacademy.org';
 const GOOGLE_FORM_ACTION_URL = ''; // e.g. 'https://docs.google.com/forms/d/e/XXXXXXXX/formResponse'
 const GOOGLE_FORM_ENTRY_ID = '';   // e.g. 'entry.1234567890'
-const COURSE_START_DATE = new Date('2026-09-14T00:00:00'); // Sept 14 = Week 1, Day 1
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 /* Lightweight device/browser sniff from navigator.userAgent — good enough to note
    "which device this report came from" for the instructor, not meant to be exact. */
@@ -2362,9 +2405,9 @@ function maybeShowWeekQuiz(week){
     quiz.forEach((q,i)=>{
       const wrap = document.createElement('div');
       wrap.style.marginBottom = '12px';
-      wrap.innerHTML = `<div style="font-size:13px;font-weight:700;margin-bottom:6px;">i+1.Whatdoes"{q.term}" mean?</div>` +
+      wrap.innerHTML = `<div style="font-size:13px;font-weight:700;margin-bottom:6px;">${i+1}. What does "${q.term}" mean?</div>` +
         q.options.map((opt,oi)=>`<label style="display:block;font-size:13px;margin:4px 0;cursor:pointer;">
-          <input type="radio" name="wqqi"value="{oi}" data-correct="${opt===q.correct?'1':'0'}"> ${opt}
+          <input type="radio" name="wqqi" value="${oi}" data-correct="${opt===q.correct?'1':'0'}"> ${opt}
         </label>`).join('');
       body.appendChild(wrap);
     });
@@ -2487,7 +2530,7 @@ function renderProgressView(){
     if(st.pct===100){ badgeClass='done'; badgeText='Complete'; }
     else if(st.pct>0){ badgeClass='partial'; badgeText='In progress'; }
     const quizText = quiz ? (quiz.total ? `${quiz.score}/${quiz.total} correct` : 'Reflection submitted') : '—';
-    rows += `<tr><td>Week ${w}</td><td>${weekMeta[w]||''}</td><td>${st.done}/${st.total} days</td><td><span class="pw-badge ${badgeClass}">${badgeText}</span></td><td>${quizText}</td></tr>`;
+    rows += `<tr><td>Week ${w} · ${weekDateRange(w)}</td><td>${weekMeta[w]||''}</td><td>${st.done}/${st.total} days</td><td><span class="pw-badge ${badgeClass}">${badgeText}</span></td><td>${quizText}</td></tr>`;
   }
   let readingRows = readingPool.map(item=>{
     const isRead = student.readingSeen.includes(item.key);
@@ -2551,7 +2594,7 @@ function renderAssessmentView(){
     body.innerHTML = `<div class="progress-signedout"><h3>Sign in to take assessments</h3><p>Assessments are generated automatically from the Read Me notes and screencast descriptions.</p></div>`;
     return;
   }
-  const pool = typeof screencastQuizPool !== 'undefined' ? screencastQuizPool : [];
+  const pool = typeof screencastQuizPool !== 'undefined' ? screencastQuizPool.slice(0,2) : [];
   const readingItems = readingPool.map(item=>{
     const quiz = student.contentQuizzes.reading[item.key];
     const statusText = quiz ? `${quiz.score}/${quiz.total}` : 'Not taken';
@@ -2574,18 +2617,18 @@ function renderAssessmentView(){
   const videoPct = pool.length ? Math.round((videoDone/pool.length)*100) : 0;
   body.innerHTML = `
     <div class="assess-summary-row">
-      <div class="progress-card" style="--pc-accent:#8b5cf6;flex:1;min-width:200px;"><h4>Read Me Assessments</h4><div class="pc-big">readingDone/{readingPool.length}</div><div class="pc-sub">completed</div></div>
-      <div class="progress-card" style="--pc-accent:#ff6a2c;flex:1;min-width:200px;"><h4>Screencast Assessments</h4><div class="pc-big">videoDone/{pool.length}</div><div class="pc-sub">completed</div></div>
+      <div class="progress-card" style="--pc-accent:#8b5cf6;flex:1;min-width:200px;"><h4>Read Me Assessments</h4><div class="pc-big">${readingDone}/${readingPool.length}</div><div class="pc-sub">completed</div></div>
+      <div class="progress-card" style="--pc-accent:#ff6a2c;flex:1;min-width:200px;"><h4>Screencast Assessments</h4><div class="pc-big">${videoDone}/${pool.length}</div><div class="pc-sub">completed</div></div>
     </div>
     <div class="note-section collapsed" id="assess-reading">
-      <h3><span>Read Me Notes Assessment <span class="note-count">readingDone/{readingPool.length}</span></span></h3>
-      <div class="assess-progress-row"><span>${readingDone} of readingPool.lengthcompleted</span><spanstyle="color:var(--c-notes);">{readingPct}%</span></div>
+      <h3><span>Read Me Notes Assessment <span class="note-count">${readingDone}/${readingPool.length}</span></span></h3>
+      <div class="assess-progress-row"><span>${readingDone} of ${readingPool.length} completed</span><span style="color:var(--c-notes);">${readingPct}%</span></div>
       <div class="assess-progress-bar"><i style="background:linear-gradient(90deg,#8b5cf6,#b794f4);width:${readingPct}%;"></i></div>
       <div>${readingItems}</div>
     </div>
     <div class="note-section collapsed" id="assess-video">
-      <h3><span>Screencast Assessment <span class="note-count">videoDone/{pool.length}</span></span></h3>
-      <div class="assess-progress-row"><span>${videoDone} of pool.lengthcompleted</span><spanstyle="color:var(--c-screen);">{videoPct}%</span></div>
+      <h3><span>Screencast Assessment <span class="note-count">${videoDone}/${pool.length}</span></span></h3>
+      <div class="assess-progress-row"><span>${videoDone} of ${pool.length} completed</span><span style="color:var(--c-screen);">${videoPct}%</span></div>
       <div class="assess-progress-bar"><i style="background:linear-gradient(90deg,#ff6a2c,#ffb347);width:${videoPct}%;"></i></div>
       <div>${videoItems}</div>
     </div>`;
@@ -2703,7 +2746,7 @@ function buildProgressReportDoc(trigger){
   const stats = [
     { label:'Overall Grade', big:`${g.letter} · ${g.pct}%`, color:P.blue },
     { label:'Lessons Completed', big:`${student.completed.length}/${cards.length}`, color:P.orange },
-    { label:'Week Quizzes', big:`quizzesTaken/{TOTAL_WEEKS}`, color:P.purple },
+    { label:'Week Quizzes', big:`${quizzesTaken}/${TOTAL_WEEKS}`, color:P.purple },
     { label:'Reading Opened', big:`${student.readingSeen.length}/11`, color:P.purple },
     { label:'Screencasts Watched', big:`${videosConfirmed}/23`, color:P.red },
     { label:'Practice Files Opened', big:`${student.seenPractice.length}/43`, color:P.blue },
@@ -2728,9 +2771,9 @@ function buildProgressReportDoc(trigger){
   for(let w=1; w<=TOTAL_WEEKS; w++){
     const st = weekStatus(w);
     const quiz = student.weekQuizzes[w];
-    const quizText = quiz ? (quiz.total ? `${quiz.score}/${quiz.total}` : 'Reflection') : '—';
+    const quizText = quiz ? (quiz.total ? `${quiz.score}/${quiz.total} correct` : 'Reflection submitted') : 'Not taken';
     const statusText = st.pct===100 ? 'Complete' : (st.pct>0 ? 'In progress' : 'Not started');
-    weekRows.push([`Week ${w}`,pdfSafeText(weekMeta[w]||''),`${st.done}/${st.total}`, statusText, quizText]);
+    weekRows.push([`Week ${w} · ${weekDateRange(w)}`,pdfSafeText(weekMeta[w]||''),`${st.done}/${st.total}`, statusText, quizText]);
   }
   if(hasAutoTable){
     doc.autoTable({
@@ -2881,10 +2924,6 @@ document.getElementById('lpReportBtn').addEventListener('click', ()=>{
 });
 /* ---------- CALENDAR-BASED BIWEEKLY AUTO-REPORT (Sept 14 = Week 1) ---------- */
 const BIWEEKLY_PERIODS = Math.ceil(TOTAL_WEEKS/2); // 16 weeks -> 8 two-week periods
-function courseWeekNumber(date){
-  const diffDays = Math.floor((date - COURSE_START_DATE) / 86400000);
-  return Math.floor(diffDays/7) + 1; // 1-indexed; <=0 means before the course starts
-}
 function checkBiweeklyReport(){
   if(!student) return;
   student.biweeklySent = student.biweeklySent || {};
@@ -2894,13 +2933,13 @@ function checkBiweeklyReport(){
     const dueDate = new Date(COURSE_START_DATE.getTime() + periodEndsAfterWeek*7*86400000);
     if(now >= dueDate && !student.biweeklySent[p]){
       const weekLo = p*2-1, weekHi = periodEndsAfterWeek;
-      submitReportSilently(`Biweekly report — Weeks ${weekLo}–${weekHi}`);
+      submitReportSilently(`Biweekly report — Weeks ${weekLo}-${weekHi}`);
       student.biweeklySent[p] = new Date().toISOString();
       saveStudentRecord(student);
     }
   }
 }
-document.addEventListener('visibilitychange', ()=>{ if(document.visibilityState==='visible') checkBiweeklyReport(); });
+document.addEventListener('visibilitychange', ()=>{ if(document.visibilityState==='visible'){ applyCalendarWeekState(); checkBiweeklyReport(); } });
 /* ---------- GOJO PROJECT FORM ---------- */
 document.getElementById('gjAddMemberBtn').addEventListener('click', gjAddMember);
 function gjAddMember(){
@@ -2924,7 +2963,7 @@ document.querySelectorAll('.ideaUpload').forEach(inp=>{
       const url=URL.createObjectURL(file);
       const box=document.createElement('div');
       box.className='thumb';
-      box.innerHTML=`<img src="url"alt="{file.name}" style="width:100%;height:100%;object-fit:cover">`;
+      box.innerHTML=`<img src="${url}" alt="${file.name}" style="width:100%;height:100%;object-fit:cover">`;
       parent.appendChild(box);
     });
   });
@@ -3202,7 +3241,7 @@ function epMakeList(){
     const item = document.createElement('button');
     item.type = 'button';
     item.className = 'ep-item';
-    item.innerHTML = `<span class="ep-swatch" style="background:el.color"></span><span><strong>{el.name}</strong> — ${el.title}</span>`;
+    item.innerHTML = `<span class="ep-swatch" style="background:el.color"></span><span><strong>${el.name}</strong> — ${el.title}</span>`;
     item.onclick = () => epSelectElement(el.id);
     epList.appendChild(item);
   });
@@ -3523,7 +3562,7 @@ function theaterRenderSide(){
   theaterUpdateProgressSummary();
   const list = theaterFilteredList();
   const headEl = document.getElementById('theaterSideHead');
-  if(headEl) headEl.textContent = theaterFilterMode==='all' ? `Up next · allScreencasts.lengthrecordings`:`{list.length} theaterFilterModerecording{list.length===1?'':'s'}`;
+  if(headEl) headEl.textContent = theaterFilterMode==='all' ? `Up next · ${allScreencasts.length} recordings` : `${list.length} ${theaterFilterMode} recording${list.length===1?'':'s'}`;
   side.innerHTML = '';
   if(!list.length){
     side.innerHTML = '<div class="theater-empty">No recordings match your search or filter.</div>';
@@ -3535,8 +3574,10 @@ function theaterRenderSide(){
     const isActive = theaterCurrentId===v.id;
     const item = document.createElement('button');
     item.type = 'button';
-    item.className = 'theater-item' + (isActive ? ' active' : '');
-    item.setAttribute('aria-label', `Play ${v.label}`);
+    const available = isScreencastAvailable(v.id);
+    item.className = 'theater-item' + (isActive ? ' active' : '') + (available ? '' : ' locked');
+    item.setAttribute('aria-label', available ? `Play ${v.label}` : `${v.label} — available later`);
+    item.setAttribute('aria-disabled', available ? 'false' : 'true');
     item.innerHTML = `<div class="ti-thumb">
         <span aria-hidden="true">▶</span>
         <img src="${driveThumbUrl(v.id)}" alt="" loading="lazy" onerror="this.style.display='none'">
@@ -3546,7 +3587,7 @@ function theaterRenderSide(){
       </div>
       <div class="ti-body">
         <span class="ti-label">${v.label}</span>
-        ${watched ? '<span class="ti-watched">✓ Watched</span>' : (opened ? '<span class="ti-status">Opened</span>' : '')}
+        ${!available ? '<span class="ti-lock">Available later</span>' : (watched ? '<span class="ti-watched">✓ Watched</span>' : (opened ? '<span class="ti-status">Opened</span>' : ''))}
       </div>`;
     item.addEventListener('click', ()=>theaterPlay(v.id, v.label));
     side.appendChild(item);
@@ -3590,7 +3631,9 @@ function theaterLoadIframe(id, label){
    on the poster for the currently-selected recording. Only from here does
    the video actually load AND the watch-progress timer start — simply
    picking a recording from the side list does not start the clock. */
+function isScreencastAvailable(id){ return allScreencasts.findIndex(v=>v.id===id) < 2; }
 function theaterBeginPlayback(id, label){
+  if(!isScreencastAvailable(id)) return;
   theaterCurrentId = id;
   theaterLoadIframe(id, label);
   theaterStartWatchTracking(id);
@@ -3621,7 +3664,7 @@ function theaterUpdateNav(){
   const indexEl = document.getElementById('theaterIndex');
   if(idx<0){ prevBtn.disabled = true; nextBtn.disabled = true; indexEl.textContent = '—'; return; }
   prevBtn.disabled = idx<=0;
-  nextBtn.disabled = idx>=allScreencasts.length-1;
+  nextBtn.disabled = idx>=Math.min(1,allScreencasts.length-1);
   indexEl.textContent = `Screencast ${idx+1} of ${allScreencasts.length}`;
 }
 function theaterMarkWatched(id){
@@ -3636,6 +3679,7 @@ function theaterMarkWatched(id){
   maybeShowContentQuiz('video', id, screencastQuizPool, `Nice work watching "${meta ? meta.label : 'this recording'}"! Quick 2-question check:`);
 }
 function theaterPlay(id, label){
+  if(!isScreencastAvailable(id)) return;
   theaterCurrentId = id;
   // Selecting a recording only loads its poster/details — the watch-progress
   // timer doesn't start until the student presses Play (theaterBeginPlayback).
@@ -3657,7 +3701,7 @@ function theaterPlay(id, label){
 function theaterStep(delta){
   const idx = allScreencasts.findIndex(v=>v.id===theaterCurrentId);
   const nextIdx = idx + delta;
-  if(nextIdx<0 || nextIdx>=allScreencasts.length) return;
+  if(nextIdx<0 || nextIdx>=allScreencasts.length || nextIdx>=2) return;
   const v = allScreencasts[nextIdx];
   theaterPlay(v.id, v.label);
 }
