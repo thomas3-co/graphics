@@ -44,7 +44,7 @@ button{font-family:inherit;}
   align-items:center;
   gap:22px;
   padding:0 22px;
-  position:sticky;top:0;z-index:1000;isolation:isolate;backdrop-filter:saturate(140%) blur(10px);
+  position:sticky;top:0;z-index:1000;
   box-shadow:0 2px 14px rgba(0,0,0,.25);
 }
 .brand{display:flex;align-items:center;gap:10px;padding:14px 0;white-space:nowrap;background:transparent;border:none;cursor:pointer;color:#fff;text-align:left;border-radius:9px;}
@@ -2729,7 +2729,7 @@ function renderProgressView(){
       <div class="progress-card" style="--pc-accent:#ff7a2d"><h4>Week Quizzes</h4><div class="pc-big">${quizzesTaken}/${TOTAL_WEEKS}</div><div class="pc-sub">completed automatically at week end</div></div>
       <div class="progress-card" style="--pc-accent:#8b5cf6"><h4>Reading Opened</h4><div class="pc-big">${student.readingSeen.length}/3</div><div class="pc-sub">Read Me sections viewed</div></div>
       <div class="progress-card" style="--pc-accent:#ff6a2c"><h4>Screencasts Watched</h4><div class="pc-big">${videosConfirmed}/2</div><div class="pc-sub">fully watched</div></div>
-      <div class="progress-card" style="--pc-accent:#ef476f"><h4>Practice Credit</h4><div class="pc-big">${PRACTICE_CREDIT_TOTAL.toFixed(1)}</div><div class="pc-sub">${PRACTICE_CREDIT_DAYS} days × 0.7 = ${PRACTICE_CREDIT_TOTAL.toFixed(1)} marks · automatically awarded</div></div>
+      <div class="progress-card" style="--pc-accent:#ef476f"><h4>Practice Credit</h4><div class="pc-big">${(cards.length*0.7).toFixed(1)}</div><div class="pc-sub">${cards.length} days × 0.7 · automatically awarded</div></div>
       <div class="progress-card" style="--pc-accent:#5b6270"><h4>Materials Opened</h4><div class="pc-big">${(student.seenMaterials||[]).length}/23</div><div class="pc-sub">additional resources previewed</div></div>
       <div class="progress-card" style="--pc-accent:#8b5cf6"><h4>Reading Checks</h4><div class="pc-big">${readingQuizEntries.length}/3</div><div class="pc-sub">avg score ${readingQuizAvg}%</div></div>
       <div class="progress-card" style="--pc-accent:#ff6a2c"><h4>Screencast Checks</h4><div class="pc-big">${screencastQuizEntries.length}/2</div><div class="pc-sub">avg score ${screencastQuizAvg}%</div></div>
@@ -2920,9 +2920,9 @@ function buildProgressReportDoc(trigger){
     { label:'Overall Grade', big:`${g.letter} · ${g.pct}%`, color:P.blue },
     { label:'Lessons Completed', big:`${student.completed.length}/${cards.length}`, color:P.orange },
     { label:'Week Quizzes', big:`${quizzesTaken}/${TOTAL_WEEKS}`, color:P.purple },
-    { label:'Read Me Checks', big:`${readingQuizEntries.length}/3`, color:P.purple },
-    { label:'Screencast Checks', big:`${screencastQuizEntries.length}/2`, color:P.red },
-    { label:'Practice Credit', big:`${PRACTICE_CREDIT_TOTAL.toFixed(1)}/${PRACTICE_CREDIT_TOTAL.toFixed(1)}`, color:P.blue },
+    { label:'Reading Opened', big:`${student.readingSeen.length}/3`, color:P.purple },
+    { label:'Screencasts Watched', big:`${videosConfirmed}/2`, color:P.red },
+    { label:'Practice Files Opened', big:`${student.seenPractice.length}/43`, color:P.blue },
   ];
   const gap = 14, cardW = (pageWidth-80-2*gap)/3, cardH = 58;
   stats.forEach((s,i)=>{
@@ -3989,22 +3989,10 @@ function renderAssignments(){
  el.querySelectorAll('[data-assignment-status]').forEach(s=>s.addEventListener('change',e=>hmSetAssignment(e.target.dataset.assignmentStatus,e.target.value)));
  el.querySelectorAll('[data-project-submit]').forEach(b=>b.addEventListener('click',()=>hmMarkSubmitted(b.dataset.projectSubmit)));
 }
-function workflowAssessmentAverage(kind){
- const entries=Object.values(student?.contentQuizzes?.[kind]||{});
- return entries.length ? Math.round(entries.reduce((sum,q)=>sum+(q.total?(q.score/q.total)*100:0),0)/entries.length) : null;
-}
 function workflowStepGrade(step){
  const pct=v=>Math.max(0,Math.min(100,Math.round(v)));
- if(step===1){
-   const completion=pct((student?.readingSeen?.length||0)/3*100);
-   const check=workflowAssessmentAverage('reading');
-   return check===null ? completion : Math.round((completion+check)/2);
- }
- if(step===2){
-   const completion=pct(Object.keys(student?.videoConfirmed||{}).filter(k=>student.videoConfirmed[k]).length/2*100);
-   const check=workflowAssessmentAverage('screencasts');
-   return check===null ? completion : Math.round((completion+check)/2);
- }
+ if(step===1) return pct((student?.readingSeen?.length||0)/3*100);
+ if(step===2) return pct(Object.keys(student?.videoConfirmed||{}).filter(k=>student.videoConfirmed[k]).length/2*100);
  if(step===3) return 100;
  if(step===4){ const a=[...Object.values(student?.contentQuizzes?.reading||{}),...Object.values(student?.contentQuizzes?.screencasts||{})]; return a.length ? pct(a.reduce((s,q)=>s+(q.total?(q.score/q.total)*100:0),0)/a.length) : null; }
  if(step===5){ const q=student?.phaseAssessments?.phase1; return q?.completedAt ? pct(q.score/q.total*100) : null; }
@@ -4012,36 +4000,24 @@ function workflowStepGrade(step){
  return null;
 }
 function workflowGradeLabel(v){ return v===null ? 'Not graded' : `${v}%`; }
-function workflowStepMeta(step){
- const readChecks=Object.keys(student?.contentQuizzes?.reading||{}).length;
- const screenChecks=Object.keys(student?.contentQuizzes?.screencasts||{}).length;
- const readAvg=workflowAssessmentAverage('reading');
- const screenAvg=workflowAssessmentAverage('screencasts');
- if(step===1) return `${student?.readingSeen?.length||0}/3 read · ${readChecks} check${readChecks===1?'':'s'}${readAvg!==null?` · ${readAvg}% check avg`:''}`;
- if(step===2) return `${Object.keys(student?.videoConfirmed||{}).filter(k=>student.videoConfirmed[k]).length}/2 watched · ${screenChecks} check${screenChecks===1?'':'s'}${screenAvg!==null?` · ${screenAvg}% check avg`:''}`;
- if(step===3) return `${PRACTICE_CREDIT_TOTAL.toFixed(1)}/${PRACTICE_CREDIT_TOTAL.toFixed(1)} marks · ${PRACTICE_CREDIT_DAYS} days × 0.7`;
- if(step===4) return `${readChecks+screenChecks} content checks recorded · linked above`;
- if(step===5) return courseWeekNumber(new Date())>=6?'15 shuffled questions · 20 marks':'Unlocks Week 6';
- return hmAssignmentState(HM_PROJECTS[0].id)==='Submitted'?'Submitted · 15/15':'15-mark individual project';
-}
 function hmPhaseAssessmentDone(){ return !!(student && student.phaseAssessments && student.phaseAssessments.phase1 && student.phaseAssessments.phase1.completedAt); }
 function renderHomeLearning(){
  const el=document.getElementById('homeLearningPanel'); if(!el) return;
  const project=HM_PROJECTS[0];
  const readDone=!!student && ['readme-week1','readme-week2','readme-week3'].every(k=>(student.readingSeen||[]).includes(k));
- const watchedDone=!!student && Object.keys(student.videoConfirmed||{}).filter(id=>student.videoConfirmed[id]).length>=2;
+ const watchedDone=!!student && Object.keys(student.videoConfirmed||{}).some(id=>student.videoConfirmed[id]);
  const practiceDone=true;
  const assessmentDone=!!student && (Object.keys(student.contentQuizzes?.reading||{}).length>0 || Object.keys(student.contentQuizzes?.screencasts||{}).length>0);
  const phaseDone=hmPhaseAssessmentDone();
  const projectDone=hmAssignmentState(project.id)==='Submitted';
  const phaseOpen=courseWeekNumber(new Date())>=6;
  const steps=[
-  {n:1,label:'Read Me',sub:workflowStepMeta(1),done:readDone,grade:workflowStepGrade(1),tab:'notes'},
-  {n:2,label:'Screencast',sub:workflowStepMeta(2),done:watchedDone,grade:workflowStepGrade(2),tab:'screencasts'},
-  {n:3,label:'Practice',sub:workflowStepMeta(3),done:practiceDone,grade:100,tab:'practice'},
-  {n:4,label:'Assessment',sub:workflowStepMeta(4),done:assessmentDone,grade:workflowStepGrade(4),tab:'assessment'},
-  {n:5,label:'Phase Assessment',sub:workflowStepMeta(5),done:phaseDone,grade:workflowStepGrade(5),tab:'phase-assessment',locked:!phaseOpen},
-  {n:6,label:'Project',sub:workflowStepMeta(6),done:projectDone,grade:workflowStepGrade(6),tab:'projects'}
+  {n:1,label:'Read Me',sub:'3 learning sections',done:readDone,grade:workflowStepGrade(1),tab:'notes'},
+  {n:2,label:'Screencast',sub:'2 released recordings',done:watchedDone,grade:workflowStepGrade(2),tab:'screencasts'},
+  {n:3,label:'Practice',sub:'0.7 credit per day',done:practiceDone,grade:100,tab:'practice'},
+  {n:4,label:'Assessment',sub:'Quick checks',done:assessmentDone,grade:workflowStepGrade(4),tab:'assessment'},
+  {n:5,label:'Phase Assessment',sub:phaseOpen?'15 shuffled questions · 20 marks':'Unlocks Week 6',done:phaseDone,grade:workflowStepGrade(5),tab:'phase-assessment',locked:!phaseOpen},
+  {n:6,label:'Project',sub:projectDone?'Submitted · 15/15':'15-mark individual project',done:projectDone,grade:workflowStepGrade(6),tab:'projects'}
  ];
  const active=Math.max(0,steps.findIndex(x=>!x.done&&!x.locked));
  const g=computeGrade();
@@ -4052,7 +4028,7 @@ function renderHomeLearning(){
  el.innerHTML=`<div class="home-workflow-card">
    <div class="workflow-top">
     <div class="workflow-kicker"><i></i> Learning journey · ${statusText}</div>
-    <div class="workflow-title-row"><div><h3>Master the course in 6 focused steps</h3><p>Every Read Me check, screencast check, practice mark, assessment, phase assessment, and project status is linked live to this workflow and the My Progress dashboard.</p></div><span class="workflow-cycle">${projectDone?'✓ COMPLETE':'PHASE 1'}</span></div>
+    <div class="workflow-title-row"><div><h3>Master the course in 6 focused steps</h3><p>Follow the path from learning to practice, assessment, and final submission. Click any step to jump directly there.</p></div><span class="workflow-cycle">${projectDone?'✓ COMPLETE':'PHASE 1'}</span></div>
    </div>
    <div class="workflow-overall">
     <div class="workflow-grade-orb" style="--grade:${gradePct}%"><b>${gradePct}%</b></div>
@@ -4069,6 +4045,7 @@ function renderHomeLearning(){
  el.querySelectorAll('[data-workflow-step]').forEach(btn=>btn.addEventListener('click',()=>{ const n=Number(btn.dataset.workflowStep); const item=steps.find(x=>x.n===n); if(item?.locked){showToast('Phase Assessment unlocks in Week 6.');return;} hmWorkflowGo(n,project); }));
  const cont=document.getElementById('workflowContinueBtn'); if(cont) cont.onclick=()=>{ if(next.locked){showToast('Phase Assessment unlocks in Week 6.');return;} hmWorkflowGo(next.n,project); };
 }
+
 function hmSearchIndex(){
  const rows=[]; document.querySelectorAll('.view').forEach(view=>{ const id=view.id; const heading=view.querySelector('h2,h1')?.textContent?.trim()||id; const text=view.innerText.replace(/\s+/g,' ').trim(); if(text) rows.push({title:heading,tab:id,text:text.slice(0,500)}); });
  return rows;
@@ -4132,9 +4109,7 @@ function renderPhaseAssessment(){
 
 function showToast(msg){const e=document.getElementById('completionToast');if(!e)return;e.textContent=msg;e.classList.add('show');clearTimeout(window.__toastTimer);window.__toastTimer=setTimeout(()=>e.classList.remove('show'),2400);}
 const PRACTICE_CREDIT_PER_DAY=0.7;
-const PRACTICE_CREDIT_DAYS=3;
-const PRACTICE_CREDIT_TOTAL=Number((PRACTICE_CREDIT_DAYS*PRACTICE_CREDIT_PER_DAY).toFixed(1));
-function practiceCreditSummary(){ return {earned:PRACTICE_CREDIT_TOTAL,total:PRACTICE_CREDIT_TOTAL,days:PRACTICE_CREDIT_DAYS,perDay:PRACTICE_CREDIT_PER_DAY}; }
+function practiceCreditSummary(){ const total=cards.length*PRACTICE_CREDIT_PER_DAY; return {earned:total,total}; }
 function updatePracticeCreditUI(){ const x=practiceCreditSummary(); const el=document.getElementById('practiceCreditSummary'); if(el) el.textContent=`${x.earned.toFixed(1)} / ${x.total.toFixed(1)}`; }
 function initLearningUpgrade(){ renderAssignments(); renderHomeLearning(); updatePracticeCreditUI(); }
 initLearningUpgrade();
