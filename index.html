@@ -1,11 +1,12 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Photoshop &amp; Graphic Design — Class of 2028</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
 <style>
 :root{
   --chrome:#15171d;
@@ -516,469 +517,484 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
   .layers-panel{width:88vw;max-width:320px;}
 }
 </style>
-</head>
-<body>
+<style>
+/* Professional learning-platform upgrades — intentionally no dark/light theme switch. */
+.sr-only{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
+.offline-banner{position:fixed;z-index:9998;left:50%;top:0;transform:translate(-50%,-110%);padding:9px 16px;border-radius:0 0 12px 12px;background:#7c2d12;color:#fff;font-weight:700;font-size:13px;transition:transform .25s ease;box-shadow:0 4px 16px rgba(0,0,0,.18)}
+.offline-banner.show{transform:translate(-50%,0)}
+.global-search-btn{position:fixed;right:22px;bottom:22px;z-index:8000;border:1px solid rgba(47,111,237,.2);background:#fff;color:#17345f;border-radius:999px;padding:10px 14px;box-shadow:0 8px 25px rgba(31,55,90,.15);cursor:pointer;font-weight:700;display:flex;gap:9px;align-items:center}.global-search-btn kbd{font-size:10px;padding:2px 5px;border:1px solid #ccd6e5;border-radius:5px;background:#f5f7fb;color:#64748b}.global-search-btn:hover{transform:translateY(-2px)}
+.home-learning{margin:22px 0}.learning-dashboard{display:grid;grid-template-columns:1.5fr repeat(3,1fr);gap:12px}.continue-card,.mini-stat{background:linear-gradient(135deg,#fff,#f7faff);border:1px solid #dce6f4;border-radius:16px;padding:18px;box-shadow:0 5px 18px rgba(30,60,100,.07)}.continue-card{display:flex;justify-content:space-between;gap:18px;align-items:center}.continue-card h3{margin:4px 0 5px;font-size:18px}.continue-card p{margin:0;color:#667085;font-size:13px}.continue-card .hbtn{white-space:nowrap}.mini-stat strong{display:block;font-size:26px;margin-bottom:3px}.mini-stat span{font-size:12px;color:#667085}.mini-progress{height:7px;background:#e8edf5;border-radius:99px;overflow:hidden;margin-top:11px}.mini-progress i{display:block;height:100%;background:#2f6fed;border-radius:inherit}
+.practice-flow{display:flex;align-items:center;gap:7px;overflow-x:auto;padding:5px 2px 15px;margin-bottom:10px}.practice-step{min-width:140px;padding:13px 12px;border:1px solid #dfe5ee;border-radius:13px;background:#fff}.practice-step span{display:inline-flex;width:25px;height:25px;align-items:center;justify-content:center;border-radius:50%;background:#edf2f8;color:#526173;font-weight:800;margin-right:7px}.practice-step b{font-size:12px}.practice-step small{display:block;color:#758195;margin:6px 0 0 33px}.practice-step.done-step{border-color:#bfe3cf;background:#f4fcf7}.practice-step.done-step span{background:#1f9d61;color:#fff}.practice-step.active-step{border-color:#b8cdf7;box-shadow:0 3px 12px rgba(47,111,237,.12)}.practice-arrow{color:#98a3b3;font-weight:800}.assignment-board{margin:5px 0 20px}.assignment-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}.assignment-card{background:#fff;border:1px solid #e1e7f0;border-radius:16px;padding:17px;box-shadow:0 4px 15px rgba(30,50,80,.05)}.assignment-card h3{margin:0 0 6px;font-size:16px}.assignment-card p{font-size:13px;color:#657184;line-height:1.55}.assignment-meta{display:flex;flex-wrap:wrap;gap:6px;margin:9px 0}.assignment-chip{font-size:11px;border-radius:99px;background:#f1f5f9;padding:4px 8px;color:#536173}.assignment-checks{margin:10px 0;padding-left:18px;font-size:12px;color:#586577;line-height:1.7}.assignment-status{display:flex;justify-content:space-between;align-items:center;gap:10px;border-top:1px solid #edf0f5;padding-top:11px}.assignment-status select{border:1px solid #d6deea;border-radius:8px;padding:7px;background:#fff}.assignment-saved{font-size:11px;color:#16804c;font-weight:700}
+.glossary-toolbar{display:flex;align-items:center;gap:10px;margin-bottom:15px}.glossary-toolbar input{flex:1;max-width:680px;padding:12px 14px;border:1px solid #d8e0ec;border-radius:12px;font:inherit;outline:none}.glossary-toolbar input:focus{border-color:#2f6fed;box-shadow:0 0 0 3px rgba(47,111,237,.12)}.toolbar-count{font-size:12px;color:#6c7788}.glossary-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.glossary-card{background:#fff;border:1px solid #e1e6ee;border-radius:14px;padding:15px;transition:.18s}.glossary-card:hover{transform:translateY(-2px);box-shadow:0 7px 18px rgba(25,45,80,.08)}.glossary-term{font-weight:800;color:#17345f;font-size:15px}.glossary-def{font-size:13px;line-height:1.55;color:#647084;margin-top:7px}.glossary-source{font-size:11px;color:#8a94a5;margin-top:10px}
+.teacher-note{padding:11px 14px;background:#fff8e8;border:1px solid #f3ddb0;border-radius:12px;color:#775b22;font-size:12px;margin-bottom:15px}.teacher-summary{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}.teacher-stat{padding:15px;border-radius:14px;background:#fff;border:1px solid #e1e7f0}.teacher-stat strong{display:block;font-size:23px}.teacher-stat span{font-size:11px;color:#687587}.teacher-table-wrap{overflow:auto;border:1px solid #e1e7f0;border-radius:14px;background:#fff}.teacher-table{width:100%;border-collapse:collapse;font-size:12px;min-width:760px}.teacher-table th,.teacher-table td{padding:11px 12px;border-bottom:1px solid #edf0f4;text-align:left}.teacher-table th{background:#f7f9fc;color:#4d5c70}.teacher-table tr:last-child td{border-bottom:0}.teacher-actions{display:flex;gap:9px;margin-top:14px;flex-wrap:wrap}
+.course-search{display:none;position:fixed;inset:0;z-index:10001}.course-search.open{display:block}.search-backdrop{position:absolute;inset:0;background:rgba(11,25,45,.5);backdrop-filter:blur(5px)}.search-dialog{position:relative;width:min(760px,calc(100% - 28px));max-height:82vh;margin:8vh auto 0;background:#fff;border-radius:20px;box-shadow:0 25px 80px rgba(0,0,0,.25);overflow:hidden}.search-head{display:flex;justify-content:space-between;align-items:center;padding:20px 22px 12px}.search-head h3{margin:4px 0;font-size:20px}.icon-close{border:0;background:#f1f4f8;border-radius:10px;width:34px;height:34px;font-size:22px;cursor:pointer}.course-search-input{display:block;width:calc(100% - 44px);margin:0 22px 14px;padding:13px 15px;border:1px solid #d5deeb;border-radius:12px;font:inherit}.search-results{max-height:55vh;overflow:auto;padding:0 22px 22px}.search-result{display:block;width:100%;text-align:left;border:1px solid #e2e7ef;background:#fff;border-radius:12px;padding:12px 14px;margin:8px 0;cursor:pointer}.search-result:hover{border-color:#9db9ec;background:#f7faff}.search-result b{display:block;color:#17345f}.search-result span{font-size:12px;color:#697588}.search-empty{padding:25px;text-align:center;color:#7a8595}
+.a11y-panel{display:none;position:fixed;inset:0;z-index:10000;background:rgba(11,25,45,.45)}.a11y-panel.open{display:grid;place-items:center}.a11y-card{width:min(420px,calc(100% - 30px));background:#fff;border-radius:18px;padding:20px;box-shadow:0 20px 60px rgba(0,0,0,.22)}.a11y-head{display:flex;justify-content:space-between;align-items:center}.a11y-head h3{margin:0}.a11y-toggle{display:flex;gap:10px;padding:13px 0;border-bottom:1px solid #edf0f4;font-size:14px}.a11y-card p{font-size:11px;color:#788496}.large-text .view,.large-text .tab{font-size:1.08em}.reduce-motion *{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}.completion-toast{position:fixed;left:50%;bottom:28px;z-index:10002;transform:translate(-50%,20px);opacity:0;background:#16345e;color:#fff;padding:11px 16px;border-radius:12px;font-size:13px;font-weight:700;pointer-events:none;transition:.2s}.completion-toast.show{opacity:1;transform:translate(-50%,0)}
+@media(max-width:1000px){.learning-dashboard{grid-template-columns:1fr 1fr}.continue-card{grid-column:1/-1}.assignment-grid,.glossary-grid{grid-template-columns:1fr 1fr}.teacher-summary{grid-template-columns:1fr 1fr}}
+@media(max-width:650px){.global-search-btn span,.global-search-btn kbd{display:none}.global-search-btn{width:46px;height:46px;justify-content:center;padding:0}.learning-dashboard,.assignment-grid,.glossary-grid,.teacher-summary{grid-template-columns:1fr}.continue-card{display:block}.continue-card .hbtn{margin-top:12px}.practice-arrow{display:none}.practice-step{min-width:170px}.search-dialog{margin-top:4vh}.teacher-actions .hbtn{width:100%;justify-content:center}}
+</style><style>.a11y-float{position:fixed;left:22px;bottom:22px;z-index:8000;width:46px;height:46px;border-radius:50%;border:1px solid #d5dfed;background:#fff;color:#17345f;font-weight:800;box-shadow:0 8px 25px rgba(31,55,90,.15);cursor:pointer}.a11y-float:hover{transform:translateY(-2px)}</style></head>
+<body><div aria-live="polite" class="offline-banner" id="offlineBanner" role="status">You are offline. Your local progress can still be saved on this device.</div><button aria-label="Search course" class="global-search-btn" id="globalSearchBtn" type="button">⌕ <span>Search course</span><kbd>⌘K</kbd></button><button aria-label="Accessibility and learning preferences" class="a11y-float" id="a11yBtn" type="button">Aa</button>
 <a class="skip-link" href="#mainContent">Skip to content</a>
 <!-- ========== SIGN-IN GATE ========== -->
-<div id="signInGate" role="dialog" aria-modal="true" aria-labelledby="siHeading">
-  <div class="si-card">
-    <div class="si-mark" aria-hidden="true">Ps</div>
-    <h2 id="siHeading">Sign in to start</h2>
-    <p>Enter your name and the email your instructor has on file. Your progress, weekly check-ins, and grade are tracked under this account for Class of 2028.</p>
-    <div class="si-error" id="siError" role="alert"></div>
-    <form id="siForm" novalidate>
-      <label for="siName">First Name</label>
-      <input id="siName" name="name" type="text" placeholder="e.g. Mamush " autocomplete="name" required>
-      <label for="siEmail">Student email</label>
-      <input id="siEmail" name="email" type="email" placeholder="You@hmacademy.org" autocomplete="email" required>
-      <button class="si-btn" id="siSubmit" type="submit">Sign In</button>
-    </form>
-    <div class="si-fine">This device remembers one student account at a time. Once you're signed in here, this browser won't let a different email enroll — sign out first if you need to switch. (This is a browser-level check, not account security — clearing browser data resets it.) Signing back in with the same email picks up exactly where you left off. Questions? <a href="mailto:thomas@hmacademy.org" style="color:#2f6fed;font-weight:700;">thomas@hmacademy.org</a></div>
-  </div>
+<div aria-labelledby="siHeading" aria-modal="true" id="signInGate" role="dialog">
+<div class="si-card">
+<div aria-hidden="true" class="si-mark">Ps</div>
+<h2 id="siHeading">Sign in to start</h2>
+<p>Enter your name and the email your instructor has on file. Your progress, weekly check-ins, and grade are tracked under this account for Class of 2028.</p>
+<div class="si-error" id="siError" role="alert"></div>
+<form id="siForm" novalidate="">
+<label for="siName">First Name</label>
+<input autocomplete="name" id="siName" name="name" placeholder="e.g. Mamush " required="" type="text"/>
+<label for="siEmail">Student email</label>
+<input autocomplete="email" id="siEmail" name="email" placeholder="You@hmacademy.org" required="" type="email"/>
+<button class="si-btn" id="siSubmit" type="submit">Sign In</button>
+</form>
+<div class="si-fine">This device remembers one student account at a time. Once you're signed in here, this browser won't let a different email enroll — sign out first if you need to switch. (This is a browser-level check, not account security — clearing browser data resets it.) Signing back in with the same email picks up exactly where you left off. Questions? <a href="mailto:thomas@hmacademy.org" style="color:#2f6fed;font-weight:700;">thomas@hmacademy.org</a></div>
+</div>
 </div>
 <!-- ========== WEEKLY CHECK-IN MODAL ========== -->
-<div class="wq-modal" id="wqModal" role="dialog" aria-modal="true" aria-labelledby="wqQuestion">
-  <div class="wq-box">
-    <div class="wq-tag" id="wqWeekTag">Weekly Check-In</div>
-    <h3 id="wqQuestion">How did this week's lessons go?</h3>
-    <div id="wqQuizBody"></div>
-    <label for="wqAnswer" id="wqAnswerLabel" style="display:block;font-size:12px;font-weight:700;margin-bottom:6px;">Your answer</label>
-    <textarea id="wqAnswer" placeholder="Type a few sentences..."></textarea>
-    <div class="wq-actions">
-      <button class="wq-skip" id="wqSkip" type="button">Remind me later</button>
-      <button class="wq-submit" id="wqSubmit" type="button">Submit &amp; Send Report</button>
-    </div>
-  </div>
+<div aria-labelledby="wqQuestion" aria-modal="true" class="wq-modal" id="wqModal" role="dialog">
+<div class="wq-box">
+<div class="wq-tag" id="wqWeekTag">Weekly Check-In</div>
+<h3 id="wqQuestion">How did this week's lessons go?</h3>
+<div id="wqQuizBody"></div>
+<label for="wqAnswer" id="wqAnswerLabel" style="display:block;font-size:12px;font-weight:700;margin-bottom:6px;">Your answer</label>
+<textarea id="wqAnswer" placeholder="Type a few sentences..."></textarea>
+<div class="wq-actions">
+<button class="wq-skip" id="wqSkip" type="button">Remind me later</button>
+<button class="wq-submit" id="wqSubmit" type="button">Submit &amp; Send Report</button>
+</div>
+</div>
 </div>
 <!-- ========== CONTENT CHECK-IN MODAL (pops after a screencast or reading is completed) ========== -->
-<div class="wq-modal" id="cqModal" role="dialog" aria-modal="true" aria-labelledby="cqHeading">
-  <div class="wq-box">
-    <div class="wq-head">
-      <div class="wq-tag" id="cqTag">Quick Check</div>
-      <h3 id="cqHeading">Knowledge Check</h3>
-      <div class="wq-progress" aria-hidden="true"><i id="cqProgressBar"></i></div>
-      <div class="wq-progress-row"><span id="cqProgressText">0 of 7 answered</span><span>7 questions</span></div>
-    </div>
-    <div class="wq-scroll" id="cqQuizScroll">
-      <div id="cqQuizBody"></div>
-    </div>
-    <div class="wq-footer">
-      <div class="wq-status" id="cqStatus">Answer all 7 questions to submit.</div>
-      <div class="wq-actions">
-        <button class="wq-submit" id="cqSubmit" type="button">Submit Quiz</button>
-      </div>
-    </div>
-  </div>
+<div aria-labelledby="cqHeading" aria-modal="true" class="wq-modal" id="cqModal" role="dialog">
+<div class="wq-box">
+<div class="wq-head">
+<div class="wq-tag" id="cqTag">Quick Check</div>
+<h3 id="cqHeading">Knowledge Check</h3>
+<div aria-hidden="true" class="wq-progress"><i id="cqProgressBar"></i></div>
+<div class="wq-progress-row"><span id="cqProgressText">0 of 7 answered</span><span>7 questions</span></div>
+</div>
+<div class="wq-scroll" id="cqQuizScroll">
+<div id="cqQuizBody"></div>
+</div>
+<div class="wq-footer">
+<div class="wq-status" id="cqStatus">Answer all 7 questions to submit.</div>
+<div class="wq-actions">
+<button class="wq-submit" id="cqSubmit" type="button">Submit Quiz</button>
+</div>
+</div>
+</div>
 </div>
 <div class="app">
-  <header class="topbar">
-    <button class="brand" id="brandHomeBtn" type="button" aria-label="Go to Home">
-      <div class="mark" aria-hidden="true"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0RkxWcSE339V2s3bEVYqs0SY1AWHud05NRkHhVxVa8w&s=10" alt=""></div>
-      <div>
-        <div class="name">Graphic Design &amp; Photoshop</div>
-        <div class="sub">Class of 2028</div>
-      </div>
-    </button>
-    <nav class="tabs" id="mainTabs" aria-label="Main sections">
-      <button class="tab active" data-tab="home" role="tab" aria-selected="true">Home</button>
-      <button class="tab" data-tab="curriculum" role="tab" aria-selected="false">Curriculum</button>
-      <button class="tab" data-tab="projects" role="tab" aria-selected="false">Group Projects</button>
-      <button class="tab" data-tab="notes" role="tab" aria-selected="false">Read Me</button>
-      <button class="tab" data-tab="screencasts" role="tab" aria-selected="false">Screencasts</button>
-      <button class="tab" data-tab="practice" role="tab" aria-selected="false">Practice Files</button>
-      <button class="tab" data-tab="materials" role="tab" aria-selected="false">Additional Materials</button>
-      <button class="tab" data-tab="assessment" role="tab" aria-selected="false">Assessment</button>
-    </nav>
-    <button class="progress-nav-btn" id="progressNavBtn" type="button">My Progress</button>
-    <div class="student-badge" id="studentBadge" style="display:none;">
-      <span class="sb-name" id="sbName"></span>
-      <span class="sb-grade" id="sbGrade">—</span>
-    </div>
-    <button class="panel-toggle" id="lpToggle" aria-expanded="true" aria-controls="layersPanel">Layers ▾</button>
-  </header>
-  <div class="workspace">
-    <main class="canvas" id="mainContent">
-      <!-- ========== HOME ========== -->
-      <section id="home" class="view active">
-        <div class="hero">
-          <div class="hero-eyebrow">16-Week Studio Course · Meets 2 Days a Week</div>
-          <h1>Master Photoshop — from blank canvas to portfolio-ready artistry.</h1>
-          <p>Everything for the course lives here: the week-by-week curriculum, group projects, detailed reading notes, screencast recordings, and downloadable practice files — all in one workspace.</p>
-          <div class="hero-actions">
-            <button class="hbtn primary" onclick="goTab('curriculum')">Start Week 1</button>
-            <button class="hbtn ghost" onclick="goTab('notes')">Open Read Me Notes</button>
-          </div>
-        </div>
-        <div class="stat-row">
-          <div class="stat"><b>16</b><span>Weeks of curriculum</span></div>
-          <div class="stat"><b>32</b><span>Daily lessons &amp; flip cards</span></div>
-          <div class="stat"><b>3</b><span>Group projects</span></div>
-          <div class="stat"><b>23</b><span>Screencast recordings</span></div>
-        </div>
-        <div class="section-heading">Jump to a section</div>
-        <div class="home-grid">
-          <div class="home-card" style="--accent:#2f6fed" onclick="goTab('curriculum')" role="button" tabindex="0" onkeydown="if(event.key==='Enter')goTab('curriculum')">
-            <h4>Curriculum</h4>
-            <p>Flip through every week — interface basics to 3D pop-out effects and double exposure posters.</p>
-          </div>
-          <div class="home-card" style="--accent:#ff7a2d" onclick="goTab('projects')" role="button" tabindex="0" onkeydown="if(event.key==='Enter')goTab('projects')">
-            <h4>Group Projects</h4>
-            <p>Week 3's Around the World brief, Week 6's Phone/iPad mockup studio, and Week 9's Gojo pop-out submission.</p>
-          </div>
-          <div class="home-card" style="--accent:#8b5cf6" onclick="goTab('notes')" role="button" tabindex="0" onkeydown="if(event.key==='Enter')goTab('notes')">
-            <h4>Read Me Notes</h4>
-            <p>Deep-dive written lessons with tools, tips, analogies and step-by-step instructions — downloadable as PDF.</p>
-          </div>
-          <div class="home-card" style="--accent:#ff6a2c" onclick="goTab('screencasts')" role="button" tabindex="0" onkeydown="if(event.key==='Enter')goTab('screencasts')">
-            <h4>Screencasts</h4>
-            <p>Every recorded class walkthrough — plays right inside the page in a cinema-style player.</p>
-          </div>
-          <div class="home-card" style="--accent:#ef476f" onclick="goTab('practice')" role="button" tabindex="0" onkeydown="if(event.key==='Enter')goTab('practice')">
-            <h4>Practice Files</h4>
-            <p>Downloadable source images and exercise files, previewed right inside the card.</p>
-          </div>
-          <div class="home-card" style="--accent:#5b6270" onclick="goTab('materials')" role="button" tabindex="0" onkeydown="if(event.key==='Enter')goTab('materials')">
-            <h4>Additional Materials</h4>
-            <p>23 extra resources from your instructor, previewed right inside the card.</p>
-          </div>
-          <div class="home-card" style="--accent:#06b6d4" onclick="goTab('assessment')" role="button" tabindex="0" onkeydown="if(event.key==='Enter')goTab('assessment')">
-            <h4>Assessment</h4>
-            <p>Quick checks generated from the Read Me notes and screencast descriptions.</p>
-          </div>
-          <div class="home-card" style="--accent:#2f6fed" onclick="goTab('progress')" role="button" tabindex="0" onkeydown="if(event.key==='Enter')goTab('progress')">
-            <h4>My Progress</h4>
-            <p>Your grade, completed lessons, week quizzes, reading, and screencasts — all in one place.</p>
-          </div>
-        </div>
-      </section>
-      <!-- ========== CURRICULUM ========== -->
-      <section id="curriculum" class="view">
-        <div class="view-head">
-          <div>
-            <h2>Curriculum</h2>
-            <p>Class meets 2 days per week. Tap any card to flip it and mark that lesson complete. Progress is saved automatically. Finishing both days in a week pops up that week's check-in quiz.</p>
-          </div>
-          <div class="month-switch" id="monthSwitch">
-            <button class="chip active" data-month="m1">Month One · Weeks 1–4</button>
-            <button class="chip" data-month="m2">Month Two · Weeks 5–8</button>
-            <button class="chip" data-month="m3">Month Three · Weeks 9–12</button>
-            <button class="chip" data-month="m4">Month Four · Weeks 13–16</button>
-          </div>
-        </div>
-        <div class="week-nav" id="weekNav"></div>
-        <!-- ===== MONTH ONE ===== -->
-        <div class="month-block active" data-month="m1">
-        <div class="week-card" id="week1">
-        <h2 class="wk">Week 1 — Graphic Design Software &amp; Foundations</h2>
-        <div class="day-grid">
-        <div class="flip-card" data-day="1-1"><div class="flip-card-inner">
-        <div class="flip-card-front"><h4>Day 1: Graphic Design Software</h4><p>A tour of the apps designers use — Photoshop, Illustrator, Photopea, Canva and more.</p><span class="flip-hint">Tap to flip</span></div>
-        <div class="flip-card-back"><div class="vocab-title">Vocabulary</div>
-        <p><span class="vocab" tabindex="0" data-def="Adobe's industry-standard raster photo-editing software.">Photoshop</span><span class="vocab-def"> — Adobe's industry-standard raster photo-editing software.</span>,
-        <span class="vocab" tabindex="0" data-def="Adobe's vector-based illustration software.">Illustrator</span><span class="vocab-def"> — Adobe's vector-based illustration software.</span>,
-        <span class="vocab" tabindex="0" data-def="A free, browser-based editor compatible with Photoshop files — no install needed.">Photopea</span><span class="vocab-def"> — A free, browser-based editor compatible with Photoshop files — no install needed.</span>,
-        <span class="vocab" tabindex="0" data-def="A beginner-friendly, drag-and-drop design tool for quick social/print graphics.">Canva</span><span class="vocab-def"> — A beginner-friendly, drag-and-drop design tool for quick social/print graphics.</span>,
-        <span class="vocab" tabindex="0" data-def="Adobe's page-layout software for multi-page documents like magazines and books.">InDesign</span><span class="vocab-def"> — Adobe's page-layout software for multi-page documents like magazines and books.</span></p>
-        <div class="big-ideas">Different software suits different jobs: raster editors for photos, vector tools for logos and scalable art, layout tools for multi-page documents. This class uses Photopea, a free browser-based Photoshop alternative.</div>
-        </div></div></div>
-        <div class="flip-card" data-day="1-2"><div class="flip-card-inner">
-        <div class="flip-card-front"><h4>Day 2: What is Graphic Design?</h4><p>The elements and principles that make visual communication actually work.</p><span class="flip-hint">Tap to flip</span></div>
-        <div class="flip-card-back"><div class="vocab-title">Vocabulary</div>
-        <p><span class="vocab" tabindex="0" data-def="Visual communication that uses images, typography and layout to convey a message.">Graphic Design</span><span class="vocab-def"> — Visual communication that uses images, typography and layout to convey a message.</span>,
-        <span class="vocab" tabindex="0" data-def="The art of arranging type so it is readable and visually appealing.">Typography</span><span class="vocab-def"> — The art of arranging type so it is readable and visually appealing.</span>,
-        <span class="vocab" tabindex="0" data-def="How elements are arranged and positioned on a page or screen.">Layout</span><span class="vocab-def"> — How elements are arranged and positioned on a page or screen.</span>,
-        <span class="vocab" tabindex="0" data-def="How visual weight is distributed across a design.">Balance</span><span class="vocab-def"> — How visual weight is distributed across a design.</span>,
-        <span class="vocab" tabindex="0" data-def="Making one element stand out by making it different from the rest.">Contrast</span><span class="vocab-def"> — Making one element stand out by making it different from the rest.</span></p>
-        <div class="big-ideas">Good graphic design isn't decoration — it's communication. Every color, font, and placement choice should serve the message you're trying to send.</div>
-        </div></div></div>
-        </div></div>
-        <div class="week-card" id="week2">
-        <h2 class="wk">Week 2 — Photopea, Pixels &amp; Layers</h2>
-        <div class="day-grid">
-        <div class="flip-card" data-day="2-1"><div class="flip-card-inner">
-        <div class="flip-card-front"><h4>Day 3: Photopea Interface, Pixels &amp; Raster</h4><p>Tour the Photopea workspace, then learn what pixels and raster images actually are.</p><span class="flip-hint">Tap to flip</span></div>
-        <div class="flip-card-back"><div class="vocab-title">Vocabulary</div>
-        <p><span class="vocab" tabindex="0" data-def="The arrangement of menus, panels and tools you work in.">Workspace</span><span class="vocab-def"> — The arrangement of menus, panels and tools you work in.</span>,
-        <span class="vocab" tabindex="0" data-def="Dockable windows like Layers, History and Properties.">Panels</span><span class="vocab-def"> — Dockable windows like Layers, History and Properties.</span>,
-        <span class="vocab" tabindex="0" data-def="The smallest square of colored light that makes up a raster image.">Pixel</span><span class="vocab-def"> — The smallest square of colored light that makes up a raster image.</span>,
-        <span class="vocab" tabindex="0" data-def="Images made of a grid of pixels — detailed, but not infinitely scalable.">Raster</span><span class="vocab-def"> — Images made of a grid of pixels — detailed, but not infinitely scalable.</span>,
-        <span class="vocab" tabindex="0" data-def="Graphics built from math-based paths — scalable to any size without blurring.">Vector</span><span class="vocab-def"> — Graphics built from math-based paths — scalable to any size without blurring.</span></p>
-        <div class="big-ideas">Photopea's layout mirrors Photoshop's, so everything you learn here transfers directly. Knowing pixel vs. raster vs. vector is the foundation every later editing decision builds on.</div>
-        </div></div></div>
-        <div class="flip-card" data-day="2-2"><div class="flip-card-inner">
-        <div class="flip-card-front"><h4>Day 4: Destructive vs. Non-Destructive Editing &amp; Layers</h4><p>Why layers matter, and how to edit without ever harming your original image.</p><span class="flip-hint">Tap to flip</span></div>
-        <div class="flip-card-back"><div class="vocab-title">Vocabulary</div>
-        <p><span class="vocab" tabindex="0" data-def="Photoshop's building blocks — stacked, independent pieces of an image.">Layer</span><span class="vocab-def"> — Photoshop's building blocks — stacked, independent pieces of an image.</span>,
-        <span class="vocab" tabindex="0" data-def="Editing that permanently changes the original pixels.">Destructive Editing</span><span class="vocab-def"> — Editing that permanently changes the original pixels.</span>,
-        <span class="vocab" tabindex="0" data-def="Editing that preserves the original image and can be undone or adjusted later.">Non-Destructive Editing</span><span class="vocab-def"> — Editing that preserves the original image and can be undone or adjusted later.</span>,
-        <span class="vocab" tabindex="0" data-def="Organize multiple layers together into one folder.">Group</span><span class="vocab-def"> — Organize multiple layers together into one folder.</span>,
-        <span class="vocab" tabindex="0" data-def="Adjust how visible a layer is, from fully hidden to fully shown.">Opacity</span><span class="vocab-def"> — Adjust how visible a layer is, from fully hidden to fully shown.</span></p>
-        <div class="big-ideas">Layers let you edit non-linearly — nothing is permanent until you flatten the file. Always prefer non-destructive techniques so you can change your mind later without starting over.</div>
-        </div></div></div>
-        </div></div>
-        <div class="week-card" id="week3">
-        <h2 class="wk">Week 3 — Around the World with a Twist (Project Week)</h2>
-        <div class="day-grid">
-        <div class="flip-card" data-day="3-1"><div class="flip-card-inner">
-        <div class="flip-card-front"><h4>Day 5: Removing Backgrounds</h4><p>Remove the original background and prepare a clean subject edge for the new composition.</p><span class="flip-hint">Tap to flip</span></div>
-        <div class="flip-card-back"><div class="vocab-title">Vocabulary</div>
-        <p><span class="vocab" tabindex="0" data-def="Automatically detects and separates the subject from its background.">Select Subject / Background Remover</span><span class="vocab-def"> — Automatically detects and separates the subject from its background.</span>,
-        <span class="vocab" tabindex="0" data-def="Pushes and blends pixels like wet paint — great for softening rough cutout edges.">Smudge Tool</span><span class="vocab-def"> — Pushes and blends pixels like wet paint — great for softening rough cutout edges.</span>,
-        <span class="vocab" tabindex="0" data-def="A thin leftover strip of the old background color left behind around a cutout.">Fringe / White Line</span><span class="vocab-def"> — A thin leftover strip of the old background color left behind around a cutout.</span>,
-        <span class="vocab" tabindex="0" data-def="Shrinks a selection edge inward slightly to remove leftover background pixels.">Defringe / Contract</span><span class="vocab-def"> — Shrinks a selection edge inward slightly to remove leftover background pixels.</span>,
-        <span class="vocab" tabindex="0" data-def="Hides parts of a layer non-destructively so the cutout stays fully reversible.">Layer Mask</span><span class="vocab-def"> — Hides parts of a layer non-destructively so the cutout stays fully reversible.</span></p>
-        <div class="big-ideas">Even a clean selection often leaves a faint white line around the edges. Zoom in to 200%+ and use the Smudge Tool (or Defringe/Contract) to blend that line away so the cutout sits seamlessly against its new background.</div>
-        </div></div></div>
-        <div class="flip-card" data-day="3-2"><div class="flip-card-inner">
-        <div class="flip-card-front"><h4>Day 6: Smudge Tool + Minimum + Gaussian Blur</h4><p>Use the Smudge Tool to refine edges, Filter → Other → Minimum to remove a white fringe, then place the subject into the world composition and use Gaussian Blur for realistic depth.</p><span class="flip-hint">Tap to flip</span></div>
-        <div class="flip-card-back"><div class="vocab-title">Vocabulary</div>
-        <p><span class="vocab" tabindex="0" data-def="Separates the main subject cleanly from the original background.">Background Removal</span><span class="vocab-def"> — Separates the main subject cleanly from the original background.</span>,
-        <span class="vocab" tabindex="0" data-def="Moves a cut-out subject into a new image or environment and blends it with the scene.">Compositing</span><span class="vocab-def"> — Moves a cut-out subject into a new image or environment and blends it with the scene.</span>,
-        <span class="vocab" tabindex="0" data-def="A soft blur that reduces detail and simulates depth or distance.">Gaussian Blur</span><span class="vocab-def"> — A soft blur that reduces detail and simulates depth or distance.</span>,
-        <span class="vocab" tabindex="0" data-def="The visual relationship between foreground, subject and background elements in a composite.">Depth of Field</span><span class="vocab-def"> — The visual relationship between foreground, subject and background elements in a composite.</span>,
-        <span class="vocab" tabindex="0" data-def="Adjusts the edges and mask of a cut-out so the subject blends naturally into its new environment.">Layer Mask</span><span class="vocab-def"> — Adjusts the edges and mask of a cut-out so the subject blends naturally into its new environment.</span></p>
-        <div class="big-ideas">A convincing composite depends on more than a clean cut-out. Match scale, lighting, color and sharpness, then apply Gaussian Blur selectively so distant parts of the scene feel farther away and the subject belongs in the new world.</div>
-        <div class="summary-text">Week 3 project work: remove the background, place the subject into the Around the World scene, and use Gaussian Blur where needed to create realistic depth.</div>
-        </div></div></div>
-        </div></div>
-        <div class="week-card" id="week4">
-        <h2 class="wk">Week 4 — Advanced Portrait Editing</h2>
-        <div class="day-grid">
-        <div class="flip-card" data-day="4-1"><div class="flip-card-inner">
-        <div class="flip-card-front"><h4>Day 1: Creating a Passport Size Photo</h4><p>Crop, retouch and format a professional passport-size photo from start to finish.</p><span class="flip-hint">Tap to flip</span></div>
-        <div class="flip-card-back"><div class="vocab-title">Vocabulary</div>
-        <p><span class="vocab" tabindex="0" data-def="Trims the canvas down to an exact size and ratio.">Crop Tool</span><span class="vocab-def"> — Trims the canvas down to an exact size and ratio.</span>,
-        <span class="vocab" tabindex="0" data-def="The standard 2x2 inch dimension required for most ID and passport photos.">Passport Size (2x2 in)</span><span class="vocab-def"> — The standard 2x2 inch dimension required for most ID and passport photos.</span>,
-        <span class="vocab" tabindex="0" data-def="Replaces the background with a flat, regulation color — usually plain white.">Solid Color Fill</span><span class="vocab-def"> — Replaces the background with a flat, regulation color — usually plain white.</span>,
-        <span class="vocab" tabindex="0" data-def="Lightens or darkens areas to even out skin tone and lighting.">Dodge &amp; Burn</span><span class="vocab-def"> — Lightens or darkens areas to even out skin tone and lighting.</span>,
-        <span class="vocab" tabindex="0" data-def="Passport photos are typically saved at 300 DPI for sharp, print-quality results.">Resolution (DPI)</span><span class="vocab-def"> — Passport photos are typically saved at 300 DPI for sharp, print-quality results.</span></p>
-        <div class="big-ideas">Passport photos follow strict formatting rules — exact size, plain background, even lighting, natural expression — so precision matters more here than creativity.</div>
-        </div></div></div>
-        <div class="flip-card" data-day="4-2"><div class="flip-card-inner">
-        <div class="flip-card-front flip-card-quiz-front"><h4>Day 2: Puppet Warp, Dress Change &amp; Final Project</h4><p>Advanced portrait manipulation, then apply all skills from Week 1–4.</p><span class="flip-hint" style="color:rgba(255,255,255,.75)">Tap to flip</span></div>
-        <div class="flip-card-back"><div class="vocab-title">Vocabulary</div>
-        <p><span class="vocab" tabindex="0" data-def="Pin-based tool for flexible distortion.">Puppet Warp</span><span class="vocab-def"> — Pin-based tool for flexible distortion.</span>,
-        <span class="vocab" tabindex="0" data-def="Altering clothing colors/patterns.">Dress Change</span><span class="vocab-def"> — Altering clothing colors/patterns.</span>,
-        <span class="vocab" tabindex="0" data-def="Mesh overlay used in puppet warp.">Control Points</span><span class="vocab-def"> — Mesh overlay used in puppet warp.</span>,
-        <span class="vocab" tabindex="0" data-def="Combining learned techniques into one design.">Integration</span><span class="vocab-def"> — Combining learned techniques into one design.</span>,
-        <span class="vocab" tabindex="0" data-def="Applying advanced retouching and compositing.">Final Composition</span><span class="vocab-def"> — Applying advanced retouching and compositing.</span></p>
-        <div class="vocab-title">Big Ideas</div>
-        <p class="big-ideas">Use Puppet Warp for realistic body or cloth repositioning; maintain proportions and natural folds. Create a polished portrait project using techniques from previous weeks.</p>
-        </div></div></div>
-        </div></div>
-        </div><!-- /month-block m1 -->
-        <!-- ===== MONTH TWO ===== -->
-        <div class="month-block" data-month="m2">
-        <div class="week-card" id="week5">
-          <h2 class="wk">Week 5 — Advanced Color Adjustment &amp; Matching</h2>
-          <div class="day-grid">
-            <div class="flip-card project-day" data-day="5-1"><div class="flip-card-inner">
-              <div class="flip-card-front"><div class="project-label">PROJECT DAY</div><h4>Day 1: Color Fill for Clothing Change</h4><p>Use Color Fill Adjustment Layer to change outfit color naturally.</p><span class="flip-hint">Tap to flip</span></div>
-              <div class="flip-card-back"><p><strong>Objective:</strong> Practice using Color Fill layers to recolor garments realistically while maintaining texture and shadows.</p>
-              <ul><li>Use <strong>Quick Selection Tool</strong> or <strong>Pen Tool</strong> to select clothing area.</li>
-              <li>Apply <strong>Solid Color Fill Layer</strong> with blending mode <strong>Color</strong> or <strong>Soft Light</strong>.</li></ul></div>
-            </div></div>
-            <div class="flip-card project-day" data-day="5-2"><div class="flip-card-inner">
-              <div class="flip-card-front"><div class="project-label">PROJECT DAY</div><h4>Day 2: Curve Control II &amp; Match Subject with Background</h4><p>Refine clothing recolor, master curve balancing, and blend subject/background tones seamlessly.</p><span class="flip-hint">Tap to flip</span></div>
-              <div class="flip-card-back"><p>Deepen control over tonal balance using <strong>Curves Adjustment Layer</strong>.</p>
-              <p>Focus on visual harmony between subject and background using <strong>Curves</strong> and <strong>Color Balance</strong>.</p></div>
-            </div></div>
-          </div>
-        </div>
-        <div class="week-card" id="week6">
-          <h2 class="wk">Week 6 — Phone / iPad Mockup (Project Week)</h2>
-          <div class="day-grid">
-            <div class="flip-card project-day" data-day="6-1"><div class="flip-card-inner">
-              <div class="flip-card-front"><div class="project-label">PROJECT DAY</div><h4>Day 1: Mockup Project</h4><p>Create a mobile or poster mockup using smart objects.</p><span class="flip-hint">Tap to flip</span></div>
-              <div class="flip-card-back"><p><strong>Objective:</strong> Build a professional presentation mockup using smart objects.</p>
-              <ul><li>Import your design into a pre-made PSD mockup file.</li>
-              <li>Use <strong>Smart Object</strong> layers to replace the placeholder.</li>
-              <li>Adjust lighting and shadows using <strong>Levels</strong> and <strong>Drop Shadow</strong>.</li>
-              <li>Save as high-quality JPEG for presentation.</li></ul>
-              <div class="summary-text">Full brief: Group Projects tab → "Week 6 · Phone / iPad Mockup".</div></div>
-            </div></div>
-            <div class="flip-card project-day" data-day="6-2"><div class="flip-card-inner">
-              <div class="flip-card-front"><div class="project-label">PROJECT DAY</div><h4>Day 2: Practice Variations &amp; Mockup Submission</h4><p>Practice extra mockup types, then finalize and submit your mockup.</p><span class="flip-hint">Tap to flip</span></div>
-              <div class="flip-card-back"><p><strong>Objective:</strong> Strengthen mockup editing skills, then craft glowing, metallic, or embossed text effects using blending and texture overlays.</p>
-              <ul><li>Try 2–3 different mockup templates; refine placement and lighting.</li>
-              <li>Apply <strong>Bevel &amp; Emboss</strong>, <strong>Drop Shadow</strong>, and <strong>Gradient Overlay</strong>.</li>
-              <li>Submit via Group Projects tab → "Week 6 · Phone / iPad Mockup".</li></ul></div>
-            </div></div>
-          </div>
-        </div>
-        <div class="week-card" id="week7">
-          <h2 class="wk">Week 7 — Text on Any Surface with Vanishing Point</h2>
-          <div class="day-grid">
-            <div class="flip-card blue-border" data-day="7-1"><div class="flip-card-inner">
-              <div class="flip-card-front"><h4>Day 1: Text on Any Surface (Vanishing Point)</h4><p>Apply realistic text on walls, floors, or objects using the Vanishing Point filter.</p><span class="flip-hint">Tap to flip</span></div>
-              <div class="flip-card-back"><p><strong>Objective:</strong> Learn to map and blend text realistically to perspective planes.</p>
-              <ul><li>Open your background image and create a new layer for text.</li>
-              <li>Go to <strong>Filter → Vanishing Point</strong> and define perspective grids.</li>
-              <li>Paste or drag your text layer into the vanishing point plane.</li>
-              <li>Adjust lighting, opacity, and blending mode (<strong>Multiply</strong> or <strong>Overlay</strong>).</li></ul></div>
-            </div></div>
-            <div class="flip-card project-day" data-day="7-2"><div class="flip-card-inner">
-              <div class="flip-card-front"><div class="project-label">PROJECT DAY</div><h4>Day 2: Refine Vanishing Point Text &amp; 3D Pop-Out Effect</h4><p>Refine lighting and texture, then create an illusion of objects or text popping out of the frame.</p><span class="flip-hint">Tap to flip</span></div>
-              <div class="flip-card-back"><p><strong>Objective:</strong> Refine realism from Day 1, then combine layer masking and 3D perspective to make subjects break out of the photo boundaries.</p>
-              <ul><li>Use <strong>Clone Stamp Tool</strong> or <strong>Healing Brush</strong> to merge edges; match lighting with <strong>Curves</strong> and <strong>Hue/Saturation</strong>.</li>
-              <li>Import an image and add a white frame around it using <strong>Rectangle Tool</strong>.</li>
-              <li>Duplicate the image layer and mask parts that should appear outside the frame; add <strong>Drop Shadows</strong> for depth.</li>
-              <li>Use <strong>3D Text</strong> with <strong>Bevel &amp; Emboss</strong> to complement the effect.</li></ul>
-              <p class="summary-text">Final look: your subject or text appears to pop out from the image into real space.</p></div>
-            </div></div>
-          </div>
-        </div>
-        <div class="week-card" id="week8">
-          <h2 class="wk">Week 8 — Independent Study &amp; Project Refinement</h2>
-          <div class="day-grid">
-            <div class="flip-card" data-day="8-1"><div class="flip-card-inner">
-              <div class="flip-card-front"><h4>Day 1: Independent Study &amp; Practice</h4><p>Spend today refining your previous Photoshop projects.</p><span class="flip-hint">Tap to flip</span></div>
-              <div class="flip-card-back"><p><strong>Focus Areas:</strong></p>
-              <ul><li>Revisit your Week 4, 5, 6 and 7 projects.</li><li>Enhance details, lighting, and text alignment.</li>
-              <li>Experiment with extra effects: <strong>Outer Glow</strong>, <strong>Color Balance</strong>, or <strong>Gradient Maps</strong>.</li></ul>
-              <p class="summary-text">Self-paced session for mastery and creativity.</p></div>
-            </div></div>
-            <div class="flip-card" data-day="8-2"><div class="flip-card-inner">
-              <div class="flip-card-front"><h4>Day 2: More Independent Study &amp; Vintage Photo Editing</h4><p>Keep refining projects, then explore how to give your photos a timeless, vintage feel.</p><span class="flip-hint">Tap to flip</span></div>
-              <div class="flip-card-back"><p><strong>Focus Areas:</strong></p>
-              <ul><li>Continue polishing Week 4–7 projects: details, lighting, text alignment.</li>
-              <li>Apply sepia tones and faded color effects.</li>
-              <li>Use <strong>Film Grain</strong> or <strong>Noise</strong> filters for an aged texture.</li>
-              <li>Experiment with <strong>Vignette</strong> and <strong>Curves Adjustment</strong> for mood enhancement.</li>
-              <li>Try blending overlays like <strong>Dust &amp; Scratches</strong> for authenticity.</li></ul>
-              <p class="summary-text">Bring a nostalgic aesthetic to your modern photos through creative vintage effects.</p></div>
-            </div></div>
-          </div>
-        </div>
-        </div><!-- /month-block m2 -->
-        <!-- ===== MONTH THREE ===== -->
-        <div class="month-block" data-month="m3">
-        <div class="week-card" id="week9">
-          <h2 class="wk">Week 9 — Gojo Pop-Out Project</h2>
-          <div class="day-grid">
-            <div class="flip-card project-day" data-day="9-1"><div class="flip-card-inner">
-              <div class="flip-card-front"><div class="project-label">PROJECT DAY</div><h4>Day 1: Neon Text Effect</h4><p>Create glowing neon text with light blending.</p><span class="flip-hint">Tap to flip</span></div>
-              <div class="flip-card-back"><p><strong>Objective:</strong> Glow, contrast, color blending.</p></div>
-            </div></div>
-            <div class="flip-card project-day" data-day="9-2"><div class="flip-card-inner">
-              <div class="flip-card-front"><div class="project-label">PROJECT DAY</div><h4>Day 2: Neon Sign + Wall Effect &amp; Submission</h4><p>Make a realistic glowing wall-mounted neon sign, then finalize and submit your Gojo pop-out project.</p><span class="flip-hint">Tap to flip</span></div>
-              <div class="flip-card-back"><ul><li>Create metal frame; add realistic wall texture; use glow layers.</li><li>Brush glow edges; blend mode lighten; color dodge for highlights.</li><li>Submit via Group Projects tab → "Week 9 · Gojo Pop-Out Project".</li></ul></div>
-            </div></div>
-          </div>
-        </div>
-        <div class="week-card" id="week10">
-          <h2 class="wk">Week 10 — Double Exposure &amp; Poster Design</h2>
-          <div class="day-grid">
-            <div class="flip-card project-day" data-day="10-1"><div class="flip-card-inner">
-              <div class="flip-card-front"><div class="project-label">PROJECT DAY</div><h4>Day 1: Double Exposure – Basics</h4><p>Learn how to merge two images creatively.</p><span class="flip-hint">Tap to flip</span></div>
-              <div class="flip-card-back"><ul><li>Use layer masks</li><li>Soft brushes</li><li>Black/white balance</li></ul></div>
-            </div></div>
-            <div class="flip-card project-day" data-day="10-2"><div class="flip-card-inner">
-              <div class="flip-card-front"><div class="project-label">PROJECT DAY</div><h4>Day 2: Advanced Double Exposure &amp; Poster Design</h4><p>Combine shapes, forests, cities, portraits, then build a full poster blending photography + typography.</p><span class="flip-hint">Tap to flip</span></div>
-              <div class="flip-card-back"><ul><li>Gradient mask control; blend multiple textures; color grading.</li><li>Cinematic color grading; strong layout; title placement rules.</li></ul></div>
-            </div></div>
-          </div>
-        </div>
-        <div class="week-card" id="week11">
-          <h2 class="wk">Week 11 — Coming Soon</h2>
-          <div class="day-grid">
-            <div class="flip-card" data-day="11-1"><div class="flip-card-inner">
-              <div class="flip-card-front"><h4>Day 1: To be added</h4><p>Lesson content for this day hasn't been added yet.</p><span class="flip-hint">Tap to flip</span></div>
-              <div class="flip-card-back"><p class="summary-text">Placeholder — check back once this week's lesson is published.</p></div>
-            </div></div>
-            <div class="flip-card" data-day="11-2"><div class="flip-card-inner">
-              <div class="flip-card-front"><h4>Day 2: To be added</h4><p>Lesson content for this day hasn't been added yet.</p><span class="flip-hint">Tap to flip</span></div>
-              <div class="flip-card-back"><p class="summary-text">Placeholder — check back once this week's lesson is published.</p></div>
-            </div></div>
-          </div>
-        </div>
-        <div class="week-card" id="week12">
-          <h2 class="wk">Week 12 — Coming Soon</h2>
-          <div class="day-grid">
-            <div class="flip-card" data-day="12-1"><div class="flip-card-inner">
-              <div class="flip-card-front"><h4>Day 1: To be added</h4><p>Lesson content for this day hasn't been added yet.</p><span class="flip-hint">Tap to flip</span></div>
-              <div class="flip-card-back"><p class="summary-text">Placeholder — check back once this week's lesson is published.</p></div>
-            </div></div>
-            <div class="flip-card" data-day="12-2"><div class="flip-card-inner">
-              <div class="flip-card-front"><h4>Day 2: To be added</h4><p>Lesson content for this day hasn't been added yet.</p><span class="flip-hint">Tap to flip</span></div>
-              <div class="flip-card-back"><p class="summary-text">Placeholder — check back once this week's lesson is published.</p></div>
-            </div></div>
-          </div>
-        </div>
-        </div><!-- /month-block m3 -->
-        <!-- ===== MONTH FOUR ===== -->
-        <div class="month-block" data-month="m4">
-        <div class="week-card" id="week13">
-          <h2 class="wk">Week 13 — Coming Soon</h2>
-          <div class="day-grid">
-            <div class="flip-card" data-day="13-1"><div class="flip-card-inner">
-              <div class="flip-card-front"><h4>Day 1: To be added</h4><p>Lesson content for this day hasn't been added yet.</p><span class="flip-hint">Tap to flip</span></div>
-              <div class="flip-card-back"><p class="summary-text">Placeholder — check back once this week's lesson is published.</p></div>
-            </div></div>
-            <div class="flip-card" data-day="13-2"><div class="flip-card-inner">
-              <div class="flip-card-front"><h4>Day 2: To be added</h4><p>Lesson content for this day hasn't been added yet.</p><span class="flip-hint">Tap to flip</span></div>
-              <div class="flip-card-back"><p class="summary-text">Placeholder — check back once this week's lesson is published.</p></div>
-            </div></div>
-          </div>
-        </div>
-        <div class="week-card" id="week14">
-          <h2 class="wk">Week 14 — Coming Soon</h2>
-          <div class="day-grid">
-            <div class="flip-card" data-day="14-1"><div class="flip-card-inner">
-              <div class="flip-card-front"><h4>Day 1: To be added</h4><p>Lesson content for this day hasn't been added yet.</p><span class="flip-hint">Tap to flip</span></div>
-              <div class="flip-card-back"><p class="summary-text">Placeholder — check back once this week's lesson is published.</p></div>
-            </div></div>
-            <div class="flip-card" data-day="14-2"><div class="flip-card-inner">
-              <div class="flip-card-front"><h4>Day 2: To be added</h4><p>Lesson content for this day hasn't been added yet.</p><span class="flip-hint">Tap to flip</span></div>
-              <div class="flip-card-back"><p class="summary-text">Placeholder — check back once this week's lesson is published.</p></div>
-            </div></div>
-          </div>
-        </div>
-        <div class="week-card" id="week15">
-          <h2 class="wk">Week 15 — Coming Soon</h2>
-          <div class="day-grid">
-            <div class="flip-card" data-day="15-1"><div class="flip-card-inner">
-              <div class="flip-card-front"><h4>Day 1: To be added</h4><p>Lesson content for this day hasn't been added yet.</p><span class="flip-hint">Tap to flip</span></div>
-              <div class="flip-card-back"><p class="summary-text">Placeholder — check back once this week's lesson is published.</p></div>
-            </div></div>
-            <div class="flip-card" data-day="15-2"><div class="flip-card-inner">
-              <div class="flip-card-front"><h4>Day 2: To be added</h4><p>Lesson content for this day hasn't been added yet.</p><span class="flip-hint">Tap to flip</span></div>
-              <div class="flip-card-back"><p class="summary-text">Placeholder — check back once this week's lesson is published.</p></div>
-            </div></div>
-          </div>
-        </div>
-        <div class="week-card" id="week16">
-          <h2 class="wk">Week 16 — Coming Soon</h2>
-          <div class="day-grid">
-            <div class="flip-card" data-day="16-1"><div class="flip-card-inner">
-              <div class="flip-card-front"><h4>Day 1: To be added</h4><p>Lesson content for this day hasn't been added yet.</p><span class="flip-hint">Tap to flip</span></div>
-              <div class="flip-card-back"><p class="summary-text">Placeholder — check back once this week's lesson is published.</p></div>
-            </div></div>
-            <div class="flip-card" data-day="16-2"><div class="flip-card-inner">
-              <div class="flip-card-front"><h4>Day 2: To be added — Final Project</h4><p>Lesson content for this day hasn't been added yet.</p><span class="flip-hint">Tap to flip</span></div>
-              <div class="flip-card-back"><p class="summary-text">Placeholder — check back once this week's lesson is published.</p></div>
-            </div></div>
-          </div>
-        </div>
-        </div><!-- /month-block m4 -->
-      </section>
-      <!-- ========== PROJECTS ========== -->
-      <section id="projects" class="view">
-        <div class="view-head">
-          <div>
-            <h2>Group Projects</h2>
-            <p>Four hands-on studio briefs. Pick a tab, follow the instructions, and submit your files to the class Google Drive folder.</p>
-          </div>
-        </div>
-        <div class="subnav" id="projSubnav">
-          <button class="active" data-proj="world">Week 3 · Around the World with a Twist</button>
-          <button data-proj="mockup">Week 6 · Phone / iPad Mockup</button>
-          <button data-proj="gojo">Week 9 · Gojo Pop-Out Project</button>
-          <button data-proj="elemental">Week 16 · Elemental Portraits (Final Project)</button>
-        </div>
-        <!-- ---- PROJECT 3: AROUND THE WORLD (now first / Week 3) ---- -->
-        <div class="proj-view active" id="proj-world">
-        <style>
+<header class="topbar">
+<button aria-label="Go to Home" class="brand" id="brandHomeBtn" type="button">
+<div aria-hidden="true" class="mark"><img alt="" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0RkxWcSE339V2s3bEVYqs0SY1AWHud05NRkHhVxVa8w&amp;s=10"/></div>
+<div>
+<div class="name">Graphic Design &amp; Photoshop</div>
+<div class="sub">Class of 2028</div>
+</div>
+</button>
+<nav aria-label="Main sections" class="tabs" id="mainTabs">
+<button aria-selected="true" class="tab active" data-tab="home" role="tab">Home</button>
+<button aria-selected="false" class="tab" data-tab="curriculum" role="tab">Curriculum</button>
+<button aria-selected="false" class="tab" data-tab="projects" role="tab">Group Projects</button>
+<button aria-selected="false" class="tab" data-tab="notes" role="tab">Read Me</button>
+<button aria-selected="false" class="tab" data-tab="screencasts" role="tab">Screencasts</button>
+<button aria-selected="false" class="tab" data-tab="practice" role="tab">Practice Files</button>
+<button aria-selected="false" class="tab" data-tab="materials" role="tab">Additional Materials</button>
+<button aria-selected="false" class="tab" data-tab="assessment" role="tab">Assessment</button>
+<button aria-selected="false" class="tab" data-tab="glossary" role="tab">Glossary</button><button aria-selected="false" class="tab" data-tab="instructor" role="tab">Instructor</button></nav>
+<button class="progress-nav-btn" id="progressNavBtn" type="button">My Progress</button>
+<div class="student-badge" id="studentBadge" style="display:none;">
+<span class="sb-name" id="sbName"></span>
+<span class="sb-grade" id="sbGrade">—</span>
+</div>
+<button aria-controls="layersPanel" aria-expanded="true" class="panel-toggle" id="lpToggle">Layers ▾</button>
+</header>
+<div class="workspace">
+<main class="canvas" id="mainContent">
+<!-- ========== HOME ========== -->
+<section class="view active" id="home">
+<div class="hero">
+<div class="hero-eyebrow">16-Week Studio Course · Meets 2 Days a Week</div>
+<h1>Master Photoshop — from blank canvas to portfolio-ready artistry.</h1>
+<p>Everything for the course lives here: the week-by-week curriculum, group projects, detailed reading notes, screencast recordings, and downloadable practice files — all in one workspace.</p>
+<div class="hero-actions">
+<button class="hbtn primary" onclick="goTab('curriculum')">Start Week 1</button>
+<button class="hbtn ghost" onclick="goTab('notes')">Open Read Me Notes</button>
+</div>
+</div>
+<div class="stat-row">
+<div class="stat"><b>16</b><span>Weeks of curriculum</span></div>
+<div class="stat"><b>32</b><span>Daily lessons &amp; flip cards</span></div>
+<div class="stat"><b>3</b><span>Group projects</span></div>
+<div class="stat"><b>23</b><span>Screencast recordings</span></div>
+</div>
+<div class="home-learning" id="homeLearningPanel"></div>
+<div class="section-heading">Jump to a section</div>
+<div class="home-grid">
+<div class="home-card" onclick="goTab('curriculum')" onkeydown="if(event.key==='Enter')goTab('curriculum')" role="button" style="--accent:#2f6fed" tabindex="0">
+<h4>Curriculum</h4>
+<p>Flip through every week — interface basics to 3D pop-out effects and double exposure posters.</p>
+</div>
+<div class="home-card" onclick="goTab('projects')" onkeydown="if(event.key==='Enter')goTab('projects')" role="button" style="--accent:#ff7a2d" tabindex="0">
+<h4>Group Projects</h4>
+<p>Week 3's Around the World brief, Week 6's Phone/iPad mockup studio, and Week 9's Gojo pop-out submission.</p>
+</div>
+<div class="home-card" onclick="goTab('notes')" onkeydown="if(event.key==='Enter')goTab('notes')" role="button" style="--accent:#8b5cf6" tabindex="0">
+<h4>Read Me Notes</h4>
+<p>Deep-dive written lessons with tools, tips, analogies and step-by-step instructions — downloadable as PDF.</p>
+</div>
+<div class="home-card" onclick="goTab('screencasts')" onkeydown="if(event.key==='Enter')goTab('screencasts')" role="button" style="--accent:#ff6a2c" tabindex="0">
+<h4>Screencasts</h4>
+<p>Every recorded class walkthrough — plays right inside the page in a cinema-style player.</p>
+</div>
+<div class="home-card" onclick="goTab('practice')" onkeydown="if(event.key==='Enter')goTab('practice')" role="button" style="--accent:#ef476f" tabindex="0">
+<h4>Practice Files</h4>
+<p>Downloadable source images and exercise files, previewed right inside the card.</p>
+</div>
+<div class="home-card" onclick="goTab('materials')" onkeydown="if(event.key==='Enter')goTab('materials')" role="button" style="--accent:#5b6270" tabindex="0">
+<h4>Additional Materials</h4>
+<p>23 extra resources from your instructor, previewed right inside the card.</p>
+</div>
+<div class="home-card" onclick="goTab('assessment')" onkeydown="if(event.key==='Enter')goTab('assessment')" role="button" style="--accent:#06b6d4" tabindex="0">
+<h4>Assessment</h4>
+<p>Quick checks generated from the Read Me notes and screencast descriptions.</p>
+</div>
+<div class="home-card" onclick="goTab('progress')" onkeydown="if(event.key==='Enter')goTab('progress')" role="button" style="--accent:#2f6fed" tabindex="0">
+<h4>My Progress</h4>
+<p>Your grade, completed lessons, week quizzes, reading, and screencasts — all in one place.</p>
+</div>
+</div>
+</section>
+<!-- ========== CURRICULUM ========== -->
+<section class="view" id="curriculum">
+<div class="view-head">
+<div>
+<h2>Curriculum</h2>
+<p>Class meets 2 days per week. Tap any card to flip it and mark that lesson complete. Progress is saved automatically. Finishing both days in a week pops up that week's check-in quiz.</p>
+</div>
+<div class="month-switch" id="monthSwitch">
+<button class="chip active" data-month="m1">Month One · Weeks 1–4</button>
+<button class="chip" data-month="m2">Month Two · Weeks 5–8</button>
+<button class="chip" data-month="m3">Month Three · Weeks 9–12</button>
+<button class="chip" data-month="m4">Month Four · Weeks 13–16</button>
+</div>
+</div>
+<div class="week-nav" id="weekNav"></div>
+<!-- ===== MONTH ONE ===== -->
+<div class="month-block active" data-month="m1">
+<div class="week-card" id="week1">
+<h2 class="wk">Week 1 — Graphic Design Software &amp; Foundations</h2>
+<div class="day-grid">
+<div class="flip-card" data-day="1-1"><div class="flip-card-inner">
+<div class="flip-card-front"><h4>Day 1: Graphic Design Software</h4><p>A tour of the apps designers use — Photoshop, Illustrator, Photopea, Canva and more.</p><span class="flip-hint">Tap to flip</span></div>
+<div class="flip-card-back"><div class="vocab-title">Vocabulary</div>
+<p><span class="vocab" data-def="Adobe's industry-standard raster photo-editing software." tabindex="0">Photoshop</span><span class="vocab-def"> — Adobe's industry-standard raster photo-editing software.</span>,
+        <span class="vocab" data-def="Adobe's vector-based illustration software." tabindex="0">Illustrator</span><span class="vocab-def"> — Adobe's vector-based illustration software.</span>,
+        <span class="vocab" data-def="A free, browser-based editor compatible with Photoshop files — no install needed." tabindex="0">Photopea</span><span class="vocab-def"> — A free, browser-based editor compatible with Photoshop files — no install needed.</span>,
+        <span class="vocab" data-def="A beginner-friendly, drag-and-drop design tool for quick social/print graphics." tabindex="0">Canva</span><span class="vocab-def"> — A beginner-friendly, drag-and-drop design tool for quick social/print graphics.</span>,
+        <span class="vocab" data-def="Adobe's page-layout software for multi-page documents like magazines and books." tabindex="0">InDesign</span><span class="vocab-def"> — Adobe's page-layout software for multi-page documents like magazines and books.</span></p>
+<div class="big-ideas">Different software suits different jobs: raster editors for photos, vector tools for logos and scalable art, layout tools for multi-page documents. This class uses Photopea, a free browser-based Photoshop alternative.</div>
+</div></div></div>
+<div class="flip-card" data-day="1-2"><div class="flip-card-inner">
+<div class="flip-card-front"><h4>Day 2: What is Graphic Design?</h4><p>The elements and principles that make visual communication actually work.</p><span class="flip-hint">Tap to flip</span></div>
+<div class="flip-card-back"><div class="vocab-title">Vocabulary</div>
+<p><span class="vocab" data-def="Visual communication that uses images, typography and layout to convey a message." tabindex="0">Graphic Design</span><span class="vocab-def"> — Visual communication that uses images, typography and layout to convey a message.</span>,
+        <span class="vocab" data-def="The art of arranging type so it is readable and visually appealing." tabindex="0">Typography</span><span class="vocab-def"> — The art of arranging type so it is readable and visually appealing.</span>,
+        <span class="vocab" data-def="How elements are arranged and positioned on a page or screen." tabindex="0">Layout</span><span class="vocab-def"> — How elements are arranged and positioned on a page or screen.</span>,
+        <span class="vocab" data-def="How visual weight is distributed across a design." tabindex="0">Balance</span><span class="vocab-def"> — How visual weight is distributed across a design.</span>,
+        <span class="vocab" data-def="Making one element stand out by making it different from the rest." tabindex="0">Contrast</span><span class="vocab-def"> — Making one element stand out by making it different from the rest.</span></p>
+<div class="big-ideas">Good graphic design isn't decoration — it's communication. Every color, font, and placement choice should serve the message you're trying to send.</div>
+</div></div></div>
+</div></div>
+<div class="week-card" id="week2">
+<h2 class="wk">Week 2 — Photopea, Pixels &amp; Layers</h2>
+<div class="day-grid">
+<div class="flip-card" data-day="2-1"><div class="flip-card-inner">
+<div class="flip-card-front"><h4>Day 3: Photopea Interface, Pixels &amp; Raster</h4><p>Tour the Photopea workspace, then learn what pixels and raster images actually are.</p><span class="flip-hint">Tap to flip</span></div>
+<div class="flip-card-back"><div class="vocab-title">Vocabulary</div>
+<p><span class="vocab" data-def="The arrangement of menus, panels and tools you work in." tabindex="0">Workspace</span><span class="vocab-def"> — The arrangement of menus, panels and tools you work in.</span>,
+        <span class="vocab" data-def="Dockable windows like Layers, History and Properties." tabindex="0">Panels</span><span class="vocab-def"> — Dockable windows like Layers, History and Properties.</span>,
+        <span class="vocab" data-def="The smallest square of colored light that makes up a raster image." tabindex="0">Pixel</span><span class="vocab-def"> — The smallest square of colored light that makes up a raster image.</span>,
+        <span class="vocab" data-def="Images made of a grid of pixels — detailed, but not infinitely scalable." tabindex="0">Raster</span><span class="vocab-def"> — Images made of a grid of pixels — detailed, but not infinitely scalable.</span>,
+        <span class="vocab" data-def="Graphics built from math-based paths — scalable to any size without blurring." tabindex="0">Vector</span><span class="vocab-def"> — Graphics built from math-based paths — scalable to any size without blurring.</span></p>
+<div class="big-ideas">Photopea's layout mirrors Photoshop's, so everything you learn here transfers directly. Knowing pixel vs. raster vs. vector is the foundation every later editing decision builds on.</div>
+</div></div></div>
+<div class="flip-card" data-day="2-2"><div class="flip-card-inner">
+<div class="flip-card-front"><h4>Day 4: Destructive vs. Non-Destructive Editing &amp; Layers</h4><p>Why layers matter, and how to edit without ever harming your original image.</p><span class="flip-hint">Tap to flip</span></div>
+<div class="flip-card-back"><div class="vocab-title">Vocabulary</div>
+<p><span class="vocab" data-def="Photoshop's building blocks — stacked, independent pieces of an image." tabindex="0">Layer</span><span class="vocab-def"> — Photoshop's building blocks — stacked, independent pieces of an image.</span>,
+        <span class="vocab" data-def="Editing that permanently changes the original pixels." tabindex="0">Destructive Editing</span><span class="vocab-def"> — Editing that permanently changes the original pixels.</span>,
+        <span class="vocab" data-def="Editing that preserves the original image and can be undone or adjusted later." tabindex="0">Non-Destructive Editing</span><span class="vocab-def"> — Editing that preserves the original image and can be undone or adjusted later.</span>,
+        <span class="vocab" data-def="Organize multiple layers together into one folder." tabindex="0">Group</span><span class="vocab-def"> — Organize multiple layers together into one folder.</span>,
+        <span class="vocab" data-def="Adjust how visible a layer is, from fully hidden to fully shown." tabindex="0">Opacity</span><span class="vocab-def"> — Adjust how visible a layer is, from fully hidden to fully shown.</span></p>
+<div class="big-ideas">Layers let you edit non-linearly — nothing is permanent until you flatten the file. Always prefer non-destructive techniques so you can change your mind later without starting over.</div>
+</div></div></div>
+</div></div>
+<div class="week-card" id="week3">
+<h2 class="wk">Week 3 — Around the World with a Twist (Project Week)</h2>
+<div class="day-grid">
+<div class="flip-card" data-day="3-1"><div class="flip-card-inner">
+<div class="flip-card-front"><h4>Day 5: Removing Backgrounds</h4><p>Remove the original background and prepare a clean subject edge for the new composition.</p><span class="flip-hint">Tap to flip</span></div>
+<div class="flip-card-back"><div class="vocab-title">Vocabulary</div>
+<p><span class="vocab" data-def="Automatically detects and separates the subject from its background." tabindex="0">Select Subject / Background Remover</span><span class="vocab-def"> — Automatically detects and separates the subject from its background.</span>,
+        <span class="vocab" data-def="Pushes and blends pixels like wet paint — great for softening rough cutout edges." tabindex="0">Smudge Tool</span><span class="vocab-def"> — Pushes and blends pixels like wet paint — great for softening rough cutout edges.</span>,
+        <span class="vocab" data-def="A thin leftover strip of the old background color left behind around a cutout." tabindex="0">Fringe / White Line</span><span class="vocab-def"> — A thin leftover strip of the old background color left behind around a cutout.</span>,
+        <span class="vocab" data-def="Shrinks a selection edge inward slightly to remove leftover background pixels." tabindex="0">Defringe / Contract</span><span class="vocab-def"> — Shrinks a selection edge inward slightly to remove leftover background pixels.</span>,
+        <span class="vocab" data-def="Hides parts of a layer non-destructively so the cutout stays fully reversible." tabindex="0">Layer Mask</span><span class="vocab-def"> — Hides parts of a layer non-destructively so the cutout stays fully reversible.</span></p>
+<div class="big-ideas">Even a clean selection often leaves a faint white line around the edges. Zoom in to 200%+ and use the Smudge Tool (or Defringe/Contract) to blend that line away so the cutout sits seamlessly against its new background.</div>
+</div></div></div>
+<div class="flip-card" data-day="3-2"><div class="flip-card-inner">
+<div class="flip-card-front"><h4>Day 6: Smudge Tool + Minimum + Gaussian Blur</h4><p>Use the Smudge Tool to refine edges, Filter → Other → Minimum to remove a white fringe, then place the subject into the world composition and use Gaussian Blur for realistic depth.</p><span class="flip-hint">Tap to flip</span></div>
+<div class="flip-card-back"><div class="vocab-title">Vocabulary</div>
+<p><span class="vocab" data-def="Separates the main subject cleanly from the original background." tabindex="0">Background Removal</span><span class="vocab-def"> — Separates the main subject cleanly from the original background.</span>,
+        <span class="vocab" data-def="Moves a cut-out subject into a new image or environment and blends it with the scene." tabindex="0">Compositing</span><span class="vocab-def"> — Moves a cut-out subject into a new image or environment and blends it with the scene.</span>,
+        <span class="vocab" data-def="A soft blur that reduces detail and simulates depth or distance." tabindex="0">Gaussian Blur</span><span class="vocab-def"> — A soft blur that reduces detail and simulates depth or distance.</span>,
+        <span class="vocab" data-def="The visual relationship between foreground, subject and background elements in a composite." tabindex="0">Depth of Field</span><span class="vocab-def"> — The visual relationship between foreground, subject and background elements in a composite.</span>,
+        <span class="vocab" data-def="Adjusts the edges and mask of a cut-out so the subject blends naturally into its new environment." tabindex="0">Layer Mask</span><span class="vocab-def"> — Adjusts the edges and mask of a cut-out so the subject blends naturally into its new environment.</span></p>
+<div class="big-ideas">A convincing composite depends on more than a clean cut-out. Match scale, lighting, color and sharpness, then apply Gaussian Blur selectively so distant parts of the scene feel farther away and the subject belongs in the new world.</div>
+<div class="summary-text">Week 3 project work: remove the background, place the subject into the Around the World scene, and use Gaussian Blur where needed to create realistic depth.</div>
+</div></div></div>
+</div></div>
+<div class="week-card" id="week4">
+<h2 class="wk">Week 4 — Advanced Portrait Editing</h2>
+<div class="day-grid">
+<div class="flip-card" data-day="4-1"><div class="flip-card-inner">
+<div class="flip-card-front"><h4>Day 1: Creating a Passport Size Photo</h4><p>Crop, retouch and format a professional passport-size photo from start to finish.</p><span class="flip-hint">Tap to flip</span></div>
+<div class="flip-card-back"><div class="vocab-title">Vocabulary</div>
+<p><span class="vocab" data-def="Trims the canvas down to an exact size and ratio." tabindex="0">Crop Tool</span><span class="vocab-def"> — Trims the canvas down to an exact size and ratio.</span>,
+        <span class="vocab" data-def="The standard 2x2 inch dimension required for most ID and passport photos." tabindex="0">Passport Size (2x2 in)</span><span class="vocab-def"> — The standard 2x2 inch dimension required for most ID and passport photos.</span>,
+        <span class="vocab" data-def="Replaces the background with a flat, regulation color — usually plain white." tabindex="0">Solid Color Fill</span><span class="vocab-def"> — Replaces the background with a flat, regulation color — usually plain white.</span>,
+        <span class="vocab" data-def="Lightens or darkens areas to even out skin tone and lighting." tabindex="0">Dodge &amp; Burn</span><span class="vocab-def"> — Lightens or darkens areas to even out skin tone and lighting.</span>,
+        <span class="vocab" data-def="Passport photos are typically saved at 300 DPI for sharp, print-quality results." tabindex="0">Resolution (DPI)</span><span class="vocab-def"> — Passport photos are typically saved at 300 DPI for sharp, print-quality results.</span></p>
+<div class="big-ideas">Passport photos follow strict formatting rules — exact size, plain background, even lighting, natural expression — so precision matters more here than creativity.</div>
+</div></div></div>
+<div class="flip-card" data-day="4-2"><div class="flip-card-inner">
+<div class="flip-card-front flip-card-quiz-front"><h4>Day 2: Puppet Warp, Dress Change &amp; Final Project</h4><p>Advanced portrait manipulation, then apply all skills from Week 1–4.</p><span class="flip-hint" style="color:rgba(255,255,255,.75)">Tap to flip</span></div>
+<div class="flip-card-back"><div class="vocab-title">Vocabulary</div>
+<p><span class="vocab" data-def="Pin-based tool for flexible distortion." tabindex="0">Puppet Warp</span><span class="vocab-def"> — Pin-based tool for flexible distortion.</span>,
+        <span class="vocab" data-def="Altering clothing colors/patterns." tabindex="0">Dress Change</span><span class="vocab-def"> — Altering clothing colors/patterns.</span>,
+        <span class="vocab" data-def="Mesh overlay used in puppet warp." tabindex="0">Control Points</span><span class="vocab-def"> — Mesh overlay used in puppet warp.</span>,
+        <span class="vocab" data-def="Combining learned techniques into one design." tabindex="0">Integration</span><span class="vocab-def"> — Combining learned techniques into one design.</span>,
+        <span class="vocab" data-def="Applying advanced retouching and compositing." tabindex="0">Final Composition</span><span class="vocab-def"> — Applying advanced retouching and compositing.</span></p>
+<div class="vocab-title">Big Ideas</div>
+<p class="big-ideas">Use Puppet Warp for realistic body or cloth repositioning; maintain proportions and natural folds. Create a polished portrait project using techniques from previous weeks.</p>
+</div></div></div>
+</div></div>
+</div><!-- /month-block m1 -->
+<!-- ===== MONTH TWO ===== -->
+<div class="month-block" data-month="m2">
+<div class="week-card" id="week5">
+<h2 class="wk">Week 5 — Advanced Color Adjustment &amp; Matching</h2>
+<div class="day-grid">
+<div class="flip-card project-day" data-day="5-1"><div class="flip-card-inner">
+<div class="flip-card-front"><div class="project-label">PROJECT DAY</div><h4>Day 1: Color Fill for Clothing Change</h4><p>Use Color Fill Adjustment Layer to change outfit color naturally.</p><span class="flip-hint">Tap to flip</span></div>
+<div class="flip-card-back"><p><strong>Objective:</strong> Practice using Color Fill layers to recolor garments realistically while maintaining texture and shadows.</p>
+<ul><li>Use <strong>Quick Selection Tool</strong> or <strong>Pen Tool</strong> to select clothing area.</li>
+<li>Apply <strong>Solid Color Fill Layer</strong> with blending mode <strong>Color</strong> or <strong>Soft Light</strong>.</li></ul></div>
+</div></div>
+<div class="flip-card project-day" data-day="5-2"><div class="flip-card-inner">
+<div class="flip-card-front"><div class="project-label">PROJECT DAY</div><h4>Day 2: Curve Control II &amp; Match Subject with Background</h4><p>Refine clothing recolor, master curve balancing, and blend subject/background tones seamlessly.</p><span class="flip-hint">Tap to flip</span></div>
+<div class="flip-card-back"><p>Deepen control over tonal balance using <strong>Curves Adjustment Layer</strong>.</p>
+<p>Focus on visual harmony between subject and background using <strong>Curves</strong> and <strong>Color Balance</strong>.</p></div>
+</div></div>
+</div>
+</div>
+<div class="week-card" id="week6">
+<h2 class="wk">Week 6 — Phone / iPad Mockup (Project Week)</h2>
+<div class="day-grid">
+<div class="flip-card project-day" data-day="6-1"><div class="flip-card-inner">
+<div class="flip-card-front"><div class="project-label">PROJECT DAY</div><h4>Day 1: Mockup Project</h4><p>Create a mobile or poster mockup using smart objects.</p><span class="flip-hint">Tap to flip</span></div>
+<div class="flip-card-back"><p><strong>Objective:</strong> Build a professional presentation mockup using smart objects.</p>
+<ul><li>Import your design into a pre-made PSD mockup file.</li>
+<li>Use <strong>Smart Object</strong> layers to replace the placeholder.</li>
+<li>Adjust lighting and shadows using <strong>Levels</strong> and <strong>Drop Shadow</strong>.</li>
+<li>Save as high-quality JPEG for presentation.</li></ul>
+<div class="summary-text">Full brief: Group Projects tab → "Week 6 · Phone / iPad Mockup".</div></div>
+</div></div>
+<div class="flip-card project-day" data-day="6-2"><div class="flip-card-inner">
+<div class="flip-card-front"><div class="project-label">PROJECT DAY</div><h4>Day 2: Practice Variations &amp; Mockup Submission</h4><p>Practice extra mockup types, then finalize and submit your mockup.</p><span class="flip-hint">Tap to flip</span></div>
+<div class="flip-card-back"><p><strong>Objective:</strong> Strengthen mockup editing skills, then craft glowing, metallic, or embossed text effects using blending and texture overlays.</p>
+<ul><li>Try 2–3 different mockup templates; refine placement and lighting.</li>
+<li>Apply <strong>Bevel &amp; Emboss</strong>, <strong>Drop Shadow</strong>, and <strong>Gradient Overlay</strong>.</li>
+<li>Submit via Group Projects tab → "Week 6 · Phone / iPad Mockup".</li></ul></div>
+</div></div>
+</div>
+</div>
+<div class="week-card" id="week7">
+<h2 class="wk">Week 7 — Text on Any Surface with Vanishing Point</h2>
+<div class="day-grid">
+<div class="flip-card blue-border" data-day="7-1"><div class="flip-card-inner">
+<div class="flip-card-front"><h4>Day 1: Text on Any Surface (Vanishing Point)</h4><p>Apply realistic text on walls, floors, or objects using the Vanishing Point filter.</p><span class="flip-hint">Tap to flip</span></div>
+<div class="flip-card-back"><p><strong>Objective:</strong> Learn to map and blend text realistically to perspective planes.</p>
+<ul><li>Open your background image and create a new layer for text.</li>
+<li>Go to <strong>Filter → Vanishing Point</strong> and define perspective grids.</li>
+<li>Paste or drag your text layer into the vanishing point plane.</li>
+<li>Adjust lighting, opacity, and blending mode (<strong>Multiply</strong> or <strong>Overlay</strong>).</li></ul></div>
+</div></div>
+<div class="flip-card project-day" data-day="7-2"><div class="flip-card-inner">
+<div class="flip-card-front"><div class="project-label">PROJECT DAY</div><h4>Day 2: Refine Vanishing Point Text &amp; 3D Pop-Out Effect</h4><p>Refine lighting and texture, then create an illusion of objects or text popping out of the frame.</p><span class="flip-hint">Tap to flip</span></div>
+<div class="flip-card-back"><p><strong>Objective:</strong> Refine realism from Day 1, then combine layer masking and 3D perspective to make subjects break out of the photo boundaries.</p>
+<ul><li>Use <strong>Clone Stamp Tool</strong> or <strong>Healing Brush</strong> to merge edges; match lighting with <strong>Curves</strong> and <strong>Hue/Saturation</strong>.</li>
+<li>Import an image and add a white frame around it using <strong>Rectangle Tool</strong>.</li>
+<li>Duplicate the image layer and mask parts that should appear outside the frame; add <strong>Drop Shadows</strong> for depth.</li>
+<li>Use <strong>3D Text</strong> with <strong>Bevel &amp; Emboss</strong> to complement the effect.</li></ul>
+<p class="summary-text">Final look: your subject or text appears to pop out from the image into real space.</p></div>
+</div></div>
+</div>
+</div>
+<div class="week-card" id="week8">
+<h2 class="wk">Week 8 — Independent Study &amp; Project Refinement</h2>
+<div class="day-grid">
+<div class="flip-card" data-day="8-1"><div class="flip-card-inner">
+<div class="flip-card-front"><h4>Day 1: Independent Study &amp; Practice</h4><p>Spend today refining your previous Photoshop projects.</p><span class="flip-hint">Tap to flip</span></div>
+<div class="flip-card-back"><p><strong>Focus Areas:</strong></p>
+<ul><li>Revisit your Week 4, 5, 6 and 7 projects.</li><li>Enhance details, lighting, and text alignment.</li>
+<li>Experiment with extra effects: <strong>Outer Glow</strong>, <strong>Color Balance</strong>, or <strong>Gradient Maps</strong>.</li></ul>
+<p class="summary-text">Self-paced session for mastery and creativity.</p></div>
+</div></div>
+<div class="flip-card" data-day="8-2"><div class="flip-card-inner">
+<div class="flip-card-front"><h4>Day 2: More Independent Study &amp; Vintage Photo Editing</h4><p>Keep refining projects, then explore how to give your photos a timeless, vintage feel.</p><span class="flip-hint">Tap to flip</span></div>
+<div class="flip-card-back"><p><strong>Focus Areas:</strong></p>
+<ul><li>Continue polishing Week 4–7 projects: details, lighting, text alignment.</li>
+<li>Apply sepia tones and faded color effects.</li>
+<li>Use <strong>Film Grain</strong> or <strong>Noise</strong> filters for an aged texture.</li>
+<li>Experiment with <strong>Vignette</strong> and <strong>Curves Adjustment</strong> for mood enhancement.</li>
+<li>Try blending overlays like <strong>Dust &amp; Scratches</strong> for authenticity.</li></ul>
+<p class="summary-text">Bring a nostalgic aesthetic to your modern photos through creative vintage effects.</p></div>
+</div></div>
+</div>
+</div>
+</div><!-- /month-block m2 -->
+<!-- ===== MONTH THREE ===== -->
+<div class="month-block" data-month="m3">
+<div class="week-card" id="week9">
+<h2 class="wk">Week 9 — Gojo Pop-Out Project</h2>
+<div class="day-grid">
+<div class="flip-card project-day" data-day="9-1"><div class="flip-card-inner">
+<div class="flip-card-front"><div class="project-label">PROJECT DAY</div><h4>Day 1: Neon Text Effect</h4><p>Create glowing neon text with light blending.</p><span class="flip-hint">Tap to flip</span></div>
+<div class="flip-card-back"><p><strong>Objective:</strong> Glow, contrast, color blending.</p></div>
+</div></div>
+<div class="flip-card project-day" data-day="9-2"><div class="flip-card-inner">
+<div class="flip-card-front"><div class="project-label">PROJECT DAY</div><h4>Day 2: Neon Sign + Wall Effect &amp; Submission</h4><p>Make a realistic glowing wall-mounted neon sign, then finalize and submit your Gojo pop-out project.</p><span class="flip-hint">Tap to flip</span></div>
+<div class="flip-card-back"><ul><li>Create metal frame; add realistic wall texture; use glow layers.</li><li>Brush glow edges; blend mode lighten; color dodge for highlights.</li><li>Submit via Group Projects tab → "Week 9 · Gojo Pop-Out Project".</li></ul></div>
+</div></div>
+</div>
+</div>
+<div class="week-card" id="week10">
+<h2 class="wk">Week 10 — Double Exposure &amp; Poster Design</h2>
+<div class="day-grid">
+<div class="flip-card project-day" data-day="10-1"><div class="flip-card-inner">
+<div class="flip-card-front"><div class="project-label">PROJECT DAY</div><h4>Day 1: Double Exposure – Basics</h4><p>Learn how to merge two images creatively.</p><span class="flip-hint">Tap to flip</span></div>
+<div class="flip-card-back"><ul><li>Use layer masks</li><li>Soft brushes</li><li>Black/white balance</li></ul></div>
+</div></div>
+<div class="flip-card project-day" data-day="10-2"><div class="flip-card-inner">
+<div class="flip-card-front"><div class="project-label">PROJECT DAY</div><h4>Day 2: Advanced Double Exposure &amp; Poster Design</h4><p>Combine shapes, forests, cities, portraits, then build a full poster blending photography + typography.</p><span class="flip-hint">Tap to flip</span></div>
+<div class="flip-card-back"><ul><li>Gradient mask control; blend multiple textures; color grading.</li><li>Cinematic color grading; strong layout; title placement rules.</li></ul></div>
+</div></div>
+</div>
+</div>
+<div class="week-card" id="week11">
+<h2 class="wk">Week 11 — Coming Soon</h2>
+<div class="day-grid">
+<div class="flip-card" data-day="11-1"><div class="flip-card-inner">
+<div class="flip-card-front"><h4>Day 1: To be added</h4><p>Lesson content for this day hasn't been added yet.</p><span class="flip-hint">Tap to flip</span></div>
+<div class="flip-card-back"><p class="summary-text">Placeholder — check back once this week's lesson is published.</p></div>
+</div></div>
+<div class="flip-card" data-day="11-2"><div class="flip-card-inner">
+<div class="flip-card-front"><h4>Day 2: To be added</h4><p>Lesson content for this day hasn't been added yet.</p><span class="flip-hint">Tap to flip</span></div>
+<div class="flip-card-back"><p class="summary-text">Placeholder — check back once this week's lesson is published.</p></div>
+</div></div>
+</div>
+</div>
+<div class="week-card" id="week12">
+<h2 class="wk">Week 12 — Coming Soon</h2>
+<div class="day-grid">
+<div class="flip-card" data-day="12-1"><div class="flip-card-inner">
+<div class="flip-card-front"><h4>Day 1: To be added</h4><p>Lesson content for this day hasn't been added yet.</p><span class="flip-hint">Tap to flip</span></div>
+<div class="flip-card-back"><p class="summary-text">Placeholder — check back once this week's lesson is published.</p></div>
+</div></div>
+<div class="flip-card" data-day="12-2"><div class="flip-card-inner">
+<div class="flip-card-front"><h4>Day 2: To be added</h4><p>Lesson content for this day hasn't been added yet.</p><span class="flip-hint">Tap to flip</span></div>
+<div class="flip-card-back"><p class="summary-text">Placeholder — check back once this week's lesson is published.</p></div>
+</div></div>
+</div>
+</div>
+</div><!-- /month-block m3 -->
+<!-- ===== MONTH FOUR ===== -->
+<div class="month-block" data-month="m4">
+<div class="week-card" id="week13">
+<h2 class="wk">Week 13 — Coming Soon</h2>
+<div class="day-grid">
+<div class="flip-card" data-day="13-1"><div class="flip-card-inner">
+<div class="flip-card-front"><h4>Day 1: To be added</h4><p>Lesson content for this day hasn't been added yet.</p><span class="flip-hint">Tap to flip</span></div>
+<div class="flip-card-back"><p class="summary-text">Placeholder — check back once this week's lesson is published.</p></div>
+</div></div>
+<div class="flip-card" data-day="13-2"><div class="flip-card-inner">
+<div class="flip-card-front"><h4>Day 2: To be added</h4><p>Lesson content for this day hasn't been added yet.</p><span class="flip-hint">Tap to flip</span></div>
+<div class="flip-card-back"><p class="summary-text">Placeholder — check back once this week's lesson is published.</p></div>
+</div></div>
+</div>
+</div>
+<div class="week-card" id="week14">
+<h2 class="wk">Week 14 — Coming Soon</h2>
+<div class="day-grid">
+<div class="flip-card" data-day="14-1"><div class="flip-card-inner">
+<div class="flip-card-front"><h4>Day 1: To be added</h4><p>Lesson content for this day hasn't been added yet.</p><span class="flip-hint">Tap to flip</span></div>
+<div class="flip-card-back"><p class="summary-text">Placeholder — check back once this week's lesson is published.</p></div>
+</div></div>
+<div class="flip-card" data-day="14-2"><div class="flip-card-inner">
+<div class="flip-card-front"><h4>Day 2: To be added</h4><p>Lesson content for this day hasn't been added yet.</p><span class="flip-hint">Tap to flip</span></div>
+<div class="flip-card-back"><p class="summary-text">Placeholder — check back once this week's lesson is published.</p></div>
+</div></div>
+</div>
+</div>
+<div class="week-card" id="week15">
+<h2 class="wk">Week 15 — Coming Soon</h2>
+<div class="day-grid">
+<div class="flip-card" data-day="15-1"><div class="flip-card-inner">
+<div class="flip-card-front"><h4>Day 1: To be added</h4><p>Lesson content for this day hasn't been added yet.</p><span class="flip-hint">Tap to flip</span></div>
+<div class="flip-card-back"><p class="summary-text">Placeholder — check back once this week's lesson is published.</p></div>
+</div></div>
+<div class="flip-card" data-day="15-2"><div class="flip-card-inner">
+<div class="flip-card-front"><h4>Day 2: To be added</h4><p>Lesson content for this day hasn't been added yet.</p><span class="flip-hint">Tap to flip</span></div>
+<div class="flip-card-back"><p class="summary-text">Placeholder — check back once this week's lesson is published.</p></div>
+</div></div>
+</div>
+</div>
+<div class="week-card" id="week16">
+<h2 class="wk">Week 16 — Coming Soon</h2>
+<div class="day-grid">
+<div class="flip-card" data-day="16-1"><div class="flip-card-inner">
+<div class="flip-card-front"><h4>Day 1: To be added</h4><p>Lesson content for this day hasn't been added yet.</p><span class="flip-hint">Tap to flip</span></div>
+<div class="flip-card-back"><p class="summary-text">Placeholder — check back once this week's lesson is published.</p></div>
+</div></div>
+<div class="flip-card" data-day="16-2"><div class="flip-card-inner">
+<div class="flip-card-front"><h4>Day 2: To be added — Final Project</h4><p>Lesson content for this day hasn't been added yet.</p><span class="flip-hint">Tap to flip</span></div>
+<div class="flip-card-back"><p class="summary-text">Placeholder — check back once this week's lesson is published.</p></div>
+</div></div>
+</div>
+</div>
+</div><!-- /month-block m4 -->
+</section>
+<!-- ========== PROJECTS ========== -->
+<section class="view" id="projects">
+<div class="view-head">
+<div>
+<h2>Group Projects</h2>
+<p>Four hands-on studio briefs. Pick a tab, follow the instructions, and submit your files to the class Google Drive folder.</p>
+</div>
+</div>
+<div class="subnav" id="projSubnav">
+<button class="active" data-proj="world">Week 3 · Around the World with a Twist</button>
+<button data-proj="mockup">Week 6 · Phone / iPad Mockup</button>
+<button data-proj="gojo">Week 9 · Gojo Pop-Out Project</button>
+<button data-proj="elemental">Week 16 · Elemental Portraits (Final Project)</button>
+</div>
+<!-- ---- PROJECT 3: AROUND THE WORLD (now first / Week 3) ---- -->
+<div class="proj-view active" id="proj-world">
+<style>
         .atw-scope{ --atw-accent:#ff8c42; font-family:'Inter',sans-serif; }
         .atw-container{max-width:1100px;margin:0 auto;padding:4px;}
         .atw-container header{display:flex;gap:16px;align-items:center;margin-bottom:18px;}
@@ -1009,67 +1025,67 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
         .atw-submit-btn:hover{opacity:.9;}
         @media(max-width:900px){.atw-main{grid-template-columns:1fr;}.atw-side{position:static;max-height:none;}.atw-grid-2{grid-template-columns:1fr;}}
         </style>
-        <div class="atw-scope">
-        <div class="atw-container">
-          <header>
-            <div>
-              <h1>Week 3 — Around the World with a Twist</h1>
-              <p class="lead">Clear instructions, per-group rubric, and submission checklist for Class of 2028.</p>
-            </div>
-          </header>
-          <div class="atw-main">
-            <nav class="atw-side" aria-label="Groups navigation">
-              <div class="atw-search"><label for="atwSearch" style="position:absolute;left:-9999px;">Search groups or keywords</label><input id="atwSearch" placeholder="Search groups or keywords"></div>
-              <div class="atw-group-list" id="atwGroupList"></div>
-            </nav>
-            <section class="atw-content">
-              <div class="atw-hero">
-                <div class="atw-hero-left">
-                  <h2 style="margin:0 0 8px;font-size:17px;">General Instructions for All Groups</h2>
-                  <p class="atw-meta">Pick a subject from your group members and take a high-resolution portrait photo. Replace the background with your assigned city, retouch the face naturally, and redesign the pattern of cloth to reflect that city's unique culture and style identity. Your final image should tell a visual story that merges your subject's personality with the atmosphere of the city.</p>
-                </div>
-                <div class="atw-hero-right">Class of 2028</div>
-              </div>
-              <div id="atwGroupContent"></div>
-              <div class="atw-card">
-                <h3 class="atw-section-title">Submission Format</h3>
-                <div class="atw-grid-2">
-                  <div>
-                    <h4 style="margin:0 0 6px;font-size:14px;">1. Final Photoshop File (.PSD)</h4>
-                    <ul class="atw-submit-list">
-                      <li>Include organized layers: background, subject, clothing, and retouching.</li>
-                      <li>Rename layers clearly (e.g., "Clothing Edit", "Face Retouch").</li>
-                      <li>Remove hidden or unnecessary layers for file cleanliness.</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <h4 style="margin:0 0 6px;font-size:14px;">2. Final Image (.JPG or .PNG)</h4>
-                    <ul class="atw-submit-list">
-                      <li>High resolution (minimum 2000 px wide).</li>
-                      <li>Export at quality 10 or higher; avoid compression.</li>
-                      <li>Filename format: <span class="atw-filename">Group#_CityName_ClassOf2027.jpg</span></li>
-                    </ul>
-                  </div>
-                </div>
-                <div style="margin-top:12px">
-                  <h4 style="margin:0 0 6px;font-size:14px;">3. Short Creative Reflection (PDF, max 1 page)</h4>
-                  <ul class="atw-submit-list">
-                    <li>Title and one-paragraph concept summary.</li>
-                    <li>Tools used: Pen Tool, Clone Stamp, Dodge &amp; Burn, Gradient Map, etc.</li>
-                    <li>Design choices: color palette, lighting, clothing influence, composition.</li>
-                    <li>Include main challenges and lessons learned.</li>
-                  </ul>
-                </div>
-                <a class="atw-submit-btn" href="https://drive.google.com/drive/folders/10rRbwGYnjjTxAA4Q9PHvf9JrsA7kqzuw?usp=sharing" target="_blank" rel="noopener">Submit files to Class Drive Folder →</a>
-              </div>
-            </section>
-          </div>
-        </div>
-        </div>
-        </div>
-        <!-- ---- PROJECT 2: PHONE/IPAD MOCKUP (Week 6) ---- -->
-        <div class="proj-view" id="proj-mockup">
-        <style>
+<div class="atw-scope">
+<div class="atw-container">
+<header>
+<div>
+<h1>Week 3 — Around the World with a Twist</h1>
+<p class="lead">Clear instructions, per-group rubric, and submission checklist for Class of 2028.</p>
+</div>
+</header>
+<div class="atw-main">
+<nav aria-label="Groups navigation" class="atw-side">
+<div class="atw-search"><label for="atwSearch" style="position:absolute;left:-9999px;">Search groups or keywords</label><input id="atwSearch" placeholder="Search groups or keywords"/></div>
+<div class="atw-group-list" id="atwGroupList"></div>
+</nav>
+<section class="atw-content">
+<div class="atw-hero">
+<div class="atw-hero-left">
+<h2 style="margin:0 0 8px;font-size:17px;">General Instructions for All Groups</h2>
+<p class="atw-meta">Pick a subject from your group members and take a high-resolution portrait photo. Replace the background with your assigned city, retouch the face naturally, and redesign the pattern of cloth to reflect that city's unique culture and style identity. Your final image should tell a visual story that merges your subject's personality with the atmosphere of the city.</p>
+</div>
+<div class="atw-hero-right">Class of 2028</div>
+</div>
+<div id="atwGroupContent"></div>
+<div class="atw-card">
+<h3 class="atw-section-title">Submission Format</h3>
+<div class="atw-grid-2">
+<div>
+<h4 style="margin:0 0 6px;font-size:14px;">1. Final Photoshop File (.PSD)</h4>
+<ul class="atw-submit-list">
+<li>Include organized layers: background, subject, clothing, and retouching.</li>
+<li>Rename layers clearly (e.g., "Clothing Edit", "Face Retouch").</li>
+<li>Remove hidden or unnecessary layers for file cleanliness.</li>
+</ul>
+</div>
+<div>
+<h4 style="margin:0 0 6px;font-size:14px;">2. Final Image (.JPG or .PNG)</h4>
+<ul class="atw-submit-list">
+<li>High resolution (minimum 2000 px wide).</li>
+<li>Export at quality 10 or higher; avoid compression.</li>
+<li>Filename format: <span class="atw-filename">Group#_CityName_ClassOf2027.jpg</span></li>
+</ul>
+</div>
+</div>
+<div style="margin-top:12px">
+<h4 style="margin:0 0 6px;font-size:14px;">3. Short Creative Reflection (PDF, max 1 page)</h4>
+<ul class="atw-submit-list">
+<li>Title and one-paragraph concept summary.</li>
+<li>Tools used: Pen Tool, Clone Stamp, Dodge &amp; Burn, Gradient Map, etc.</li>
+<li>Design choices: color palette, lighting, clothing influence, composition.</li>
+<li>Include main challenges and lessons learned.</li>
+</ul>
+</div>
+<a class="atw-submit-btn" href="https://drive.google.com/drive/folders/10rRbwGYnjjTxAA4Q9PHvf9JrsA7kqzuw?usp=sharing" rel="noopener" target="_blank">Submit files to Class Drive Folder →</a>
+</div>
+</section>
+</div>
+</div>
+</div>
+</div>
+<!-- ---- PROJECT 2: PHONE/IPAD MOCKUP (Week 6) ---- -->
+<div class="proj-view" id="proj-mockup">
+<style>
         .sp-scope{ --sp-accent:#ff7a2d; --sp-accent2:#ff9b57; font-family:'Inter',sans-serif; }
         .sp-project{max-width:1100px;margin:0 auto;padding:22px;background:linear-gradient(180deg,#fffaf7,#fff);border-radius:20px;box-shadow:var(--shadow);border:1px solid rgba(0,0,0,0.03);}
         .sp-project .header{display:flex;gap:18px;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;}
@@ -1106,92 +1122,92 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
         .sp-tips-modal .box{background:#fff;padding:22px;border-radius:14px;max-width:340px;box-shadow:0 20px 50px rgba(0,0,0,.3);}
         @media(max-width:900px){.sp-project .layout{grid-template-columns:1fr;}.sp-project .device.ipad{width:300px;height:400px;}.sp-project .device{width:240px;height:480px;}}
         </style>
-        <div class="sp-scope">
-        <div class="sp-project">
-          <div class="header">
-            <div class="title">
-              <div class="logo-badge" aria-hidden="true">PM</div>
-              <div><h1>Week 6 — Phone / iPad Mockup Student Project</h1>
-              <p class="lead">Design your own mockup inspired by the images below. Let the visuals guide your creativity — focus on composition, lighting, and mood.</p></div>
-            </div>
-            <div style="text-align:right">
-              <div style="font-size:12px;color:#6b6b6b">Deadline: <strong>Follow weekly schedule</strong></div>
-              <div style="margin-top:8px"><a href="https://drive.google.com/drive/folders/10rRbwGYnjjTxAA4Q9PHvf9JrsA7kqzuw?usp=sharing" target="_blank" rel="noopener"><button class="btn" type="button">Submit to Class Drive Folder</button></a></div>
-            </div>
-          </div>
-          <div class="layout">
-            <div class="mockup-card">
-              <div class="device-switch">
-                <button id="sp-btn-phone" class="active" type="button" onclick="spSetDevice('phone')">Phone Mockup</button>
-                <button id="sp-btn-ipad" type="button" onclick="spSetDevice('ipad')">iPad Mockup</button>
-                <div style="flex:1"></div>
-                <button class="btn ghost" type="button" onclick="spOpenAllImages()">Open All</button>
-              </div>
-              <div class="device-stage">
-                <div id="sp-device" class="device"><div class="screen"><div class="carousel" id="sp-carousel"><img id="sp-main-image" src="" alt="Mockup inspiration image"></div></div></div>
-              </div>
-              <div class="carousel-controls" style="flex-direction:column;align-items:center">
-                <div style="display:flex;gap:10px">
-                  <button class="btn" type="button" onclick="spPrevImage()" aria-label="Previous image">◀</button>
-                  <button class="btn" type="button" onclick="spNextImage()" aria-label="Next image">▶</button>
-                  <button class="btn ghost" type="button" onclick="spShowTips()">Quick Tips</button>
-                </div>
-                <div class="thumbs" id="sp-thumbs"></div>
-              </div>
-            </div>
-            <div class="info">
-              <div class="section">
-                <h3>Instructions</h3>
-                <p class="note">
-                  1. Design a phone or iPad mockup using your own creative composition.<br>
-                  2. Let the carousel images inspire your pose, angle, or scene — don't copy, interpret creatively.<br>
-                  3. Ensure high resolution (≥1080px for phone, ≥2048px for iPad).<br>
-                  4. Use warm accents subtly to enhance mood.<br>
-                  5. Export your file as <code>Firstname_Lastname_PM.jpg</code>.<br>
+<div class="sp-scope">
+<div class="sp-project">
+<div class="header">
+<div class="title">
+<div aria-hidden="true" class="logo-badge">PM</div>
+<div><h1>Week 6 — Phone / iPad Mockup Student Project</h1>
+<p class="lead">Design your own mockup inspired by the images below. Let the visuals guide your creativity — focus on composition, lighting, and mood.</p></div>
+</div>
+<div style="text-align:right">
+<div style="font-size:12px;color:#6b6b6b">Deadline: <strong>Follow weekly schedule</strong></div>
+<div style="margin-top:8px"><a href="https://drive.google.com/drive/folders/10rRbwGYnjjTxAA4Q9PHvf9JrsA7kqzuw?usp=sharing" rel="noopener" target="_blank"><button class="btn" type="button">Submit to Class Drive Folder</button></a></div>
+</div>
+</div>
+<div class="layout">
+<div class="mockup-card">
+<div class="device-switch">
+<button class="active" id="sp-btn-phone" onclick="spSetDevice('phone')" type="button">Phone Mockup</button>
+<button id="sp-btn-ipad" onclick="spSetDevice('ipad')" type="button">iPad Mockup</button>
+<div style="flex:1"></div>
+<button class="btn ghost" onclick="spOpenAllImages()" type="button">Open All</button>
+</div>
+<div class="device-stage">
+<div class="device" id="sp-device"><div class="screen"><div class="carousel" id="sp-carousel"><img alt="Mockup inspiration image" id="sp-main-image" src=""/></div></div></div>
+</div>
+<div class="carousel-controls" style="flex-direction:column;align-items:center">
+<div style="display:flex;gap:10px">
+<button aria-label="Previous image" class="btn" onclick="spPrevImage()" type="button">◀</button>
+<button aria-label="Next image" class="btn" onclick="spNextImage()" type="button">▶</button>
+<button class="btn ghost" onclick="spShowTips()" type="button">Quick Tips</button>
+</div>
+<div class="thumbs" id="sp-thumbs"></div>
+</div>
+</div>
+<div class="info">
+<div class="section">
+<h3>Instructions</h3>
+<p class="note">
+                  1. Design a phone or iPad mockup using your own creative composition.<br/>
+                  2. Let the carousel images inspire your pose, angle, or scene — don't copy, interpret creatively.<br/>
+                  3. Ensure high resolution (≥1080px for phone, ≥2048px for iPad).<br/>
+                  4. Use warm accents subtly to enhance mood.<br/>
+                  5. Export your file as <code>Firstname_Lastname_PM.jpg</code>.<br/>
                   6. Click "Submit to Class Drive Folder" to upload your final work.
                 </p>
-                <div class="rubric-box"><strong>Mockup Note:</strong> A mockup is a visual prototype showing your design concept clearly.<br>
-                <strong>Rubric:</strong> Composition 40%, Lighting &amp; Mood 30%, Creativity 20%, Resolution &amp; Presentation 10%.</div>
-              </div>
-              <div class="section">
-                <h3>Creating a 3D Mockup and Composition</h3>
-                <p><strong>What:</strong> A 3D mockup is a digital visual showing your design applied on a realistic object like a phone, tablet, or poster. It helps visualize how your work looks in real life.</p>
-                <p><strong>Why:</strong> It gives your design depth and realism. 3D mockups make presentations professional, help with perspective accuracy, and make your work more engaging.</p>
-                <p><strong>When:</strong> After completing your main design (photo or layout), use Photoshop or an online tool like Photopea or Smartmockups to place your design inside a 3D frame or screen.</p>
-                <p><strong>How:</strong></p>
-                <ul class="checklist">
-                  <li>Prepare your final image or layout.</li>
-                  <li>Use a smart object or mockup template.</li>
-                  <li>Insert your design into the mockup layer.</li>
-                  <li>Adjust lighting, reflection, and perspective for realism.</li>
-                  <li>Align background color or blur to match your theme.</li>
-                  <li>Export the final composition as JPG or PNG.</li>
-                </ul>
-              </div>
-              <div class="actions">
-                <a id="sp-submit-link" href="https://drive.google.com/drive/folders/10rRbwGYnjjTxAA4Q9PHvf9JrsA7kqzuw?usp=sharing" target="_blank" rel="noopener"><button class="btn" type="button">Submit to Class Drive Folder</button></a>
-                <button class="btn ghost" type="button" onclick="spShowTips()">Quick Tips</button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="sp-tips-modal" id="spTipsModal" role="dialog" aria-modal="true" aria-labelledby="spTipsHeading">
-          <div class="box">
-            <h4 id="spTipsHeading">Quick Tips</h4>
-            <ul style="padding-left:18px;color:#6b6b6b;margin:0 0 12px;">
-              <li>Use light and shadow to create depth.</li>
-              <li>Keep accents subtle but engaging.</li>
-              <li>Ensure clarity and composition.</li>
-              <li>Send your draft for subject-selection feedback.</li>
-            </ul>
-            <button class="btn ghost" type="button" onclick="spCloseTips()">Close</button>
-          </div>
-        </div>
-        </div>
-        </div>
-        <!-- ---- PROJECT 1: GOJO (Week 9) ---- -->
-        <div class="proj-view" id="proj-gojo">
-        <style>
+<div class="rubric-box"><strong>Mockup Note:</strong> A mockup is a visual prototype showing your design concept clearly.<br/>
+<strong>Rubric:</strong> Composition 40%, Lighting &amp; Mood 30%, Creativity 20%, Resolution &amp; Presentation 10%.</div>
+</div>
+<div class="section">
+<h3>Creating a 3D Mockup and Composition</h3>
+<p><strong>What:</strong> A 3D mockup is a digital visual showing your design applied on a realistic object like a phone, tablet, or poster. It helps visualize how your work looks in real life.</p>
+<p><strong>Why:</strong> It gives your design depth and realism. 3D mockups make presentations professional, help with perspective accuracy, and make your work more engaging.</p>
+<p><strong>When:</strong> After completing your main design (photo or layout), use Photoshop or an online tool like Photopea or Smartmockups to place your design inside a 3D frame or screen.</p>
+<p><strong>How:</strong></p>
+<ul class="checklist">
+<li>Prepare your final image or layout.</li>
+<li>Use a smart object or mockup template.</li>
+<li>Insert your design into the mockup layer.</li>
+<li>Adjust lighting, reflection, and perspective for realism.</li>
+<li>Align background color or blur to match your theme.</li>
+<li>Export the final composition as JPG or PNG.</li>
+</ul>
+</div>
+<div class="actions">
+<a href="https://drive.google.com/drive/folders/10rRbwGYnjjTxAA4Q9PHvf9JrsA7kqzuw?usp=sharing" id="sp-submit-link" rel="noopener" target="_blank"><button class="btn" type="button">Submit to Class Drive Folder</button></a>
+<button class="btn ghost" onclick="spShowTips()" type="button">Quick Tips</button>
+</div>
+</div>
+</div>
+</div>
+<div aria-labelledby="spTipsHeading" aria-modal="true" class="sp-tips-modal" id="spTipsModal" role="dialog">
+<div class="box">
+<h4 id="spTipsHeading">Quick Tips</h4>
+<ul style="padding-left:18px;color:#6b6b6b;margin:0 0 12px;">
+<li>Use light and shadow to create depth.</li>
+<li>Keep accents subtle but engaging.</li>
+<li>Ensure clarity and composition.</li>
+<li>Send your draft for subject-selection feedback.</li>
+</ul>
+<button class="btn ghost" onclick="spCloseTips()" type="button">Close</button>
+</div>
+</div>
+</div>
+</div>
+<!-- ---- PROJECT 1: GOJO (Week 9) ---- -->
+<div class="proj-view" id="proj-gojo">
+<style>
         .gj-scope{font-family:'Poppins',sans-serif;color:#081726;}
         .gj-scope .container{max-width:1100px;margin:0 auto;padding:0 0 24px;background:#fff8f0;border-radius:16px;box-shadow:var(--shadow);padding:24px;}
         .gj-scope header{display:flex;gap:16px;align-items:center;margin-bottom:24px;}
@@ -1222,80 +1238,80 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
         .gj-scope .field-error.show{display:block;}
         .gj-scope .pdf-status{font-size:12.5px;color:#4a4a4a;align-self:center;}
         </style>
-        <div class="gj-scope">
-        <div class="container">
-        <header>
-          <div class="logo" aria-hidden="true">GJ</div>
-          <div>
-            <h1>Week 9 — Gojo Pop-Out Project (Group Project)</h1>
-            <p class="lead">Propose 3 design ideas and attach draft images. Submit your files directly to the class Google Drive folder to get the rubric.</p>
-          </div>
-        </header>
-        <form id="projectForm">
-        <div class="card">
-        <h2>Group Details</h2>
-        <div class="row" style="align-items:center">
-        <div class="col"><label for="groupName">Gojo / Group Name</label><input type="text" id="groupName" placeholder="e.g. Gojo Black Lions" required>
-        <div class="field-error" id="groupNameError">Enter a group name.</div></div>
-        <div style="width:220px"><label for="animal">Symbolic Animal</label>
-        <select id="animal"><option>Black Lions</option><option>Abyssinian Long Claw</option><option>Walia</option><option>Menelik's Bushbuck</option><option>Ethiopian Wolf</option><option>Nyalas</option></select></div>
-        </div>
-        <div style="margin-top:12px">
-        <label id="membersLabel">Group Members (up to 8)</label>
-        <div class="members" id="membersList" role="group" aria-labelledby="membersLabel">
-          <div class="member-row">
-            <input type="text" placeholder="First Name" class="memberName" required aria-label="Member First Name">
-            <input type="text" placeholder="Role (designer/lead)" class="memberRole" style="width:160px" required aria-label="Member role">
-            <button type="button" class="btn ghost small" onclick="gjRemoveMember(this)">Remove</button>
-          </div>
-        </div>
-        <button type="button" class="btn small" id="gjAddMemberBtn">+ Add member</button>
-        </div>
-        </div>
-        <div class="card">
-        <h2>Propose 3 Design Ideas</h2>
-        <div class="ideas">
-          <div class="idea" id="idea1"><h3>Idea 1</h3>
-            <label for="idea1Title">Title</label><input type="text" id="idea1Title" class="ideaTitle" required>
-            <label for="idea1Desc">Description</label><textarea id="idea1Desc" class="ideaDesc" required></textarea>
-            <label for="idea1Effect">Text Effect</label><select id="idea1Effect" class="ideaTextEffect"><option>Metallic</option><option>Glass</option><option>Stone</option><option>Neon</option><option>Smoke</option></select>
-            <label for="idea1Dir">3D Direction</label><select id="idea1Dir" class="ideaDir"><option>Forward</option><option>Upward</option><option>Left</option><option>Right</option><option>Diagonal</option></select>
-            <label for="idea1Colors">Color Scheme</label><input type="text" id="idea1Colors" class="ideaColors">
-            <label for="idea1Upload">Draft Image</label><input type="file" id="idea1Upload" class="ideaUpload" accept="image/*" multiple>
-            <div class="uploads" data-target="idea1"></div>
-          </div>
-          <div class="idea" id="idea2"><h3>Idea 2</h3>
-            <label for="idea2Title">Title</label><input type="text" id="idea2Title" class="ideaTitle" required>
-            <label for="idea2Desc">Description</label><textarea id="idea2Desc" class="ideaDesc" required></textarea>
-            <label for="idea2Effect">Text Effect</label><select id="idea2Effect" class="ideaTextEffect"><option>Metallic</option><option>Glass</option><option>Stone</option><option>Neon</option><option>Smoke</option></select>
-            <label for="idea2Dir">3D Direction</label><select id="idea2Dir" class="ideaDir"><option>Forward</option><option>Upward</option><option>Left</option><option>Right</option><option>Diagonal</option></select>
-            <label for="idea2Colors">Color Scheme</label><input type="text" id="idea2Colors" class="ideaColors">
-            <label for="idea2Upload">Draft Image</label><input type="file" id="idea2Upload" class="ideaUpload" accept="image/*" multiple>
-            <div class="uploads" data-target="idea2"></div>
-          </div>
-          <div class="idea" id="idea3"><h3>Idea 3</h3>
-            <label for="idea3Title">Title</label><input type="text" id="idea3Title" class="ideaTitle" required>
-            <label for="idea3Desc">Description</label><textarea id="idea3Desc" class="ideaDesc" required></textarea>
-            <label for="idea3Effect">Text Effect</label><select id="idea3Effect" class="ideaTextEffect"><option>Metallic</option><option>Glass</option><option>Stone</option><option>Neon</option><option>Smoke</option></select>
-            <label for="idea3Dir">3D Direction</label><select id="idea3Dir" class="ideaDir"><option>Forward</option><option>Upward</option><option>Left</option><option>Right</option><option>Diagonal</option></select>
-            <label for="idea3Colors">Color Scheme</label><input type="text" id="idea3Colors" class="ideaColors">
-            <label for="idea3Upload">Draft Image</label><input type="file" id="idea3Upload" class="ideaUpload" accept="image/*" multiple>
-            <div class="uploads" data-target="idea3"></div>
-          </div>
-        </div>
-        </div>
-        <div class="card actions">
-        <span class="pdf-status" id="gjPdfStatus" aria-live="polite"></span>
-        <button type="button" class="btn" id="gjDownloadBtn">Download Project PDF</button>
-        <button type="button" class="btn" id="gjSubmitBtn">Submit to Class Drive Folder</button>
-        </div>
-        </form>
-        </div>
-        </div>
-        </div>
-        <!-- ---- PROJECT 4: ELEMENTAL PORTRAITS (Week 16, Final Project) ---- -->
-        <div class="proj-view" id="proj-elemental">
-        <style>
+<div class="gj-scope">
+<div class="container">
+<header>
+<div aria-hidden="true" class="logo">GJ</div>
+<div>
+<h1>Week 9 — Gojo Pop-Out Project (Group Project)</h1>
+<p class="lead">Propose 3 design ideas and attach draft images. Submit your files directly to the class Google Drive folder to get the rubric.</p>
+</div>
+</header>
+<form id="projectForm">
+<div class="card">
+<h2>Group Details</h2>
+<div class="row" style="align-items:center">
+<div class="col"><label for="groupName">Gojo / Group Name</label><input id="groupName" placeholder="e.g. Gojo Black Lions" required="" type="text"/>
+<div class="field-error" id="groupNameError">Enter a group name.</div></div>
+<div style="width:220px"><label for="animal">Symbolic Animal</label>
+<select id="animal"><option>Black Lions</option><option>Abyssinian Long Claw</option><option>Walia</option><option>Menelik's Bushbuck</option><option>Ethiopian Wolf</option><option>Nyalas</option></select></div>
+</div>
+<div style="margin-top:12px">
+<label id="membersLabel">Group Members (up to 8)</label>
+<div aria-labelledby="membersLabel" class="members" id="membersList" role="group">
+<div class="member-row">
+<input aria-label="Member First Name" class="memberName" placeholder="First Name" required="" type="text"/>
+<input aria-label="Member role" class="memberRole" placeholder="Role (designer/lead)" required="" style="width:160px" type="text"/>
+<button class="btn ghost small" onclick="gjRemoveMember(this)" type="button">Remove</button>
+</div>
+</div>
+<button class="btn small" id="gjAddMemberBtn" type="button">+ Add member</button>
+</div>
+</div>
+<div class="card">
+<h2>Propose 3 Design Ideas</h2>
+<div class="ideas">
+<div class="idea" id="idea1"><h3>Idea 1</h3>
+<label for="idea1Title">Title</label><input class="ideaTitle" id="idea1Title" required="" type="text"/>
+<label for="idea1Desc">Description</label><textarea class="ideaDesc" id="idea1Desc" required=""></textarea>
+<label for="idea1Effect">Text Effect</label><select class="ideaTextEffect" id="idea1Effect"><option>Metallic</option><option>Glass</option><option>Stone</option><option>Neon</option><option>Smoke</option></select>
+<label for="idea1Dir">3D Direction</label><select class="ideaDir" id="idea1Dir"><option>Forward</option><option>Upward</option><option>Left</option><option>Right</option><option>Diagonal</option></select>
+<label for="idea1Colors">Color Scheme</label><input class="ideaColors" id="idea1Colors" type="text"/>
+<label for="idea1Upload">Draft Image</label><input accept="image/*" class="ideaUpload" id="idea1Upload" multiple="" type="file"/>
+<div class="uploads" data-target="idea1"></div>
+</div>
+<div class="idea" id="idea2"><h3>Idea 2</h3>
+<label for="idea2Title">Title</label><input class="ideaTitle" id="idea2Title" required="" type="text"/>
+<label for="idea2Desc">Description</label><textarea class="ideaDesc" id="idea2Desc" required=""></textarea>
+<label for="idea2Effect">Text Effect</label><select class="ideaTextEffect" id="idea2Effect"><option>Metallic</option><option>Glass</option><option>Stone</option><option>Neon</option><option>Smoke</option></select>
+<label for="idea2Dir">3D Direction</label><select class="ideaDir" id="idea2Dir"><option>Forward</option><option>Upward</option><option>Left</option><option>Right</option><option>Diagonal</option></select>
+<label for="idea2Colors">Color Scheme</label><input class="ideaColors" id="idea2Colors" type="text"/>
+<label for="idea2Upload">Draft Image</label><input accept="image/*" class="ideaUpload" id="idea2Upload" multiple="" type="file"/>
+<div class="uploads" data-target="idea2"></div>
+</div>
+<div class="idea" id="idea3"><h3>Idea 3</h3>
+<label for="idea3Title">Title</label><input class="ideaTitle" id="idea3Title" required="" type="text"/>
+<label for="idea3Desc">Description</label><textarea class="ideaDesc" id="idea3Desc" required=""></textarea>
+<label for="idea3Effect">Text Effect</label><select class="ideaTextEffect" id="idea3Effect"><option>Metallic</option><option>Glass</option><option>Stone</option><option>Neon</option><option>Smoke</option></select>
+<label for="idea3Dir">3D Direction</label><select class="ideaDir" id="idea3Dir"><option>Forward</option><option>Upward</option><option>Left</option><option>Right</option><option>Diagonal</option></select>
+<label for="idea3Colors">Color Scheme</label><input class="ideaColors" id="idea3Colors" type="text"/>
+<label for="idea3Upload">Draft Image</label><input accept="image/*" class="ideaUpload" id="idea3Upload" multiple="" type="file"/>
+<div class="uploads" data-target="idea3"></div>
+</div>
+</div>
+</div>
+<div class="card actions">
+<span aria-live="polite" class="pdf-status" id="gjPdfStatus"></span>
+<button class="btn" id="gjDownloadBtn" type="button">Download Project PDF</button>
+<button class="btn" id="gjSubmitBtn" type="button">Submit to Class Drive Folder</button>
+</div>
+</form>
+</div>
+</div>
+</div>
+<!-- ---- PROJECT 4: ELEMENTAL PORTRAITS (Week 16, Final Project) ---- -->
+<div class="proj-view" id="proj-elemental">
+<style>
         .ep-scope{ --ep-accent:#7c3aed; --ep-gold:#f5b942; font-family:'Inter',sans-serif; color:#eef0ff; }
         .ep-container{max-width:1100px;margin:0 auto;padding:26px;border-radius:22px;position:relative;overflow:hidden;
           background:radial-gradient(circle at 15% 0%,rgba(124,58,237,.55),transparent 55%),
@@ -1334,299 +1350,294 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
         .ep-submit-btn:hover{opacity:.9;}
         @media(max-width:900px){.ep-main{grid-template-columns:1fr;}.ep-side{position:static;max-height:none;}.ep-grid-2{grid-template-columns:1fr;}}
         </style>
-        <div class="ep-scope">
-        <div class="ep-container">
-          <header>
-            <div class="ep-badge" aria-hidden="true">✦</div>
-            <div>
-              <h1>Week 16 — Elemental Portraits</h1>
-              <p class="lead">Fuse a portrait with a force of nature to create a surreal Elemental Being. The capstone project for Class of 2028.</p>
-              <span class="ep-final-tag">Final Project</span>
-            </div>
-          </header>
-          <div class="ep-main">
-            <nav class="ep-side" aria-label="Elements navigation">
-              <div class="ep-search"><label for="epSearch" style="position:absolute;left:-9999px;">Search elements or keywords</label><input id="epSearch" placeholder="Search elements..."></div>
-              <div class="ep-list" id="epList"></div>
-            </nav>
-            <section class="ep-content">
-              <div class="ep-hero">
-                <div class="ep-hero-left">
-                  <h2 style="margin:0 0 8px;font-size:17px;color:#fff;">General Instructions</h2>
-                  <p class="ep-meta">Choose one elemental force below and fuse it with a self-portrait (or a willing model) to create a surreal "Elemental Being." The fusion should feel physically believable — as if the force is erupting from, wrapping around, or replacing part of the subject — not simply pasted on top. Use blending modes, layer masks, Liquify, and color grading to sell the illusion, and build a short visual story around your character: who are they, and where does their power come from?</p>
-                </div>
-                <div class="ep-hero-right" id="epHeroSwatch">Class of 2028</div>
-              </div>
-              <div id="epContent"></div>
-              <div class="ep-card">
-                <h3 class="ep-section-title">Submission Format</h3>
-                <div class="ep-grid-2">
-                  <div>
-                    <h4 style="margin:0 0 6px;font-size:14px;color:#fff;">1. Final Photoshop File (.PSD)</h4>
-                    <ul class="ep-submit-list">
-                      <li>Include organized layers: portrait, element textures, blending/masking, and color grade.</li>
-                      <li>Rename layers clearly (e.g., "Fire Overlay", "Skin Glow Mask").</li>
-                      <li>Remove hidden or unnecessary layers for file cleanliness.</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <h4 style="margin:0 0 6px;font-size:14px;color:#fff;">2. Final Image (.JPG or .PNG)</h4>
-                    <ul class="ep-submit-list">
-                      <li>High resolution (minimum 2000 px wide).</li>
-                      <li>Export at quality 10 or higher; avoid compression.</li>
-                      <li>Filename format: <span class="ep-filename">Element_CharacterName_ClassOf2028.jpg</span></li>
-                    </ul>
-                  </div>
-                </div>
-                <div style="margin-top:12px">
-                  <h4 style="margin:0 0 6px;font-size:14px;color:#fff;">3. Short Creative Reflection (PDF, max 1 page)</h4>
-                  <ul class="ep-submit-list">
-                    <li>Character name and one-paragraph origin story for your Elemental Being.</li>
-                    <li>Tools used: Layer Masks, Blend Modes, Liquify, Dodge &amp; Burn, Gradient Map, etc.</li>
-                    <li>Design choices: color palette, texture sourcing, and how you sold the fusion.</li>
-                    <li>Include main challenges and lessons learned across the whole course.</li>
-                  </ul>
-                </div>
-                <a class="ep-submit-btn" href="https://drive.google.com/drive/folders/10rRbwGYnjjTxAA4Q9PHvf9JrsA7kqzuw?usp=sharing" target="_blank" rel="noopener">Submit files to Class Drive Folder →</a>
-              </div>
-            </section>
-          </div>
-        </div>
-        </div>
-        </div>
-      </section>
-      <!-- ========== NOTES / READ ME ========== -->
-      <section id="notes" class="view">
-        <div class="view-head">
-          <div>
-            <h2>Read Me — Course Notes</h2>
-            <p>Three focused weekly note packs. Open a card to study the lesson, review the vocabulary, use the tips, then choose <strong>Mark as Read</strong> when you are ready for the 7-question check.</p>
-          </div>
-        </div>
-
-        <div class="note-section" id="readme-week1" data-reading="readme-week1">
-          <div class="note-actions">
-            <button class="note-dl" onclick="downloadSectionPDF('readme-week1','Week 1 — Open, Save and Export')">Download PDF</button>
-            <button class="note-mark" data-reading-key="readme-week1" onclick="markReadingRead('readme-week1', this)"><span class="nm-circle" aria-hidden="true"></span><span class="nm-label">Mark as Read</span></button>
-          </div>
-          <h3><span class="week-badge">WEEK 1</span> Open · Save · Export</h3>
-          <p>Week 1 builds the file-handling habits you need before editing: create or open the correct document, save an editable working file, and export a finished copy in the format your project requires.</p>
-
-          <div class="readme-grid">
-            <article class="readme-lesson-card">
-              <div class="readme-card-icon">01</div>
-              <div><h4>How to Open</h4>
-                <p>Use <strong>File → Open</strong> to bring an existing image or Photoshop document into the workspace. You can also open a file from the start screen or drag a supported file into the editor.</p>
-                <ol class="note-steps">
-                  <li>Choose the file you actually intend to edit.</li>
-                  <li>Check the image dimensions and resolution before doing detailed work.</li>
-                  <li>Confirm that the document opens with the expected layers or image content.</li>
-                </ol>
-              </div>
-            </article>
-            <article class="readme-lesson-card">
-              <div class="readme-card-icon">02</div>
-              <div><h4>How to Save</h4>
-                <p><strong>Save</strong> protects your editable working file. For Photoshop projects, save the working version as a <strong>PSD</strong> so layers and editability remain available.</p>
-                <ol class="note-steps">
-                  <li>Use <strong>File → Save As</strong> when creating the first named working copy.</li>
-                  <li>Choose a clear filename and a folder you can find again.</li>
-                  <li>Save repeatedly while working so your latest edits are preserved.</li>
-                </ol>
-              </div>
-            </article>
-            <article class="readme-lesson-card">
-              <div class="readme-card-icon">03</div>
-              <div><h4>How to Export</h4>
-                <p><strong>Export</strong> creates a delivery copy for a specific use. Use <strong>File → Export → Export As</strong> when you need a JPG, PNG, or another final image format.</p>
-                <ol class="note-steps">
-                  <li>Keep the PSD as the editable master.</li>
-                  <li>Choose the format that matches the destination.</li>
-                  <li>Check dimensions, transparency, quality, and filename before confirming the export.</li>
-                </ol>
-              </div>
-            </article>
-          </div>
-
-          <div class="readme-vocab">
-            <div class="vocab-title">Week 1 Vocabulary</div>
-            <p>
-              <span class="vocab" tabindex="0" data-def="An editable Photoshop document that preserves layers and other working information.">PSD</span><span class="vocab-def"> — An editable Photoshop document that preserves layers and other working information.</span><br>
-              <span class="vocab" tabindex="0" data-def="Opening an existing file so it becomes the document you can edit.">Open</span><span class="vocab-def"> — Opening an existing file so it becomes the document you can edit.</span><br>
-              <span class="vocab" tabindex="0" data-def="Writing the current working document to a saved file so the editable work is preserved.">Save</span><span class="vocab-def"> — Writing the current working document to a saved file so the editable work is preserved.</span><br>
-              <span class="vocab" tabindex="0" data-def="Creating a final-use copy of the design in a selected output format such as JPG or PNG.">Export</span><span class="vocab-def"> — Creating a final-use copy of the design in a selected output format such as JPG or PNG.</span><br>
-              <span class="vocab" tabindex="0" data-def="The physical or digital location where the working file is stored.">Folder</span><span class="vocab-def"> — The physical or digital location where the working file is stored.</span>
-            </p>
-          </div>
-          <div class="note-tip"><strong>Quick tip:</strong> Think <strong>PSD = master working file</strong> and <strong>export = delivery copy</strong>. Do not replace your editable master with a flattened delivery image.</div>
-        </div>
-
-        <div class="note-section" id="readme-week2" data-reading="readme-week2">
-          <div class="note-actions">
-            <button class="note-dl" onclick="downloadSectionPDF('readme-week2','Week 2 — Non-Destructive Editing')">Download PDF</button>
-            <button class="note-mark" data-reading-key="readme-week2" onclick="markReadingRead('readme-week2', this)"><span class="nm-circle" aria-hidden="true"></span><span class="nm-label">Mark as Read</span></button>
-          </div>
-          <h3><span class="week-badge">WEEK 2</span> Destructive vs. Non-Destructive Editing</h3>
-          <p>Week 2 explains what happens when an edit changes the original pixels directly, why that can become difficult to undo later, and how a non-destructive workflow keeps the original information available.</p>
-
-          <div class="readme-grid">
-            <article class="readme-lesson-card">
-              <div class="readme-card-icon">A</div>
-              <div><h4>Destructive Editing</h4>
-                <p>A <strong>destructive edit</strong> permanently changes the pixels or content you are working on. If you later need the original detail, you may have to undo many steps or reopen an earlier version.</p>
-                <div class="note-tool"><strong>Example:</strong> painting directly on the only copy of a raster layer and then saving over the original can remove information from that working layer.</div>
-              </div>
-            </article>
-            <article class="readme-lesson-card">
-              <div class="readme-card-icon">B</div>
-              <div><h4>Non-Destructive Editing</h4>
-                <p>A <strong>non-destructive workflow</strong> keeps the original information available while edits are applied through layers, masks, adjustment layers, smart objects, or other reversible methods.</p>
-                <div class="note-tool"><strong>Goal:</strong> make an edit, inspect the result, and still be able to change or remove that edit without rebuilding the entire image.</div>
-              </div>
-            </article>
-            <article class="readme-lesson-card">
-              <div class="readme-card-icon">C</div>
-              <div><h4>Raster Images &amp; Pixels</h4>
-                <p>A <strong>raster image</strong> is built from a grid of tiny picture elements called <strong>pixels</strong>. Each pixel stores color information that contributes to the complete photograph or graphic.</p>
-                <div class="note-tool"><strong>Important:</strong> when a raster image is enlarged too far, individual pixels become more visible and the image can lose apparent sharpness.</div>
-              </div>
-            </article>
-          </div>
-
-          <div class="readme-vocab">
-            <div class="vocab-title">Week 2 Vocabulary</div>
-            <p>
-              <span class="vocab" tabindex="0" data-def="An edit that directly changes original image information or pixels and can be difficult to reverse later.">Destructive Editing</span><span class="vocab-def"> — An edit that directly changes original image information or pixels and can be difficult to reverse later.</span><br>
-              <span class="vocab" tabindex="0" data-def="An editing workflow that preserves original information so changes can be adjusted or removed later.">Non-Destructive Editing</span><span class="vocab-def"> — An editing workflow that preserves original information so changes can be adjusted or removed later.</span><br>
-              <span class="vocab" tabindex="0" data-def="A digital image made from a grid of colored picture elements rather than mathematical paths.">Raster Image</span><span class="vocab-def"> — A digital image made from a grid of colored picture elements rather than mathematical paths.</span><br>
-              <span class="vocab" tabindex="0" data-def="A tiny picture element in a raster image that stores color information.">Pixel</span><span class="vocab-def"> — A tiny picture element in a raster image that stores color information.</span><br>
-              <span class="vocab" tabindex="0" data-def="A way of applying an edit while keeping the source information available for later changes.">Reversible Workflow</span><span class="vocab-def"> — A way of applying an edit while keeping the source information available for later changes.</span>
-            </p>
-          </div>
-          <div class="note-tip"><strong>Why it matters:</strong> non-destructive editing gives you more control. You can compare versions, correct mistakes, change your mind, and keep the original image information available.</div>
-        </div>
-
-        <div class="note-section" id="readme-week3" data-reading="readme-week3">
-          <div class="note-actions">
-            <button class="note-dl" onclick="downloadSectionPDF('readme-week3','Week 3 — Background Removal and World Composition')">Download PDF</button>
-            <button class="note-mark" data-reading-key="readme-week3" onclick="markReadingRead('readme-week3', this)"><span class="nm-circle" aria-hidden="true"></span><span class="nm-label">Mark as Read</span></button>
-          </div>
-          <h3><span class="week-badge">WEEK 3</span> Remove · Refine · Place · Blur</h3>
-          <p>Week 3 turns background removal into a complete composition workflow: isolate the subject, clean the edge, remove a white fringe, place the subject into the world scene, and create realistic depth with Gaussian Blur.</p>
-
-          <div class="readme-timeline">
-            <article class="readme-step-card"><span>01</span><div><h4>Removing Backgrounds</h4><p>Use a selection method that fits the subject, create a clean subject mask or isolated layer, and inspect difficult edges such as hair, fur, and fine clothing details.</p></div></article>
-            <article class="readme-step-card"><span>02</span><div><h4>Smudge Tool</h4><p>Use the <strong>Smudge Tool</strong> carefully around fine edges to blend or restore small areas. Keep the brush controlled and avoid smearing important facial or clothing details.</p></div></article>
-            <article class="readme-step-card"><span>03</span><div><h4>Removing the White Fringe</h4><p>If the old background leaves a bright halo around the subject, refine the edge instead of accepting the visible outline. A white fringe is especially obvious when the subject is placed on a darker or colorful background.</p></div></article>
-            <article class="readme-step-card"><span>04</span><div><h4>Filter → Other → Minimum</h4><p>With the subject selection or mask targeted, use <strong>Filter → Other → Minimum</strong> to contract the edge slightly. This can pull the mask inward and help remove a thin white line left by the original background.</p></div></article>
-            <article class="readme-step-card"><span>05</span><div><h4>Place the Subject into the World</h4><p>Move the cleaned subject into the new world composition. Match scale, position, lighting, color, and perspective so the subject feels like part of the scene rather than a pasted cutout.</p></div></article>
-            <article class="readme-step-card"><span>06</span><div><h4>Gaussian Blur for Realistic Depth</h4><p>Use <strong>Gaussian Blur</strong> selectively to create depth of field. Background elements that sit farther from the camera can be softened more than the main subject, helping the composition feel photographic.</p></div></article>
-          </div>
-
-          <div class="readme-vocab">
-            <div class="vocab-title">Week 3 Vocabulary</div>
-            <p>
-              <span class="vocab" tabindex="0" data-def="The process of isolating a subject from the original background so it can be placed into another composition.">Background Removal</span><span class="vocab-def"> — The process of isolating a subject from the original background so it can be placed into another composition.</span><br>
-              <span class="vocab" tabindex="0" data-def="A Photoshop tool that blends pixels by dragging color and texture from one area into another.">Smudge Tool</span><span class="vocab-def"> — A Photoshop tool that blends pixels by dragging color and texture from one area into another.</span><br>
-              <span class="vocab" tabindex="0" data-def="A visible light-colored outline left around a subject after the old background has been removed.">White Fringe</span><span class="vocab-def"> — A visible light-colored outline left around a subject after the old background has been removed.</span><br>
-              <span class="vocab" tabindex="0" data-def="A Photoshop filter found under Filter → Other that contracts an edge by a chosen amount.">Minimum</span><span class="vocab-def"> — A Photoshop filter found under Filter → Other that contracts an edge by a chosen amount.</span><br>
-              <span class="vocab" tabindex="0" data-def="A blur filter used to soften image detail and simulate reduced focus or depth of field.">Gaussian Blur</span><span class="vocab-def"> — A blur filter used to soften image detail and simulate reduced focus or depth of field.</span><br>
-              <span class="vocab" tabindex="0" data-def="The visual arrangement where the isolated subject is integrated into a new scene or environment.">World Composition</span><span class="vocab-def"> — The visual arrangement where the isolated subject is integrated into a new scene or environment.</span><br>
-              <span class="vocab" tabindex="0" data-def="A controlled layer or selection edge that separates the subject from its previous background.">Subject Edge</span><span class="vocab-def"> — A controlled layer or selection edge that separates the subject from its previous background.</span>
-            </p>
-          </div>
-          <div class="note-tip"><strong>Pro tip:</strong> clean the edge before adding blur. Gaussian Blur should help establish depth in the final scene, not hide a poorly removed background.</div>
-        </div>
-      </section>
-      <!-- ========== SCREENCASTS (CINEMATIC THEATER PLAYER) ========== -->
-      <section id="screencasts" class="view">
-        <div class="view-head"><div><h2>Screencasts</h2><p>For now, the first two recordings are available. Additional recordings are shown in gray until they are released.</p></div></div>
-        <div class="theater" id="screencastTheater">
-          <div class="theater-main">
-            <div class="theater-stage" id="theaterStage">
-              <div class="theater-player" id="theaterPlayerWrap"></div>
-            </div>
-            <div class="theater-nav">
-              <button type="button" class="tn-btn" id="theaterPrevBtn">◀ Previous</button>
-              <span class="tn-index" id="theaterIndex">—</span>
-              <button type="button" class="tn-btn" id="theaterNextBtn">Next ▶</button>
-            </div>
-            <div class="theater-tip" id="theaterTip">📌 Tip: Click <strong>Next ▶</strong> after you've finished watching a recording — that saves your progress and unlocks that recording's quick assessment check.</div>
-            <div class="theater-info">
-              <div class="ti-avatar" aria-hidden="true">Ps</div>
-              <div class="ti-meta">
-                <b id="theaterTitle">Select a recording</b>
-                <small>Graphic Design &amp; Photoshop · Screencast recordings</small>
-              </div>
-            </div>
-            <div class="theater-about">
-              <h4 id="theaterAboutTitle">Select a recording</h4>
-              <p id="theaterDesc">Pick any recording from the list to see what it covers.</p>
-            </div>
-          </div>
-          <div class="theater-side">
-            <div class="theater-progress">
-              <div class="tp-row"><span id="theaterProgressText">0 of 23 watched</span><span id="theaterProgressPct">0%</span></div>
-              <div class="tp-bar"><i id="theaterProgressBar" style="width:0%"></i></div>
-            </div>
-            <div class="theater-search"><input type="text" id="theaterSearchInput" placeholder="Search recordings..." aria-label="Search recordings"></div>
-            <div class="theater-filters" id="theaterFilters">
-              <button type="button" class="tf-chip active" data-filter="all">All</button>
-              <button type="button" class="tf-chip" data-filter="watched">Watched</button>
-              <button type="button" class="tf-chip" data-filter="unwatched">Not watched</button>
-            </div>
-            <div class="theater-side-head" id="theaterSideHead">Up next · 23 recordings</div>
-            <div class="theater-list" id="theaterSide"></div>
-          </div>
-        </div>
-      </section>
-      <!-- ========== PRACTICE FILES ========== -->
-      <section id="practice" class="view">
-        <div class="view-head"><div><h2>Practice Files</h2>
-        <p>Downloadable source images and exercise files — tap the thumbnail to preview right inside the card, then download to practice.</p></div></div>
-        <div class="media-grid" id="practiceGrid"></div>
-      </section>
-      <!-- ========== ADDITIONAL MATERIALS (placeholder) ========== -->
-      <section id="materials" class="view">
-        <div class="view-head"><div><h2>Additional Materials</h2>
-        <p>Extra readings, references and files from your instructor — tap a thumbnail to preview right inside the card, or open it in Google Drive.</p></div></div>
-        <div class="media-grid" id="materialsGrid"></div>
-      </section>
-      <!-- ========== ASSESSMENT ========== -->
-      <section id="assessment" class="view">
-        <div class="view-head"><div><h2>Assessment</h2></div></div>
-        <div id="assessmentBody"></div>
-      </section>
-      <!-- ========== MY PROGRESS ========== -->
-      <section id="progress" class="view">
-        <div class="view-head"><div><h2>My Progress</h2>
-        <p>Everything tracked toward your grade — lessons, week-end quizzes, reading, vocabulary, and screencasts.</p></div></div>
-        <div id="progressBody"></div>
-      </section>
-    </main>
-    <aside class="layers-panel" id="layersPanel">
-      <div class="lp-head"><h3>Layers — Progress</h3></div>
-      <div class="lp-total" id="lpTotalPct">0%<span> complete</span></div>
-      <div class="lp-bar"><i id="lpBar"></i></div>
-      <button type="button" class="lp-rows-toggle" id="lpRowsToggle" aria-expanded="false" aria-controls="lpRows">
-        <span>Weekly breakdown</span><span class="lrt-arrow" aria-hidden="true">▾</span>
-      </button>
-      <div id="lpRows"></div>
-      <div class="lp-grade">
-        <span>Overall Grade</span>
-        <b id="lpGradeLetter">—</b>
-        <span id="lpGradeDetail">Sign in to start tracking.</span>
-      </div>
-      <button class="lp-report-btn" id="lpReportBtn">✉ Send Progress Report</button>
-      <div id="lpReportStatus" style="font-size:10.5px;color:#8f96a6;margin-top:6px;min-height:12px;"></div>
-      <button class="lp-signout" id="lpSignOutBtn">Sign out of this device</button>
-      <div class="lp-note">Every lesson card is a "layer." Flip a card in the Curriculum tab to mark that day's lesson complete — the total above and this panel's grade &amp; report stay visible even while the weekly breakdown is collapsed; tap "Weekly breakdown" to expand it. Finishing both days in a week automatically submits that week's check-in quiz report, and a full progress report is also sent automatically every 2 weeks (Sept 14 = Week 1) to your instructor.</div>
-    </aside>
-  </div>
-  <footer class="appfoot">
+<div class="ep-scope">
+<div class="ep-container">
+<header>
+<div aria-hidden="true" class="ep-badge">✦</div>
+<div>
+<h1>Week 16 — Elemental Portraits</h1>
+<p class="lead">Fuse a portrait with a force of nature to create a surreal Elemental Being. The capstone project for Class of 2028.</p>
+<span class="ep-final-tag">Final Project</span>
+</div>
+</header>
+<div class="ep-main">
+<nav aria-label="Elements navigation" class="ep-side">
+<div class="ep-search"><label for="epSearch" style="position:absolute;left:-9999px;">Search elements or keywords</label><input id="epSearch" placeholder="Search elements..."/></div>
+<div class="ep-list" id="epList"></div>
+</nav>
+<section class="ep-content">
+<div class="ep-hero">
+<div class="ep-hero-left">
+<h2 style="margin:0 0 8px;font-size:17px;color:#fff;">General Instructions</h2>
+<p class="ep-meta">Choose one elemental force below and fuse it with a self-portrait (or a willing model) to create a surreal "Elemental Being." The fusion should feel physically believable — as if the force is erupting from, wrapping around, or replacing part of the subject — not simply pasted on top. Use blending modes, layer masks, Liquify, and color grading to sell the illusion, and build a short visual story around your character: who are they, and where does their power come from?</p>
+</div>
+<div class="ep-hero-right" id="epHeroSwatch">Class of 2028</div>
+</div>
+<div id="epContent"></div>
+<div class="ep-card">
+<h3 class="ep-section-title">Submission Format</h3>
+<div class="ep-grid-2">
+<div>
+<h4 style="margin:0 0 6px;font-size:14px;color:#fff;">1. Final Photoshop File (.PSD)</h4>
+<ul class="ep-submit-list">
+<li>Include organized layers: portrait, element textures, blending/masking, and color grade.</li>
+<li>Rename layers clearly (e.g., "Fire Overlay", "Skin Glow Mask").</li>
+<li>Remove hidden or unnecessary layers for file cleanliness.</li>
+</ul>
+</div>
+<div>
+<h4 style="margin:0 0 6px;font-size:14px;color:#fff;">2. Final Image (.JPG or .PNG)</h4>
+<ul class="ep-submit-list">
+<li>High resolution (minimum 2000 px wide).</li>
+<li>Export at quality 10 or higher; avoid compression.</li>
+<li>Filename format: <span class="ep-filename">Element_CharacterName_ClassOf2028.jpg</span></li>
+</ul>
+</div>
+</div>
+<div style="margin-top:12px">
+<h4 style="margin:0 0 6px;font-size:14px;color:#fff;">3. Short Creative Reflection (PDF, max 1 page)</h4>
+<ul class="ep-submit-list">
+<li>Character name and one-paragraph origin story for your Elemental Being.</li>
+<li>Tools used: Layer Masks, Blend Modes, Liquify, Dodge &amp; Burn, Gradient Map, etc.</li>
+<li>Design choices: color palette, texture sourcing, and how you sold the fusion.</li>
+<li>Include main challenges and lessons learned across the whole course.</li>
+</ul>
+</div>
+<a class="ep-submit-btn" href="https://drive.google.com/drive/folders/10rRbwGYnjjTxAA4Q9PHvf9JrsA7kqzuw?usp=sharing" rel="noopener" target="_blank">Submit files to Class Drive Folder →</a>
+</div>
+</section>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- ========== NOTES / READ ME ========== -->
+<section class="view" id="notes">
+<div class="view-head">
+<div>
+<h2>Read Me — Course Notes</h2>
+<p>Three focused weekly note packs. Open a card to study the lesson, review the vocabulary, use the tips, then choose <strong>Mark as Read</strong> when you are ready for the 7-question check.</p>
+</div>
+</div>
+<div class="note-section" data-reading="readme-week1" id="readme-week1">
+<div class="note-actions">
+<button class="note-dl" onclick="downloadSectionPDF('readme-week1','Week 1 — Open, Save and Export')">Download PDF</button>
+<button class="note-mark" data-reading-key="readme-week1" onclick="markReadingRead('readme-week1', this)"><span aria-hidden="true" class="nm-circle"></span><span class="nm-label">Mark as Read</span></button>
+</div>
+<h3><span class="week-badge">WEEK 1</span> Open · Save · Export</h3>
+<p>Week 1 builds the file-handling habits you need before editing: create or open the correct document, save an editable working file, and export a finished copy in the format your project requires.</p>
+<div class="readme-grid">
+<article class="readme-lesson-card">
+<div class="readme-card-icon">01</div>
+<div><h4>How to Open</h4>
+<p>Use <strong>File → Open</strong> to bring an existing image or Photoshop document into the workspace. You can also open a file from the start screen or drag a supported file into the editor.</p>
+<ol class="note-steps">
+<li>Choose the file you actually intend to edit.</li>
+<li>Check the image dimensions and resolution before doing detailed work.</li>
+<li>Confirm that the document opens with the expected layers or image content.</li>
+</ol>
+</div>
+</article>
+<article class="readme-lesson-card">
+<div class="readme-card-icon">02</div>
+<div><h4>How to Save</h4>
+<p><strong>Save</strong> protects your editable working file. For Photoshop projects, save the working version as a <strong>PSD</strong> so layers and editability remain available.</p>
+<ol class="note-steps">
+<li>Use <strong>File → Save As</strong> when creating the first named working copy.</li>
+<li>Choose a clear filename and a folder you can find again.</li>
+<li>Save repeatedly while working so your latest edits are preserved.</li>
+</ol>
+</div>
+</article>
+<article class="readme-lesson-card">
+<div class="readme-card-icon">03</div>
+<div><h4>How to Export</h4>
+<p><strong>Export</strong> creates a delivery copy for a specific use. Use <strong>File → Export → Export As</strong> when you need a JPG, PNG, or another final image format.</p>
+<ol class="note-steps">
+<li>Keep the PSD as the editable master.</li>
+<li>Choose the format that matches the destination.</li>
+<li>Check dimensions, transparency, quality, and filename before confirming the export.</li>
+</ol>
+</div>
+</article>
+</div>
+<div class="readme-vocab">
+<div class="vocab-title">Week 1 Vocabulary</div>
+<p>
+<span class="vocab" data-def="An editable Photoshop document that preserves layers and other working information." tabindex="0">PSD</span><span class="vocab-def"> — An editable Photoshop document that preserves layers and other working information.</span><br/>
+<span class="vocab" data-def="Opening an existing file so it becomes the document you can edit." tabindex="0">Open</span><span class="vocab-def"> — Opening an existing file so it becomes the document you can edit.</span><br/>
+<span class="vocab" data-def="Writing the current working document to a saved file so the editable work is preserved." tabindex="0">Save</span><span class="vocab-def"> — Writing the current working document to a saved file so the editable work is preserved.</span><br/>
+<span class="vocab" data-def="Creating a final-use copy of the design in a selected output format such as JPG or PNG." tabindex="0">Export</span><span class="vocab-def"> — Creating a final-use copy of the design in a selected output format such as JPG or PNG.</span><br/>
+<span class="vocab" data-def="The physical or digital location where the working file is stored." tabindex="0">Folder</span><span class="vocab-def"> — The physical or digital location where the working file is stored.</span>
+</p>
+</div>
+<div class="note-tip"><strong>Quick tip:</strong> Think <strong>PSD = master working file</strong> and <strong>export = delivery copy</strong>. Do not replace your editable master with a flattened delivery image.</div>
+</div>
+<div class="note-section" data-reading="readme-week2" id="readme-week2">
+<div class="note-actions">
+<button class="note-dl" onclick="downloadSectionPDF('readme-week2','Week 2 — Non-Destructive Editing')">Download PDF</button>
+<button class="note-mark" data-reading-key="readme-week2" onclick="markReadingRead('readme-week2', this)"><span aria-hidden="true" class="nm-circle"></span><span class="nm-label">Mark as Read</span></button>
+</div>
+<h3><span class="week-badge">WEEK 2</span> Destructive vs. Non-Destructive Editing</h3>
+<p>Week 2 explains what happens when an edit changes the original pixels directly, why that can become difficult to undo later, and how a non-destructive workflow keeps the original information available.</p>
+<div class="readme-grid">
+<article class="readme-lesson-card">
+<div class="readme-card-icon">A</div>
+<div><h4>Destructive Editing</h4>
+<p>A <strong>destructive edit</strong> permanently changes the pixels or content you are working on. If you later need the original detail, you may have to undo many steps or reopen an earlier version.</p>
+<div class="note-tool"><strong>Example:</strong> painting directly on the only copy of a raster layer and then saving over the original can remove information from that working layer.</div>
+</div>
+</article>
+<article class="readme-lesson-card">
+<div class="readme-card-icon">B</div>
+<div><h4>Non-Destructive Editing</h4>
+<p>A <strong>non-destructive workflow</strong> keeps the original information available while edits are applied through layers, masks, adjustment layers, smart objects, or other reversible methods.</p>
+<div class="note-tool"><strong>Goal:</strong> make an edit, inspect the result, and still be able to change or remove that edit without rebuilding the entire image.</div>
+</div>
+</article>
+<article class="readme-lesson-card">
+<div class="readme-card-icon">C</div>
+<div><h4>Raster Images &amp; Pixels</h4>
+<p>A <strong>raster image</strong> is built from a grid of tiny picture elements called <strong>pixels</strong>. Each pixel stores color information that contributes to the complete photograph or graphic.</p>
+<div class="note-tool"><strong>Important:</strong> when a raster image is enlarged too far, individual pixels become more visible and the image can lose apparent sharpness.</div>
+</div>
+</article>
+</div>
+<div class="readme-vocab">
+<div class="vocab-title">Week 2 Vocabulary</div>
+<p>
+<span class="vocab" data-def="An edit that directly changes original image information or pixels and can be difficult to reverse later." tabindex="0">Destructive Editing</span><span class="vocab-def"> — An edit that directly changes original image information or pixels and can be difficult to reverse later.</span><br/>
+<span class="vocab" data-def="An editing workflow that preserves original information so changes can be adjusted or removed later." tabindex="0">Non-Destructive Editing</span><span class="vocab-def"> — An editing workflow that preserves original information so changes can be adjusted or removed later.</span><br/>
+<span class="vocab" data-def="A digital image made from a grid of colored picture elements rather than mathematical paths." tabindex="0">Raster Image</span><span class="vocab-def"> — A digital image made from a grid of colored picture elements rather than mathematical paths.</span><br/>
+<span class="vocab" data-def="A tiny picture element in a raster image that stores color information." tabindex="0">Pixel</span><span class="vocab-def"> — A tiny picture element in a raster image that stores color information.</span><br/>
+<span class="vocab" data-def="A way of applying an edit while keeping the source information available for later changes." tabindex="0">Reversible Workflow</span><span class="vocab-def"> — A way of applying an edit while keeping the source information available for later changes.</span>
+</p>
+</div>
+<div class="note-tip"><strong>Why it matters:</strong> non-destructive editing gives you more control. You can compare versions, correct mistakes, change your mind, and keep the original image information available.</div>
+</div>
+<div class="note-section" data-reading="readme-week3" id="readme-week3">
+<div class="note-actions">
+<button class="note-dl" onclick="downloadSectionPDF('readme-week3','Week 3 — Background Removal and World Composition')">Download PDF</button>
+<button class="note-mark" data-reading-key="readme-week3" onclick="markReadingRead('readme-week3', this)"><span aria-hidden="true" class="nm-circle"></span><span class="nm-label">Mark as Read</span></button>
+</div>
+<h3><span class="week-badge">WEEK 3</span> Remove · Refine · Place · Blur</h3>
+<p>Week 3 turns background removal into a complete composition workflow: isolate the subject, clean the edge, remove a white fringe, place the subject into the world scene, and create realistic depth with Gaussian Blur.</p>
+<div class="readme-timeline">
+<article class="readme-step-card"><span>01</span><div><h4>Removing Backgrounds</h4><p>Use a selection method that fits the subject, create a clean subject mask or isolated layer, and inspect difficult edges such as hair, fur, and fine clothing details.</p></div></article>
+<article class="readme-step-card"><span>02</span><div><h4>Smudge Tool</h4><p>Use the <strong>Smudge Tool</strong> carefully around fine edges to blend or restore small areas. Keep the brush controlled and avoid smearing important facial or clothing details.</p></div></article>
+<article class="readme-step-card"><span>03</span><div><h4>Removing the White Fringe</h4><p>If the old background leaves a bright halo around the subject, refine the edge instead of accepting the visible outline. A white fringe is especially obvious when the subject is placed on a darker or colorful background.</p></div></article>
+<article class="readme-step-card"><span>04</span><div><h4>Filter → Other → Minimum</h4><p>With the subject selection or mask targeted, use <strong>Filter → Other → Minimum</strong> to contract the edge slightly. This can pull the mask inward and help remove a thin white line left by the original background.</p></div></article>
+<article class="readme-step-card"><span>05</span><div><h4>Place the Subject into the World</h4><p>Move the cleaned subject into the new world composition. Match scale, position, lighting, color, and perspective so the subject feels like part of the scene rather than a pasted cutout.</p></div></article>
+<article class="readme-step-card"><span>06</span><div><h4>Gaussian Blur for Realistic Depth</h4><p>Use <strong>Gaussian Blur</strong> selectively to create depth of field. Background elements that sit farther from the camera can be softened more than the main subject, helping the composition feel photographic.</p></div></article>
+</div>
+<div class="readme-vocab">
+<div class="vocab-title">Week 3 Vocabulary</div>
+<p>
+<span class="vocab" data-def="The process of isolating a subject from the original background so it can be placed into another composition." tabindex="0">Background Removal</span><span class="vocab-def"> — The process of isolating a subject from the original background so it can be placed into another composition.</span><br/>
+<span class="vocab" data-def="A Photoshop tool that blends pixels by dragging color and texture from one area into another." tabindex="0">Smudge Tool</span><span class="vocab-def"> — A Photoshop tool that blends pixels by dragging color and texture from one area into another.</span><br/>
+<span class="vocab" data-def="A visible light-colored outline left around a subject after the old background has been removed." tabindex="0">White Fringe</span><span class="vocab-def"> — A visible light-colored outline left around a subject after the old background has been removed.</span><br/>
+<span class="vocab" data-def="A Photoshop filter found under Filter → Other that contracts an edge by a chosen amount." tabindex="0">Minimum</span><span class="vocab-def"> — A Photoshop filter found under Filter → Other that contracts an edge by a chosen amount.</span><br/>
+<span class="vocab" data-def="A blur filter used to soften image detail and simulate reduced focus or depth of field." tabindex="0">Gaussian Blur</span><span class="vocab-def"> — A blur filter used to soften image detail and simulate reduced focus or depth of field.</span><br/>
+<span class="vocab" data-def="The visual arrangement where the isolated subject is integrated into a new scene or environment." tabindex="0">World Composition</span><span class="vocab-def"> — The visual arrangement where the isolated subject is integrated into a new scene or environment.</span><br/>
+<span class="vocab" data-def="A controlled layer or selection edge that separates the subject from its previous background." tabindex="0">Subject Edge</span><span class="vocab-def"> — A controlled layer or selection edge that separates the subject from its previous background.</span>
+</p>
+</div>
+<div class="note-tip"><strong>Pro tip:</strong> clean the edge before adding blur. Gaussian Blur should help establish depth in the final scene, not hide a poorly removed background.</div>
+</div>
+</section>
+<!-- ========== SCREENCASTS (CINEMATIC THEATER PLAYER) ========== -->
+<section class="view" id="screencasts">
+<div class="view-head"><div><h2>Screencasts</h2><p>For now, the first two recordings are available. Additional recordings are shown in gray until they are released.</p></div></div>
+<div class="theater" id="screencastTheater">
+<div class="theater-main">
+<div class="theater-stage" id="theaterStage">
+<div class="theater-player" id="theaterPlayerWrap"></div>
+</div>
+<div class="theater-nav">
+<button class="tn-btn" id="theaterPrevBtn" type="button">◀ Previous</button>
+<span class="tn-index" id="theaterIndex">—</span>
+<button class="tn-btn" id="theaterNextBtn" type="button">Next ▶</button>
+</div>
+<div class="theater-tip" id="theaterTip">📌 Tip: Click <strong>Next ▶</strong> after you've finished watching a recording — that saves your progress and unlocks that recording's quick assessment check.</div>
+<div class="theater-info">
+<div aria-hidden="true" class="ti-avatar">Ps</div>
+<div class="ti-meta">
+<b id="theaterTitle">Select a recording</b>
+<small>Graphic Design &amp; Photoshop · Screencast recordings</small>
+</div>
+</div>
+<div class="theater-about">
+<h4 id="theaterAboutTitle">Select a recording</h4>
+<p id="theaterDesc">Pick any recording from the list to see what it covers.</p>
+</div>
+</div>
+<div class="theater-side">
+<div class="theater-progress">
+<div class="tp-row"><span id="theaterProgressText">0 of 23 watched</span><span id="theaterProgressPct">0%</span></div>
+<div class="tp-bar"><i id="theaterProgressBar" style="width:0%"></i></div>
+</div>
+<div class="theater-search"><input aria-label="Search recordings" id="theaterSearchInput" placeholder="Search recordings..." type="text"/></div>
+<div class="theater-filters" id="theaterFilters">
+<button class="tf-chip active" data-filter="all" type="button">All</button>
+<button class="tf-chip" data-filter="watched" type="button">Watched</button>
+<button class="tf-chip" data-filter="unwatched" type="button">Not watched</button>
+</div>
+<div class="theater-side-head" id="theaterSideHead">Up next · 23 recordings</div>
+<div class="theater-list" id="theaterSide"></div>
+</div>
+</div>
+</section>
+<!-- ========== PRACTICE FILES ========== -->
+<section class="view" id="practice">
+<div class="view-head"><div><h2>Practice Files</h2>
+<p>Downloadable source images and exercise files — tap the thumbnail to preview right inside the card, then download to practice.</p></div></div>
+<div aria-label="Learning workflow" class="practice-flow">
+<div class="practice-step done-step"><span>1</span><b>Read Me</b><small>Learn the concept</small></div><div class="practice-arrow">→</div><div class="practice-step"><span>2</span><b>Screencast</b><small>Watch the technique</small></div><div class="practice-arrow">→</div><div class="practice-step active-step"><span>3</span><b>Practice</b><small>Make it yourself</small></div><div class="practice-arrow">→</div><div class="practice-step"><span>4</span><b>7-Question Check</b><small>Prove what you know</small></div><div class="practice-arrow">→</div><div class="practice-step"><span>5</span><b>Complete</b><small>Track your progress</small></div>
+</div>
+<div class="assignment-board" id="assignmentBoard"></div>
+<div class="media-grid" id="practiceGrid"></div>
+</section>
+<!-- ========== ADDITIONAL MATERIALS (placeholder) ========== -->
+<section class="view" id="materials">
+<div class="view-head"><div><h2>Additional Materials</h2>
+<p>Extra readings, references and files from your instructor — tap a thumbnail to preview right inside the card, or open it in Google Drive.</p></div></div>
+<div class="media-grid" id="materialsGrid"></div>
+</section>
+<!-- ========== ASSESSMENT ========== -->
+<section class="view" id="assessment">
+<div class="view-head"><div><h2>Assessment</h2></div></div>
+<div id="assessmentBody"></div>
+</section>
+<!-- ========== MY PROGRESS ========== -->
+<section class="view" id="glossary"><div class="view-head"><div><h2>Photoshop Glossary</h2><p>Search course vocabulary, definitions, and where each term is taught.</p></div></div><div class="glossary-toolbar"><label class="sr-only" for="glossarySearch">Search glossary</label><input autocomplete="off" id="glossarySearch" placeholder="Search a term, definition, or lesson…" type="search"/><span class="toolbar-count" id="glossaryCount"></span></div><div class="glossary-grid" id="glossaryGrid"></div></section><section class="view" id="instructor"><div class="view-head"><div><h2>Instructor Dashboard</h2><p>Local classroom overview for this browser. Review saved student activity and missing work.</p></div><button class="hbtn ghost" id="teacherRefreshBtn" type="button">Refresh</button></div><div class="teacher-note">This is a browser-based classroom tool; a shared LMS/database is required for multi-device synchronization.</div><div class="teacher-summary" id="teacherSummary"></div><div class="teacher-table-wrap"><table class="teacher-table"><thead><tr><th>Student</th><th>Progress</th><th>Grade</th><th>Week quizzes</th><th>Checks</th><th>Last saved</th></tr></thead><tbody id="teacherRows"></tbody></table></div><div class="teacher-actions"><button class="hbtn primary" id="teacherExportBtn" type="button">Export Class CSV</button><button class="hbtn ghost" id="teacherClearBtn" type="button">Clear Local Class Records</button></div></section><section class="view" id="progress">
+<div class="view-head"><div><h2>My Progress</h2>
+<p>Everything tracked toward your grade — lessons, week-end quizzes, reading, vocabulary, and screencasts.</p></div></div>
+<div id="progressBody"></div>
+</section>
+</main>
+<aside class="layers-panel" id="layersPanel">
+<div class="lp-head"><h3>Layers — Progress</h3></div>
+<div class="lp-total" id="lpTotalPct">0%<span> complete</span></div>
+<div class="lp-bar"><i id="lpBar"></i></div>
+<button aria-controls="lpRows" aria-expanded="false" class="lp-rows-toggle" id="lpRowsToggle" type="button">
+<span>Weekly breakdown</span><span aria-hidden="true" class="lrt-arrow">▾</span>
+</button>
+<div id="lpRows"></div>
+<div class="lp-grade">
+<span>Overall Grade</span>
+<b id="lpGradeLetter">—</b>
+<span id="lpGradeDetail">Sign in to start tracking.</span>
+</div>
+<button class="lp-report-btn" id="lpReportBtn">✉ Send Progress Report</button>
+<div id="lpReportStatus" style="font-size:10.5px;color:#8f96a6;margin-top:6px;min-height:12px;"></div>
+<button class="lp-signout" id="lpSignOutBtn">Sign out of this device</button>
+<div class="lp-note">Every lesson card is a "layer." Flip a card in the Curriculum tab to mark that day's lesson complete — the total above and this panel's grade &amp; report stay visible even while the weekly breakdown is collapsed; tap "Weekly breakdown" to expand it. Finishing both days in a week automatically submits that week's check-in quiz report, and a full progress report is also sent automatically every 2 weeks (Sept 14 = Week 1) to your instructor.</div>
+</aside>
+</div>
+<footer class="appfoot">
     Graphic Design &amp; Photoshop — Class of 2028
     <div class="foot-contact">✉ <a href="mailto:thomas@hmacademy.org">thomas@hmacademy.org</a></div>
-  </footer>
+</footer>
 </div><script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
 <script>
@@ -1896,10 +1907,10 @@ function markReadingRead(key, btnEl){
     setTimeout(()=>btnEl.classList.remove('just-done'), 500);
   }
   const readingItem = readingPool.find(p=>p.key===key);
-  maybeShowContentQuiz('reading', key, readingPool, `Nice work reading "${readingItem ? readingItem.title : key}"! Quick 2-question check:`);
+  maybeShowContentQuiz('reading', key, readingPool, `Nice work reading "${readingItem ? readingItem.title : key}"! Quick 7-question check:`);
 }
 /* ================= CONTENT CHECK-IN QUIZZES (screencasts + reading) =================
-   A lightweight 2-question multiple-choice check pops up right after a
+   A lightweight 7-question multiple-choice check pops up right after a
    screencast is marked watched, or a Read Me section is marked read. Both
    questions are generated from that item's own title and description —
    one asks what the title covers (options are descriptions, one real,
@@ -2218,12 +2229,14 @@ function loadStudentRecord(email){
       rec.contentQuizzes = rec.contentQuizzes || { screencasts:{}, reading:{} };
       rec.contentQuizzes.screencasts = rec.contentQuizzes.screencasts || {};
       rec.contentQuizzes.reading = rec.contentQuizzes.reading || {};
+      rec.assignmentStatus = rec.assignmentStatus || {};
+      rec.lastSavedAt = rec.lastSavedAt || null;
       return rec;
     }
   }catch(e){}
-  return { name:'', email:email.trim().toLowerCase(), completed:[], weekQuizzes:{}, readingSeen:[], vocabSeen:{}, videoConfirmed:{}, seenScreencasts:[], seenPractice:[], seenMaterials:[], biweeklySent:{}, contentQuizzes:{ screencasts:{}, reading:{} }, signedInAt:new Date().toISOString() };
+  return { name:'', email:email.trim().toLowerCase(), completed:[], weekQuizzes:{}, readingSeen:[], vocabSeen:{}, videoConfirmed:{}, seenScreencasts:[], seenPractice:[], seenMaterials:[], biweeklySent:{}, assignmentStatus:{}, contentQuizzes:{ screencasts:{}, reading:{} }, signedInAt:new Date().toISOString(), lastSavedAt:null };
 }
-function saveStudentRecord(rec){ try{ localStorage.setItem(studentKey(rec.email), JSON.stringify(rec)); }catch(e){ console.error(e); } }
+function saveStudentRecord(rec){ try{ if(!rec || window.__guestPreview || rec.email==='guest-preview@local') return; rec.lastSavedAt = new Date().toISOString(); localStorage.setItem(studentKey(rec.email), JSON.stringify(rec)); localStorage.setItem('hm_last_saved_at', rec.lastSavedAt); }catch(e){ console.error(e); } }
 let student = null; // active record for this session
 function attemptSignIn(){
   siClearError();
@@ -3681,7 +3694,7 @@ function theaterMarkWatched(id){
   updateGrade();
   theaterRenderSide();
   const meta = allScreencasts.find(v=>v.id===id);
-  maybeShowContentQuiz('video', id, screencastQuizPool, `Nice work watching "${meta ? meta.label : 'this recording'}"! Quick 2-question check:`);
+  maybeShowContentQuiz('video', id, screencastQuizPool, `Nice work watching "${meta ? meta.label : 'this recording'}"! Quick 7-question check:`);
 }
 function theaterPlay(id, label){
   if(!isScreencastAvailable(id)) return;
@@ -3735,6 +3748,69 @@ renderProgressView();
    returning student triggers enterApp() -> theaterRenderSide() immediately.
    That's why the actual call happens here, last. */
 initAuth();
+
+/* ================= LEARNING PLATFORM UPGRADE ================= */
+const HM_ASSIGNMENTS = [
+ {id:'w1-file-workflow',week:1,title:'File Workflow Practice',desc:'Open a supplied image, save an editable PSD, then export a delivery copy without replacing the master file.',skills:['Open','Save','PSD','Export'],checks:['Correct file opened','PSD saved','Final JPG/PNG exported']},
+ {id:'w3-world-composition',week:3,title:'Around the World Composition',desc:'Remove a subject background, place the subject into a new world, clean the edge, and use Gaussian Blur for believable integration.',skills:['Background Removal','Smudge Tool','Minimum','Gaussian Blur'],checks:['Background removed','White fringe cleaned','Subject integrated with blur']},
+ {id:'w4-passport',week:4,title:'Passport Size Photo',desc:'Prepare a passport-size photo with exact dimensions, correct crop ratio, resolution, and clean alignment.',skills:['Crop Ratio','Resolution','Exact Dimensions','Alignment'],checks:['Correct dimensions','Correct resolution','Clean print layout']},
+ {id:'portfolio-foundation',week:6,title:'Portfolio Practice Piece',desc:'Create one polished Photoshop composition using a non-destructive workflow and export both the editable master and final delivery file.',skills:['Layers','Non-Destructive','Raster','Export'],checks:['Editable master','Non-destructive edits','Final export']}
+];
+function hmOpenWeek(w){ return typeof isCourseWeekOpen==='function' ? isCourseWeekOpen(w) : w<=1; }
+function hmAssignmentState(id){ return student && student.assignmentStatus ? (student.assignmentStatus[id] || 'Not started') : 'Not started'; }
+function hmSetAssignment(id,status){
+ if(!student || window.__guestPreview){ showToast('Sign in to save assignment progress.'); return; }
+ student.assignmentStatus = student.assignmentStatus || {}; student.assignmentStatus[id]=status; saveStudentRecord(student); renderAssignments(); renderHomeLearning(); if(typeof renderProgressView==='function') renderProgressView(); showToast(status==='Submitted'?'Assignment marked ready for submission.':'Assignment status saved.');
+}
+function renderAssignments(){
+ const el=document.getElementById('assignmentBoard'); if(!el) return;
+ el.innerHTML='<div class="assignment-grid">'+HM_ASSIGNMENTS.map(a=>{
+  const open=hmOpenWeek(a.week), state=hmAssignmentState(a.id);
+  const disabled=!open || !student || window.__guestPreview;
+  return `<article class="assignment-card ${open?'':'locked'}"><div class="assignment-meta"><span class="assignment-chip">Week ${a.week}</span><span class="assignment-chip">${open?'Available':'Locked until release'}</span></div><h3>${a.title}</h3><p>${a.desc}</p><div class="assignment-meta">${a.skills.map(x=>`<span class="assignment-chip">${x}</span>`).join('')}</div><ul class="assignment-checks">${a.checks.map(x=>`<li>□ ${x}</li>`).join('')}</ul><div class="assignment-status"><span class="assignment-saved">${state}</span><select aria-label="${a.title} status" data-assignment-status="${a.id}" ${disabled?'disabled':''}><option ${state==='Not started'?'selected':''}>Not started</option><option ${state==='In progress'?'selected':''}>In progress</option><option ${state==='Submitted'?'selected':''}>Submitted</option></select></div></article>`;
+ }).join('')+'</div>';
+ el.querySelectorAll('[data-assignment-status]').forEach(s=>s.addEventListener('change',e=>hmSetAssignment(e.target.dataset.assignmentStatus,e.target.value)));
+}
+function renderHomeLearning(){
+ const el=document.getElementById('homeLearningPanel'); if(!el) return;
+ const total=typeof cards!=='undefined'?cards.length:0, done=student&&typeof completed!=='undefined'?completed.length:0, pct=total?Math.round(done/total*100):0;
+ let next=null; if(typeof cards!=='undefined') next=[...cards].find(c=>hmOpenWeek(Number(c.dataset.day.split('-')[0])) && !(student&&student.completed||[]).includes(c.dataset.day));
+ const nextLabel=next ? next.querySelector('.front h3')?.textContent || `Week ${next.dataset.day.split('-')[0]} lesson` : 'All released lessons complete';
+ const nextWeek=next ? Number(next.dataset.day.split('-')[0]) : 1;
+ const assignmentCount=student&&student.assignmentStatus?Object.values(student.assignmentStatus).filter(v=>v==='Submitted').length:0;
+ el.innerHTML=`<div class="learning-dashboard"><div class="continue-card"><div><div class="hero-eyebrow">YOUR NEXT STEP</div><h3>${nextLabel}</h3><p>${student&&!window.__guestPreview?'Continue where you left off.':'Preview the course now; sign in to save personal progress.'}</p></div><button class="hbtn primary" type="button" id="continueLearningBtn">${next?'Continue learning':'Review course'}</button></div><div class="mini-stat"><strong>${pct}%</strong><span>Lesson progress</span><div class="mini-progress"><i style="width:${pct}%"></i></div></div><div class="mini-stat"><strong>${assignmentCount}/${HM_ASSIGNMENTS.length}</strong><span>Assignments ready</span></div><div class="mini-stat"><strong>${nextWeek}</strong><span>Next available week</span></div></div>`;
+ const btn=document.getElementById('continueLearningBtn'); if(btn) btn.onclick=()=>{ if(next){goTab('curriculum');setTimeout(()=>next.scrollIntoView({behavior:'smooth',block:'center'}),100);} else goTab('curriculum'); };
+}
+function hmCollectGlossary(){
+ const out=[]; document.querySelectorAll('.note-section[data-reading]').forEach(sec=>{ const title=sec.querySelector('h3')?.innerText||'Course Notes'; sec.querySelectorAll('.vocab').forEach(v=>out.push({term:v.textContent.trim(),def:v.dataset.def||v.nextElementSibling?.textContent.replace(/^\s*[—-]\s*/,'').trim()||'',source:title})); });
+ (window.screencastQuizVocabulary||[]).forEach(v=>{ (v.terms||[]).forEach(x=>out.push({term:x.term,def:x.def,source:v.title||'Screencast'})); });
+ const seen=new Set(); return out.filter(x=>{const k=x.term.toLowerCase();if(seen.has(k))return false;seen.add(k);return true;}).sort((a,b)=>a.term.localeCompare(b.term));
+}
+function renderGlossary(filter=''){ const grid=document.getElementById('glossaryGrid'); if(!grid)return; const all=hmCollectGlossary(), q=filter.toLowerCase().trim(); const rows=all.filter(x=>(x.term+' '+x.def+' '+x.source).toLowerCase().includes(q)); const count=document.getElementById('glossaryCount'); if(count)count.textContent=`${rows.length} term${rows.length===1?'':'s'}`; grid.innerHTML=rows.length?rows.map(x=>`<article class="glossary-card"><div class="glossary-term">${x.term}</div><div class="glossary-def">${x.def}</div><div class="glossary-source">${x.source}</div></article>`).join(''):'<div class="search-empty">No glossary terms match your search.</div>'; }
+function hmSearchIndex(){
+ const rows=[]; document.querySelectorAll('.view').forEach(view=>{ const id=view.id; const heading=view.querySelector('h2,h1')?.textContent?.trim()||id; const text=view.innerText.replace(/\s+/g,' ').trim(); if(text) rows.push({title:heading,tab:id,text:text.slice(0,500)}); });
+ return rows.concat(hmCollectGlossary().map(x=>({title:x.term,tab:'glossary',text:x.def+' · '+x.source})));
+}
+function renderCourseSearch(q=''){ const out=document.getElementById('courseSearchResults'); if(!out)return; q=q.trim().toLowerCase(); if(!q){out.innerHTML='<div class="search-empty">Start typing to search lessons, notes, vocabulary, screencasts, and resources.</div>';return;} const rows=hmSearchIndex().filter(x=>(x.title+' '+x.text).toLowerCase().includes(q)).slice(0,18); out.innerHTML=rows.length?rows.map((x,i)=>`<button class="search-result" type="button" data-search-tab="${x.tab}"><b>${x.title}</b><span>${x.text.slice(0,170)}${x.text.length>170?'…':''}</span></button>`).join(''):'<div class="search-empty">No matching course content.</div>'; out.querySelectorAll('.search-result').forEach((b,i)=>b.addEventListener('click',()=>{const tab=b.dataset.searchTab; closeCourseSearch(); if(document.getElementById(tab)) goTab(tab);})); }
+function openCourseSearch(){ const m=document.getElementById('courseSearch'),i=document.getElementById('courseSearchInput'); m.classList.add('open');m.setAttribute('aria-hidden','false');setTimeout(()=>i.focus(),20);renderCourseSearch(i.value); }
+function closeCourseSearch(){const m=document.getElementById('courseSearch');m.classList.remove('open');m.setAttribute('aria-hidden','true');}
+function showToast(msg){const e=document.getElementById('completionToast');if(!e)return;e.textContent=msg;e.classList.add('show');clearTimeout(window.__toastTimer);window.__toastTimer=setTimeout(()=>e.classList.remove('show'),2400);}
+function renderTeacher(){
+ const rows=document.getElementById('teacherRows'), sum=document.getElementById('teacherSummary'); if(!rows||!sum)return; const records=[]; for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k&&k.startsWith('hm_student_')){try{const r=JSON.parse(localStorage.getItem(k));if(r&&r.email)records.push(r);}catch(e){}}} if(student&&!window.__guestPreview&&!records.some(r=>r.email===student.email))records.push(student); records.sort((a,b)=>(a.name||'').localeCompare(b.name||'')); const lessonTotal=typeof cards!=='undefined'?cards.length:32; const totalLessons=records.reduce((n,r)=>n+(r.completed||[]).length,0); const avg=records.length?Math.round(records.reduce((n,r)=>n+((r.completed||[]).length/lessonTotal*100),0)/records.length):0; const submitted=records.reduce((n,r)=>n+Object.values(r.assignmentStatus||{}).filter(v=>v==='Submitted').length,0); sum.innerHTML=`<div class="teacher-stat"><strong>${records.length}</strong><span>Students saved here</span></div><div class="teacher-stat"><strong>${avg}%</strong><span>Average lesson progress</span></div><div class="teacher-stat"><strong>${submitted}</strong><span>Assignments marked ready</span></div><div class="teacher-stat"><strong>${navigator.onLine?'Online':'Offline'}</strong><span>Connection status</span></div>`; rows.innerHTML=records.length?records.map(r=>{const g=typeof computeGrade==='function'&&student&&r.email===student.email?computeGrade():{letter:'—',pct:0};const pct=Math.round(((r.completed||[]).length/lessonTotal)*100);const checks=Object.values(r.contentQuizzes||{}).reduce((n,b)=>n+Object.keys(b||{}).length,0);return `<tr><td><b>${r.name||'Unnamed'}</b><br><span>${r.email}</span></td><td>${pct}%</td><td>${g.letter} ${g.pct?`(${g.pct}%)`:''}</td><td>${Object.keys(r.weekQuizzes||{}).length}/${typeof TOTAL_WEEKS!=='undefined'?TOTAL_WEEKS:16}</td><td>${checks}</td><td>${r.lastSavedAt?new Date(r.lastSavedAt).toLocaleString():'—'}</td></tr>`;}).join(''):'<tr><td colspan="6">No saved student records on this browser yet.</td></tr>'; }
+function exportTeacherCSV(){ const rows=[['Student','Email','Lesson Progress','Grade','Week Quizzes','Content Checks','Last Saved']]; for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(!k||!k.startsWith('hm_student_'))continue;try{const r=JSON.parse(localStorage.getItem(k));const pct=Math.round(((r.completed||[]).length/(typeof cards!=='undefined'?cards.length:32))*100);rows.push([r.name||'',r.email||'',pct+'%','Local record',Object.keys(r.weekQuizzes||{}).length,Object.values(r.contentQuizzes||{}).reduce((n,b)=>n+Object.keys(b||{}).length,0),r.lastSavedAt||'']);}catch(e){}} const csv=rows.map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\n');const blob=new Blob([csv],{type:'text/csv;charset=utf-8'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='photoshop-class-local-progress.csv';a.click();URL.revokeObjectURL(a.href);showToast('Class CSV exported.'); }
+function initLearningUpgrade(){
+ renderAssignments();renderHomeLearning();renderGlossary();renderTeacher();
+ document.getElementById('glossarySearch')?.addEventListener('input',e=>renderGlossary(e.target.value));
+ document.getElementById('teacherRefreshBtn')?.addEventListener('click',renderTeacher);document.getElementById('teacherExportBtn')?.addEventListener('click',exportTeacherCSV);document.getElementById('teacherClearBtn')?.addEventListener('click',()=>{if(confirm('Clear locally saved student records from this browser? This cannot be undone.')){Object.keys(localStorage).filter(k=>k.startsWith('hm_student_')).forEach(k=>localStorage.removeItem(k));renderTeacher();showToast('Local class records cleared.');}});
+ document.getElementById('globalSearchBtn')?.addEventListener('click',openCourseSearch);document.querySelectorAll('[data-close-search]').forEach(x=>x.addEventListener('click',closeCourseSearch));document.getElementById('courseSearchInput')?.addEventListener('input',e=>renderCourseSearch(e.target.value));
+ document.addEventListener('keydown',e=>{if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='k'){e.preventDefault();openCourseSearch();}if(e.key==='Escape')closeCourseSearch();});
+ const ab=document.getElementById('a11yBtn'),ap=document.getElementById('a11yPanel'),ac=document.getElementById('a11yClose');ab?.addEventListener('click',()=>{ap.classList.add('open');ap.setAttribute('aria-hidden','false');});ac?.addEventListener('click',()=>{ap.classList.remove('open');ap.setAttribute('aria-hidden','true');});
+ const rm=document.getElementById('reduceMotionToggle'),lt=document.getElementById('largeTextToggle');try{rm.checked=localStorage.getItem('hm_reduce_motion')==='1';lt.checked=localStorage.getItem('hm_large_text')==='1';}catch(e){} document.documentElement.classList.toggle('reduce-motion',rm.checked);document.documentElement.classList.toggle('large-text',lt.checked);rm.addEventListener('change',()=>{document.documentElement.classList.toggle('reduce-motion',rm.checked);localStorage.setItem('hm_reduce_motion',rm.checked?'1':'0');});lt.addEventListener('change',()=>{document.documentElement.classList.toggle('large-text',lt.checked);localStorage.setItem('hm_large_text',lt.checked?'1':'0');});
+ const ob=document.getElementById('offlineBanner');const updateOnline=()=>ob.classList.toggle('show',!navigator.onLine);window.addEventListener('online',()=>{updateOnline();showToast('Back online.');});window.addEventListener('offline',()=>{updateOnline();showToast('Offline mode: local progress remains available.');});updateOnline();
+}
+initLearningUpgrade();
 </script>
-</body>
+<div aria-hidden="true" class="course-search" id="courseSearch"><div class="search-backdrop" data-close-search=""></div><div aria-labelledby="courseSearchTitle" aria-modal="true" class="search-dialog" role="dialog"><div class="search-head"><div><div class="wq-tag">Course Search</div><h3 id="courseSearchTitle">Find a lesson, term, or resource</h3></div><button aria-label="Close search" class="icon-close" data-close-search="" type="button">×</button></div><input autocomplete="off" class="course-search-input" id="courseSearchInput" placeholder="Try “Gaussian Blur”, “passport”, “save”, or “Week 3”…" type="search"/><div class="search-results" id="courseSearchResults"></div></div></div>
+<div aria-hidden="true" class="a11y-panel" id="a11yPanel"><div class="a11y-card"><div class="a11y-head"><h3>Accessibility &amp; Learning Preferences</h3><button aria-label="Close" class="icon-close" id="a11yClose" type="button">×</button></div><label class="a11y-toggle"><input id="reduceMotionToggle" type="checkbox"/> Reduce motion</label><label class="a11y-toggle"><input id="largeTextToggle" type="checkbox"/> Larger text</label><p>These preferences are saved on this device.</p></div></div>
+<div aria-live="polite" class="completion-toast" id="completionToast" role="status"></div></body>
 </html>
