@@ -709,6 +709,17 @@ img,video,iframe{max-width:100%;}
 @media(max-width:900px){.phase-workflows-grid{grid-template-columns:1fr}.progress-linked-grid{grid-template-columns:1fr}.theater{flex-direction:column}.theater-side{width:100%}}
 @media(max-width:600px){.phase-workflows-intro{flex-direction:column;align-items:flex-start}.phase-step-grid{grid-template-columns:1fr}.phase-workflow-head{grid-template-columns:38px 1fr 20px}.phase-head-progress{display:none}.theater-stage{padding:7px!important;border-radius:18px!important}.theater-player{border-radius:12px!important}}
 </style>
+
+<style>
+/* Clickable mark + phase-first Home layout */
+.workflow-mark-only{width:100%;text-align:left;cursor:pointer;position:relative;transition:transform .18s,box-shadow .18s,border-color .18s!important;}
+.workflow-mark-only:hover{transform:translateY(-2px);border-color:#9db9ec!important;box-shadow:0 12px 28px rgba(47,111,237,.13)!important;}
+.workflow-mark-only:focus-visible{outline:3px solid rgba(47,111,237,.22);outline-offset:3px;}
+.workflow-mark-copy{min-width:0;}
+.workflow-mark-link{justify-self:end;white-space:nowrap;padding:9px 12px;border-radius:11px;background:#f3f7ff;color:#2f6fed;font-size:11px;font-weight:900;}
+.workflow-mark-link b{font-size:15px;margin-left:4px;}
+@media(max-width:760px){.workflow-mark-only{grid-template-columns:auto 1fr!important}.workflow-mark-link{grid-column:2;justify-self:start}}
+</style>
 </head>
 <body><div aria-live="polite" class="offline-banner" id="offlineBanner" role="status">You are offline. Your local progress can still be saved on this device.</div><button aria-label="Accessibility and learning preferences" class="a11y-float" id="a11yBtn" type="button">Aa</button>
 <a class="skip-link" href="#mainContent">Skip to content</a>
@@ -4339,11 +4350,11 @@ function renderHomeLearning(){
        <span class="workflow-cycle">${nextStep ? `Next: ${nextStep.label}` : 'All steps complete'}</span>
      </div>
    </div>
-   <div class="workflow-overall">
+   <button type="button" class="workflow-overall workflow-mark-only" id="homeWorkflowProgressBtn" aria-label="Open My Progress">
      <div class="workflow-grade-orb" style="--grade:${homePct}%"><b>${homePct}%</b></div>
-     <div><div class="workflow-overall-meta">Overall Phase One Mark</div><div class="workflow-overall-score">${g.pct}%</div><div class="workflow-overall-detail">${g.detail}</div><div class="workflow-mini-bar"><i style="width:${homePct}%"></i></div></div>
-     <button type="button" class="hbtn primary workflow-overall-action" id="homeWorkflowProgressBtn">Open My Progress</button>
-   </div>
+     <div class="workflow-mark-copy"><div class="workflow-overall-meta">Overall Phase One Mark</div><div class="workflow-overall-score">${g.pct}%</div><div class="workflow-overall-detail">${g.detail}</div><div class="workflow-mini-bar"><i style="width:${homePct}%"></i></div></div>
+     <span class="workflow-mark-link">View My Progress <b>→</b></span>
+   </button>
    <div class="workflow-track-wrap"><div class="workflow-track">
      ${homeSteps.map((x,i)=>`<div class="workflow-node">
        <button type="button" class="workflow-click ${x.done?'done-step':''} ${x.locked?'workflow-lock':''} ${nextStep===x?'active-step':''}" data-home-workflow-step="${x.n}" ${x.locked?'aria-disabled="true"':''}>
