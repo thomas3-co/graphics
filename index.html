@@ -504,7 +504,7 @@ footer.appfoot .foot-classroom a:hover{text-decoration:underline;}
 /* ===== WEEKLY / CONTENT QUIZ MODALS ===== */
 .wq-modal{position:fixed;inset:0;z-index:4000;background:rgba(10,10,15,.68);display:none;align-items:center;justify-content:center;padding:18px;backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px);}
 .wq-modal.open{display:flex;}
-.wq-box{background:#fff;border-radius:22px;width:min(760px,96vw);max-height:min(88vh,900px);display:flex;flex-direction:column;overflow:hidden;box-shadow:0 35px 100px rgba(0,0,0,.42);border:1px solid rgba(255,255,255,.8);}
+.wq-box{background:#fff;border-radius:22px;width:min(760px,96vw);height:min(88vh,900px);max-height:min(88vh,900px);display:flex;flex-direction:column;overflow:hidden;box-shadow:0 35px 100px rgba(0,0,0,.42);border:1px solid rgba(255,255,255,.8);}
 .wq-box .wq-head{padding:22px 26px 16px;background:linear-gradient(180deg,#f8faff 0%,#fff 100%);border-bottom:1px solid var(--line);flex:0 0 auto;}
 .wq-box .wq-tag{font-size:10px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;color:var(--c-curriculum);display:inline-flex;align-items:center;gap:7px;background:#eef4ff;border:1px solid #dbe7ff;padding:6px 9px;border-radius:999px;}
 .wq-box .wq-tag:before{content:'✓';width:16px;height:16px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;background:var(--c-curriculum);color:#fff;font-size:9px;}
@@ -528,7 +528,7 @@ footer.appfoot .foot-classroom a:hover{text-decoration:underline;}
 .wq-option:has(input:checked) .wq-option-check{display:flex;}
 @media(max-width:640px){.wq-box .wq-head{padding:18px 18px 14px}.wq-question-card{padding:13px}.wq-option{padding:10px}.wq-question-text{font-size:13px;}}
 .wq-progress-row{display:flex;justify-content:space-between;align-items:center;margin-top:7px;font-size:11px;color:var(--muted);font-weight:600;}
-.wq-scroll{overflow-y:auto;overscroll-behavior:contain;padding:18px 26px 22px;min-height:0;flex:1;scrollbar-width:thin;}
+.wq-scroll{overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;padding:18px 26px 22px;min-height:0;flex:1 1 auto;scrollbar-width:thin;}
 .wq-scroll::-webkit-scrollbar{width:9px;}
 .wq-scroll::-webkit-scrollbar-thumb{background:#cbd3df;border-radius:999px;border:3px solid #fff;}
 .wq-question{padding:16px 17px;margin:0 0 12px;border:1px solid var(--line);border-radius:15px;background:#fff;box-shadow:0 3px 12px rgba(15,17,23,.045);transition:border-color .2s,box-shadow .2s,background .2s;}
@@ -551,7 +551,7 @@ footer.appfoot .foot-classroom a:hover{text-decoration:underline;}
 .wq-box textarea{width:100%;min-height:90px;border-radius:10px;border:1px solid var(--line);padding:10px 12px;font-family:inherit;font-size:13.5px;resize:vertical;margin-bottom:12px;}
 @media(max-width:640px){
   .wq-modal{padding:8px;}
-  .wq-box{width:100%;max-height:94vh;border-radius:18px;}
+  .wq-box{width:100%;height:92vh;max-height:92vh;border-radius:18px;}
   .wq-box .wq-head{padding:17px 17px 13px;}
   .wq-scroll{padding:13px 13px 18px;}
   .wq-box .wq-footer{padding:11px 13px;align-items:stretch;flex-direction:column;}
@@ -752,11 +752,15 @@ img,video,iframe{max-width:100%;}
 <!-- ========== WEEKLY CHECK-IN MODAL ========== -->
 <div aria-labelledby="wqQuestion" aria-modal="true" class="wq-modal" id="wqModal" role="dialog">
 <div class="wq-box">
+<div class="wq-head">
 <div class="wq-tag" id="wqWeekTag">Weekly Check-In</div>
 <h3 id="wqQuestion">How did this week's lessons go?</h3>
+</div>
+<div class="wq-scroll" id="wqQuizScroll">
 <div id="wqQuizBody"></div>
 <label for="wqAnswer" id="wqAnswerLabel" style="display:block;font-size:12px;font-weight:700;margin-bottom:6px;">Your answer</label>
 <textarea id="wqAnswer" placeholder="Type a few sentences..."></textarea>
+</div>
 <div class="wq-actions">
 <button class="wq-skip" id="wqSkip" type="button">Remind me later</button>
 <button class="wq-submit" id="wqSubmit" type="button">Submit &amp; Send Report</button>
