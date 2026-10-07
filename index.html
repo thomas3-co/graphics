@@ -511,6 +511,22 @@ footer.appfoot .foot-classroom a:hover{text-decoration:underline;}
 .wq-box h3{margin:10px 0 12px;font-size:1.22rem;line-height:1.35;color:var(--ink);}
 .wq-progress{height:7px;background:#e9edf4;border-radius:999px;overflow:hidden;}
 .wq-progress i{display:block;height:100%;width:0;background:linear-gradient(90deg,#2f6fed,#8b5cf6);border-radius:999px;transition:width .25s ease;}
+.wq-question-card{margin:0 0 16px;padding:16px;border:1px solid #e5eaf2;border-radius:16px;background:#fff;box-shadow:0 6px 18px rgba(15,23,42,.05);}
+.wq-question-head{display:flex;align-items:flex-start;gap:12px;margin-bottom:12px;}
+.wq-question-number{width:30px;height:30px;flex:0 0 30px;border-radius:10px;display:flex;align-items:center;justify-content:center;background:#eef4ff;color:var(--c-curriculum);font-weight:800;font-size:12px;}
+.wq-question-kicker{font-size:10px;text-transform:uppercase;letter-spacing:.7px;font-weight:800;color:#8a94a6;margin-bottom:3px;}
+.wq-question-text{font-size:14px;font-weight:800;color:var(--ink);line-height:1.45;}
+.wq-options{display:grid;gap:8px;}
+.wq-option{position:relative;display:flex;align-items:center;gap:10px;padding:11px 12px;border:1px solid #e2e7ef;border-radius:12px;background:#fafbfd;cursor:pointer;transition:.18s ease;}
+.wq-option:hover{border-color:#b9c9ec;background:#f5f8ff;transform:translateY(-1px);}
+.wq-option input{position:absolute;opacity:0;pointer-events:none;}
+.wq-option-letter{width:26px;height:26px;flex:0 0 26px;border-radius:8px;display:flex;align-items:center;justify-content:center;background:#eef1f5;color:#667085;font-weight:800;font-size:11px;}
+.wq-option-text{flex:1;font-size:13px;line-height:1.4;color:#273142;}
+.wq-option-check{display:none;width:20px;height:20px;border-radius:50%;align-items:center;justify-content:center;background:var(--c-curriculum);color:#fff;font-size:11px;font-weight:800;}
+.wq-option:has(input:checked){border-color:var(--c-curriculum);background:#f1f6ff;box-shadow:0 0 0 2px rgba(47,111,237,.08);}
+.wq-option:has(input:checked) .wq-option-letter{background:var(--c-curriculum);color:#fff;}
+.wq-option:has(input:checked) .wq-option-check{display:flex;}
+@media(max-width:640px){.wq-box .wq-head{padding:18px 18px 14px}.wq-question-card{padding:13px}.wq-option{padding:10px}.wq-question-text{font-size:13px;}}
 .wq-progress-row{display:flex;justify-content:space-between;align-items:center;margin-top:7px;font-size:11px;color:var(--muted);font-weight:600;}
 .wq-scroll{overflow-y:auto;overscroll-behavior:contain;padding:18px 26px 22px;min-height:0;flex:1;scrollbar-width:thin;}
 .wq-scroll::-webkit-scrollbar{width:9px;}
@@ -2811,11 +2827,12 @@ function maybeShowWeekQuiz(week){
   if(quiz.length){
     quiz.forEach((q,i)=>{
       const wrap = document.createElement('div');
-      wrap.style.marginBottom = '12px';
-      wrap.innerHTML = `<div style="font-size:13px;font-weight:700;margin-bottom:6px;">${i+1}. What does "${q.term}" mean?</div>` +
-        q.options.map((opt,oi)=>`<label style="display:block;font-size:13px;margin:4px 0;cursor:pointer;">
-          <input type="radio" name="wqqi" value="${oi}" data-correct="${opt===q.correct?'1':'0'}"> ${opt}
-        </label>`).join('');
+      wrap.className = 'wq-question-card';
+      wrap.innerHTML = `<div class="wq-question-head"><span class="wq-question-number">${i+1}</span><div><div class="wq-question-kicker">Vocabulary check</div><div class="wq-question-text">What does "${q.term}" mean?</div></div></div>` +
+        `<div class="wq-options">` + q.options.map((opt,oi)=>`<label class="wq-option">
+          <input type="radio" name="wqq-${week}-${i}" value="${oi}" data-correct="${opt===q.correct?'1':'0'}">
+          <span class="wq-option-letter">${String.fromCharCode(65+oi)}</span><span class="wq-option-text">${opt}</span><span class="wq-option-check" aria-hidden="true">✓</span>
+        </label>`).join('') + `</div>`;
       body.appendChild(wrap);
     });
     answerLabel.textContent = 'Anything else you want your instructor to know? (optional)';
