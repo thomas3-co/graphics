@@ -401,11 +401,11 @@ footer.appfoot .foot-classroom a:hover{text-decoration:underline;}
 .media-card .media-body .chk.seen{opacity:1;background:var(--card-accent,var(--c-screen));color:#fff;}
 .media-card .media-body a{margin-top:2px;text-decoration:none;font-weight:700;font-size:12px;color:var(--card-accent,var(--c-screen));display:flex;align-items:center;gap:6px;}
 /* ===== CINEMATIC THEATER PLAYER (Screencasts) ===== */
-.theater{display:flex;gap:22px;margin-top:20px;align-items:flex-start;}
+.theater{display:flex;gap:20px;margin-top:18px;align-items:flex-start;}
 .theater-main{flex:1;min-width:0;}
-.theater-stage{background:linear-gradient(145deg,#0b1020,#171d33 55%,#0b1020);border-radius:18px;padding:8px;border:0;box-shadow:0 18px 45px rgba(15,23,42,.16);transition:transform .2s ease,box-shadow .2s ease;}
-.theater-stage.is-playing{border:0;box-shadow:0 22px 55px rgba(15,23,42,.22);}
-.theater-player{width:100%;aspect-ratio:16/9;background:#0a0f1d;border-radius:12px;overflow:hidden;position:relative;box-shadow:inset 0 0 0 1px rgba(255,255,255,.06);border:0;}
+.theater-stage{background:transparent;border-radius:0;padding:0;border:0;box-shadow:none;transition:none;}
+.theater-stage.is-playing{border:0;box-shadow:none;}
+.theater-player{width:100%;aspect-ratio:16/9;background:#151a2e;border-radius:0;overflow:hidden;position:relative;box-shadow:none;border:0;}
 .theater-player iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block;}
 .theater-player .thumb-poster{position:absolute;inset:0;width:100%;}
 .theater-nav{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:12px;}
@@ -463,23 +463,6 @@ footer.appfoot .foot-classroom a:hover{text-decoration:underline;}
 .theater-item.active .ti-label{color:var(--c-curriculum);}
 .theater-item .ti-watched{display:flex;align-items:center;gap:4px;font-size:11px;color:#1a8a52;font-weight:700;margin-top:4px;}
 .theater-item .ti-status{display:block;font-size:11px;color:var(--muted);margin-top:4px;}
-.theater-player:after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(255,255,255,.045),transparent 18%,transparent 82%,rgba(0,0,0,.14));opacity:.8;}
-.theater-nav{padding:0 2px;}
-.theater-nav .tn-btn{min-height:40px;padding:9px 15px;border-radius:11px;transition:transform .18s ease,box-shadow .18s ease,background .18s ease;}
-.theater-nav .tn-btn:not(:disabled):hover{transform:translateY(-1px);box-shadow:0 6px 16px rgba(30,60,100,.1);}
-.theater-tip{background:linear-gradient(135deg,#fff,#f8fbff);border-style:solid;border-color:#dce6f4;box-shadow:0 5px 18px rgba(30,60,100,.05);}
-.theater-about{border:1px solid #e3e9f2;}
-.theater-side{background:linear-gradient(180deg,#f8faff,#f3f6fb);border:1px solid #dfe6f1;border-radius:18px;padding:12px;box-shadow:0 12px 30px rgba(30,50,80,.08);max-height:760px;}
-.theater-progress{border:1px solid #e2e8f1;box-shadow:0 5px 16px rgba(30,50,80,.05);}
-.theater-search input{box-sizing:border-box;background:#fff;border-color:#d8e1ee;padding:10px 12px;}
-.theater-filters{flex-wrap:wrap;}
-.theater-filters .tf-chip{transition:.18s ease;}
-.theater-filters .tf-chip:hover{border-color:#a9bee5;background:#f5f8ff;color:#315a9e;}
-.theater-item{border:1px solid transparent;padding:7px;border-radius:12px;}
-.theater-item:hover{transform:translateX(2px);background:#fff;box-shadow:0 4px 12px rgba(30,50,80,.06);}
-.theater-item.active{background:#fff;box-shadow:0 5px 16px rgba(47,111,237,.12),inset 0 0 0 1px rgba(47,111,237,.22);}
-.theater-item .ti-thumb{border-radius:9px;}
-.theater-item .ti-label{font-size:12.5px;}
 @media(max-width:900px){
   .theater{flex-direction:column;}
   .theater-side{width:100%;max-height:none;}
@@ -488,6 +471,16 @@ footer.appfoot .foot-classroom a:hover{text-decoration:underline;}
   .theater-item .ti-thumb{width:100%;height:90px;}
   .theater-item .ti-body{padding-top:6px;}
 }
+.practice-day .project-label{background:linear-gradient(135deg,#7c3aed,#4f46e5);}
+.practice-day .flip-card-front{background:linear-gradient(145deg,#4f46e5,#7c3aed);}
+.theater-stage{background:radial-gradient(circle at 50% 42%,rgba(70,78,105,.32),rgba(8,10,18,.96) 72%);padding:10px;box-sizing:border-box;border-radius:16px;box-shadow:0 18px 50px rgba(13,18,35,.18);}
+.theater-stage.is-playing{box-shadow:0 22px 65px rgba(13,18,35,.24);}
+.theater-player{border-radius:10px;box-shadow:0 12px 34px rgba(0,0,0,.28);}
+.theater-nav .tn-btn{min-width:112px;transition:transform .16s ease,background .16s ease,border-color .16s ease,box-shadow .16s ease;}
+.theater-nav .tn-btn:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 5px 14px rgba(30,45,80,.12);}
+.theater-tip{backdrop-filter:blur(8px);}
+.theater-side{position:sticky;top:78px;}
+@media(max-width:900px){.theater-side{position:static;}.theater-stage{padding:6px;border-radius:12px;}.theater-player{border-radius:8px;}}
 /* ===== SIGN-IN GATE ===== */
 #signInGate{position:fixed;inset:0;z-index:5000;background:linear-gradient(135deg,#1c2030,#2f6fed 160%);display:flex;align-items:center;justify-content:center;padding:20px;}
 #signInGate.hidden{display:none;}
@@ -902,42 +895,28 @@ img,video,iframe{max-width:100%;}
         <span class="vocab" data-def="Passport photos are typically saved at 300 DPI for sharp, print-quality results." tabindex="0">Resolution (DPI)</span><span class="vocab-def"> — Passport photos are typically saved at 300 DPI for sharp, print-quality results.</span></p>
 <div class="big-ideas">Passport photos follow strict formatting rules — exact size, plain background, even lighting, natural expression — so precision matters more here than creativity.</div>
 </div></div></div>
-<div class="flip-card project-day" data-day="4-2"><div class="flip-card-inner">
-<div class="flip-card-front"><div class="project-label">IN-CLASS PRACTICE</div><h4>Day 2: Practice Day — In Class</h4><p>Complete the assigned practice activities in class and submit your work through the Google Classroom section provided for you.</p><span class="flip-hint">Tap to flip</span></div>
-<div class="flip-card-back"><div class="vocab-title">Practice Focus</div>
-<p>Use this class session to practice the techniques already taught in Weeks 1–4. Follow the instructor's in-class practice task and complete the required work before leaving class.</p>
-<ul><li>Open the assigned practice task in your Google Classroom.</li><li>Complete the practice during class.</li><li>Save your work using the required file name and format.</li><li>Submit the completed work through the assigned Classroom task.</li></ul>
-<div class="summary-text">This is an in-class practice day — the specific practice task is assigned through Google Classroom.</div>
+<div class="flip-card" data-day="4-2"><div class="flip-card-inner">
+<div class="flip-card-front"><h4>Day 2: Puppet Warp, Dress Change &amp; Final Project</h4><p>Use Puppet Warp for realistic portrait adjustments, change clothing, and combine skills from Weeks 1–4.</p><span class="flip-hint">Tap to flip</span></div>
+<div class="flip-card-back"><div class="vocab-title">Vocabulary</div>
+<p><span class="vocab" data-def="Pin-based tool for flexible distortion." tabindex="0">Puppet Warp</span><span class="vocab-def"> — Pin-based tool for flexible distortion.</span>,
+        <span class="vocab" data-def="Altering clothing colors or patterns." tabindex="0">Dress Change</span><span class="vocab-def"> — Altering clothing colors/patterns.</span>,
+        <span class="vocab" data-def="Mesh points used to control a puppet warp transformation." tabindex="0">Control Points</span><span class="vocab-def"> — Mesh overlay used in Puppet Warp.</span>,
+        <span class="vocab" data-def="Combining learned techniques into one design." tabindex="0">Integration</span><span class="vocab-def"> — Combining learned techniques into one design.</span>,
+        <span class="vocab" data-def="Applying advanced retouching and compositing." tabindex="0">Final Composition</span><span class="vocab-def"> — Applying advanced retouching and compositing.</span></p>
+<div class="vocab-title">Big Ideas</div>
+<p class="big-ideas">Use Puppet Warp for realistic body or cloth repositioning while maintaining proportions and natural folds. Apply the technique together with clothing changes and previous Photoshop skills to create a polished portrait project.</p>
 </div></div></div>
-</div></div>
 </div><!-- /month-block m1 -->
 <!-- ===== MONTH TWO ===== -->
 <div class="month-block" data-month="m2">
 <div class="week-card" id="week5">
 <h2 class="wk">Week 5 — Advanced Color Adjustment &amp; Matching</h2>
 <div class="day-grid">
-<div class="flip-card project-day" data-day="5-1"><div class="flip-card-inner">
-<div class="flip-card-front"><div class="project-label">PROJECT DAY</div><h4>Day 1: Color Fill for Clothing Change</h4><p>Use Color Fill Adjustment Layer to change outfit color naturally.</p><span class="flip-hint">Tap to flip</span></div>
-<div class="flip-card-back"><p><strong>Objective:</strong> Practice using Color Fill layers to recolor garments realistically while maintaining texture and shadows.</p>
-<ul><li>Use <strong>Quick Selection Tool</strong> or <strong>Pen Tool</strong> to select clothing area.</li>
-<li>Apply <strong>Solid Color Fill Layer</strong> with blending mode <strong>Color</strong> or <strong>Soft Light</strong>.</li></ul></div>
-</div></div>
 <div class="flip-card project-day" data-day="5-2"><div class="flip-card-inner">
 <div class="flip-card-front"><div class="project-label">PROJECT DAY</div><h4>Day 2: Curve Control II &amp; Match Subject with Background</h4><p>Refine clothing recolor, master curve balancing, and blend subject/background tones seamlessly.</p><span class="flip-hint">Tap to flip</span></div>
 <div class="flip-card-back"><p>Deepen control over tonal balance using <strong>Curves Adjustment Layer</strong>.</p>
 <p>Focus on visual harmony between subject and background using <strong>Curves</strong> and <strong>Color Balance</strong>.</p></div>
 </div></div>
-<div class="flip-card project-day" data-day="5-6"><div class="flip-card-inner">
-<div class="flip-card-front flip-card-quiz-front"><div class="project-label">ADVANCED LESSON</div><h4>Day 6: Puppet Warp, Dress Change &amp; Final Project</h4><p>Use Puppet Warp for controlled portrait adjustments, explore dress changes, and integrate the skills from Weeks 1–4.</p><span class="flip-hint" style="color:rgba(255,255,255,.75)">Tap to flip</span></div>
-<div class="flip-card-back"><div class="vocab-title">Vocabulary</div>
-<p><span class="vocab" data-def="Pin-based tool for flexible distortion." tabindex="0">Puppet Warp</span><span class="vocab-def"> — Pin-based tool for flexible distortion.</span>,
-        <span class="vocab" data-def="Altering clothing colors/patterns." tabindex="0">Dress Change</span><span class="vocab-def"> — Altering clothing colors/patterns.</span>,
-        <span class="vocab" data-def="Mesh overlay used in puppet warp." tabindex="0">Control Points</span><span class="vocab-def"> — Mesh overlay used in puppet warp.</span>,
-        <span class="vocab" data-def="Combining learned techniques into one design." tabindex="0">Integration</span><span class="vocab-def"> — Combining learned techniques into one design.</span>,
-        <span class="vocab" data-def="Applying advanced retouching and compositing." tabindex="0">Final Composition</span><span class="vocab-def"> — Applying advanced retouching and compositing.</span></p>
-<div class="vocab-title">Big Ideas</div>
-<p class="big-ideas">Use Puppet Warp for realistic body or cloth repositioning; maintain proportions and natural folds. Create a polished portrait project by integrating the techniques learned in the earlier weeks.</p>
-</div></div></div>
 </div>
 </div>
 <div class="week-card" id="week6">
@@ -3632,6 +3611,8 @@ const screencastPlaylist = [
   { id:'1y13t7n5nTN_3oppd_Nx7AJ1Yfd7nSwdE', label:'How to Create Realistic T-Shirt Mockups', desc:'Build custom, fully editable apparel mockups using Smart Objects and Displacement Maps. Learn how to set up reusable template files where graphics instantly conform to garment folds, highlights, and shadow layers with a single click.' }
 ];
 const allScreencasts = screencastPlaylist;
+const RELEASED_SCREENCAST_IDS = new Set([allScreencasts[0]?.id, allScreencasts[1]?.id, '1GPnPtOIV2Sgb3uyPIpb2wnTt8riCEXTo']);
+function getReleasedScreencasts(){ return allScreencasts.filter(v=>RELEASED_SCREENCAST_IDS.has(v.id)); }
 window.screencastQuizVocabulary = {
   '1khSdxt8enMJ7NW60dp-gLxFGEKmbOzOJ': [
     {term:'Background Removal',def:'Isolating a subject from its original background so it can be placed into another scene.'},
@@ -3800,7 +3781,7 @@ function theaterStartWatchTracking(id){
 function theaterIsWatched(id){ return !!(student && student.videoConfirmed && student.videoConfirmed[id]); }
 function theaterIsOpened(id){ return !!(student && student.seenScreencasts && student.seenScreencasts.includes(id)); }
 function theaterUpdateProgressSummary(){
-  const released = allScreencasts.slice(0,2);
+  const released = getReleasedScreencasts();
   const total = released.length;
   const watchedCount = released.filter(v=>theaterIsWatched(v.id)).length;
   const pct = total ? Math.round((watchedCount/total)*100) : 0;
@@ -3812,7 +3793,7 @@ function theaterUpdateProgressSummary(){
   if(barEl) barEl.style.width = pct + '%';
 }
 function theaterFilteredList(){
-  return allScreencasts.slice(0,2).filter(v=>{
+  return getReleasedScreencasts().filter(v=>{
     if(theaterSearchTerm && !v.label.toLowerCase().includes(theaterSearchTerm)) return false;
     if(theaterFilterMode==='watched' && !theaterIsWatched(v.id)) return false;
     if(theaterFilterMode==='unwatched' && theaterIsWatched(v.id)) return false;
@@ -3823,14 +3804,14 @@ function theaterRenderSide(){
   const side = document.getElementById('theaterSide');
   if(!side) return;
   theaterUpdateProgressSummary();
-  const availableList = allScreencasts.slice(0,2).filter(v=>{
+  const availableList = getReleasedScreencasts().filter(v=>{
     if(theaterSearchTerm && !v.label.toLowerCase().includes(theaterSearchTerm)) return false;
     if(theaterFilterMode==='watched' && !theaterIsWatched(v.id)) return false;
     if(theaterFilterMode==='unwatched' && theaterIsWatched(v.id)) return false;
     return true;
   });
   const headEl = document.getElementById('theaterSideHead');
-  if(headEl) headEl.textContent = theaterFilterMode==='all' ? 'Available now · 2 recordings' : `${availableList.length} ${theaterFilterMode} recording${availableList.length===1?'':'s'}`;
+  if(headEl) headEl.textContent = theaterFilterMode==='all' ? `Available now · ${getReleasedScreencasts().length} recordings` : `${availableList.length} ${theaterFilterMode} recording${availableList.length===1?'':'s'}`;
   side.innerHTML = '';
   availableList.forEach(v=>{
     const watched = theaterIsWatched(v.id);
@@ -3857,7 +3838,7 @@ function theaterRenderSide(){
   if(theaterFilterMode==='all'){
     const locked = document.createElement('div');
     locked.className='theater-locked-panel';
-    locked.innerHTML='<div class="tlp-icon" aria-hidden="true">🔒</div><strong>Additional recordings are locked</strong><p>Only the first two screencasts are available right now. Later recordings will unlock automatically according to the course calendar.</p><span>Search and navigation only include recordings that are currently released.</span>';
+    locked.innerHTML='<div class="tlp-icon" aria-hidden="true">🔒</div><strong>Additional recordings are locked</strong><p>More screencasts will unlock automatically according to the course calendar.</p><span>Search and navigation only include recordings that are currently released.</span>';
     side.appendChild(locked);
   }
 }
@@ -3899,7 +3880,7 @@ function theaterLoadIframe(id, label){
    on the poster for the currently-selected recording. Only from here does
    the video actually load AND the watch-progress timer start — simply
    picking a recording from the side list does not start the clock. */
-function isScreencastAvailable(id){ return allScreencasts.findIndex(v=>v.id===id) < 2; }
+function isScreencastAvailable(id){ return RELEASED_SCREENCAST_IDS.has(id); }
 function theaterBeginPlayback(id, label){
   if(!isScreencastAvailable(id)) return;
   theaterCurrentId = id;
@@ -3926,14 +3907,15 @@ document.addEventListener('visibilitychange', ()=>{
   if(document.hidden) theaterPauseForHiddenTab();
 });
 function theaterUpdateNav(){
-  const idx = allScreencasts.findIndex(v=>v.id===theaterCurrentId);
+  const released = getReleasedScreencasts();
+  const idx = released.findIndex(v=>v.id===theaterCurrentId);
   const prevBtn = document.getElementById('theaterPrevBtn');
   const nextBtn = document.getElementById('theaterNextBtn');
   const indexEl = document.getElementById('theaterIndex');
   if(idx<0){ prevBtn.disabled = true; nextBtn.disabled = true; indexEl.textContent = '—'; return; }
   prevBtn.disabled = idx<=0;
-  nextBtn.disabled = idx>=Math.min(1,allScreencasts.length-1);
-  indexEl.textContent = `Screencast ${idx+1} of ${allScreencasts.length}`;
+  nextBtn.disabled = idx>=released.length-1;
+  indexEl.textContent = `Screencast ${idx+1} of ${released.length}`;
 }
 function theaterMarkWatched(id){
   if(!student) return;
@@ -3967,10 +3949,11 @@ function theaterPlay(id, label){
   theaterRenderSide();
 }
 function theaterStep(delta){
-  const idx = allScreencasts.findIndex(v=>v.id===theaterCurrentId);
+  const released = getReleasedScreencasts();
+  const idx = released.findIndex(v=>v.id===theaterCurrentId);
   const nextIdx = idx + delta;
-  if(nextIdx<0 || nextIdx>=allScreencasts.length || nextIdx>=2) return;
-  const v = allScreencasts[nextIdx];
+  if(nextIdx<0 || nextIdx>=released.length) return;
+  const v = released[nextIdx];
   theaterPlay(v.id, v.label);
 }
 document.getElementById('theaterPrevBtn').addEventListener('click', ()=>theaterStep(-1));
@@ -4039,7 +4022,7 @@ function hmWorkflowGo(step,project){
  }else if(step===2){
    goTab('screencasts');
    setTimeout(()=>{
-     const firstUnread=(allScreencasts||[]).slice(0,2).find(v=>!theaterIsWatched(v.id)) || allScreencasts?.[0];
+     const releasedScreencasts=getReleasedScreencasts(); const firstUnread=releasedScreencasts.find(v=>!theaterIsWatched(v.id)) || releasedScreencasts?.[0] || allScreencasts?.[0];
      if(firstUnread) theaterPlay(firstUnread.id,firstUnread.label);
      document.getElementById('screencastTheater')?.scrollIntoView({behavior:'smooth',block:'start'});
    },120);
