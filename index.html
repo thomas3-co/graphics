@@ -822,7 +822,7 @@ img,video,iframe{max-width:100%;}
     </div>
   </div>
   <div class="workflow-overall">
-    <div class="workflow-grade-orb"><b>0%</b></div>
+    <div class="workflow-grade-orb"><b>0/100</b></div>
     <div><div class="workflow-overall-meta">Overall Phase One Mark</div><div class="workflow-overall-score">0%</div><div class="workflow-overall-detail">Progress will update as you complete each step.</div><div class="workflow-mini-bar"><i style="width:0%"></i></div></div>
     <button type="button" class="hbtn primary workflow-overall-action" onclick="goTab('progress')">Open My Progress</button>
   </div>
@@ -4345,7 +4345,7 @@ function renderHomeLearning(){
    </div>
    <div class="workflow-overall">
      <div class="workflow-grade-orb" style="--grade:${homePct}%"><b>${homePct}%</b></div>
-     <div><div class="workflow-overall-meta">Overall Phase One Mark</div><div class="workflow-overall-score">${g.pct}%</div><div class="workflow-overall-detail">${g.detail}</div><div class="workflow-mini-bar"><i style="width:${homePct}%"></i></div></div>
+     <div><div class="workflow-overall-meta">Overall Phase One Mark</div><div class="workflow-overall-score">${g.pct}/100</div><div class="workflow-overall-detail">${g.detail} · ${g.pct}%</div><div class="workflow-mini-bar"><i style="width:${homePct}%"></i></div></div>
      <button type="button" class="hbtn primary workflow-overall-action" id="homeWorkflowProgressBtn">Open My Progress</button>
    </div>
    <div class="workflow-track-wrap"><div class="workflow-track">
