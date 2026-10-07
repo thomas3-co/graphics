@@ -629,7 +629,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
 .workflow-kicker{display:flex;align-items:center;gap:8px;font-size:10px;letter-spacing:.11em;font-weight:900;color:#2f6fed;text-transform:uppercase}.workflow-kicker i{width:8px;height:8px;border-radius:50%;background:#10b981;box-shadow:0 0 0 5px rgba(16,185,129,.12)}
 .workflow-title-row{display:flex;justify-content:space-between;gap:20px;align-items:flex-start;margin-top:7px}.workflow-title-row h3{margin:0;font-size:22px;letter-spacing:-.02em}.workflow-title-row p{margin:7px 0 0;color:#667085;font-size:13px;line-height:1.55;max-width:720px}
 .workflow-overall{margin:0 24px 18px;padding:16px 18px;border:1px solid #dbe5f2;border-radius:18px;background:#fff;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:18px;box-shadow:0 7px 22px rgba(31,55,90,.06)}
-.workflow-grade-orb{width:64px;height:64px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(#2f6fed var(--grade,0%),#e9eef6 0);position:relative}.workflow-grade-orb:after{content:"";position:absolute;inset:6px;border-radius:50%;background:#fff}.workflow-grade-orb b{position:relative;z-index:1;font-size:14px;color:#17345f}.workflow-overall-score{font-size:24px;font-weight:950;color:#101828}.workflow-overall-meta{font-size:10px;letter-spacing:.08em;font-weight:900;color:#7a8699;text-transform:uppercase}.workflow-overall-detail{font-size:11px;color:#667085;margin-top:4px}.workflow-mini-bar{height:8px;background:#edf1f6;border-radius:999px;overflow:hidden;margin-top:8px}.workflow-mini-bar i{display:block;height:100%;background:linear-gradient(90deg,#10b981,#2f6fed);border-radius:999px}.workflow-overall-action{padding:8px 11px;border-radius:10px;background:#f3f7ff;color:#2f6fed;font-size:11px;font-weight:850;white-space:nowrap}
+.workflow-grade-orb{width:64px;height:64px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(#2f6fed var(--grade,0%),#e9eef6 0);position:relative}.workflow-grade-orb:after{content:"";position:absolute;inset:6px;border-radius:50%;background:#fff}.workflow-grade-orb b{position:relative;z-index:1;font-size:14px;color:#17345f}.workflow-overall-score{font-size:24px;font-weight:950;color:#101828} .workflow-overall-score span{font-size:9px;font-weight:900;text-transform:uppercase;letter-spacing:.06em;color:#667085;margin-left:5px}.workflow-overall-meta{font-size:10px;letter-spacing:.08em;font-weight:900;color:#7a8699;text-transform:uppercase}.workflow-overall-detail{font-size:11px;color:#667085;margin-top:4px}.workflow-mini-bar{height:8px;background:#edf1f6;border-radius:999px;overflow:hidden;margin-top:8px}.workflow-mini-bar i{display:block;height:100%;background:linear-gradient(90deg,#10b981,#2f6fed);border-radius:999px}.workflow-overall-action{padding:8px 11px;border-radius:10px;background:#f3f7ff;color:#2f6fed;font-size:11px;font-weight:850;white-space:nowrap}
 .workflow-track-wrap{padding:0 24px 22px;overflow-x:auto}.workflow-track{display:grid;grid-template-columns:repeat(6,minmax(160px,1fr));min-width:980px;gap:0;position:relative}.workflow-track:before{content:"";position:absolute;left:7%;right:7%;top:29px;height:2px;background:#dce4ef}.workflow-node{position:relative;z-index:1;padding:0 5px}
 .workflow-click{width:100%;min-height:184px;border:1px solid #dce4ef!important;border-radius:18px!important;background:#fff!important;padding:15px!important;display:flex;flex-direction:column;align-items:flex-start;box-shadow:0 4px 14px rgba(31,55,90,.045);transition:transform .18s,box-shadow .18s,border-color .18s,background .18s!important}.workflow-click:hover{transform:translateY(-5px);border-color:#a9c0eb!important;box-shadow:0 13px 28px rgba(47,111,237,.13)!important}.workflow-click.active-step{border-color:#2f6fed!important;box-shadow:0 12px 28px rgba(47,111,237,.13)!important}.workflow-click.done-step{border-color:#b9e5d2!important}.workflow-lock{background:#f4f6f9!important}.workflow-lock:hover{transform:none!important;box-shadow:0 4px 14px rgba(31,55,90,.045)!important}
 .workflow-node-top{display:flex;align-items:center;justify-content:space-between;width:100%;gap:8px}.workflow-number{width:29px;height:29px;border-radius:50%;display:grid;place-items:center;background:#eef4ff;color:#2f6fed;font-weight:950;font-size:12px;border:2px solid #fff;box-shadow:0 0 0 2px #dce7fa}.done-step .workflow-number{background:#ecfdf3;color:#047857;box-shadow:0 0 0 2px #ccefe0}.workflow-node-status{font-size:9px;font-weight:900;text-transform:uppercase;letter-spacing:.06em;padding:5px 7px;border-radius:999px;background:#f2f4f7;color:#667085}.done-step .workflow-node-status{background:#ecfdf3;color:#047857}.workflow-lock .workflow-node-status{background:#eef0f3;color:#98a2b3}.workflow-node h4{margin:13px 0 4px;font-size:14px;color:#101828}.workflow-node small{font-size:10.5px;color:#667085;line-height:1.45;min-height:31px}.workflow-grade{margin-top:auto!important;padding-top:12px;width:100%;border-top:1px solid #edf1f5;display:flex!important;align-items:center;justify-content:space-between!important;font-size:10px!important;color:#667085!important}.workflow-grade b{font-size:12px;color:#2563eb}.done-step .workflow-grade b{color:#047857}.workflow-status-dot{width:7px;height:7px;border-radius:50%;background:#2f6fed;display:inline-block;margin-right:4px}.done-step .workflow-status-dot{background:#10b981}.workflow-lock .workflow-status-dot{background:#98a2b3}
@@ -2551,19 +2551,41 @@ function saveStudentRecord(rec){
   if(!rec || !rec.email) return;
   try{
     rec.lastSavedAt = new Date().toISOString();
-    const serialized = JSON.stringify(normalizeStudentRecord(rec));
-    localStorage.setItem(studentKey(rec.email), serialized);
-    localStorage.setItem('hm_last_saved_at', rec.lastSavedAt);
-    // Keep a short-lived local recovery copy in case a browser storage write is interrupted.
+    const normalized = normalizeStudentRecord(rec);
+    const serialized = JSON.stringify(normalized);
+    const key = studentKey(normalized.email);
+    const previous = localStorage.getItem(key);
+    localStorage.setItem(key, serialized);
+    localStorage.setItem('hm_last_saved_at', normalized.lastSavedAt);
     localStorage.setItem('hm_last_student_snapshot', serialized);
+    if(student && student.email === normalized.email) student = normalized;
     window.__lastSaveOk = true;
     updateSaveStatus('Saved just now');
+    // Re-link every view only when the student's data actually changed.
+    // This keeps the Home workflow, Progress, Practice, Projects, and grades in sync
+    // without re-rendering the whole interface during the periodic autosave.
+    if(previous !== serialized){
+      if(typeof renderHomeLearning === 'function') renderHomeLearning();
+      if(typeof renderProgressView === 'function') renderProgressView();
+      if(typeof renderAssignments === 'function') renderAssignments();
+      if(typeof updatePracticeCreditUI === 'function') updatePracticeCreditUI();
+      if(typeof updateGrade === 'function'){
+        const g = computeGrade();
+        const letterEl = document.getElementById('lpGradeLetter');
+        const detailEl = document.getElementById('lpGradeDetail');
+        if(letterEl) letterEl.textContent = student ? `${g.letter} (${g.pct}%)` : '—';
+        if(detailEl) detailEl.textContent = g.detail;
+        const sbGrade = document.getElementById('sbGrade');
+        if(sbGrade) sbGrade.textContent = student ? `${g.letter} · ${g.pct}%` : '—';
+      }
+    }
   }catch(e){
     window.__lastSaveOk = false;
     updateSaveStatus('Storage full — progress may not be saved');
     console.error('Student progress could not be saved:',e);
   }
 }
+
 function updateSaveStatus(msg){
   const els=document.querySelectorAll('[data-save-status]');
   els.forEach(el=>el.textContent=msg);
@@ -2877,6 +2899,8 @@ function updateGrade(){
   const sbGrade = document.getElementById('sbGrade');
   if(sbGrade) sbGrade.textContent = student ? `${g.letter} · ${g.pct}%` : '—';
   renderProgressView();
+  // Keep the Home workflow connected to the same active student record.
+  if(typeof renderHomeLearning === 'function') renderHomeLearning();
 }
 function weekStatus(w){
   const dayEls = weekDayEls(w);
@@ -4317,7 +4341,7 @@ function renderHomeLearning(){
     <button class="phase-workflow-head" type="button" aria-expanded="${openByDefault?'true':'false'}">
       <span class="phase-icon">${phase==='Phase One'?'01':'02'}</span>
       <span class="phase-head-copy"><strong>${phase} Workflow</strong><small>${meta}</small></span>
-      <span class="phase-head-progress"><b>${pct}%</b><i><em style="width:${pct}%"></em></i></span>
+      <span class="phase-head-progress"><b>${phase==='Phase One' ? `${pct}/100` : `${pct}%`}</b><i><em style="width:${pct}%"></em></i></span>
       <span class="phase-chevron" aria-hidden="true">⌄</span>
     </button>
     <div class="phase-workflow-body">
@@ -4344,8 +4368,8 @@ function renderHomeLearning(){
      </div>
    </div>
    <div class="workflow-overall">
-     <div class="workflow-grade-orb" style="--grade:${homePct}%"><b>${homePct}%</b></div>
-     <div><div class="workflow-overall-meta">Overall Phase One Mark</div><div class="workflow-overall-score">${g.pct}/100</div><div class="workflow-overall-detail">${g.detail} · ${g.pct}%</div><div class="workflow-mini-bar"><i style="width:${homePct}%"></i></div></div>
+     <div class="workflow-grade-orb" style="--grade:${homePct}%"><b>${g.pct}/100</b></div>
+     <div class="workflow-overall-copy"><div class="workflow-overall-meta">Overall Phase One Mark</div><div class="workflow-overall-score">${g.pct}/100 <span>exact mark</span></div><div class="workflow-overall-detail">${student ? `${g.pct} marks earned out of 100` : 'Sign in to see the student mark'} · ${homePct}%</div><div class="workflow-mini-bar"><i style="width:${homePct}%"></i></div></div>
      <button type="button" class="hbtn primary workflow-overall-action" id="homeWorkflowProgressBtn">Open My Progress</button>
    </div>
    <div class="workflow-track-wrap"><div class="workflow-track">
