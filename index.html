@@ -728,6 +728,8 @@ img,video,iframe{max-width:100%;}
 <input autocomplete="email" id="siEmail" name="email" placeholder="You@hmacademy.org" required="" type="email"/>
 <button class="si-btn" id="siSubmit" type="submit">Sign In</button>
 </form>
+<div style="margin-top:12px;text-align:center;"><a href="#" id="guestSignInLink" style="color:#2f6fed;font-weight:800;text-decoration:none;">Guest sign-in / preview</a></div>
+<button type="button" id="continueGuestBtn" class="si-btn" style="margin-top:8px;background:#eef4ff;color:#2f6fed;border:1px solid #cddcff;">Continue as guest</button>
 <div class="si-fine">This device remembers one student account at a time. Once you're signed in here, this browser won't let a different email enroll — sign out first if you need to switch. (This is a browser-level check, not account security — clearing browser data resets it.) Signing back in with the same email picks up exactly where you left off. Questions? <a href="mailto:thomas@hmacademy.org" style="color:#2f6fed;font-weight:700;">thomas@hmacademy.org</a><div style="margin-top:10px;display:flex;flex-direction:column;gap:6px;"><a href="https://classroom.google.com/c/ODg5MDAyNjgwNDU5?cjc=gigvadsd" target="_blank" rel="noopener noreferrer" style="color:#2f6fed;font-weight:700;text-decoration:none;">Section B — Google Classroom</a><a href="https://classroom.google.com/c/ODg5MDA0NTM0Mjc5?cjc=547gadfs" target="_blank" rel="noopener noreferrer" style="color:#2f6fed;font-weight:700;text-decoration:none;">Section C — Google Classroom</a><a href="https://classroom.google.com/c/ODg5MDAzNjk4NTky?cjc=f7ese2pk" target="_blank" rel="noopener noreferrer" style="color:#2f6fed;font-weight:700;text-decoration:none;">Section D — Google Classroom</a></div></div>
 </div>
 </div>
@@ -808,7 +810,7 @@ img,video,iframe{max-width:100%;}
 <div class="stat-row">
 <div class="stat"><b>16</b><span>Weeks of curriculum</span></div>
 <div class="stat"><b>32</b><span>Daily lessons &amp; flip cards</span></div>
-<div class="stat"><b>3</b><span>Group projects</span></div>
+<div class="stat"><b>4</b><span>Projects</span></div>
 <div class="stat"><b>23</b><span>Screencast recordings</span></div>
 </div>
 <div class="home-learning" id="homeLearningPanel">
@@ -1936,7 +1938,7 @@ document.getElementById('projSubnav').addEventListener('click', e=>{
 /* ================= PROGRESS / FLIP CARDS / LAYERS PANEL ================= */
 const weekMeta = {
   1:'Graphic Design Software & Foundations', 2:'Photopea, Pixels & Layers', 3:'Around the World with a Twist',
-  4:'Advanced Portrait Editing', 5:'Color Adjustment & Matching', 6:'Phone / iPad Mockup',
+  4:'Advanced Portrait Editing', 5:'Independent Time & Practice', 6:'Phone / iPad Mockup',
   7:'Vanishing Point Text', 8:'Independent Study', 9:'Gojo Pop-Out Project',
   10:'Double Exposure & Poster Design', 11:'Coming Soon', 12:'Coming Soon',
   13:'Coming Soon', 14:'Coming Soon', 15:'Coming Soon', 16:'Coming Soon'
@@ -1979,7 +1981,7 @@ function applyCalendarWeekState(){
     }
   }
 }
-const cards = document.querySelectorAll('.flip-card[data-day]');
+const cards = Array.from(document.querySelectorAll('.flip-card[data-day]'));
 let completed = [];
 try{ completed = JSON.parse(localStorage.getItem('completedDays')) || []; }catch(e){ completed = []; }
 function weekDayEls(w){ return document.querySelectorAll('.flip-card[data-day^="'+w+'-"]'); }
@@ -2666,6 +2668,17 @@ function attemptSignIn(){
   enterApp();
 }
 document.getElementById('siForm').addEventListener('submit', e=>{ e.preventDefault(); attemptSignIn(); });
+function continueAsGuest(){
+  siClearError();
+  student = loadStudentRecord('guest-preview@local');
+  student.name = student.name || 'Guest Preview';
+  student.email = 'guest-preview@local';
+  window.__guestPreview = true;
+  enterApp();
+  showToast('Guest mode started. Sign in later to save personal grades and submissions.');
+}
+document.getElementById('guestSignInLink')?.addEventListener('click', e=>{ e.preventDefault(); continueAsGuest(); });
+document.getElementById('continueGuestBtn')?.addEventListener('click', continueAsGuest);
 document.getElementById('lpSignOutBtn').addEventListener('click', ()=>{
   if(!confirm('Sign out? Your progress stays saved on this device for your account, but you\'ll need to sign back in with the same email.')) return;
   localStorage.removeItem('hm_current_student');
@@ -2711,19 +2724,13 @@ function initAuth(){
   if(cur){
     student = loadStudentRecord(cur.email);
     student.name = cur.name;
+    student.email = cur.email;
+    window.__guestPreview = false;
     enterApp();
     return;
   }
-  // Guest preview: open the course immediately without forcing sign-in.
-  // A student can still sign in later to use personal progress, quizzes, and grades.
-  student = loadStudentRecord('guest-preview@local');
-  student.name = student.name || 'Guest Preview';
-  student.email = 'guest-preview@local';
-  window.__guestPreview = true;
-  enterApp();
-  return;
-  // Not currently signed in on this device — if it's already enrolled to someone,
-  // pre-fill their details so continuing is a one-click resume, not re-typing everything.
+  // No saved session: keep the sign-in gate visible until the student explicitly chooses.
+  window.__guestPreview = false;
   const lock = getDeviceLock();
   if(lock){
     const nameField = document.getElementById('siName');
@@ -2735,6 +2742,7 @@ function initAuth(){
     const gateP = document.querySelector('.si-card p');
     if(gateP) gateP.textContent = `Confirm your details to pick up right where you left off, ${lock.name||'there'}.`;
   }
+  gate.classList.remove('hidden');
 }
 /* NOTE: initAuth() is *called* at the very bottom of this script, not here.
    enterApp() (triggered by initAuth when a student is already signed in on
@@ -2870,9 +2878,11 @@ function computeGrade(){
   const quizzesTaken = Object.keys(student.weekQuizzes).length;
   const quizPctSum = Object.values(student.weekQuizzes).reduce((s,q)=> s + (q.total ? (q.score/q.total)*100 : 100), 0);
   const quizAvg = quizzesTaken ? quizPctSum/quizzesTaken : 0;
-  const readingPct = Math.min(100, (student.readingSeen.length/3)*100);
+  const readingTotal = typeof readingPool !== 'undefined' ? readingPool.length : 0;
+  const readingPct = readingTotal ? Math.min(100, (student.readingSeen.length/readingTotal)*100) : 0;
   const videoIds = Object.keys(student.videoConfirmed).filter(id=>student.videoConfirmed[id]);
-  const videoPct = Math.min(100, (videoIds.length/2)*100);
+  const videoTotal = typeof getReleasedScreencasts === 'function' ? getReleasedScreencasts().length : 0;
+  const videoPct = videoTotal ? Math.min(100, (videoIds.length/videoTotal)*100) : 0;
   const overall = completionPct*0.45 + quizAvg*0.25 + readingPct*0.15 + videoPct*0.15;
   // Standard +/- grading scale. Keep all grade logic centralized here.
   let letter = 'NI';
@@ -2966,7 +2976,7 @@ function renderProgressView(){
       <div class="progress-card" style="--pc-accent:#ff7a2d"><h4>Week Quizzes</h4><div class="pc-big">${quizzesTaken}/${TOTAL_WEEKS}</div><div class="pc-sub">completed automatically at week end</div></div>
       <div class="progress-card" style="--pc-accent:#8b5cf6"><h4>Reading Opened</h4><div class="pc-big">${student.readingSeen.length}/${readingPool.length}</div><div class="pc-sub">Read Me sections viewed</div></div>
       <div class="progress-card" style="--pc-accent:#ff6a2c"><h4>Screencasts Watched</h4><div class="pc-big">${videosConfirmed}/${typeof getReleasedScreencasts==='function' ? getReleasedScreencasts().length : 3}</div><div class="pc-sub">fully watched</div></div>
-      <div class="progress-card" style="--pc-accent:#ef476f"><h4>Practice Mark</h4><div class="pc-big">${Math.min(cards.length*0.7,2.8).toFixed(1)} / 2.8</div><div class="pc-sub">0.7 mark × 4 practice days = 2.8 marks total</div></div>
+      <div class="progress-card" style="--pc-accent:#ef476f"><h4>Practice Mark</h4><div class="pc-big">${practiceCreditSummary().earned.toFixed(1)} / 2.8</div><div class="pc-sub">0.7 mark × 4 practice days = 2.8 marks total</div></div>
       <div class="progress-card" style="--pc-accent:#5b6270"><h4>Materials Opened</h4><div class="pc-big">${(student.seenMaterials||[]).length}/23</div><div class="pc-sub">additional resources previewed</div></div>
       <div class="progress-card" style="--pc-accent:#8b5cf6"><h4>Reading Checks</h4><div class="pc-big">${readingQuizEntries.length}/${readingPool.length}</div><div class="pc-sub">avg score ${readingQuizAvg}%</div></div>
       <div class="progress-card" style="--pc-accent:#ff6a2c"><h4>Screencast Checks</h4><div class="pc-big">${screencastQuizEntries.length}/${typeof getReleasedScreencasts==='function' ? getReleasedScreencasts().length : 3}</div><div class="pc-sub">avg score ${screencastQuizAvg}%</div></div>
@@ -3423,7 +3433,7 @@ async function gjGeneratePDF(data){
   doc.setFontSize(16); doc.text(`1.1 Symbolic Animal: ${data.animal}`,50,y); y+=20;
   doc.text(`1.2 Members:`,50,y); y+=18;
   doc.setFontSize(14);
-  data.members.forEach(m=>{ doc.text(`- m.name({m.role||'member'})`,70,y); y+=16; });
+  data.members.forEach(m=>{ doc.text(`- ${m.name} (${m.role||'member'})`,70,y); y+=16; });
   for(const [i,idea] of data.ideas.entries()){
     y+=10;
     if(y>pageHeight-250){ doc.addPage(); drawBackground(); y=40; }
@@ -3663,7 +3673,7 @@ function epMakeList(){
     const item = document.createElement('button');
     item.type = 'button';
     item.className = 'ep-item';
-    item.innerHTML = `<span class="ep-swatch" style="background:el.color"></span><span><strong>${el.name}</strong> — ${el.title}</span>`;
+    item.innerHTML = `<span class="ep-swatch" style="background:${el.color}"></span><span><strong>${el.name}</strong> — ${el.title}</span>`;
     item.onclick = () => epSelectElement(el.id);
     epList.appendChild(item);
   });
@@ -4140,7 +4150,8 @@ function theaterUpdateNav(){
   const indexEl = document.getElementById('theaterIndex');
   if(idx<0){ prevBtn.disabled = true; nextBtn.disabled = true; indexEl.textContent = '—'; return; }
   prevBtn.disabled = idx<=0;
-  nextBtn.disabled = idx>=released.length-1;
+  nextBtn.disabled = false;
+  nextBtn.textContent = idx>=released.length-1 ? 'Finish ✓' : 'Next ▶';
   indexEl.textContent = `Screencast ${idx+1} of ${released.length}`;
 }
 function theaterMarkWatched(id){
@@ -4177,6 +4188,22 @@ function theaterPlay(id, label){
 function theaterStep(delta){
   const released = getReleasedScreencasts();
   const idx = released.findIndex(v=>v.id===theaterCurrentId);
+  if(idx<0) return;
+  if(delta>0){
+    // Next/Finish is the explicit checkpoint: save the current recording as watched.
+    theaterClearWatchTracking(false);
+    theaterMarkWatched(theaterCurrentId);
+    if(idx>=released.length-1){
+      theaterUpdateNav();
+      theaterRenderSide();
+      const meta = released[idx];
+      maybeShowContentQuiz('video', meta.id, screencastQuizPool, `Nice work watching "${meta.label}"! Quick 5-question screencast check:`);
+      showToast('Recording saved as watched. This is the last released screencast.');
+      return;
+    }
+  } else {
+    theaterClearWatchTracking(true);
+  }
   const nextIdx = idx + delta;
   if(nextIdx<0 || nextIdx>=released.length) return;
   const v = released[nextIdx];
@@ -4193,12 +4220,6 @@ if(allScreencasts.length){
 theaterUpdateNav();
 theaterRenderSide();
 renderProgressView();
-/* Everything above this line (driveThumbUrl, renderMediaCard, allScreencasts,
-   theaterRenderSide, etc.) must exist before initAuth() runs, since a
-   returning student triggers enterApp() -> theaterRenderSide() immediately.
-   That's why the actual call happens here, last. */
-initAuth();
-
 /* ================= LEARNING PLATFORM UPGRADE ================= */
 const PHASE_SUBMISSION_URL = 'https://drive.google.com/drive/folders/1DzGBJliUESjJHW6Qc-QNOM5a8VMBpQqr?usp=sharing';
 const SECTION_B_CLASSROOM_URL = 'https://classroom.google.com/c/ODg5MDAyNjgwNDU5?cjc=gigvadsd';
@@ -4319,13 +4340,13 @@ function renderHomeLearning(){
  const phase1Steps=[
   {n:1,label:'Read Me',sub:'Weeks 1–4 notes',done:!!student && ['readme-week1','readme-week2','readme-week3','readme-week4'].every(k=>(student.readingSeen||[]).includes(k)),tab:'notes'},
   {n:2,label:'Screencast',sub:'Released recordings',done:!!student && Object.keys(student.videoConfirmed||{}).filter(id=>student.videoConfirmed[id]).length>=(typeof getReleasedScreencasts==='function'?getReleasedScreencasts().length:3),tab:'screencasts'},
-  {n:3,label:'Practice',sub:'0.7 × 4 days · 2.8 marks',done:!!student,tab:'practice'},
+  {n:3,label:'Practice',sub:'0.7 × 4 days · 2.8 marks',done:!!student && practiceCreditSummary().earned>=practiceCreditSummary().total,tab:'practice'},
   {n:4,label:'Assessment',sub:'Read Me + Screencast checks',done:!!student && (Object.keys(student.contentQuizzes?.reading||{}).length>0 || Object.keys(student.contentQuizzes?.screencasts||{}).length>0),tab:'assessment'},
   {n:5,label:'Phase 1 Assessment',sub:phaseOpen?'15 questions · 20 marks':'Unlocks Week 6',done:phase1Done,tab:'phase-assessment',locked:!phaseOpen},
   {n:6,label:'Phase 1 Project',sub:projectDone?'Submitted':'Individual submission',done:projectDone,tab:'projects'}
  ];
- const phase2Cards=cards.filter(c=>Number(c.week)>=5&&Number(c.week)<=8);
- const phase2Completed=student ? phase2Cards.filter(c=>(student.completed||[]).includes(c.id)).length : 0;
+ const phase2Cards=cards.filter(c=>{ const w=Number(String(c.dataset.day||'').split('-')[0]); return w>=5&&w<=8; });
+ const phase2Completed=student ? phase2Cards.filter(c=>(student.completed||[]).includes(c.dataset.day)).length : 0;
  const phase2Pct=phase2Cards.length ? Math.round(phase2Completed/phase2Cards.length*100) : 0;
  const phase2Steps=[
   {n:1,label:'Curriculum',sub:'Weeks 5–8 · independent growth',tab:'curriculum'},
@@ -4453,7 +4474,7 @@ function openPhaseAssessmentModal(){
  const saved=student?.phaseAssessments?.phase1;
  if(saved?.completedAt){ const pct=Math.round(saved.score/saved.total*100); body.innerHTML=`<div class="phase-complete-card"><div class="hero-eyebrow">PHASE 1 COMPLETE</div><div class="phase-score">${saved.score}/${saved.total} · ${pct}%</div><p style="margin:7px 0;color:#667085">Submitted ${new Date(saved.completedAt).toLocaleString()}. This official phase result is locked.</p><div class="phase-progress"><i style="width:${pct}%"></i></div></div>`; document.getElementById('phaseModalProgress').textContent=`Saved score · ${pct}%`; submit.style.display='none'; modal.classList.add('open'); return; }
  submit.style.display='inline-flex';
- const questions=shuffleArray(PHASE1_QUESTIONS).map(q=>({...q,opts:shuffleArray(q.opts).map((text,idx)=>({text,original:idx})),uid:Math.random().toString(36).slice(2)}));
+ const questions=shuffleArray(PHASE1_QUESTIONS).map(q=>({...q,opts:shuffleArray(q.opts).map(text=>({text,original:q.opts.indexOf(text)})),uid:Math.random().toString(36).slice(2)}));
  window.__phaseModalQuestions=questions;
  body.innerHTML=questions.map((q,i)=>`<article class="phase-modal-q"><div class="phase-modal-qhead"><div><div class="phase-qnum">Question ${i+1} · Week ${q.week}</div><h4>${q.q}</h4></div><span class="phase-mark">${q.marks} ${q.marks===1?'mark':'marks'}</span></div><div class="phase-modal-opts">${q.opts.map((o,j)=>`<label class="phase-modal-opt"><input type="radio" name="phaseModalQ${i}" value="${o.original}"><span>${o.text}</span></label>`).join('')}</div></article>`).join('');
  document.getElementById('phaseModalProgress').textContent=`0/${questions.length} answered · 20 marks`;
@@ -4499,6 +4520,8 @@ function showCourseCelebration(title,message){
 }
 function initLearningUpgrade(){ renderAssignments(); renderHomeLearning(); updatePracticeCreditUI(); setTimeout(maybeShowCourseCelebrations,300); }
 initLearningUpgrade();
+/* Start authentication only after every course/project/data dependency is initialized. */
+initAuth();
 </script>
 <div aria-hidden="true" class="a11y-panel" id="a11yPanel"><div class="a11y-card"><div class="a11y-head"><h3>Accessibility &amp; Learning Preferences</h3><button aria-label="Close" class="icon-close" id="a11yClose" type="button">×</button></div><label class="a11y-toggle"><input id="reduceMotionToggle" type="checkbox"/> Reduce motion</label><label class="a11y-toggle"><input id="largeTextToggle" type="checkbox"/> Larger text</label><p>These preferences are saved on this device.</p></div></div>
 <div aria-live="polite" class="completion-toast" id="completionToast" role="status"></div></body>
