@@ -565,6 +565,38 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
   .canvas{padding:22px 14px 60px;}
   .layers-panel{width:88vw;max-width:320px;}
 }
+
+/* ===== ENHANCED CINEMATIC SCREencast EXPERIENCE ===== */
+.learning-check-note{margin:14px 0 4px;padding:13px 16px;border:1px solid rgba(47,111,237,.16);border-radius:14px;background:linear-gradient(135deg,rgba(47,111,237,.07),rgba(139,92,246,.05));color:#465066;font-size:12.5px;line-height:1.55;box-shadow:0 8px 24px rgba(26,36,60,.06);}
+.learning-check-note strong{color:#26334d;}
+.theater{gap:24px;}
+.theater-main{position:relative;}
+.theater-stage{position:relative;background:radial-gradient(circle at 50% 38%,rgba(103,116,160,.25),rgba(6,8,15,.97) 62%,#030408 100%)!important;padding:14px!important;border-radius:22px!important;box-shadow:0 28px 90px rgba(3,7,18,.30),inset 0 1px 0 rgba(255,255,255,.08)!important;overflow:hidden;}
+.theater-stage:before{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,rgba(255,255,255,.035),transparent 18%,transparent 82%,rgba(255,255,255,.035));}
+.theater-stage:after{content:"CINEMATIC LESSON";position:absolute;top:12px;left:18px;z-index:4;font-size:9px;letter-spacing:1.8px;font-weight:800;color:rgba(255,255,255,.55);}
+.theater-player{position:relative;border-radius:15px!important;background:#05060a!important;box-shadow:0 20px 55px rgba(0,0,0,.48),0 0 0 1px rgba(255,255,255,.06)!important;transform:translateZ(0);}
+.theater-player:after{content:"";position:absolute;inset:0;pointer-events:none;box-shadow:inset 0 0 70px rgba(0,0,0,.28),inset 0 1px 0 rgba(255,255,255,.07);}
+.theater-stage.is-playing .theater-player{box-shadow:0 26px 70px rgba(0,0,0,.58),0 0 50px rgba(79,70,229,.12),0 0 0 1px rgba(255,255,255,.08)!important;}
+.theater-nav{margin-top:14px;padding:10px 12px;border-radius:14px;background:rgba(7,10,18,.82);backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.08);}
+.theater-nav .tn-btn{background:rgba(255,255,255,.08);color:#fff;border-color:rgba(255,255,255,.12);border-radius:11px;min-width:118px;}
+.theater-nav .tn-btn:hover:not(:disabled){background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.22);box-shadow:0 8px 20px rgba(0,0,0,.22);}
+.theater-nav .tn-index{color:rgba(255,255,255,.68);}
+.theater-tip{background:rgba(10,13,23,.86)!important;color:rgba(255,255,255,.72)!important;border:1px solid rgba(255,255,255,.09)!important;backdrop-filter:blur(14px);}
+.theater-info,.theater-about{border:1px solid rgba(18,25,43,.07);box-shadow:0 14px 38px rgba(16,24,40,.08);}
+.theater-side{top:78px;}
+.theater-progress{border:1px solid rgba(18,25,43,.07);box-shadow:0 14px 38px rgba(16,24,40,.08);}
+.theater-item{transition:background .18s ease,transform .18s ease,box-shadow .18s ease;}
+.theater-item:hover{transform:translateX(2px);}
+.theater-item.active{background:linear-gradient(135deg,#e8efff,#f1ecff);box-shadow:inset 0 0 0 1px rgba(47,111,237,.18),0 6px 18px rgba(47,111,237,.08);}
+.wq-modal{backdrop-filter:blur(10px);}
+.wq-box,.phase-modal{user-select:none;-webkit-user-select:none;}
+.capture-warning{position:fixed;inset:0;z-index:10000;display:none;align-items:center;justify-content:center;background:rgba(3,5,10,.97);color:#fff;text-align:center;padding:24px;}
+.capture-warning.show{display:flex;}
+.capture-warning .cw-card{max-width:430px;padding:30px;border:1px solid rgba(255,255,255,.12);border-radius:20px;background:linear-gradient(145deg,#121625,#070910);box-shadow:0 30px 90px rgba(0,0,0,.55);}
+.capture-warning h3{margin:0 0 8px;font-size:20px;}
+.capture-warning p{margin:0;color:rgba(255,255,255,.7);font-size:13px;line-height:1.6;}
+@media print{body>*{display:none!important;}body:after{content:"Printing this assessment is disabled.";display:block;padding:40px;font:700 18px sans-serif;color:#111;}}
+@media(max-width:900px){.theater-stage{padding:8px!important;border-radius:16px!important;}.theater-player{border-radius:10px!important;}.theater-stage:after{display:none;}.learning-check-note{font-size:12px;}}
 </style>
 <style>
 /* Professional learning-platform upgrades — intentionally no dark/light theme switch. */
@@ -896,26 +928,29 @@ img,video,iframe{max-width:100%;}
 <div class="big-ideas">Passport photos follow strict formatting rules — exact size, plain background, even lighting, natural expression — so precision matters more here than creativity.</div>
 </div></div></div>
 <div class="flip-card" data-day="4-2"><div class="flip-card-inner">
-<div class="flip-card-front"><h4>Day 2: Puppet Warp, Dress Change &amp; Final Project</h4><p>Use Puppet Warp for realistic portrait adjustments, change clothing, and combine skills from Weeks 1–4.</p><span class="flip-hint">Tap to flip</span></div>
+<div class="flip-card-front"><h4>Day 2: Transform &amp; Puppet Warp</h4><p>Practice Transform controls and Puppet Warp to reposition, reshape, and refine portrait elements while keeping the edit flexible.</p><span class="flip-hint">Tap to flip</span></div>
 <div class="flip-card-back"><div class="vocab-title">Vocabulary</div>
-<p><span class="vocab" data-def="Pin-based tool for flexible distortion." tabindex="0">Puppet Warp</span><span class="vocab-def"> — Pin-based tool for flexible distortion.</span>,
-        <span class="vocab" data-def="Altering clothing colors or patterns." tabindex="0">Dress Change</span><span class="vocab-def"> — Altering clothing colors/patterns.</span>,
-        <span class="vocab" data-def="Mesh points used to control a puppet warp transformation." tabindex="0">Control Points</span><span class="vocab-def"> — Mesh overlay used in Puppet Warp.</span>,
-        <span class="vocab" data-def="Combining learned techniques into one design." tabindex="0">Integration</span><span class="vocab-def"> — Combining learned techniques into one design.</span>,
-        <span class="vocab" data-def="Applying advanced retouching and compositing." tabindex="0">Final Composition</span><span class="vocab-def"> — Applying advanced retouching and compositing.</span></p>
+<p><span class="vocab" data-def="Changes an object's size, position, rotation, or perspective." tabindex="0">Transform</span><span class="vocab-def"> — Changes an object's size, position, rotation, or perspective.</span>,
+        <span class="vocab" data-def="Pin-based tool for flexible distortion." tabindex="0">Puppet Warp</span><span class="vocab-def"> — Pin-based tool for flexible distortion.</span>,
+        <span class="vocab" data-def="Mesh points used to control a Puppet Warp transformation." tabindex="0">Control Points</span><span class="vocab-def"> — Mesh points used to control a Puppet Warp transformation.</span>,
+        <span class="vocab" data-def="The handles and controls used to resize, rotate, and reposition an object." tabindex="0">Transform Controls</span><span class="vocab-def"> — The handles and controls used to resize, rotate, and reposition an object.</span>,
+        <span class="vocab" data-def="An editing approach that keeps the original information available for later changes." tabindex="0">Non-Destructive Workflow</span><span class="vocab-def"> — An editing approach that keeps the original information available for later changes.</span></p>
 <div class="vocab-title">Big Ideas</div>
-<p class="big-ideas">Use Puppet Warp for realistic body or cloth repositioning while maintaining proportions and natural folds. Apply the technique together with clothing changes and previous Photoshop skills to create a polished portrait project.</p>
+<p class="big-ideas">Use Transform for controlled size, position, rotation, and perspective changes. Use Puppet Warp when you need more flexible, pin-based reshaping. Work non-destructively so the portrait can be adjusted again.</p>
 </div></div></div>
 </div><!-- /month-block m1 -->
 <!-- ===== MONTH TWO ===== -->
 <div class="month-block" data-month="m2">
 <div class="week-card" id="week5">
-<h2 class="wk">Week 5 — Advanced Color Adjustment &amp; Matching</h2>
+<h2 class="wk">Week 5 — Independent Time &amp; Practice</h2>
 <div class="day-grid">
-<div class="flip-card project-day" data-day="5-2"><div class="flip-card-inner">
-<div class="flip-card-front"><div class="project-label">PROJECT DAY</div><h4>Day 2: Curve Control II &amp; Match Subject with Background</h4><p>Refine clothing recolor, master curve balancing, and blend subject/background tones seamlessly.</p><span class="flip-hint">Tap to flip</span></div>
-<div class="flip-card-back"><p>Deepen control over tonal balance using <strong>Curves Adjustment Layer</strong>.</p>
-<p>Focus on visual harmony between subject and background using <strong>Curves</strong> and <strong>Color Balance</strong>.</p></div>
+<div class="flip-card" data-day="5-1"><div class="flip-card-inner">
+<div class="flip-card-front"><h4>Day 1: Independent Learning &amp; Practice</h4><p>Use independent time to review the course skills, revisit screencasts, and practice the techniques you need most.</p><span class="flip-hint">Tap to flip</span></div>
+<div class="flip-card-back"><div class="vocab-title">Independent Time</div><p>Work at your own pace. Rewatch released screencasts, review Read Me notes, and practice the techniques that need more repetition.</p><ul><li>Choose one skill to strengthen.</li><li>Recreate the technique from memory.</li><li>Save your editable work and compare your result with the lesson.</li></ul><div class="big-ideas">The goal is confidence and independence: identify what you need, practice it, and improve without waiting for a new teacher demonstration.</div></div>
+</div></div>
+<div class="flip-card" data-day="5-2"><div class="flip-card-inner">
+<div class="flip-card-front"><h4>Day 2: Independent Practice &amp; Review</h4><p>Use a second independent practice session to strengthen weak areas, finish unfinished work, and prepare for the next phase.</p><span class="flip-hint">Tap to flip</span></div>
+<div class="flip-card-back"><div class="vocab-title">Practice Time</div><p>Choose a focused task and complete it independently. Revisit Transform, Puppet Warp, portrait retouching, background removal, or any earlier skill that needs more practice.</p><ul><li>Set a clear practice goal.</li><li>Complete the task from start to finish.</li><li>Check your layers, file naming, and saved working file.</li></ul><div class="big-ideas">Independent practice is about applying the skills without step-by-step prompting and knowing when to review a lesson before continuing.</div></div>
 </div></div>
 </div>
 </div>
@@ -1539,6 +1574,7 @@ img,video,iframe{max-width:100%;}
 <p>Three focused weekly note packs. Open a card to study the lesson, review the vocabulary, use the tips, then choose <strong>Mark as Read</strong> when you are ready for the 5-question check.</p>
 </div>
 </div>
+<div class="learning-check-note" role="note"><strong>Important — Read Me pop-out quiz:</strong> After you finish a Read Me section, click <strong>Mark as Read</strong>. A 5-question pop-out check will appear. Complete it before moving on so your score is recorded.</div>
 <div class="note-section" data-reading="readme-week1" id="readme-week1">
 <div class="note-actions">
 <button class="note-dl" onclick="downloadSectionPDF('readme-week1','Week 1 — Open, Save and Export')">Download PDF</button>
@@ -1668,6 +1704,7 @@ img,video,iframe{max-width:100%;}
 <!-- ========== SCREENCASTS (CINEMATIC THEATER PLAYER) ========== -->
 <section class="view" id="screencasts">
 <div class="view-head"><div><h2>Screencasts</h2><p>For now, the first two recordings are available. Additional recordings are shown in gray until they are released.</p></div></div>
+<div class="learning-check-note screen-note" role="note"><strong>Important — Screencast pop-out quiz:</strong> Watch the recording, then click <strong>Next ▶</strong> to save it as watched. A 5-question pop-out check will appear after the recording is completed.</div>
 <div class="theater" id="screencastTheater">
 <div class="theater-main">
 <div class="theater-stage" id="theaterStage">
@@ -1678,7 +1715,7 @@ img,video,iframe{max-width:100%;}
 <span class="tn-index" id="theaterIndex">—</span>
 <button class="tn-btn" id="theaterNextBtn" type="button">Next ▶</button>
 </div>
-<div class="theater-tip" id="theaterTip">📌 Tip: Click <strong>Next ▶</strong> after you've finished watching a recording — that saves your progress and unlocks that recording's quick assessment check.</div>
+<div class="theater-tip" id="theaterTip">📌 <strong>Watch → Next ▶ → Quick Check.</strong> Finish the recording, then click <strong>Next ▶</strong> to save your progress and open the 5-question screencast check.</div>
 <div class="theater-info">
 <div aria-hidden="true" class="ti-avatar">Ps</div>
 <div class="ti-meta">
@@ -1762,7 +1799,7 @@ img,video,iframe{max-width:100%;}
       <a href="https://classroom.google.com/c/ODg5MDAzNjk4NTky?cjc=f7ese2pk" target="_blank" rel="noopener noreferrer">Section D — Google Classroom</a>
     </div>
 </footer>
-</div><script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</div><div class="capture-warning" id="captureWarning" aria-hidden="true"><div class="cw-card"><h3>Assessment Protected</h3><p>Screen capture and printing are disabled while an assessment is active. Your assessment has been ended and recorded according to the course rules.</p></div></div><script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
 <script>
 /* ================= TAB NAVIGATION ================= */
@@ -2206,6 +2243,44 @@ function assessmentStart(type, key){
   const firstInput = document.querySelector('#cqQuizBody input');
   if(firstInput) firstInput.focus();
 }
+function showAssessmentProtectionMessage(){
+  const el=document.getElementById('captureWarning');
+  if(!el) return;
+  el.classList.add('show'); el.setAttribute('aria-hidden','false');
+  clearTimeout(window.__captureWarningTimer);
+  window.__captureWarningTimer=setTimeout(()=>{el.classList.remove('show');el.setAttribute('aria-hidden','true');},2200);
+}
+function invalidateActiveAssessment(reason){
+  if(!student) return false;
+  let invalidated=false;
+  const cq=document.getElementById('cqModal');
+  if(cq?.classList.contains('open') && cqPendingType && cqPendingKey){
+    const bucket=cqPendingType==='video'?'screencasts':'reading';
+    if(!student.contentQuizzes[bucket][cqPendingKey]){
+      student.contentQuizzes[bucket][cqPendingKey]={score:0,total:5,completedAt:new Date().toISOString(),invalidated:true,reason:reason||'left assessment tab'};
+      invalidated=true;
+    }
+    cq.classList.remove('open'); cqPendingType=null; cqPendingKey=null;
+  }
+  const wq=document.getElementById('wqModal');
+  if(wq?.classList.contains('open')){
+    const week=wq.dataset.week;
+    if(week && !student.weekQuizzes[week]){
+      student.weekQuizzes[week]={score:0,total:Number(wq.dataset.hasQuiz==='1'?5:0),reflection:'',completedAt:new Date().toISOString(),invalidated:true,reason:reason||'left assessment tab'};
+      invalidated=true;
+    }
+    wq.classList.remove('open');
+  }
+  const pm=document.getElementById('phaseAssessmentModal');
+  if(pm?.classList.contains('open') && !student.phaseAssessments?.phase1?.completedAt && window.__phaseModalQuestions?.length){
+    student.phaseAssessments=student.phaseAssessments||{};
+    student.phaseAssessments.phase1={score:0,total:phaseAssessmentTotal(),answers:[],completedAt:new Date().toISOString(),invalidated:true,reason:reason||'left assessment tab'};
+    invalidated=true;
+    pm.classList.remove('open');
+  }
+  if(invalidated){saveStudentRecord(student);updateGrade();renderHomeLearning?.();renderAssessmentView?.();renderPhaseAssessment?.();showAssessmentProtectionMessage();}
+  return invalidated;
+}
 document.getElementById('cqSubmit').addEventListener('click', ()=>{
   const modal = document.getElementById('cqModal');
   if(!student || !cqPendingType || !cqPendingKey){ modal.classList.remove('open'); return; }
@@ -2243,6 +2318,25 @@ document.getElementById('cqSubmit').addEventListener('click', ()=>{
   cqPendingType = null;
   cqPendingKey = null;
   if(document.getElementById('assessment').classList.contains('active')) renderAssessmentView();
+});
+/* ---------- ASSESSMENT TAB-SWITCH + SCREEN-CAPTURE PROTECTION ---------- */
+document.addEventListener('visibilitychange',()=>{
+  if(document.visibilityState==='hidden'){ invalidateActiveAssessment('switched browser tab or window'); }
+});
+window.addEventListener('blur',()=>{
+  const cq=document.getElementById('cqModal'), wq=document.getElementById('wqModal'), pm=document.getElementById('phaseAssessmentModal');
+  if(cq?.classList.contains('open')||wq?.classList.contains('open')||pm?.classList.contains('open')) invalidateActiveAssessment('left the assessment window');
+});
+document.addEventListener('contextmenu',e=>{
+  const cq=document.getElementById('cqModal'), wq=document.getElementById('wqModal'), pm=document.getElementById('phaseAssessmentModal');
+  if(cq?.classList.contains('open')||wq?.classList.contains('open')||pm?.classList.contains('open')) e.preventDefault();
+});
+document.addEventListener('keydown',e=>{
+  const protectedOpen=['cqModal','wqModal','phaseAssessmentModal'].some(id=>document.getElementById(id)?.classList.contains('open'));
+  if(!protectedOpen) return;
+  if(e.key==='PrintScreen' || (e.ctrlKey&&e.key.toLowerCase()==='p') || (e.metaKey&&e.key.toLowerCase()==='p')){
+    e.preventDefault(); e.stopPropagation(); invalidateActiveAssessment('screen capture or printing attempt');
+  }
 });
 /* =====================================================================
    SIGN-IN + DEVICE LOCK + WEEK-END QUIZ + GRADING + AUTO PROGRESS REPORT
@@ -4191,7 +4285,24 @@ const PRACTICE_CREDIT_PER_DAY=0.7;
 const PRACTICE_MAX_MARK=2.8;
 function practiceCreditSummary(){ const total=PRACTICE_MAX_MARK; const earned=Math.min(cards.length*PRACTICE_CREDIT_PER_DAY,total); return {earned,total}; }
 function updatePracticeCreditUI(){ const x=practiceCreditSummary(); const el=document.getElementById('practiceCreditSummary'); if(el) el.textContent=`${x.earned.toFixed(1)} / ${x.total.toFixed(1)}`; }
-function initLearningUpgrade(){ renderAssignments(); renderHomeLearning(); updatePracticeCreditUI(); }
+function maybeShowCourseCelebrations(){
+  if(!student || window.__guestPreview) return;
+  const monthOneDone=Array.from({length:8},(_,i)=>String(i+1)).every(d=>student.completed.includes(d)) || [1,2,3,4].every(w=>cards.some(c=>c.dataset.day===`${w}-1`) && cards.some(c=>c.dataset.day===`${w}-2`) && cards.filter(c=>c.dataset.day.startsWith(`${w}-`)).every(c=>student.completed.includes(c.dataset.day)));
+  const phaseDone=!!student.phaseAssessments?.phase1?.completedAt;
+  if(monthOneDone && !student.celebrations?.monthOne){
+    student.celebrations=student.celebrations||{}; student.celebrations.monthOne=true; saveStudentRecord(student);
+    showCourseCelebration('MONTH ONE COMPLETE','Congratulations! You have finished Month One. You built your foundation across Weeks 1–4 and are ready for the next stage.');
+  } else if(phaseDone && !student.celebrations?.phaseOne){
+    student.celebrations=student.celebrations||{}; student.celebrations.phaseOne=true; saveStudentRecord(student);
+    showCourseCelebration('PHASE ONE COMPLETE','Congratulations! You have completed Phase One. Your assessment result is saved, and you are ready to continue into the next phase.');
+  }
+}
+function showCourseCelebration(title,message){
+  let el=document.getElementById('courseCelebration');
+  if(!el){el=document.createElement('div');el.id='courseCelebration';el.className='capture-warning';el.innerHTML='<div class="cw-card celebration-card"><div style="font-size:34px;margin-bottom:8px">🎉</div><div class="hero-eyebrow">MILESTONE UNLOCKED</div><h3 id="celebrationTitle"></h3><p id="celebrationMessage"></p><button type="button" class="hbtn primary" id="celebrationClose" style="margin-top:18px">Continue</button></div>';document.body.appendChild(el);el.querySelector('#celebrationClose').onclick=()=>{el.classList.remove('show');el.setAttribute('aria-hidden','true');};}
+  el.querySelector('#celebrationTitle').textContent=title; el.querySelector('#celebrationMessage').textContent=message; el.classList.add('show'); el.setAttribute('aria-hidden','false');
+}
+function initLearningUpgrade(){ renderAssignments(); renderHomeLearning(); updatePracticeCreditUI(); setTimeout(maybeShowCourseCelebrations,300); }
 initLearningUpgrade();
 </script>
 <div aria-hidden="true" class="a11y-panel" id="a11yPanel"><div class="a11y-card"><div class="a11y-head"><h3>Accessibility &amp; Learning Preferences</h3><button aria-label="Close" class="icon-close" id="a11yClose" type="button">×</button></div><label class="a11y-toggle"><input id="reduceMotionToggle" type="checkbox"/> Reduce motion</label><label class="a11y-toggle"><input id="largeTextToggle" type="checkbox"/> Larger text</label><p>These preferences are saved on this device.</p></div></div>
