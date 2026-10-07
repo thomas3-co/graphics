@@ -615,6 +615,11 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
 .home-workflow-card{margin:22px 0;padding:20px;background:linear-gradient(135deg,#fff,#f7faff);border:1px solid #dce6f4;border-radius:18px;box-shadow:0 6px 22px rgba(30,60,100,.07);}
 .workflow-head{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;margin-bottom:14px}.workflow-head h3{margin:4px 0 6px;font-size:20px}.workflow-head p{margin:0;color:#667085;font-size:13px;line-height:1.55}.workflow-cycle{white-space:nowrap;border-radius:999px;padding:7px 10px;background:#edf5ff;color:#2f6fed;font-size:11px;font-weight:800}.home-five-step{margin-bottom:8px}.workflow-click{border:1px solid #dfe5ee;cursor:pointer;text-align:left;font:inherit;color:inherit;transition:.18s;}.workflow-click:hover{transform:translateY(-2px);border-color:#9db9ec;box-shadow:0 5px 14px rgba(47,111,237,.10)}.workflow-click:focus-visible{outline:3px solid rgba(47,111,237,.25);outline-offset:2px}.workflow-footer{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-top:13px;border-top:1px solid #edf0f5;color:#5d6a7c;font-size:12px}.workflow-footer .hbtn{white-space:nowrap}@media(max-width:700px){.workflow-head,.workflow-footer{flex-direction:column;align-items:stretch}.workflow-cycle{align-self:flex-start}.home-five-step{overflow-x:auto}.workflow-click{min-width:175px}}
 </style><style>
+/* Keep the Home learning workflow visible even if dynamic progress rendering is temporarily unavailable. */
+.home-workflow-fallback{display:block!important}
+.home-learning{display:block;width:100%;margin:0 0 22px}
+.home-learning .home-workflow-card{width:100%;box-sizing:border-box}
+</style><style>
 /* Workflow UI/UX refinement */
 .home-workflow-card{position:relative;overflow:hidden;padding:0;background:#f8fafc;border:1px solid #dfe7f3;border-radius:24px;box-shadow:0 18px 45px rgba(20,45,85,.10)}
 .home-workflow-card:before{content:"";position:absolute;inset:0 0 auto;height:5px;background:linear-gradient(90deg,#2f6fed,#7c5cff,#10b981)}
@@ -804,7 +809,8 @@ img,video,iframe{max-width:100%;}
 <div class="stat"><b>3</b><span>Group projects</span></div>
 <div class="stat"><b>23</b><span>Screencast recordings</span></div>
 </div>
-<div id="homeWorkflowFallback" class="home-learning home-workflow-fallback">
+<div class="home-learning" id="homeLearningPanel">
+<div id="homeWorkflowFallback" class="home-workflow-fallback">
 <section class="home-workflow-card" aria-label="Home learning workflow">
   <div class="workflow-top">
     <span class="workflow-kicker"><i></i> Home workflow</span>
@@ -829,7 +835,7 @@ img,video,iframe{max-width:100%;}
   <div class="workflow-footer"><span class="workflow-next"><b>Start with Read Me</b> and work through the workflow in order.</span><button type="button" class="hbtn ghost" onclick="goTab('notes')">Start →</button></div>
 </section>
 </div>
-<div class="home-learning" id="homeLearningPanel"></div>
+</div>
 <div class="section-heading">Jump to a section</div>
 <div class="home-grid">
 <div class="home-card" onclick="goTab('curriculum')" onkeydown="if(event.key==='Enter')goTab('curriculum')" role="button" style="--accent:#2f6fed" tabindex="0">
@@ -4275,8 +4281,8 @@ function workflowStepGrade(step){
 function workflowGradeLabel(v){ return v===null ? 'Not graded' : `${v}`; }
 function hmPhaseAssessmentDone(){ return !!(student && student.phaseAssessments && student.phaseAssessments.phase1 && student.phaseAssessments.phase1.completedAt); }
 function renderHomeLearning(){
- const fallback=document.getElementById('homeWorkflowFallback'); if(fallback) fallback.remove();
  const el=document.getElementById('homeLearningPanel'); if(!el) return;
+ const fallback=el.querySelector('#homeWorkflowFallback');
  const project=HM_PROJECTS[0];
  const phase1Done=hmPhaseAssessmentDone();
  const projectDone=hmAssignmentState(project.id)==='Submitted';
@@ -4349,11 +4355,12 @@ function renderHomeLearning(){
    </div></div>
    <div class="workflow-footer"><span class="workflow-next">${nextStep ? `Recommended next step: <b>${nextStep.label}</b>` : '<b>Phase One complete.</b>'}</span><button type="button" class="hbtn ghost" id="homeWorkflowContinueBtn">${nextStep ? 'Continue →' : 'Review Progress'}</button></div>
  </section>`;
- el.innerHTML=`${homeWorkflow}
+ const renderedWorkflow=`${homeWorkflow}
  <div class="phase-workflows-wrap">
    <div class="phase-workflows-intro"><div><span class="workflow-kicker"><i></i> Your learning roadmap</span><h3>Choose your phase</h3><p>Phase One builds the foundation. Phase Two continues with independent learning, practice, assessment, and project work.</p></div><span class="workflow-cycle">${phase1Done?'Phase One complete':'Phase One in progress'}</span></div>
    <div class="phase-workflows-grid">${phaseCard('Phase One',phase1Steps,'Weeks 1–4 · Foundation &amp; Phase One',g.pct,`${g.pct}/100 · ${g.detail}`,true)}${phaseCard('Phase Two',phase2Steps,'Weeks 5–8 · Independent learning &amp; practice',phase2Pct,`${phase2Completed}/${phase2Cards.length} curriculum lessons complete`,false)}</div>
  </div>`;
+ el.innerHTML=renderedWorkflow;
  el.querySelector('#homeWorkflowProgressBtn')?.addEventListener('click',()=>goTab('progress'));
  el.querySelector('#homeWorkflowContinueBtn')?.addEventListener('click',()=>{
    if(nextStep){ hmWorkflowGo(nextStep.n,project); }
