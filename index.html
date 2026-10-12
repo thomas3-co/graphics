@@ -3331,6 +3331,7 @@ function renderProgressView(){
   const readingQuizEntries = Object.values(student.contentQuizzes.reading);
   const screencastQuizEntries = Object.values(student.contentQuizzes.screencasts);
   const avgPct = entries => entries.length ? Math.round(entries.reduce((s,q)=> s + (q.total ? (q.score/q.total)*100 : 0), 0) / entries.length) : 0;
+  const marksSum = entries => { const e=entries.reduce((a,q)=>a+(Number(q.score)||0),0), t=entries.reduce((a,q)=>a+(Number(q.total)||0),0); return `${e}/${t}`; };
   const readingQuizAvg = avgPct(readingQuizEntries);
   const screencastQuizAvg = avgPct(screencastQuizEntries);
   let rows = '';
@@ -3380,9 +3381,9 @@ function renderProgressView(){
       <div class="progress-card" style="--pc-accent:#ff6a2c"><h4>Screencasts Watched</h4><div class="pc-big">${videosConfirmed}/${typeof getReleasedScreencasts==='function' ? getReleasedScreencasts().length : 3}</div><div class="pc-sub">fully watched</div></div>
       <div class="progress-card" style="--pc-accent:#ef476f"><h4>Practice Mark</h4><div class="pc-big">${practiceCreditSummary().earned.toFixed(1)} / 2.8</div><div class="pc-sub">0.7 mark × 4 practice days = 2.8 marks total</div></div>
       <div class="progress-card" style="--pc-accent:#5b6270"><h4>Materials Opened</h4><div class="pc-big">${(student.seenMaterials||[]).length}/23</div><div class="pc-sub">additional resources previewed</div></div>
-      <div class="progress-card" style="--pc-accent:#8b5cf6"><h4>Reading Checks</h4><div class="pc-big">${readingQuizEntries.length}/${readingPool.length}</div><div class="pc-sub">avg score ${readingQuizAvg}%</div></div>
-      <div class="progress-card" style="--pc-accent:#ff6a2c"><h4>Screencast Checks</h4><div class="pc-big">${screencastQuizEntries.length}/${typeof getReleasedScreencasts==='function' ? getReleasedScreencasts().length : 3}</div><div class="pc-sub">avg score ${screencastQuizAvg}%</div></div>
-      <div class="progress-card" style="--pc-accent:#10b981"><h4>Phase 1 Assessment</h4><div class="pc-big">${student.phaseAssessments?.phase1 ? `${student.phaseAssessments.phase1.score}/${student.phaseAssessments.phase1.total}` : 'Not taken'}</div><div class="pc-sub">${student.phaseAssessments?.phase1 ? Math.round(student.phaseAssessments.phase1.score/student.phaseAssessments.phase1.total*100)+'% · 20 marks' : '15 questions · Weeks 1–4'}</div></div>
+      <div class="progress-card" style="--pc-accent:#8b5cf6"><h4>Reading Checks</h4><div class="pc-big">${readingQuizEntries.length}/${readingPool.length}</div><div class="pc-sub">marks ${marksSum(readingQuizEntries)}</div></div>
+      <div class="progress-card" style="--pc-accent:#ff6a2c"><h4>Screencast Checks</h4><div class="pc-big">${screencastQuizEntries.length}/${typeof getReleasedScreencasts==='function' ? getReleasedScreencasts().length : 3}</div><div class="pc-sub">marks ${marksSum(screencastQuizEntries)}</div></div>
+      <div class="progress-card" style="--pc-accent:#10b981"><h4>Phase 1 Assessment</h4><div class="pc-big">${student.phaseAssessments?.phase1 ? `${student.phaseAssessments.phase1.score}/${student.phaseAssessments.phase1.total}` : 'Not taken'}</div><div class="pc-sub">${student.phaseAssessments?.phase1 ? `${student.phaseAssessments.phase1.score}/${student.phaseAssessments.phase1.total} marks` : '15 questions · Weeks 1–4'}</div></div>
     </div>
     <div class="note-section collapsed" style="margin-top:22px;">
       <h3 style="margin-top:0;"><span>Week-by-week breakdown <span class="note-count">${student.completed.length}/${cards.length} lessons</span></span></h3>
@@ -3509,6 +3510,7 @@ function buildProgressReportDoc(trigger){
   const readingQuizEntries = Object.values(student.contentQuizzes.reading);
   const screencastQuizEntries = Object.values(student.contentQuizzes.screencasts);
   const avgPct = entries => entries.length ? Math.round(entries.reduce((s,q)=> s + (q.total ? (q.score/q.total)*100 : 0), 0) / entries.length) : 0;
+  const marksSum = entries => { const e=entries.reduce((a,q)=>a+(Number(q.score)||0),0), t=entries.reduce((a,q)=>a+(Number(q.total)||0),0); return `${e}/${t}`; };
   const readingQuizAvg = avgPct(readingQuizEntries);
   const screencastQuizAvg = avgPct(screencastQuizEntries);
 
@@ -4847,7 +4849,7 @@ function renderHomeLearning(){
        <button type="button" class="workflow-click ${x.done?'done-step':''} ${x.locked?'workflow-lock':''} ${nextStep===x?'active-step':''}" data-home-workflow-step="${x.n}" ${x.locked?'aria-disabled="true"':''}>
          <span class="workflow-node-top"><span class="workflow-number">${x.done?'✓':x.locked?'🔒':String(x.n).padStart(2,'0')}</span><span class="workflow-node-status">${x.done?'Complete':x.locked?'Locked':'Continue'}</span></span>
          <h4>${x.label}</h4><small>${x.sub}</small>
-         <span class="workflow-grade"><span><i class="workflow-status-dot"></i>Exact mark</span><b>${x.mark}</b></span><span class="workflow-grade-percent">${x.grade}</span>
+         <span class="workflow-grade"><span><i class="workflow-status-dot"></i>Exact mark</span><b>${x.mark}</b></span>
        </button>
      </div>`).join('')}
    </div></div>
@@ -4921,7 +4923,7 @@ function openPhaseAssessmentModal(){
  const modal=document.getElementById('phaseAssessmentModal'); const body=document.getElementById('phaseModalBody'); const submit=document.getElementById('phaseModalSubmit');
  if(!phaseAssessmentAvailable()){ body.innerHTML=`<div class="phase-lock-card"><div class="phase-lock-icon">🔒</div><h3>Available in Week 6</h3><p>The Phase 1 Assessment opens when Week 6 begins. Your workflow will unlock the clickable assessment automatically then.</p><div class="phase-launch-meta" style="justify-content:center;margin-top:16px"><span>15 questions</span><span>20 marks</span><span>Shuffled order</span></div></div>`; document.getElementById('phaseModalProgress').textContent='Locked until Week 6'; submit.style.display='none'; modal.classList.add('open'); return; }
  const saved=student?.phaseAssessments?.phase1;
- if(saved?.completedAt){ const pct=Math.round(saved.score/saved.total*100); body.innerHTML=`<div class="phase-complete-card"><div class="hero-eyebrow">PHASE 1 COMPLETE</div><div class="phase-score">${saved.score}/${saved.total} · ${pct}%</div><p style="margin:7px 0;color:#667085">Submitted ${new Date(saved.completedAt).toLocaleString()}. This official phase result is locked.</p><div class="phase-progress"><i style="width:${pct}%"></i></div></div>`; document.getElementById('phaseModalProgress').textContent=`Saved score · ${pct}%`; submit.style.display='none'; modal.classList.add('open'); return; }
+ if(saved?.completedAt){ const pct=Math.round(saved.score/saved.total*100); body.innerHTML=`<div class="phase-complete-card"><div class="hero-eyebrow">PHASE 1 COMPLETE</div><div class="phase-score">${saved.score}/${saved.total}</div><p style="margin:7px 0;color:#667085">Submitted ${new Date(saved.completedAt).toLocaleString()}. This official phase result is locked.</p><div class="phase-progress"><i style="width:${pct}%"></i></div></div>`; document.getElementById('phaseModalProgress').textContent=`Saved score · ${saved.score}/${saved.total}`; submit.style.display='none'; modal.classList.add('open'); return; }
  submit.style.display='inline-flex';
  const questions=shuffleArray(PHASE1_QUESTIONS).map(q=>({...q,opts:shuffleArray(q.opts).map(text=>({text,original:q.opts.indexOf(text)})),uid:Math.random().toString(36).slice(2)}));
  window.__phaseModalQuestions=questions;
@@ -4942,7 +4944,7 @@ function renderPhaseAssessment(){
  const body=document.getElementById('phaseAssessmentBody'); if(!body)return;
  if(!student){body.innerHTML='<div class="progress-signedout"><h3>Sign in to access the Phase 1 Assessment</h3><p>The assessment becomes available in Week 6 and opens as a focused pop-out quiz.</p></div>';return;}
  const saved=student.phaseAssessments?.phase1; const open=phaseAssessmentAvailable(); const pct=saved?.completedAt?Math.round(saved.score/saved.total*100):0;
- body.innerHTML=`<div class="phase-launch-card ${saved?.completedAt?'phase-completed':''}"><div><div class="hero-eyebrow">${open?'WEEK 6 · NOW AVAILABLE':'WEEK 6 · LOCKED'}</div><h3>Phase 1 Assessment</h3><p>15 shuffled questions covering Weeks 1–4. Complete it in the pop-out assessment window for one official 20-mark phase score.</p><div class="phase-launch-meta"><span>15 questions</span><span>20 marks</span><span>${saved?.completedAt?`Completed · ${pct}%`:'Single final attempt'}</span></div></div><button class="hbtn primary phase-launch-btn" type="button" onclick="openPhaseAssessmentModal()">${saved?.completedAt?'View Result':(open?'Start Assessment':'Locked · Week 6')}</button></div>`;
+ body.innerHTML=`<div class="phase-launch-card ${saved?.completedAt?'phase-completed':''}"><div><div class="hero-eyebrow">${open?'WEEK 6 · NOW AVAILABLE':'WEEK 6 · LOCKED'}</div><h3>Phase 1 Assessment</h3><p>15 shuffled questions covering Weeks 1–4. Complete it in the pop-out assessment window for one official 20-mark phase score.</p><div class="phase-launch-meta"><span>15 questions</span><span>20 marks</span><span>${saved?.completedAt?`Completed · ${saved.score}/${saved.total}`:'Single final attempt'}</span></div></div><button class="hbtn primary phase-launch-btn" type="button" onclick="openPhaseAssessmentModal()">${saved?.completedAt?'View Result':(open?'Start Assessment':'Locked · Week 6')}</button></div>`;
 }
 
 function showToast(msg){const e=document.getElementById('completionToast');if(!e)return;e.textContent=msg;e.classList.add('show');clearTimeout(window.__toastTimer);window.__toastTimer=setTimeout(()=>e.classList.remove('show'),2400);}
