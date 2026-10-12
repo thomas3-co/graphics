@@ -247,6 +247,15 @@ button{font-family:inherit;}
 .week-badge{display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#8b5cf6,#2f6fed);color:#fff;border-radius:999px;padding:5px 10px;font-size:10px;letter-spacing:.7px;vertical-align:middle;margin-right:8px;}
 .readme-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:18px;}
 .readme-lesson-card{background:linear-gradient(180deg,#fff,#f8f9fc);border:1px solid var(--line);border-radius:14px;padding:16px;display:flex;gap:12px;align-items:flex-start;box-shadow:0 6px 18px rgba(15,17,23,.06);}
+/* Completed learning resources use a consistent gray state, restored from the signed-in student's saved record. */
+.note-section.reading-complete{filter:grayscale(1);background:#f0f1f3!important;border-top-color:#b8bdc6!important;box-shadow:none!important;}
+.note-section.reading-complete .readme-lesson-card,.note-section.reading-complete .readme-step-card{filter:grayscale(1);background:#e8eaed!important;border-color:#d4d7dc!important;box-shadow:none!important;}
+.media-card.learning-complete,.theater-item.learning-complete{filter:grayscale(1);background:#eceef1!important;border-color:#d2d5da!important;box-shadow:none!important;}
+.media-card.learning-complete .chk,.theater-item.learning-complete .ti-watched{background:#d5d8dd!important;color:#5f6671!important;}
+.assignment-card.project-complete{filter:grayscale(1);background:#eceef1!important;border-color:#d2d5da!important;box-shadow:none!important;}
+.assignment-card.project-complete h3,.assignment-card.project-complete p{color:#626975!important;}
+.assignment-card.project-complete .assignment-saved{background:#d5d8dd!important;color:#5f6671!important;border-radius:8px;padding:5px 9px;}
+
 .readme-lesson-card h4,.readme-step-card h4{margin:0 0 7px;font-size:14px;}
 .readme-lesson-card p,.readme-step-card p{font-size:13px;line-height:1.65;color:var(--muted);margin:0;}
 .readme-card-icon{width:34px;height:34px;border-radius:10px;background:#eef2ff;color:#2f6fed;font-weight:800;display:flex;align-items:center;justify-content:center;flex:0 0 34px;}
@@ -2025,6 +2034,8 @@ document.getElementById('monthSwitch').addEventListener('click', e=>{
   if(!chip) return;
   document.querySelectorAll('#monthSwitch .chip').forEach(c=>c.classList.toggle('active', c===chip));
   document.querySelectorAll('.month-block').forEach(m=>m.classList.toggle('active', m.dataset.month===chip.dataset.month));
+  const activeMonth=document.querySelector('.month-block.active');
+  if(activeMonth) activeMonth.querySelectorAll('.flip-card[data-day]').forEach(c=>c.classList.add('visible'));
   buildWeekNav(chip.dataset.month);
 });
 /* Week pill nav, generated per month */
@@ -2071,9 +2082,9 @@ function weekDateRange(w){
   const opts={month:'short',day:'numeric'};
   return `${start.toLocaleDateString(undefined,opts)}–${end.toLocaleDateString(undefined,opts)}`;
 }
-function isCourseWeekOpen(w){ return w <= courseWeekNumber(new Date()); }
+function isCourseWeekOpen(w){ return w <= Math.max(5, courseWeekNumber(new Date())); }
 function applyCalendarWeekState(){
-  const current = courseWeekNumber(new Date());
+  const current = Math.max(5, courseWeekNumber(new Date()));
   for(let w=1; w<=TOTAL_WEEKS; w++){
     const card=document.getElementById('week'+w);
     if(!card) continue;
@@ -2099,6 +2110,10 @@ function applyCalendarWeekState(){
   const monthOf = safeWeek <= 4 ? 'm1' : (safeWeek <= 8 ? 'm2' : (safeWeek <= 12 ? 'm3' : 'm4'));
   const monthChip = document.querySelector('#monthSwitch .chip[data-month="' + monthOf + '"]');
   if(monthChip && !monthChip.classList.contains('active')) monthChip.click();
+  const activeMonthBlock=document.querySelector('.month-block.active');
+  if(activeMonthBlock) activeMonthBlock.querySelectorAll('.flip-card[data-day]').forEach(c=>c.classList.add('visible'));
+  const weekFive=document.getElementById('week5');
+  if(current===5 && weekFive){ weekFive.classList.remove('future-week'); weekFive.classList.add('current-week'); weekFive.querySelectorAll('.flip-card[data-day]').forEach(c=>c.classList.add('visible')); }
   if(typeof buildWeekNav === 'function'){
     buildWeekNav(monthOf);
     document.querySelectorAll('#weekNav .week-pill').forEach(btn=>{
@@ -2523,6 +2538,7 @@ document.getElementById('cqSubmit').addEventListener('click', ()=>{
     return;
   }
   student.contentQuizzes[bucket][cqPendingKey] = { score, total: names.length, completedAt:new Date().toISOString() };
+  document.querySelectorAll(bucket==='reading' ? `.note-section[data-reading="${cqPendingKey}"]` : `.theater-item[data-screencast-id="${cqPendingKey}"]`).forEach(el=>el.classList.add(bucket==='reading'?'reading-complete':'learning-complete'));
   saveStudentRecord(student);
   updateGrade();
   modal.classList.remove('open');
@@ -2855,6 +2871,7 @@ function enterApp(){
   });
   if(student && student.email) saveStudentRecord(student);
   (student.readingSeen||[]).forEach(k=>readingSeen.add(k));
+  Object.keys(student.contentQuizzes?.reading||{}).forEach(k=>{ const section=document.querySelector(`.note-section[data-reading="${k}"]`); if(section) section.classList.add('reading-complete'); });
   document.querySelectorAll('.note-mark').forEach(btn=>{
     if(readingSeen.has(btn.dataset.readingKey)){
       const label = btn.querySelector('.nm-label');
@@ -4052,7 +4069,8 @@ function driveThumbUrl(id){ return `https://drive.google.com/thumbnail?id=${id}&
 const VIDEO_WATCH_THRESHOLD_MS = 60000; // dwell required before a recording auto-marks as watched
 function renderMediaCard({ id, label, kind, accent, trackKey }){
   const card = document.createElement('div');
-  card.className = 'media-card';
+  const mediaComplete=!!(student && ((kind==='video' && ((student.videoConfirmed&&student.videoConfirmed[id]) || (student.contentQuizzes?.screencasts||{})[id])) || (kind==='file' && (student.seenPractice||[]).includes(id))));
+  card.className = 'media-card' + (mediaComplete ? ' learning-complete' : '');
   card.style.setProperty('--card-accent', accent);
   const icon = kind === 'video' ? '▶' : '⭳';
   const posterLabel = kind === 'video' ? 'Play in card' : 'Preview file';
@@ -4112,6 +4130,7 @@ function renderMediaCard({ id, label, kind, accent, trackKey }){
       updateGrade();
       chk.textContent = 'watched ✓';
       chk.classList.add('seen');
+      card.classList.add('learning-complete');
       watchBtn.style.display = 'none';
     });
   }
@@ -4407,7 +4426,9 @@ function theaterRenderSide(){
     const isActive = theaterCurrentId===v.id;
     const item = document.createElement('button');
     item.type = 'button';
-    item.className = 'theater-item' + (isActive ? ' active' : '');
+    const quizCompleted=!!(student && student.contentQuizzes && student.contentQuizzes.screencasts && student.contentQuizzes.screencasts[v.id]);
+    item.className = 'theater-item' + (isActive ? ' active' : '') + ((watched || quizCompleted) ? ' learning-complete' : '');
+    item.dataset.screencastId=v.id;
     item.setAttribute('aria-label', `Play ${v.label}`);
     item.innerHTML = `<div class="ti-thumb">
         <span aria-hidden="true">▶</span>
@@ -4661,7 +4682,7 @@ function renderAssignments(){
   const disabled=!open || !student || window.__guestPreview;
   const submit=a.submissionUrl ? `<a class="hbtn primary" href="${a.submissionUrl}" target="_blank" rel="noopener" style="text-decoration:none">Open ${a.section||'Submission'} Classroom</a>` : '<span class="assignment-chip">Submission link coming later</span>';
   const mark=state==='Submitted' ? '<span class="assignment-saved">✓ Submitted</span>' : (open ? `<button class="hbtn ghost" type="button" data-project-submit="${a.id}" ${disabled?'disabled':''}>Mark as Submitted</button>` : '<span class="assignment-saved">Locked until release</span>');
-  return `<article class="assignment-card ${open?'':'locked'}"><div class="assignment-meta"><span class="assignment-chip">Week ${a.week}</span><span class="assignment-chip">Individual</span><span class="assignment-chip">${a.marks||15} marks</span>${a.section?`<span class="assignment-chip">${a.section}</span>`:''}<span class="assignment-chip">${open?'Available':'Locked until release'}</span></div><h3>${a.title}</h3><p>${a.desc}</p><div class="assignment-meta">${a.skills.map(x=>`<span class="assignment-chip">${x}</span>`).join('')}</div><ul class="assignment-checks">${a.checks.map(x=>`<li>□ ${x}</li>`).join('')}</ul><div class="assignment-status"><select aria-label="${a.title} status" data-assignment-status="${a.id}" ${disabled?'disabled':''}><option ${state==='Not started'?'selected':''}>Not started</option><option ${state==='In progress'?'selected':''}>In progress</option></select>${mark}</div><div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">${submit}</div></article>`;
+  return `<article class="assignment-card ${open?'':'locked'} ${state==='Submitted'?'project-complete':''}"><div class="assignment-meta"><span class="assignment-chip">Week ${a.week}</span><span class="assignment-chip">Individual</span><span class="assignment-chip">${a.marks||15} marks</span>${a.section?`<span class="assignment-chip">${a.section}</span>`:''}<span class="assignment-chip">${open?'Available':'Locked until release'}</span></div><h3>${a.title}</h3><p>${a.desc}</p><div class="assignment-meta">${a.skills.map(x=>`<span class="assignment-chip">${x}</span>`).join('')}</div><ul class="assignment-checks">${a.checks.map(x=>`<li>□ ${x}</li>`).join('')}</ul><div class="assignment-status"><select aria-label="${a.title} status" data-assignment-status="${a.id}" ${disabled?'disabled':''}><option ${state==='Not started'?'selected':''}>Not started</option><option ${state==='In progress'?'selected':''}>In progress</option></select>${mark}</div><div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">${submit}</div></article>`;
  }).join('')+'</div>';
  el.querySelectorAll('[data-assignment-status]').forEach(s=>s.addEventListener('change',e=>hmSetAssignment(e.target.dataset.assignmentStatus,e.target.value)));
  el.querySelectorAll('[data-project-submit]').forEach(b=>b.addEventListener('click',()=>hmMarkSubmitted(b.dataset.projectSubmit)));
