@@ -966,18 +966,6 @@ input,select,textarea{font-size:16px}
 <div class="home-learning" id="homeLearningPanel">
 <div id="homeWorkflowFallback" class="home-workflow-fallback">
 <section class="home-workflow-card" aria-label="Home learning workflow">
-  <div class="workflow-top">
-    <span class="workflow-kicker"><i></i> Home workflow</span>
-    <div class="workflow-title-row">
-      <div><h3>Your Learning Workflow</h3><p>Follow your course in order: Read Me → Screencast → Practice → Assessment → Phase One Assessment → Project.</p></div>
-      <span class="workflow-cycle">Phase One · Weeks 1–4</span>
-    </div>
-  </div>
-  <div class="workflow-overall">
-    <div class="workflow-grade-orb"><b>0/100</b></div>
-    <div><div class="workflow-overall-meta">Overall Phase One Mark</div><div class="workflow-overall-score">0%</div><div class="workflow-overall-detail">Progress will update as you complete each step.</div><div class="workflow-mini-bar"><i style="width:0%"></i></div></div>
-    <button type="button" class="hbtn primary workflow-overall-action" onclick="goTab('progress')">Open My Progress</button>
-  </div>
   <div class="workflow-track-wrap"><div class="workflow-track">
     <div class="workflow-node"><button type="button" class="workflow-click" onclick="goTab('notes')"><span class="workflow-node-top"><span class="workflow-number">01</span><span class="workflow-node-status">Start</span></span><h4>Read Me</h4><small>Weeks 1–4 notes</small><span class="workflow-grade"><span>Learning notes</span><b>—</b></span></button></div>
     <div class="workflow-node"><button type="button" class="workflow-click" onclick="goTab('screencasts')"><span class="workflow-node-top"><span class="workflow-number">02</span><span class="workflow-node-status">Continue</span></span><h4>Screencast</h4><small>Released recordings</small><span class="workflow-grade"><span>Watch &amp; check</span><b>—</b></span></button></div>
@@ -4845,7 +4833,7 @@ function renderHomeLearning(){
     <button class="phase-workflow-head" type="button" aria-expanded="${openByDefault?'true':'false'}">
       <span class="phase-icon">${phase==='Phase One'?'01':'02'}</span>
       <span class="phase-head-copy"><strong>${phase} Workflow</strong><small>${meta}</small></span>
-      <span class="phase-head-progress"><b>${phase==='Phase One' ? `${pct}/100` : `${pct}%`}</b><i><em style="width:${pct}%"></em></i></span>
+      <span class="phase-head-progress"><b>${phase==='Phase One' ? (()=>{const m=phaseOneMarks();return `${fmtMark(m.earned)}/${fmtMark(m.total)}`;})() : `${pct}%`}</b><i><em style="width:${pct}%"></em></i></span>
       <span class="phase-chevron" aria-hidden="true">⌄</span>
     </button>
     <div class="phase-workflow-body">
@@ -4864,18 +4852,6 @@ function renderHomeLearning(){
  const nextStep=homeSteps.find(x=>!x.done&&!x.locked) || homeSteps.find(x=>!x.locked) || homeSteps[0];
  const homePct=Math.max(0,Math.min(100,Number(g.pct)||0));
  const homeWorkflow=`<section class="home-workflow-card" aria-label="Home learning workflow">
-   <div class="workflow-top">
-     <span class="workflow-kicker"><i></i> Home workflow</span>
-     <div class="workflow-title-row">
-       <div><h3>Your Learning Workflow</h3><p>Follow the course in order from Read Me to Screencast, Practice, Assessment, Weekly Quiz, Phase One Assessment, and Project. Your progress and marks stay connected to My Progress.</p></div>
-       <span class="workflow-cycle">${nextStep ? `Next: ${nextStep.label}` : 'All steps complete'}</span>
-     </div>
-   </div>
-   <div class="workflow-overall">
-     <div class="workflow-grade-orb" style="--grade:${homePct}%"><b>${g.pct}/100</b></div>
-     <div class="workflow-overall-copy"><div class="workflow-overall-meta">Overall Phase One Mark</div><div class="workflow-overall-score">${g.pct}/100 <span>exact mark</span></div><div class="workflow-overall-detail">${student ? `${g.pct} marks earned out of 100` : 'Sign in to see the student mark'} · ${homePct}%</div><div class="workflow-mini-bar"><i style="width:${homePct}%"></i></div></div>
-     <button type="button" class="hbtn primary workflow-overall-action" id="homeWorkflowProgressBtn">Open My Progress</button>
-   </div>
    ${phaseOneTotalHTML()}
    <div class="workflow-track-wrap"><div class="workflow-track">
      ${homeSteps.map((x,i)=>`<div class="workflow-node">
@@ -4891,7 +4867,7 @@ function renderHomeLearning(){
  const renderedWorkflow=`${homeWorkflow}
  <div class="phase-workflows-wrap">
    <div class="phase-workflows-intro"><div><span class="workflow-kicker"><i></i> Your learning roadmap</span><h3>Choose your phase</h3><p>Phase One builds the foundation. Phase Two continues with independent learning, practice, assessment, and project work.</p></div><span class="workflow-cycle">${phase1Done?'Phase One complete':'Phase One in progress'}</span></div>
-   <div class="phase-workflows-grid">${phaseCard('Phase One',phase1Steps,'Weeks 1–4 · Foundation &amp; Phase One',g.pct,`${g.pct}/100 · ${g.detail}`,true)}${phaseCard('Phase Two',phase2Steps,'Weeks 5–8 · Independent learning &amp; practice',phase2Pct,`${phase2Completed}/${phase2Cards.length} curriculum lessons complete`,false)}</div>
+   <div class="phase-workflows-grid">${phaseCard('Phase One',phase1Steps,'Weeks 1–4 · Foundation &amp; Phase One',(()=>{const m=phaseOneMarks();return m.total?m.earned/m.total*100:0;})(),`${fmtMark(phaseOneMarks().earned)}/${fmtMark(phaseOneMarks().total)} marks · ${g.detail}`,true)}${phaseCard('Phase Two',phase2Steps,'Weeks 5–8 · Independent learning &amp; practice',phase2Pct,`${phase2Completed}/${phase2Cards.length} curriculum lessons complete`,false)}</div>
  </div>`;
  el.innerHTML=renderedWorkflow;
  el.querySelector('#homeWorkflowProgressBtn')?.addEventListener('click',()=>goTab('progress'));
@@ -5080,6 +5056,9 @@ button,.chip,.week-pill,.flip-card{ touch-action:manipulation; }
 .marks-bar span{font:700 12px 'Inter',sans-serif;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
 .marks-bar b{font:800 20px 'Poppins',sans-serif;color:var(--c-notes)}
 .marks-bar small{margin-left:auto;font:600 12px 'Inter',sans-serif;color:var(--muted)}
+.home-workflow-card .p1-total{margin:24px 24px 18px}
+.home-workflow-card .workflow-footer .hbtn.ghost{background:#eef3ff;color:#2f6fed;border:1px solid #c9d8fb;font-weight:700}
+.home-workflow-card .workflow-footer .hbtn.ghost:hover{background:#dfe9ff}
 </style>
 </body>
 </html>
