@@ -1155,15 +1155,33 @@ input,select,textarea{font-size:16px}
 <!-- ===== MONTH TWO ===== -->
 <div class="month-block active" data-month="m2">
 <div class="week-card" id="week5">
-<h2 class="wk">Week 5 — Check-In &amp; Check-Out</h2>
+<h2 class="wk">Week 5 — Revision &amp; Skills Check</h2>
 <div class="day-grid">
 <div class="flip-card" data-day="5-1"><div class="flip-card-inner">
-<div class="flip-card-front"><h4>Day 1: Check-In</h4><p>Check in with your learning: review what you have completed, identify what feels clear, and note what you need help with.</p><span class="flip-hint">Tap to flip</span></div>
-<div class="flip-card-back"><div class="vocab-title">Check-In</div><p>Take stock of your learning at the start of Month Two.</p><ul><li>Review the work you have completed.</li><li>Identify one skill you feel confident using.</li><li>Write down one question or skill you want help with.</li></ul><div class="big-ideas">A useful check-in helps you and your instructor decide what to focus on next.</div></div>
+<div class="flip-card-front"><h4>Day 1: Revision — Foundations &amp; Photo Editing</h4><p>Review Weeks 1–3: file handling, raster images, non-destructive editing, background removal, smudge cleanup, and depth with Gaussian Blur.</p><span class="flip-hint">Tap to flip</span></div>
+<div class="flip-card-back"><div class="vocab-title">Day 1 Revision Tasks</div>
+<p><strong>Goal:</strong> Revisit the core techniques and identify any skill that needs more practice.</p>
+<ul>
+<li>Open a working file and use a clear, meaningful filename; save a separate editable version.</li>
+<li>Explain the difference between raster and vector artwork, and why pixels matter.</li>
+<li>Practice a clean background removal; inspect edges and remove white fringe without damaging the subject.</li>
+<li>Use the Smudge Tool carefully and review Filter → Other → Minimum when cleaning a mask edge.</li>
+<li>Place the subject into a new composition and use Gaussian Blur to create believable depth.</li>
+</ul>
+<div class="big-ideas"><strong>Self-check:</strong> Can you explain each step, undo safely, and keep the original image available? Revisit the Read Me or screencast for any step that feels uncertain.</div></div>
 </div></div>
 <div class="flip-card" data-day="5-2"><div class="flip-card-inner">
-<div class="flip-card-front"><h4>Day 2: Check-Out</h4><p>Check out of the week by reflecting on your progress, organizing your work, and setting a next step.</p><span class="flip-hint">Tap to flip</span></div>
-<div class="flip-card-back"><div class="vocab-title">Check-Out</div><p>Finish the week with a short learning reflection. Revisit Transform, Puppet Warp, portrait retouching, background removal, or any earlier skill that needs more practice.</p><ul><li>Set a clear practice goal.</li><li>Complete the task from start to finish.</li><li>Check your layers, file naming, and saved working file.</li></ul><div class="big-ideas">Independent practice is about applying the skills without step-by-step prompting and knowing when to review a lesson before continuing.</div></div>
+<div class="flip-card-front"><h4>Day 2: Revision — Transform, Puppet Warp &amp; Export</h4><p>Review Week 4 skills, then complete a short independent practice task and check your file before submitting.</p><span class="flip-hint">Tap to flip</span></div>
+<div class="flip-card-back"><div class="vocab-title">Day 2 Revision Tasks</div>
+<p><strong>Goal:</strong> Apply the editing tools independently and produce a tidy, editable result.</p>
+<ul>
+<li>Use Transform to resize, rotate, position, and proportionally scale a subject.</li>
+<li>Use Puppet Warp pins and control points to make a small, deliberate adjustment; avoid unnatural distortion.</li>
+<li>Keep edits non-destructive where possible and preserve an editable working file.</li>
+<li>Review layer names, visibility, masks, edges, alignment, and the overall composition.</li>
+<li>Save the working file, then export a suitable final image and reopen it to confirm it works.</li>
+</ul>
+<div class="big-ideas"><strong>Exit reflection:</strong> Name one tool you can use confidently, one step you need to practise, and your next learning goal. Check the Read Me and screencasts before moving on.</div></div>
 </div></div>
 </div>
 </div>
@@ -5032,5 +5050,52 @@ initAuth();
 #curriculum #week5 .flip-card{display:block!important;height:380px!important;min-height:380px!important;opacity:1!important;visibility:visible!important;transform:none!important}
 #curriculum #week5 .locked-week-panel{display:none!important}
 </style>
-\n</body>
+\n
+<style id="hma-ipad-responsive-revision-fix">
+/* Responsive layout tuned for iPad portrait/landscape, split view, and touch input. */
+html{ -webkit-text-size-adjust:100%; text-size-adjust:100%; }
+body{ overflow-x:hidden; }
+img,video,canvas,iframe{ max-width:100%; }
+button,.chip,.week-pill,.flip-card{ touch-action:manipulation; }
+.topbar{ padding-left:max(12px,env(safe-area-inset-left)); padding-right:max(12px,env(safe-area-inset-right)); }
+@media (max-width: 1100px){
+  .topbar{gap:8px;overflow-x:auto;overflow-y:hidden;justify-content:flex-start;white-space:nowrap;-webkit-overflow-scrolling:touch;}
+  .topbar nav,.nav-links{flex:0 0 auto;}
+  .view,.view.active{width:100%;max-width:100%;padding-left:clamp(12px,3vw,24px);padding-right:clamp(12px,3vw,24px);}
+  .day-grid{grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:14px;}
+  .flip-card{min-width:0;height:clamp(340px,48vw,390px);}
+  .month-switch,.week-nav{max-width:100%;overflow-x:auto;flex-wrap:nowrap;padding-bottom:6px;-webkit-overflow-scrolling:touch;}
+  .month-switch .chip,.week-nav button{flex:0 0 auto;}
+}
+@media (max-width: 760px){
+  .app{padding-top:60px;}
+  .topbar{height:60px;min-height:60px;}
+  .day-grid{grid-template-columns:minmax(0,1fr)!important;}
+  .flip-card{height:360px;}
+  .week-card h2.wk{font-size:1.08rem;flex-wrap:wrap;}
+  .month-switch{gap:7px;}
+  .month-switch .chip{font-size:12px;padding:9px 12px;}
+  .modal,.modal-content,.wq-box,.cq-box{max-width:calc(100vw - 20px);}
+  .wq-scroll,.cq-scroll{min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;}
+  .wq-footer,.cq-footer{padding-bottom:calc(12px + env(safe-area-inset-bottom));}
+  input,select,textarea,button{font-size:max(16px,1em);}
+}
+@media (min-width: 761px) and (max-width: 1180px){
+  .day-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .flip-card{height:370px;}
+}
+/* Ensure Week 5 is a normal, readable revision panel, regardless of stale lock/animation state. */
+#curriculum .month-block[data-month="m2"].active #week5,
+#curriculum .month-block[data-month="m2"].active #week5 .day-grid,
+#curriculum .month-block[data-month="m2"].active #week5 .flip-card,
+#curriculum .month-block[data-month="m2"].active #week5 .flip-card-inner{
+  visibility:visible!important;opacity:1!important;transform:none!important;
+}
+#curriculum .month-block[data-month="m2"].active #week5.future-week{filter:none!important;opacity:1!important;}
+#curriculum .month-block[data-month="m2"].active #week5.future-week::after{display:none!important;}
+#curriculum .month-block[data-month="m2"].active #week5 .day-grid{display:grid!important;}
+#curriculum .month-block[data-month="m2"].active #week5 .flip-card{display:block!important;pointer-events:auto!important;}
+</style>
+
+</body>
 </html>
