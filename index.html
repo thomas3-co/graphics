@@ -197,10 +197,17 @@ button{font-family:inherit;}
 .week-pill.active{background:var(--ink);color:#fff;border-color:var(--ink);}
 .month-block{display:none;}
  .month-block.active{display:block;}
-/* Reliable Week 5 display: its two Check-In/Check-Out flip cards must be visible in Month Two. */
-.month-block[data-month="m2"].active #week5 .day-grid{display:grid!important;visibility:visible!important;}
-#week5 .flip-card{opacity:1;transform:none;visibility:visible;}
-#week5 .flip-card .flip-card-inner{visibility:visible;}
+/* FORCE Week 5 Check-In/Check-Out to remain visible, even if stale lock classes exist. */
+.month-block[data-month="m2"].active #week5,#week5{visibility:visible!important;}
+.month-block[data-month="m2"].active #week5 .day-grid,#week5 .day-grid{display:grid!important;visibility:visible!important;opacity:1!important;}
+#week5.future-week{opacity:1!important;filter:none!important;pointer-events:auto!important;}
+#week5.future-week::after{display:none!important;}
+#week5.future-week .day-grid{display:grid!important;visibility:visible!important;}
+#week5 .locked-week-panel{display:none!important;}
+#week5 .flip-card{display:block!important;opacity:1!important;transform:none!important;visibility:visible!important;pointer-events:auto!important;}
+#week5 .flip-card .flip-card-inner{visibility:visible!important;}
+#week5 .flip-card-front,#week5 .flip-card-back{visibility:visible;}
+/* Week 5 is a released course week and should never be hidden by a stale lock state. */
 /* A completed weekly pop-out quiz greys the whole corresponding week, while preserving readable text. */
 .week-card.quiz-completed{filter:grayscale(1)!important;}
 .week-card.quiz-completed .week-date{background:#e4e6e9!important;color:#666d77!important;border-color:#d1d4d9!important;}
@@ -2042,6 +2049,14 @@ function goTab(name){
   const progBtn = document.getElementById('progressNavBtn');
   if(progBtn) progBtn.classList.toggle('active', name==='progress');
   document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active', v.id===name));
+  if(name==='curriculum'){
+    const weekNow=Math.max(5,courseWeekNumber(new Date()));
+    const monthNow=weekNow<=4?'m1':(weekNow<=8?'m2':(weekNow<=12?'m3':'m4'));
+    const chip=document.querySelector('#monthSwitch .chip[data-month="'+monthNow+'"]');
+    if(chip && !chip.classList.contains('active')) chip.click();
+    const w5=document.getElementById('week5');
+    if(w5){w5.classList.remove('future-week');w5.querySelectorAll('.flip-card').forEach(c=>c.classList.add('visible'));}
+  }
   window.scrollTo({top:0,behavior:'smooth'});
   // Leaving Screencasts for another tab counts as "done with this recording"
   // if they'd watched a meaningful chunk of it — see theaterClearWatchTracking.
@@ -2939,6 +2954,7 @@ function enterApp(){
   updateGrade();
   theaterRenderSide();
   refreshCompletionGrayStates();
+  applyCalendarWeekState();
   const w5=document.getElementById('week5');
   if(w5){ w5.classList.remove('future-week'); w5.querySelectorAll('.flip-card').forEach(c=>c.classList.add('visible')); }
   const m2=document.querySelector('#monthSwitch .chip[data-month="m2"]');
