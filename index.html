@@ -208,7 +208,9 @@ button{font-family:inherit;}
 .day-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;}
 .flip-card{background:transparent;width:100%;height:380px;perspective:1200px;opacity:0;transform:translateY(30px);transition:all .6s ease-out;}
 .flip-card.visible{opacity:1;transform:translateY(0);}
-.flip-card.done .flip-card-inner{box-shadow:0 0 0 2px var(--c-curriculum),0 12px 24px rgba(47,111,237,.18);}
+.flip-card.done .flip-card-inner{box-shadow:0 0 0 2px #c7cbd1,0 8px 18px rgba(71,84,103,.10);}
+.flip-card.done .flip-card-front,.flip-card.done .flip-card-back{filter:grayscale(1);}
+.flip-card.done{cursor:default;}
 .flip-card-inner{position:relative;width:100%;height:100%;text-align:center;transition:transform .7s ease;transform-style:preserve-3d;border-radius:14px;cursor:pointer;box-shadow:0 8px 20px rgba(15,17,23,.10);}
 .flip-card:hover .flip-card-inner,.flip-card.flipped .flip-card-inner{transform:rotateY(180deg) translateY(-4px);}
 .flip-card-front,.flip-card-back{position:absolute;width:100%;height:100%;backface-visibility:hidden;border-radius:14px;padding:18px 20px;font-size:.92rem;display:flex;flex-direction:column;justify-content:center;box-sizing:border-box;}
@@ -301,6 +303,10 @@ button{font-family:inherit;}
 /* ===== ASSESSMENT PAGE ===== */
 .assess-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--line);flex-wrap:wrap;}
 .assess-row:last-child{border-bottom:none;}
+.assess-row.assess-completed{background:#f2f3f5;border:1px solid #e1e3e6;border-radius:10px;padding:10px 12px;margin:6px 0;color:#667085;}
+.assess-row.assess-completed .assess-row-main b{color:#737983;}
+.assess-row.assess-completed .assess-status.done{color:#737983;}
+.assess-row.assess-completed .assess-btn{background:#d7d9dd!important;color:#656b74!important;border:1px solid #c9ccd1!important;opacity:1;}
 .assess-row-main{display:flex;flex-direction:column;gap:4px;}
 .assess-row-main b{font-size:13.5px;}
 .assess-status{font-size:11.5px;font-weight:700;color:var(--muted);}
@@ -3317,7 +3323,7 @@ function renderAssessmentView(){
     const btn = quiz
       ? `<button type="button" class="assess-btn" disabled>Completed</button>`
       : `<button type="button" class="assess-btn" onclick="assessmentStart('reading','${item.key}')">Start</button>`;
-    return `<div class="assess-row"><div class="assess-row-main"><b>${item.title}</b><span class="assess-status ${quiz?'done':''}">${statusText}</span></div>${btn}</div>`;
+    return `<div class="assess-row ${quiz?'assess-completed':''}"><div class="assess-row-main"><b>${item.title}</b><span class="assess-status ${quiz?'done':''}">${statusText}</span></div>${btn}</div>`;
   }).join('') || '<p style="font-size:13px;color:var(--muted);">No Read Me sections available yet.</p>';
   const videoItems = pool.map(item=>{
     const quiz = student.contentQuizzes.screencasts[item.key];
@@ -3325,7 +3331,7 @@ function renderAssessmentView(){
     const btn = quiz
       ? `<button type="button" class="assess-btn" disabled>Completed</button>`
       : `<button type="button" class="assess-btn" onclick="assessmentStart('video','${item.key}')">Start</button>`;
-    return `<div class="assess-row"><div class="assess-row-main"><b>${item.title}</b><span class="assess-status ${quiz?'done':''}">${statusText}</span></div>${btn}</div>`;
+    return `<div class="assess-row ${quiz?'assess-completed':''}"><div class="assess-row-main"><b>${item.title}</b><span class="assess-status ${quiz?'done':''}">${statusText}</span></div>${btn}</div>`;
   }).join('') || '<p style="font-size:13px;color:var(--muted);">No screencasts available yet.</p>';
   const readingDone = Object.keys(student.contentQuizzes.reading).length;
   const videoDone = Object.keys(student.contentQuizzes.screencasts).length;
@@ -4832,7 +4838,7 @@ function renderPhaseAssessment(){
  const body=document.getElementById('phaseAssessmentBody'); if(!body)return;
  if(!student){body.innerHTML='<div class="progress-signedout"><h3>Sign in to access the Phase 1 Assessment</h3><p>The assessment becomes available in Week 6 and opens as a focused pop-out quiz.</p></div>';return;}
  const saved=student.phaseAssessments?.phase1; const open=phaseAssessmentAvailable(); const pct=saved?.completedAt?Math.round(saved.score/saved.total*100):0;
- body.innerHTML=`<div class="phase-launch-card"><div><div class="hero-eyebrow">${open?'WEEK 6 · NOW AVAILABLE':'WEEK 6 · LOCKED'}</div><h3>Phase 1 Assessment</h3><p>15 shuffled questions covering Weeks 1–4. Complete it in the pop-out assessment window for one official 20-mark phase score.</p><div class="phase-launch-meta"><span>15 questions</span><span>20 marks</span><span>${saved?.completedAt?`Completed · ${pct}%`:'Single final attempt'}</span></div></div><button class="hbtn primary phase-launch-btn" type="button" onclick="openPhaseAssessmentModal()">${saved?.completedAt?'View Result':(open?'Start Assessment':'Locked · Week 6')}</button></div>`;
+ body.innerHTML=`<div class="phase-launch-card ${saved?.completedAt?'phase-completed':''}"><div><div class="hero-eyebrow">${open?'WEEK 6 · NOW AVAILABLE':'WEEK 6 · LOCKED'}</div><h3>Phase 1 Assessment</h3><p>15 shuffled questions covering Weeks 1–4. Complete it in the pop-out assessment window for one official 20-mark phase score.</p><div class="phase-launch-meta"><span>15 questions</span><span>20 marks</span><span>${saved?.completedAt?`Completed · ${pct}%`:'Single final attempt'}</span></div></div><button class="hbtn primary phase-launch-btn" type="button" onclick="openPhaseAssessmentModal()">${saved?.completedAt?'View Result':(open?'Start Assessment':'Locked · Week 6')}</button></div>`;
 }
 
 function showToast(msg){const e=document.getElementById('completionToast');if(!e)return;e.textContent=msg;e.classList.add('show');clearTimeout(window.__toastTimer);window.__toastTimer=setTimeout(()=>e.classList.remove('show'),2400);}
