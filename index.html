@@ -2052,7 +2052,7 @@ document.getElementById('projSubnav').addEventListener('click', e=>{
 /* ================= PROGRESS / FLIP CARDS / LAYERS PANEL ================= */
 const weekMeta = {
   1:'Graphic Design Software & Foundations', 2:'Photopea, Pixels & Layers', 3:'Around the World with a Twist',
-  4:'Advanced Portrait Editing', 5:'Independent Time & Practice', 6:'Phone / iPad Mockup',
+  4:'Advanced Portrait Editing', 5:'Check-In & Check-Out', 6:'Phone / iPad Mockup',
   7:'Vanishing Point Text', 8:'Independent Study', 9:'Gojo Pop-Out Project',
   10:'Double Exposure & Poster Design', 11:'Coming Soon', 12:'Coming Soon',
   13:'Coming Soon', 14:'Coming Soon', 15:'Coming Soon', 16:'Coming Soon'
@@ -2081,7 +2081,7 @@ function applyCalendarWeekState(){
     if(heading){
       let dateEl=heading.querySelector('.week-date');
       if(!dateEl){ dateEl=document.createElement('span'); dateEl.className='week-date'; heading.appendChild(dateEl); }
-      dateEl.textContent=weekDateRange(w);
+      dateEl.textContent = weekDateRange(w) + (w===current ? ' · MATERIALS RELEASED THIS WEEK' : (w<current ? ' · RELEASED' : ' · RELEASES LATER'));
     }
     card.classList.toggle('future-week', w>current);
     card.classList.toggle('current-week', w===current);
@@ -2093,6 +2093,19 @@ function applyCalendarWeekState(){
       lockPanel.innerHTML = '<div><div class=\"lock-icon\" aria-hidden=\"true\">🔒</div><strong>Week '+w+' is locked</strong><span>This lesson content will unlock when its calendar week begins.</span></div>';
       card.appendChild(lockPanel);
     }
+  }
+  // Keep the calendar focused on the currently released course month/week.
+  const safeWeek = Math.max(1, Math.min(TOTAL_WEEKS, current));
+  const monthOf = safeWeek <= 4 ? 'm1' : (safeWeek <= 8 ? 'm2' : (safeWeek <= 12 ? 'm3' : 'm4'));
+  const monthChip = document.querySelector('#monthSwitch .chip[data-month="' + monthOf + '"]');
+  if(monthChip && !monthChip.classList.contains('active')) monthChip.click();
+  if(typeof buildWeekNav === 'function'){
+    buildWeekNav(monthOf);
+    document.querySelectorAll('#weekNav .week-pill').forEach(btn=>{
+      const w = Number(btn.textContent.replace('Week ', ''));
+      btn.classList.toggle('active', w === safeWeek);
+      btn.setAttribute('aria-current', w === safeWeek ? 'week' : 'false');
+    });
   }
 }
 const cards = Array.from(document.querySelectorAll('.flip-card[data-day]'));
@@ -2146,6 +2159,12 @@ function toggleCardDone(card){
   if(!completed.includes(day)){
     completed.push(day);
     card.classList.add('done');
+    // Persist the completed lesson in the signed-in student's record immediately,
+    // so it remains gray after logout/login and on this browser's next visit.
+    if(student && student.email){
+      student.completed = Array.from(new Set([...(student.completed || []), day]));
+      saveStudentRecord(student);
+    }
     const week = day.split('-')[0];
     const wasComplete = isWeekComplete(week);
     updateProgress();
@@ -2827,8 +2846,14 @@ function enterApp(){
   let legacy = [];
   try{ legacy = JSON.parse(localStorage.getItem('completedDays')) || []; }catch(e){}
   legacy.forEach(d=>{ if(!student.completed.includes(d)) student.completed.push(d); });
-  completed = student.completed;
-  cards.forEach(card=>{ card.classList.toggle('done', completed.includes(card.dataset.day)); });
+  completed = Array.from(new Set([...(student.completed || []), ...legacy]));
+  student.completed = completed.slice();
+  cards.forEach(card=>{
+    const isDone = completed.includes(card.dataset.day);
+    card.classList.toggle('done', isDone);
+    if(isDone) card.setAttribute('aria-label', 'Completed lesson, shown in gray');
+  });
+  if(student && student.email) saveStudentRecord(student);
   (student.readingSeen||[]).forEach(k=>readingSeen.add(k));
   document.querySelectorAll('.note-mark').forEach(btn=>{
     if(readingSeen.has(btn.dataset.readingKey)){
