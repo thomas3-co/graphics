@@ -780,6 +780,31 @@ input,select,textarea{font-size:16px}
   .wq-option,.phase-modal-opt{padding-top:13px;padding-bottom:13px}
 }
 </style>
+<style>
+/* HM_V2 styles */
+.study-banner{position:fixed;left:50%;bottom:calc(16px + env(safe-area-inset-bottom));transform:translate(-50%,30px);opacity:0;pointer-events:none;z-index:3500;display:flex;align-items:center;gap:14px;max-width:min(560px,calc(100% - 24px));width:max-content;background:#101522;color:#fff;border:1px solid rgba(255,255,255,.14);border-radius:18px;padding:12px 16px;box-shadow:0 18px 50px rgba(0,0,0,.35);transition:.25s}
+.study-banner.show{opacity:1;transform:translate(-50%,0)}
+.study-banner .sb-ico{font-size:22px}
+.study-banner .sb-copy{display:flex;flex-direction:column;gap:2px;font-size:12px;line-height:1.4;color:#c9d3f5}
+.study-banner .sb-copy b{font-size:13px;color:#fff}
+.study-banner .sb-time{font-family:'Poppins',sans-serif;font-weight:800;font-size:24px;background:rgba(255,255,255,.1);border-radius:12px;padding:6px 12px;min-width:68px;text-align:center}
+.week-card h2.wk{flex-wrap:wrap}
+.week-finish{margin-left:auto;display:inline-flex;align-items:center;gap:8px;background:#fff;border:1.5px solid #d7dbe3;border-radius:999px;padding:6px 14px 6px 7px;font:700 12.5px 'Inter',sans-serif;color:#1a1d24;cursor:pointer;transition:.2s}
+.week-finish:hover:not(:disabled){border-color:#2f6fed;background:#f5f8ff}
+.week-finish:disabled{opacity:.5;cursor:not-allowed}
+.week-finish .wf-box{width:22px;height:22px;border-radius:50%;border:2px solid #c7cbd4;display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:#fff;transition:.2s}
+.week-finish.done{background:#f0faf4;border-color:#1a8a52;color:#1a8a52}
+.week-finish.done .wf-box{background:#1a8a52;border-color:#1a8a52}
+.rp-backdrop{position:fixed;inset:0;z-index:10050;background:rgba(10,14,25,.6);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;padding:16px}
+.rp-backdrop.open{display:flex}
+.rp-box{background:#fff;border-radius:20px;max-width:420px;width:100%;padding:24px;box-shadow:0 30px 80px rgba(0,0,0,.35)}
+.rp-box h3{margin:0 0 6px;font-size:18px}
+.rp-box p{margin:0 0 16px;color:#5b6270;font-size:13.5px;line-height:1.5}
+.rp-box small{display:block;margin-top:12px;color:#7a8699;font-size:11.5px;line-height:1.5}
+.rp-actions{display:grid;gap:8px}
+.rp-btn{border:0;border-radius:11px;padding:13px 16px;font:700 14px 'Inter',sans-serif;cursor:pointer;background:#2f6fed;color:#fff;min-height:44px}
+.rp-btn.ghost{background:#f2f4f7;color:#5b6270}
+</style>
 </head>
 <body><div aria-live="polite" class="offline-banner" id="offlineBanner" role="status">You are offline. Your local progress can still be saved on this device.</div><button aria-label="Accessibility and learning preferences" class="a11y-float" id="a11yBtn" type="button">Aa</button>
 <a class="skip-link" href="#mainContent">Skip to content</a>
@@ -1936,6 +1961,7 @@ input,select,textarea{font-size:16px}
 </div>
 <button class="lp-report-btn" id="lpReportBtn">✉ Send Progress Report</button>
 <div id="lpReportStatus" style="font-size:10.5px;color:#8f96a6;margin-top:6px;min-height:12px;"></div>
+<div class="lp-data-tools"><div class="lp-data-title">Save &amp; restore</div><span class="lp-save-status" data-save-status>Saved on this device</span><div class="lp-data-actions"><button type="button" id="lpExportBtn">⬇ Backup</button><button type="button" id="lpImportBtn">⬆ Restore</button></div><input type="file" id="lpImportFile" accept="application/json,.json" style="display:none"><small>Your progress saves automatically in this browser. Use Backup to move it to another device.</small></div>
 <button class="lp-signout" id="lpSignOutBtn">Sign out of this device</button>
 <div class="lp-note">Every lesson card is a "layer." Flip a card in the Curriculum tab to mark that day's lesson complete — the total above and this panel's grade &amp; report stay visible even while the weekly breakdown is collapsed; tap "Weekly breakdown" to expand it. Progress reports are only sent when the student explicitly chooses "Send Progress Report."</div>
 </aside>
@@ -2100,6 +2126,7 @@ function updateProgress(){
   buildLayersPanel();
 }
 function toggleCardDone(card){
+  maybeStartStudyForCard(card);
   const day = card.dataset.day;
   if(!completed.includes(day)){
     completed.push(day);
@@ -2107,7 +2134,7 @@ function toggleCardDone(card){
     const week = day.split('-')[0];
     const wasComplete = isWeekComplete(week);
     updateProgress();
-    if(wasComplete) maybeShowWeekQuiz(week);
+    /* quiz now starts from the Day 2 flip + 2-minute study timer */
   }
 }
 cards.forEach(card=>{
@@ -2590,6 +2617,7 @@ function getCurrentStudent(){
 }
 function setCurrentStudent(s){
   try{ localStorage.setItem('hm_current_student', JSON.stringify(s)); }catch(e){}
+  rememberSession(s);
 }
 function studentKey(email){ return 'hm_student_' + email.trim().toLowerCase(); }
 function normalizeStudentRecord(rec,email){
@@ -2610,6 +2638,9 @@ function normalizeStudentRecord(rec,email){
   rec.contentQuizzes.reading = rec.contentQuizzes.reading || {};
   rec.assignmentStatus = rec.assignmentStatus || {};
   rec.phaseAssessments = rec.phaseAssessments || {};
+  rec.weekFinished = rec.weekFinished || {};
+  rec.studyTimers = rec.studyTimers || {};
+  rec.celebrations = rec.celebrations || {};
   rec.signedInAt = rec.signedInAt || new Date().toISOString();
   rec.lastSavedAt = rec.lastSavedAt || null;
   return rec;
@@ -2617,7 +2648,7 @@ function normalizeStudentRecord(rec,email){
 function loadStudentRecord(email){
   email = email.trim().toLowerCase();
   try{
-    const raw = localStorage.getItem(studentKey(email));
+    const raw = takeCachedRecord(email) || localStorage.getItem(studentKey(email));
     if(raw) return normalizeStudentRecord(JSON.parse(raw),email);
   }catch(e){}
   return normalizeStudentRecord({},email);
@@ -2629,6 +2660,7 @@ function saveStudentRecord(rec){
     const normalized = normalizeStudentRecord(rec);
     const serialized = JSON.stringify(normalized);
     const key = studentKey(normalized.email);
+    idbSet('record:'+normalized.email, serialized);
     const previous = localStorage.getItem(key);
     localStorage.setItem(key, serialized);
     localStorage.setItem('hm_last_saved_at', normalized.lastSavedAt);
@@ -2679,6 +2711,8 @@ function mergeStudentRecords(base,extra){
   base.contentQuizzes={screencasts:Object.assign({},extra.contentQuizzes?.screencasts||{},base.contentQuizzes?.screencasts||{}),reading:Object.assign({},extra.contentQuizzes?.reading||{},base.contentQuizzes?.reading||{})};
   base.assignmentStatus=Object.assign({},extra.assignmentStatus||{},base.assignmentStatus||{});
   base.phaseAssessments=Object.assign({},extra.phaseAssessments||{},base.phaseAssessments||{});
+  base.weekFinished=Object.assign({},extra.weekFinished||{},base.weekFinished||{});
+  base.celebrations=Object.assign({},extra.celebrations||{},base.celebrations||{});
   return normalizeStudentRecord(base);
 }
 function exportStudentProgress(){
@@ -2755,7 +2789,7 @@ document.getElementById('continueGuestBtn')?.addEventListener('click', continueA
 document.getElementById('lpSignOutBtn').addEventListener('click', ()=>{
   if(!confirm('Sign out? Your progress stays saved on this device for your account, but you\'ll need to sign back in with the same email.')) return;
   localStorage.removeItem('hm_current_student');
-  location.reload();
+  forgetSession().then(()=>location.reload());
 });
 window.addEventListener('beforeunload',()=>{if(student) saveStudentRecord(student);});
 document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden' && student) saveStudentRecord(student);});
@@ -2773,6 +2807,7 @@ function enterApp(){
   try{ navigator.storage?.persist?.(); }catch(e){}
   updateSaveStatus(student?.lastSavedAt ? `Saved ${new Date(student.lastSavedAt).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}` : 'Saved on this device');
   document.getElementById('studentBadge').style.display = 'flex';
+  renderWeekFinishButtons(); resumeStudyTimers();
   document.getElementById('sbName').textContent = student.name;
   let legacy = [];
   try{ legacy = JSON.parse(localStorage.getItem('completedDays')) || []; }catch(e){}
@@ -2792,9 +2827,11 @@ function enterApp(){
   updateGrade();
   theaterRenderSide();
 }
-function initAuth(){
-  const cur = getCurrentStudent();
+async function initAuth(){
+  let cur = getCurrentStudent();
+  if(!cur){ try{ cur = await restoreSavedSession(); }catch(e){} }
   if(cur){
+    try{ await restoreRecordFromBackup(cur.email); }catch(e){}
     student = loadStudentRecord(cur.email);
     student.name = cur.name;
     student.email = cur.email;
@@ -2944,6 +2981,174 @@ document.getElementById('wqSubmit').addEventListener('click', ()=>{
 document.getElementById('wqModal').addEventListener('keydown', e=>{
   if(e.key==='Escape' && document.getElementById('wqSkip').style.display!=='none') document.getElementById('wqSkip').click();
 });
+/* HM_V2_PATCH — study timer, week check-marks, saved sessions, permission-based reports */
+const STUDY_SECONDS = 120;
+let studyTicker = null;
+function maybeStartStudyForCard(card){
+  const parts = String(card.dataset.day||'').split('-');
+  if(parts[1] !== '2' || !card.classList.contains('flipped')) return;
+  startStudyBeforeQuiz(parts[0]);
+}
+function startStudyBeforeQuiz(week){
+  week = String(week);
+  if(!student || (student.weekQuizzes && student.weekQuizzes[week])) return;
+  student.studyTimers = student.studyTimers || {};
+  if(!student.studyTimers[week]){
+    student.studyTimers[week] = Date.now() + STUDY_SECONDS*1000;
+    saveStudentRecord(student);
+    showToast('Study time started — your Week '+week+' quiz opens in 2 minutes.');
+  }
+  runStudyTicker();
+}
+function resumeStudyTimers(){ if(student && Object.keys(student.studyTimers||{}).length) runStudyTicker(); }
+function runStudyTicker(){ if(studyTicker) return; studyTicker = setInterval(studyTick,1000); studyTick(); }
+function studyBannerEl(){
+  let el = document.getElementById('studyBanner');
+  if(!el){ el = document.createElement('div'); el.id = 'studyBanner'; el.className = 'study-banner'; el.setAttribute('role','status'); el.setAttribute('aria-live','off'); document.body.appendChild(el); }
+  return el;
+}
+function showStudyBanner(w,left){
+  const el = studyBannerEl(); const m = Math.floor(left/60), s = String(left%60).padStart(2,'0');
+  el.innerHTML = `<div class="sb-ico" aria-hidden="true">📖</div><div class="sb-copy"><b>Study time · Week ${w}</b><span>Review your lesson card. Your quiz opens automatically when the timer ends.</span></div><div class="sb-time">${m}:${s}</div>`;
+  el.classList.add('show');
+}
+function hideStudyBanner(){ const el = document.getElementById('studyBanner'); if(el) el.classList.remove('show'); }
+function stopStudyTicker(){ if(studyTicker){ clearInterval(studyTicker); studyTicker = null; } hideStudyBanner(); }
+function studyTick(){
+  if(!student){ stopStudyTicker(); return; }
+  const t = student.studyTimers || {};
+  let changed = false;
+  Object.keys(t).forEach(w=>{ if(student.weekQuizzes && student.weekQuizzes[w]){ delete t[w]; changed = true; } });
+  if(changed) saveStudentRecord(student);
+  const weeks = Object.keys(t);
+  if(!weeks.length){ stopStudyTicker(); return; }
+  weeks.sort((a,b)=>t[a]-t[b]);
+  const w = weeks[0], left = Math.ceil((t[w]-Date.now())/1000);
+  if(left > 0){ showStudyBanner(w,left); return; }
+  hideStudyBanner();
+  const busy = ['wqModal','cqModal','phaseAssessmentModal'].some(id=>{ const m = document.getElementById(id); return m && m.classList.contains('open'); });
+  if(busy) return; // try again on the next tick
+  delete student.studyTimers[w];
+  saveStudentRecord(student);
+  maybeShowWeekQuiz(w);
+}
+/* ----- Week finished check-marks ----- */
+function renderWeekFinishButtons(){
+  for(let w=1; w<=TOTAL_WEEKS; w++){
+    const h = document.querySelector('#week'+w+' h2.wk'); if(!h) continue;
+    let b = h.querySelector('.week-finish');
+    if(!b){
+      b = document.createElement('button'); b.type = 'button'; b.className = 'week-finish';
+      b.addEventListener('click', e=>{ e.stopPropagation(); toggleWeekFinished(w); });
+      h.appendChild(b);
+    }
+    const done = !!(student && student.weekFinished && student.weekFinished[w]);
+    b.classList.toggle('done', done);
+    b.disabled = !student || !isCourseWeekOpen(w);
+    b.setAttribute('aria-pressed', done ? 'true' : 'false');
+    b.innerHTML = `<span class="wf-box" aria-hidden="true">${done?'✓':''}</span>${done?'Week finished':'Mark week finished'}`;
+  }
+}
+function toggleWeekFinished(w){
+  if(!student){ showToast('Sign in to save your progress.'); return; }
+  if(!isCourseWeekOpen(w)) return;
+  student.weekFinished = student.weekFinished || {};
+  const nowDone = !student.weekFinished[w];
+  if(nowDone) student.weekFinished[w] = new Date().toISOString(); else delete student.weekFinished[w];
+  saveStudentRecord(student);
+  renderWeekFinishButtons();
+  if(nowDone) checkWeekFinishedMilestones();
+}
+function checkWeekFinishedMilestones(){
+  const f = student.weekFinished || {};
+  student.celebrations = student.celebrations || {};
+  const all = Array.from({length:TOTAL_WEEKS},(_,i)=>i+1);
+  if(all.every(w=>f[w]) && !student.celebrations.finishedAll){
+    student.celebrations.finishedAll = true; saveStudentRecord(student);
+    showCourseCelebration('COURSE COMPLETE','Congratulations! You finished every week of the course. Great work, and thank you for your effort.');
+    return;
+  }
+  const months = {1:[1,2,3,4],2:[5,6,7,8],3:[9,10,11,12],4:[13,14,15,16]};
+  for(const m of [1,2,3,4]){
+    const key = 'finishedMonth'+m;
+    if(months[m].every(w=>f[w]) && !student.celebrations[key]){
+      student.celebrations[key] = true; saveStudentRecord(student);
+      showCourseCelebration('MONTH '+m+' COMPLETE','Congratulations! You ticked off all four weeks of Month '+m+'. Keep going!');
+      break;
+    }
+  }
+}
+/* ----- Saved sessions: localStorage + IndexedDB + cookie, so students stay signed in ----- */
+function idbOpen(){
+  return new Promise((res,rej)=>{
+    try{
+      const r = indexedDB.open('hm_course_store',1);
+      r.onupgradeneeded = ()=>r.result.createObjectStore('kv');
+      r.onsuccess = ()=>res(r.result); r.onerror = ()=>rej(r.error);
+    }catch(e){ rej(e); }
+  });
+}
+function idbSet(k,v){
+  return idbOpen().then(db=>new Promise(res=>{ const tx = db.transaction('kv','readwrite'); tx.objectStore('kv').put(v,k); tx.oncomplete = ()=>res(true); tx.onerror = ()=>res(false); })).catch(()=>false);
+}
+function idbGet(k){
+  return idbOpen().then(db=>new Promise(res=>{ const q = db.transaction('kv').objectStore('kv').get(k); q.onsuccess = ()=>res(q.result||null); q.onerror = ()=>res(null); })).catch(()=>null);
+}
+function idbDel(k){
+  return idbOpen().then(db=>new Promise(res=>{ const tx = db.transaction('kv','readwrite'); tx.objectStore('kv').delete(k); tx.oncomplete = ()=>res(true); tx.onerror = ()=>res(false); })).catch(()=>false);
+}
+function rememberSession(s){
+  const v = JSON.stringify({name:s.name,email:s.email});
+  try{ document.cookie = 'hm_cs='+encodeURIComponent(v)+'; max-age=31536000; path=/; SameSite=Lax'; }catch(e){}
+  idbSet('session', v);
+}
+function forgetSession(){
+  try{ document.cookie = 'hm_cs=; max-age=0; path=/; SameSite=Lax'; }catch(e){}
+  return idbDel('session');
+}
+async function restoreSavedSession(){
+  let s = null;
+  try{ const m = document.cookie.match(/(?:^|;\s*)hm_cs=([^;]+)/); if(m) s = JSON.parse(decodeURIComponent(m[1])); }catch(e){}
+  if(!s){ const v = await idbGet('session'); if(v){ try{ s = JSON.parse(v); }catch(e){} } }
+  if(s && s.email){ try{ localStorage.setItem('hm_current_student', JSON.stringify(s)); }catch(e){} return s; }
+  return null;
+}
+async function restoreRecordFromBackup(email){
+  email = String(email||'').trim().toLowerCase();
+  const bk = await idbGet('record:'+email);
+  if(!bk) return;
+  let bt = '', lt = '', local = null;
+  try{ bt = JSON.parse(bk).lastSavedAt || ''; }catch(e){ return; }
+  try{ local = localStorage.getItem(studentKey(email)); lt = local ? (JSON.parse(local).lastSavedAt || '') : ''; }catch(e){}
+  if(!local || bt > lt){
+    window.__recCache = window.__recCache || {}; window.__recCache[email] = bk;
+    try{ localStorage.setItem(studentKey(email), bk); }catch(e){}
+  }
+}
+function takeCachedRecord(email){
+  const c = window.__recCache; if(!c || !c[email]) return null;
+  const v = c[email]; delete c[email]; return v;
+}
+/* ----- Reports only with the student's permission ----- */
+function ensureReportModal(){
+  if(document.getElementById('reportPermModal')) return;
+  const wrap = document.createElement('div'); wrap.id = 'reportPermModal'; wrap.className = 'rp-backdrop';
+  wrap.innerHTML = `<div class="rp-box" role="dialog" aria-modal="true" aria-labelledby="rpTitle"><h3 id="rpTitle">Share your progress report?</h3><p>Nothing is downloaded or sent unless you choose an option below.</p><div class="rp-actions"><button type="button" class="rp-btn" id="rpPdf">⬇ Download PDF report</button><button type="button" class="rp-btn" id="rpMail">✉ Email my instructor</button><button type="button" class="rp-btn ghost" id="rpNo">Not now</button></div><small>Emailing opens your own mail app so you can read the message before sending it.</small></div>`;
+  document.body.appendChild(wrap);
+  const close = ()=>wrap.classList.remove('open');
+  wrap.addEventListener('click', e=>{ if(e.target === wrap) close(); });
+  wrap.addEventListener('keydown', e=>{ if(e.key === 'Escape') close(); });
+  wrap.querySelector('#rpNo').onclick = close;
+  wrap.querySelector('#rpPdf').onclick = ()=>{ close(); generateProgressReportPDF(window.__reportTrigger); };
+  wrap.querySelector('#rpMail').onclick = ()=>{ close(); notifyInstructor(window.__reportTrigger); };
+}
+function askReportPermission(trigger){
+  if(!student) return;
+  ensureReportModal();
+  window.__reportTrigger = trigger;
+  const m = document.getElementById('reportPermModal'); m.classList.add('open');
+  setTimeout(()=>{ const b = m.querySelector('#rpPdf'); if(b) b.focus(); },50);
+}
 /* ---------- GRADING ---------- */
 function computeGrade(){
   if(!student) return { pct:0, letter:'—', detail:'Sign in to start tracking.' };
@@ -3047,6 +3252,7 @@ function renderProgressView(){
     </div>
     <div class="progress-grid">
       <div class="progress-card" style="--pc-accent:#2f6fed"><h4>Lessons Completed</h4><div class="pc-big">${student.completed.length}/${cards.length}</div><div class="pc-sub">across ${TOTAL_WEEKS} weeks</div></div>
+      <div class="progress-card" style="--pc-accent:#10b981"><h4>Weeks Finished</h4><div class="pc-big">${Object.keys(student.weekFinished||{}).length}/${TOTAL_WEEKS}</div><div class="pc-sub">ticked as finished</div></div>
       <div class="progress-card" style="--pc-accent:#ff7a2d"><h4>Week Quizzes</h4><div class="pc-big">${quizzesTaken}/${TOTAL_WEEKS}</div><div class="pc-sub">completed automatically at week end</div></div>
       <div class="progress-card" style="--pc-accent:#06b6d4"><h4>Weekly Quiz Marks</h4><div class="pc-big">${weeklyQuizMarks().earned}/${weeklyQuizMarks().total}</div><div class="pc-sub">Weeks 1–4 · exact marks</div></div>
       <div class="progress-card" style="--pc-accent:#8b5cf6"><h4>Reading Opened</h4><div class="pc-big">${student.readingSeen.length}/${readingPool.length}</div><div class="pc-sub">Read Me sections viewed</div></div>
@@ -3409,9 +3615,9 @@ function notifyInstructor(trigger){
    full, colorful PDF saved to the student's own device — replacing the old "one
    giant plain-text email" approach. */
 function submitReportSilently(trigger){
+  // Reports are never downloaded or emailed automatically — the student must choose.
   if(!student) return;
-  notifyInstructor(trigger);
-  generateProgressReportPDF(trigger);
+  askReportPermission(trigger);
 }
 document.getElementById('lpReportBtn').addEventListener('click', ()=>{
   if(!student){ alert('Sign in first.'); return; }
@@ -4612,6 +4818,12 @@ function showCourseCelebration(title,message){
 }
 function initLearningUpgrade(){ renderAssignments(); renderHomeLearning(); updatePracticeCreditUI(); setTimeout(maybeShowCourseCelebrations,300); }
 initLearningUpgrade();
+(function(){
+  const ex = document.getElementById('lpExportBtn'), im = document.getElementById('lpImportBtn'), f = document.getElementById('lpImportFile');
+  if(ex) ex.addEventListener('click', exportStudentProgress);
+  if(im && f) im.addEventListener('click', ()=>f.click());
+  if(f) f.addEventListener('change', e=>{ importStudentProgress(e.target.files[0]); e.target.value = ''; });
+})();
 /* Start authentication only after every course/project/data dependency is initialized. */
 (function(){
   const bar=document.querySelector('.topbar');
