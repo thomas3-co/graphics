@@ -1801,6 +1801,7 @@ input,select,textarea{font-size:16px}
 </div>
 </div>
 <div class="learning-check-note" role="note"><strong>Important — Read Me pop-out quiz:</strong> After you finish a Read Me section, click <strong>Mark as Read</strong>. A 5-question pop-out check will appear. Complete it before moving on so your score is recorded.</div>
+<div class="marks-bar readme-marks" id="readmeMarksBar" aria-live="polite"><span>Read Me marks</span><b>0/20</b><small>0 of 4 checks completed</small></div>
 <div class="note-section" data-reading="readme-week1" id="readme-week1">
 <div class="note-actions">
 <button class="note-dl" onclick="downloadSectionPDF('readme-week1','Week 1 — Open, Save and Export')">Download PDF</button>
@@ -3311,6 +3312,7 @@ function updateGrade(){
   renderProgressView();
   // Keep the Home workflow connected to the same active student record.
   if(typeof renderHomeLearning === 'function') renderHomeLearning();
+  if(typeof updateMarksBars === 'function') updateMarksBars();
 }
 function weekStatus(w){
   const dayEls = weekDayEls(w);
@@ -3372,6 +3374,7 @@ function renderProgressView(){
         <button type="button" onclick="goTab('screencasts')"><span class="pl-icon">03</span><span><b>Screencasts</b><small>Continue watching in the cinematic theater</small></span><strong>→</strong></button>
       </div>
     </div>
+    ${phaseOneTotalHTML()}
     <div class="progress-grid">
       <div class="progress-card" style="--pc-accent:#2f6fed"><h4>Lessons Completed</h4><div class="pc-big">${student.completed.length}/${cards.length}</div><div class="pc-sub">across ${TOTAL_WEEKS} weeks</div></div>
       <div class="progress-card" style="--pc-accent:#10b981"><h4>Weeks Finished</h4><div class="pc-big">${Object.keys(student.weekFinished||{}).length}/${TOTAL_WEEKS}</div><div class="pc-sub">ticked as finished</div></div>
@@ -4457,6 +4460,7 @@ function theaterUpdateProgressSummary(){
   const barEl = document.getElementById('theaterProgressBar');
   if(textEl) textEl.textContent = `${watchedCount} of ${total} watched`;
   if(pctEl) pctEl.textContent = pct + '%';
+  if(typeof updateMarksBars === 'function') updateMarksBars();
   if(barEl) barEl.style.width = pct + '%';
 }
 function theaterFilteredList(){
@@ -4747,6 +4751,34 @@ function renderAssignments(){
  el.querySelectorAll('[data-assignment-status]').forEach(s=>s.addEventListener('change',e=>hmSetAssignment(e.target.dataset.assignmentStatus,e.target.value)));
  el.querySelectorAll('[data-project-submit]').forEach(b=>b.addEventListener('click',()=>hmMarkSubmitted(b.dataset.projectSubmit)));
 }
+function fmtMark(n){ n=Number(n)||0; return Number.isInteger(n)?String(n):n.toFixed(1); }
+function phaseOneMarks(){
+ const sum=o=>Object.values(o||{}).reduce((a,q)=>a+(Number(q&&q.score)||0),0);
+ const readTotal=(typeof readingPool!=='undefined'?readingPool.length:0)*5;
+ const scrTotal=(typeof getReleasedScreencasts==='function'?getReleasedScreencasts().length:0)*5;
+ const wk=weeklyQuizMarks();
+ let pr; try{ pr=practiceCreditSummary(); }catch(e){ pr={earned:0,total:2.8}; } // practice constants initialise later in startup
+ const items=[
+  {label:'Week Quizzes',earned:wk.earned,total:wk.total},
+  {label:'Screencast',earned:sum(student?.contentQuizzes?.screencasts),total:scrTotal},
+  {label:'Read Me',earned:sum(student?.contentQuizzes?.reading),total:readTotal},
+  {label:'Practice',earned:pr.earned,total:pr.total}
+ ];
+ return {items,earned:items.reduce((a,i)=>a+i.earned,0),total:items.reduce((a,i)=>a+i.total,0)};
+}
+function phaseOneTotalHTML(){
+ const m=phaseOneMarks();
+ return `<section class="p1-total" aria-label="Phase One marks total"><div class="p1-total-head"><span>Phase One Marks Total</span><b>${fmtMark(m.earned)}/${fmtMark(m.total)}</b></div><div class="p1-total-grid">${m.items.map(i=>`<div><small>${i.label}</small><b>${fmtMark(i.earned)}/${fmtMark(i.total)}</b></div>`).join('')}</div></section>`;
+}
+function updateMarksBars(){
+ const m=phaseOneMarks();
+ const find=l=>m.items.find(i=>i.label===l);
+ const r=find('Read Me'), v=find('Screencast');
+ const rb=document.getElementById('readmeMarksBar');
+ if(rb){ const done=student?Object.keys(student.contentQuizzes?.reading||{}).length:0; const n=(typeof readingPool!=='undefined'?readingPool.length:0); rb.innerHTML=`<span>Read Me marks</span><b>${fmtMark(r.earned)}/${fmtMark(r.total)}</b><small>${done} of ${n} checks completed</small>`; }
+ const sp=document.getElementById('theaterProgressPct');
+ if(sp) sp.textContent=`${fmtMark(v.earned)}/${fmtMark(v.total)} marks`;
+}
 function weeklyQuizMarks(){
   const weeks=[1,2,3,4], perQuiz=3; // buildWeekQuiz() asks 3 questions per week
   let earned=0, taken=0;
@@ -4758,7 +4790,7 @@ function workflowStepMark(step){
    const taken=entries.filter(q=>q && Number.isFinite(Number(q.score)) && Number.isFinite(Number(q.total)) && Number(q.total)>0);
    const earned=taken.reduce((s,q)=>s+Number(q.score),0);
    const completedTotal=taken.reduce((s,q)=>s+Number(q.total),0);
-   const total=completedTotal>0 ? completedTotal : Number(availableTotal)||0;
+   const total=Number(availableTotal)>0 ? Number(availableTotal) : completedTotal;
    return {earned,total,text:`${earned}/${total}`};
  };
  const readingEntries=Object.values(student?.contentQuizzes?.reading||{});
@@ -4844,6 +4876,7 @@ function renderHomeLearning(){
      <div class="workflow-overall-copy"><div class="workflow-overall-meta">Overall Phase One Mark</div><div class="workflow-overall-score">${g.pct}/100 <span>exact mark</span></div><div class="workflow-overall-detail">${student ? `${g.pct} marks earned out of 100` : 'Sign in to see the student mark'} · ${homePct}%</div><div class="workflow-mini-bar"><i style="width:${homePct}%"></i></div></div>
      <button type="button" class="hbtn primary workflow-overall-action" id="homeWorkflowProgressBtn">Open My Progress</button>
    </div>
+   ${phaseOneTotalHTML()}
    <div class="workflow-track-wrap"><div class="workflow-track">
      ${homeSteps.map((x,i)=>`<div class="workflow-node">
        <button type="button" class="workflow-click ${x.done?'done-step':''} ${x.locked?'workflow-lock':''} ${nextStep===x?'active-step':''}" data-home-workflow-step="${x.n}" ${x.locked?'aria-disabled="true"':''}>
@@ -5032,6 +5065,21 @@ button,.chip,.week-pill,.flip-card{ touch-action:manipulation; }
 #screencastTheater .theater-nav .tn-btn:focus-visible{outline:3px solid #9db8ff;outline-offset:2px}
 #screencastTheater .theater-nav .tn-index{justify-self:center;padding:7px 14px;border-radius:999px;background:rgba(255,255,255,.08);color:#cdd5e6;font:700 11px 'Inter',sans-serif;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap}
 @media (max-width:600px){#screencastTheater .theater-nav{grid-template-columns:1fr 1fr;grid-template-areas:"idx idx" "prev next"}#screencastTheater .theater-nav .tn-index{grid-area:idx}#screencastTheater .theater-nav .tn-prev{grid-area:prev;justify-self:stretch}#screencastTheater .theater-nav .tn-next{grid-area:next;justify-self:stretch}}
+</style>
+<style id="hma-marks-ui">
+.p1-total{margin:0 0 16px;padding:16px 18px;border-radius:16px;background:linear-gradient(135deg,#101522,#1a2236);color:#fff;border:1px solid rgba(255,255,255,.08);box-shadow:0 10px 26px rgba(7,12,25,.16)}
+.p1-total-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.p1-total-head span{font:700 12px 'Inter',sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#aeb8cf}
+.p1-total-head b{font:800 28px 'Poppins',sans-serif;color:#fff}
+.p1-total-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:12px}
+.p1-total-grid>div{padding:10px 12px;border-radius:12px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.08)}
+.p1-total-grid small{display:block;font:600 11px 'Inter',sans-serif;color:#aeb8cf;margin-bottom:3px}
+.p1-total-grid b{font:700 16px 'Poppins',sans-serif}
+@media (max-width:640px){.p1-total-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.marks-bar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:0 0 16px;padding:12px 16px;border-radius:14px;background:#fff;border:1px solid var(--line);box-shadow:0 6px 18px rgba(31,55,90,.06)}
+.marks-bar span{font:700 12px 'Inter',sans-serif;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.marks-bar b{font:800 20px 'Poppins',sans-serif;color:var(--c-notes)}
+.marks-bar small{margin-left:auto;font:600 12px 'Inter',sans-serif;color:var(--muted)}
 </style>
 </body>
 </html>
