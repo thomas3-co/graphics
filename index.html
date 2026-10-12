@@ -1104,15 +1104,15 @@ input,select,textarea{font-size:16px}
 <!-- ===== MONTH TWO ===== -->
 <div class="month-block" data-month="m2">
 <div class="week-card" id="week5">
-<h2 class="wk">Week 5 — Independent Time &amp; Practice</h2>
+<h2 class="wk">Week 5 — Check-In &amp; Check-Out</h2>
 <div class="day-grid">
 <div class="flip-card" data-day="5-1"><div class="flip-card-inner">
-<div class="flip-card-front"><h4>Day 1: Independent Learning &amp; Practice</h4><p>Use independent time to review the course skills, revisit screencasts, and practice the techniques you need most.</p><span class="flip-hint">Tap to flip</span></div>
-<div class="flip-card-back"><div class="vocab-title">Independent Time</div><p>Work at your own pace. Rewatch released screencasts, review Read Me notes, and practice the techniques that need more repetition.</p><ul><li>Choose one skill to strengthen.</li><li>Recreate the technique from memory.</li><li>Save your editable work and compare your result with the lesson.</li></ul><div class="big-ideas">The goal is confidence and independence: identify what you need, practice it, and improve without waiting for a new teacher demonstration.</div></div>
+<div class="flip-card-front"><h4>Day 1: Check-In</h4><p>Check in with your learning: review what you have completed, identify what feels clear, and note what you need help with.</p><span class="flip-hint">Tap to flip</span></div>
+<div class="flip-card-back"><div class="vocab-title">Check-In</div><p>Take stock of your learning at the start of Month Two.</p><ul><li>Review the work you have completed.</li><li>Identify one skill you feel confident using.</li><li>Write down one question or skill you want help with.</li></ul><div class="big-ideas">A useful check-in helps you and your instructor decide what to focus on next.</div></div>
 </div></div>
 <div class="flip-card" data-day="5-2"><div class="flip-card-inner">
-<div class="flip-card-front"><h4>Day 2: Independent Practice &amp; Review</h4><p>Use a second independent practice session to strengthen weak areas, finish unfinished work, and prepare for the next phase.</p><span class="flip-hint">Tap to flip</span></div>
-<div class="flip-card-back"><div class="vocab-title">Practice Time</div><p>Choose a focused task and complete it independently. Revisit Transform, Puppet Warp, portrait retouching, background removal, or any earlier skill that needs more practice.</p><ul><li>Set a clear practice goal.</li><li>Complete the task from start to finish.</li><li>Check your layers, file naming, and saved working file.</li></ul><div class="big-ideas">Independent practice is about applying the skills without step-by-step prompting and knowing when to review a lesson before continuing.</div></div>
+<div class="flip-card-front"><h4>Day 2: Check-Out</h4><p>Check out of the week by reflecting on your progress, organizing your work, and setting a next step.</p><span class="flip-hint">Tap to flip</span></div>
+<div class="flip-card-back"><div class="vocab-title">Check-Out</div><p>Finish the week with a short learning reflection. Revisit Transform, Puppet Warp, portrait retouching, background removal, or any earlier skill that needs more practice.</p><ul><li>Set a clear practice goal.</li><li>Complete the task from start to finish.</li><li>Check your layers, file naming, and saved working file.</li></ul><div class="big-ideas">Independent practice is about applying the skills without step-by-step prompting and knowing when to review a lesson before continuing.</div></div>
 </div></div>
 </div>
 </div>
@@ -1970,7 +1970,7 @@ input,select,textarea{font-size:16px}
 </div>
 <button class="lp-report-btn" id="lpReportBtn">✉ Send Progress Report</button>
 <div id="lpReportStatus" style="font-size:10.5px;color:#8f96a6;margin-top:6px;min-height:12px;"></div>
-<div class="lp-data-tools"><div class="lp-data-title">Save &amp; restore</div><span class="lp-save-status" data-save-status>Saved on this device</span><div class="lp-data-actions"><button type="button" id="lpExportBtn">⬇ Backup</button><button type="button" id="lpImportBtn">⬆ Restore</button></div><input type="file" id="lpImportFile" accept="application/json,.json" style="display:none"><small>Your progress saves automatically in this browser. Use Backup to move it to another device.</small></div>
+
 <button class="lp-signout" id="lpSignOutBtn">Sign out of this device</button>
 <div class="lp-note">Every lesson card is a "layer." Flip a card in the Curriculum tab to mark that day's lesson complete — the total above and this panel's grade &amp; report stay visible even while the weekly breakdown is collapsed; tap "Weekly breakdown" to expand it. Progress reports are only sent when the student explicitly chooses "Send Progress Report."</div>
 </aside>
@@ -3630,13 +3630,13 @@ function notifyInstructor(trigger){
    full, colorful PDF saved to the student's own device — replacing the old "one
    giant plain-text email" approach. */
 function submitReportSilently(trigger){
-  // Reports are never downloaded or emailed automatically — the student must choose.
-  if(!student) return;
-  askReportPermission(trigger);
+  // Automatic milestones never open report dialogs, download files, or launch email.
+  // Reports are available only through the explicit Layers-panel button.
+  return;
 }
 document.getElementById('lpReportBtn').addEventListener('click', ()=>{
   if(!student){ alert('Sign in first.'); return; }
-  submitReportSilently('Manual send from Layers panel');
+  askReportPermission('Manual send from Layers panel');
 });
 /* ---------- CALENDAR-BASED BIWEEKLY AUTO-REPORT (Sept 14 = Week 1) ---------- */
 const BIWEEKLY_PERIODS = Math.ceil(TOTAL_WEEKS/2); // 16 weeks -> 8 two-week periods
