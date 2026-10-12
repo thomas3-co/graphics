@@ -813,6 +813,71 @@ input,select,textarea{font-size:16px}
 .tn-mark.done{background:#e7f6ee;color:#1a8a52}
 #theaterWatchedNote{font-size:12px;color:var(--muted);flex:1;min-width:180px}
 </style>
+
+<style id="hm-responsive-lock-patch">
+/* Responsive refinements for iPad, iPhone and touch devices */
+html { -webkit-text-size-adjust:100%; }
+body { overflow-wrap:anywhere; }
+.topbar { padding-left:max(10px,env(safe-area-inset-left)); padding-right:max(10px,env(safe-area-inset-right)); }
+.tabs { min-width:0; overscroll-behavior-x:contain; }
+@media (max-width:1024px) {
+  .workspace { display:flex; flex-direction:column; }
+  .canvas { width:100%; padding:24px 18px 70px; }
+  .layers-panel,.layers-panel.collapsed { order:0; position:relative; top:auto; width:auto; max-height:none; margin:0 14px 12px; }
+  .theater { flex-direction:column; }
+  .theater-main,.theater-side { width:100%; min-width:0; }
+  .theater-side { position:static; max-height:460px; }
+  .theater-list { flex-direction:row; overflow-x:auto; overflow-y:hidden; }
+  .theater-item { width:180px; flex:0 0 180px; flex-direction:column; }
+  .theater-item .ti-thumb { width:100%; height:100px; }
+  .readme-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+}
+@media (max-width:760px) {
+  .topbar { height:auto; min-height:60px; flex-wrap:wrap; gap:5px; padding-top:5px; padding-bottom:5px; }
+  .app { padding-top:92px; }
+  .brand { flex:1 0 auto; }
+  .tabs { order:3; flex:1 0 100%; width:100%; }
+  .tab { padding:10px 11px; min-height:42px; }
+  .student-badge { margin-left:auto; }
+  .progress-nav-btn { margin-left:auto; }
+  .view-head { top:105px; }
+  .workspace { display:flex; flex-direction:column; }
+  .canvas { padding:18px 12px 70px; }
+  .day-grid,.readme-grid,.readme-timeline,.progress-grid { grid-template-columns:minmax(0,1fr); }
+  .flip-card { height:350px; }
+  .hero { padding:30px 22px; }
+  .hero h1 { font-size:clamp(1.6rem,7vw,2.4rem); }
+  .note-section h3 { padding-right:0; }
+  .note-actions { position:static; flex-direction:row; margin:0 0 14px; flex-wrap:wrap; }
+  .wq-modal { padding: max(6px,env(safe-area-inset-top)) 6px max(6px,env(safe-area-inset-bottom)); align-items:center; }
+  .wq-box { width:100%; height: min(94dvh,900px); max-height:94dvh; border-radius:16px; }
+  .wq-box .wq-footer { position:relative; z-index:5; flex-direction:column; align-items:stretch; gap:8px; padding:10px 12px max(12px,env(safe-area-inset-bottom)); }
+  .wq-box .wq-actions { width:100%; display:flex; }
+  .wq-box .wq-actions button { flex:1; min-height:46px; }
+  .wq-scroll { min-height:0; overflow-y:auto; -webkit-overflow-scrolling:touch; }
+  .phase-modal { width:100%; max-height:94dvh; }
+  .phase-modal-foot { position:sticky; bottom:0; z-index:3; flex-wrap:wrap; }
+  .phase-modal-foot button { min-height:46px; }
+}
+@media (max-width:420px) {
+  .brand .name { max-width:190px; white-space:normal; line-height:1.1; }
+  .panel-toggle { padding:7px; }
+  .student-badge .sb-name { display:none; }
+  .tab { padding:9px 8px; font-size:11px; }
+  .canvas { padding-left:9px; padding-right:9px; }
+}
+@media (orientation:landscape) and (max-height:500px) {
+  .wq-box { height:94dvh; max-height:94dvh; }
+  .wq-box .wq-head { padding:10px 16px; }
+  .wq-scroll { padding:10px 16px; }
+  .wq-box .wq-footer { padding:8px 12px; }
+}
+/* Completed assessments and quizzes remain visibly locked */
+.hm-completed-lock { filter:grayscale(1)!important; opacity:.62!important; background:#e5e7eb!important; border-color:#c7cbd1!important; color:#555b65!important; box-shadow:none!important; }
+.hm-completed-lock button,.hm-completed-lock a { pointer-events:none!important; cursor:not-allowed!important; }
+.hm-lock-label { display:inline-flex; align-items:center; gap:5px; color:#59616d; font-weight:800; font-size:11px; }
+</style>
+
 </head>
 <body><div aria-live="polite" class="offline-banner" id="offlineBanner" role="status">You are offline. Your local progress can still be saved on this device.</div><button aria-label="Accessibility and learning preferences" class="a11y-float" id="a11yBtn" type="button">Aa</button>
 <a class="skip-link" href="#mainContent">Skip to content</a>
@@ -4022,6 +4087,10 @@ const VIDEO_WATCH_THRESHOLD_MS = 60000; // dwell required before a recording aut
 function renderMediaCard({ id, label, kind, accent, trackKey }){
   const card = document.createElement('div');
   card.className = 'media-card';
+  const quizBucket = kind === 'video' ? 'screencasts' : 'reading';
+  const quizId = trackKey || id;
+  const quizCompleted = !!student?.contentQuizzes?.[quizBucket]?.[quizId];
+  if(quizCompleted) card.classList.add('hm-completed-lock');
   card.style.setProperty('--card-accent', accent);
   const icon = kind === 'video' ? '▶' : '⭳';
   const posterLabel = kind === 'video' ? 'Play in card' : 'Preview file';
@@ -4036,7 +4105,7 @@ function renderMediaCard({ id, label, kind, accent, trackKey }){
       </button>
     </div>
     <div class="media-body">
-      <div class="mb-top"><b>${label}</b><span class="chk" data-role="chk">not opened</span></div>
+      <div class="mb-top"><b>${label}</b><span class="chk" data-role="chk">${quizCompleted ? '✓ Assessment completed · locked' : 'not opened'}</span></div>
       ${kind==='video' ? '<button type="button" class="chk" data-role="watchbtn" style="cursor:pointer;display:none;">Mark watched</button>' : ''}
       <a href="${openUrl}" target="_blank" rel="noopener">Open in Google Drive →</a>
     </div>`;
@@ -4047,7 +4116,10 @@ function renderMediaCard({ id, label, kind, accent, trackKey }){
   if(student && student.videoConfirmed && student.videoConfirmed[id]){
     if(chk){ chk.textContent='watched ✓'; chk.classList.add('seen'); }
   }
+  poster.disabled = quizCompleted;
+  if(quizCompleted) poster.setAttribute('aria-label', `${label}: assessment completed and locked`);
   poster.addEventListener('click', ()=>{
+    if(quizCompleted) return;
     thumb.innerHTML = '<div class="thumb-poster" style="cursor:default;"><div class="thumb-spinner" aria-hidden="true"></div><span class="lbl">Loading...</span></div>';
     const iframe = document.createElement('iframe');
     iframe.src = embedUrl;
@@ -4811,7 +4883,7 @@ function openPhaseAssessmentModal(){
  const modal=document.getElementById('phaseAssessmentModal'); const body=document.getElementById('phaseModalBody'); const submit=document.getElementById('phaseModalSubmit');
  if(!phaseAssessmentAvailable()){ body.innerHTML=`<div class="phase-lock-card"><div class="phase-lock-icon">🔒</div><h3>Available in Week 6</h3><p>The Phase 1 Assessment opens when Week 6 begins. Your workflow will unlock the clickable assessment automatically then.</p><div class="phase-launch-meta" style="justify-content:center;margin-top:16px"><span>15 questions</span><span>20 marks</span><span>Shuffled order</span></div></div>`; document.getElementById('phaseModalProgress').textContent='Locked until Week 6'; submit.style.display='none'; modal.classList.add('open'); return; }
  const saved=student?.phaseAssessments?.phase1;
- if(saved?.completedAt){ const pct=Math.round(saved.score/saved.total*100); body.innerHTML=`<div class="phase-complete-card"><div class="hero-eyebrow">PHASE 1 COMPLETE</div><div class="phase-score">${saved.score}/${saved.total} · ${pct}%</div><p style="margin:7px 0;color:#667085">Submitted ${new Date(saved.completedAt).toLocaleString()}. This official phase result is locked.</p><div class="phase-progress"><i style="width:${pct}%"></i></div></div>`; document.getElementById('phaseModalProgress').textContent=`Saved score · ${pct}%`; submit.style.display='none'; modal.classList.add('open'); return; }
+ if(saved?.completedAt){ const pct=Math.round(saved.score/saved.total*100); body.innerHTML=`<div class="phase-complete-card hm-completed-lock"><div class="hero-eyebrow">PHASE 1 COMPLETE</div><div class="phase-score">${saved.score}/${saved.total} · ${pct}%</div><p style="margin:7px 0;color:#667085">Submitted ${new Date(saved.completedAt).toLocaleString()}. This official phase result is locked.</p><div class="phase-progress"><i style="width:${pct}%"></i></div></div>`; document.getElementById('phaseModalProgress').textContent=`Saved score · ${pct}%`; submit.style.display='none'; modal.classList.add('open'); return; }
  submit.style.display='inline-flex';
  const questions=shuffleArray(PHASE1_QUESTIONS).map(q=>({...q,opts:shuffleArray(q.opts).map(text=>({text,original:q.opts.indexOf(text)})),uid:Math.random().toString(36).slice(2)}));
  window.__phaseModalQuestions=questions;
@@ -4858,6 +4930,16 @@ function showCourseCelebration(title,message){
   el.querySelector('#celebrationTitle').textContent=title; el.querySelector('#celebrationMessage').textContent=message; el.classList.add('show'); el.setAttribute('aria-hidden','false');
 }
 function initLearningUpgrade(){ renderAssignments(); renderHomeLearning(); updatePracticeCreditUI(); setTimeout(maybeShowCourseCelebrations,300); }
+
+/* Durable local progress safeguards: save immediately before leaving/signing out. */
+function hmPersistCurrentProgress(){
+  if(!student || !student.email) return;
+  try { saveStudentRecord(student); } catch(e) {}
+}
+window.addEventListener('pagehide', hmPersistCurrentProgress);
+window.addEventListener('beforeunload', hmPersistCurrentProgress);
+document.addEventListener('visibilitychange',()=>{ if(document.visibilityState==='hidden') hmPersistCurrentProgress(); });
+
 initLearningUpgrade();
 (function(){
   const ex = document.getElementById('lpExportBtn'), im = document.getElementById('lpImportBtn'), f = document.getElementById('lpImportFile');
