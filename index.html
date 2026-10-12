@@ -1958,12 +1958,11 @@ input,select,textarea{font-size:16px}
 <div class="theater-player" id="theaterPlayerWrap"></div>
 </div>
 <div class="theater-nav">
-<button class="tn-btn" id="theaterPrevBtn" type="button">◀ Previous</button>
+<button class="tn-btn tn-prev" id="theaterPrevBtn" type="button"><span class="tn-arrow" aria-hidden="true">‹</span><span>Previous</span></button>
 <span class="tn-index" id="theaterIndex">—</span>
-<button class="tn-btn" id="theaterNextBtn" type="button">Next ▶</button>
+<button class="tn-btn tn-next" id="theaterNextBtn" type="button"><span>Next</span><span class="tn-arrow" aria-hidden="true">›</span></button>
 </div>
 <div class="theater-markrow"><button type="button" class="tn-mark" id="theaterWatchedBtn">✓ Mark as watched</button><span id="theaterWatchedNote"></span></div>
-<div class="theater-tip" id="theaterTip">📌 <strong>Watch → Next ▶ → Quick Check.</strong> Finish the recording, then click <strong>Mark as watched</strong> (or <strong>Next ▶</strong>) to save your progress and open the 5-question screencast check.</div>
 <div class="theater-info">
 <div aria-hidden="true" class="ti-avatar">Ps</div>
 <div class="ti-meta">
@@ -4582,7 +4581,7 @@ function theaterUpdateNav(){
   if(idx<0){ prevBtn.disabled = true; nextBtn.disabled = true; indexEl.textContent = '—'; return; }
   prevBtn.disabled = idx<=0;
   nextBtn.disabled = false;
-  nextBtn.textContent = idx>=released.length-1 ? 'Finish ✓' : 'Next ▶';
+  nextBtn.querySelector('span').textContent = idx>=released.length-1 ? 'Finish' : 'Next'; nextBtn.classList.toggle('is-finish', idx>=released.length-1);
   indexEl.textContent = `Screencast ${idx+1} of ${released.length}`;
 }
 function theaterMarkWatched(id){
@@ -5017,5 +5016,20 @@ button,.chip,.week-pill,.flip-card{ touch-action:manipulation; }
 }
 </style>
 
+<style id="hma-theater-nav-ui">
+#screencastTheater .theater-nav{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:12px;margin-top:14px;padding:10px;border-radius:18px;background:linear-gradient(135deg,#101522,#1a2236);border:1px solid rgba(255,255,255,.08);box-shadow:0 12px 28px rgba(7,12,25,.22);backdrop-filter:none}
+#screencastTheater .theater-nav .tn-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-width:0;min-height:46px;padding:0 20px;border-radius:14px;font:700 14px 'Poppins','Inter',sans-serif;letter-spacing:.01em;cursor:pointer;transition:transform .15s ease,box-shadow .15s ease,background .15s ease,opacity .15s ease}
+#screencastTheater .theater-nav .tn-arrow{font-size:24px;line-height:1;font-weight:500;margin-top:-2px}
+#screencastTheater .theater-nav .tn-prev{justify-self:start;color:#e8ecf6;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16)}
+#screencastTheater .theater-nav .tn-prev:hover:not(:disabled){background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.3);transform:translateX(-2px)}
+#screencastTheater .theater-nav .tn-next{justify-self:end;color:#fff;border:1px solid transparent;background:linear-gradient(135deg,#2f6fed,#8b5cf6);box-shadow:0 8px 20px rgba(79,70,229,.38)}
+#screencastTheater .theater-nav .tn-next:hover:not(:disabled){transform:translateX(2px);box-shadow:0 10px 26px rgba(79,70,229,.5)}
+#screencastTheater .theater-nav .tn-next.is-finish{background:linear-gradient(135deg,#1a8a52,#2bb673);box-shadow:0 8px 20px rgba(26,138,82,.38)}
+#screencastTheater .theater-nav .tn-btn:active:not(:disabled){transform:scale(.97)}
+#screencastTheater .theater-nav .tn-btn:disabled{opacity:.35;cursor:not-allowed;box-shadow:none}
+#screencastTheater .theater-nav .tn-btn:focus-visible{outline:3px solid #9db8ff;outline-offset:2px}
+#screencastTheater .theater-nav .tn-index{justify-self:center;padding:7px 14px;border-radius:999px;background:rgba(255,255,255,.08);color:#cdd5e6;font:700 11px 'Inter',sans-serif;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap}
+@media (max-width:600px){#screencastTheater .theater-nav{grid-template-columns:1fr 1fr;grid-template-areas:"idx idx" "prev next"}#screencastTheater .theater-nav .tn-index{grid-area:idx}#screencastTheater .theater-nav .tn-prev{grid-area:prev;justify-self:stretch}#screencastTheater .theater-nav .tn-next{grid-area:next;justify-self:stretch}}
+</style>
 </body>
 </html>
