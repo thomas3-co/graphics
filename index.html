@@ -196,7 +196,16 @@ button{font-family:inherit;}
 }
 .week-pill.active{background:var(--ink);color:#fff;border-color:var(--ink);}
 .month-block{display:none;}
-.month-block.active{display:block;}
+ .month-block.active{display:block;}
+/* Reliable Week 5 display: its two Check-In/Check-Out flip cards must be visible in Month Two. */
+.month-block[data-month="m2"].active #week5 .day-grid{display:grid!important;visibility:visible!important;}
+#week5 .flip-card{opacity:1;transform:none;visibility:visible;}
+#week5 .flip-card .flip-card-inner{visibility:visible;}
+/* A completed weekly pop-out quiz greys the whole corresponding week, while preserving readable text. */
+.week-card.quiz-completed{filter:grayscale(1)!important;}
+.week-card.quiz-completed .week-date{background:#e4e6e9!important;color:#666d77!important;border-color:#d1d4d9!important;}
+.week-card.quiz-completed .flip-card-front,.week-card.quiz-completed .flip-card-back{filter:grayscale(1)!important;}
+
 .week-card{margin:34px 0 10px;scroll-margin-top:75px;}
 .week-card h2.wk{font-size:1.35rem;margin-bottom:16px;color:var(--c-curriculum);display:flex;align-items:center;gap:10px;}
 .week-card h2.wk::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--c-curriculum);}
@@ -628,6 +637,24 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
 .capture-warning p{margin:0;color:rgba(255,255,255,.7);font-size:13px;line-height:1.6;}
 @media print{body>*{display:none!important;}body:after{content:"Printing this assessment is disabled.";display:block;padding:40px;font:700 18px sans-serif;color:#111;}}
 @media(max-width:900px){.theater-stage{padding:8px!important;border-radius:16px!important;}.theater-player{border-radius:10px!important;}.theater-stage:after{display:none;}.learning-check-note{font-size:12px;}}
+
+/* Keep quiz submit controls visible and the modal footer reachable on desktop, iPad and phones. */
+.wq-box{display:flex;flex-direction:column;min-height:0;}
+.wq-box .wq-head{flex:0 0 auto;position:relative;z-index:2;}
+.wq-box .wq-scroll{min-height:0;flex:1 1 auto;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;}
+.wq-box .wq-footer{flex:0 0 auto;position:relative;z-index:5;padding-bottom:calc(14px + env(safe-area-inset-bottom));}
+#wqModal .wq-box>.wq-actions{flex:0 0 auto;position:relative;z-index:5;padding:12px 20px calc(14px + env(safe-area-inset-bottom));background:#fff;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:12px;}
+@media(max-width:640px){#wqModal .wq-box>.wq-actions{padding:11px 13px calc(14px + env(safe-area-inset-bottom));}}
+.cq-top-actions{display:flex;justify-content:flex-end;margin-top:10px;}
+.cq-submit-top{padding:8px 14px!important;font-size:12px!important;}
+.wq-box .wq-footer .wq-actions{flex:0 0 auto;}
+@media(max-width:640px){
+ .wq-box .wq-footer{display:flex;flex-direction:column;align-items:stretch;gap:8px;max-height:none;}
+ .wq-box .wq-footer .wq-actions{display:flex;width:100%;}
+ .wq-box .wq-footer .wq-actions button{width:100%;min-height:44px;}
+ .cq-top-actions .cq-submit-top{width:auto!important;min-height:40px;}
+}
+
 </style>
 <style>
 /* Professional learning-platform upgrades — intentionally no dark/light theme switch. */
@@ -856,6 +883,7 @@ input,select,textarea{font-size:16px}
 <div class="wq-head">
 <div class="wq-tag" id="wqWeekTag">Weekly Check-In</div>
 <h3 id="wqQuestion">How did this week's lessons go?</h3>
+<div class="cq-top-actions"><button class="wq-submit cq-submit-top" type="button" onclick="document.getElementById('wqSubmit').click()">Submit Quiz ↑</button></div>
 </div>
 <div class="wq-scroll" id="wqQuizScroll">
 <div id="wqQuizBody"></div>
@@ -876,6 +904,7 @@ input,select,textarea{font-size:16px}
 <h3 id="cqHeading">Knowledge Check</h3>
 <div aria-hidden="true" class="wq-progress"><i id="cqProgressBar"></i></div>
 <div class="wq-progress-row"><span id="cqProgressText">0 of 5 answered</span><span>5 questions</span></div>
+<div class="cq-top-actions"><button class="wq-submit cq-submit-top" type="button" onclick="document.getElementById('cqSubmit').click()">Submit Quiz ↑</button></div>
 </div>
 <div class="wq-scroll" id="cqQuizScroll">
 <div id="cqQuizBody"></div>
@@ -1009,15 +1038,15 @@ input,select,textarea{font-size:16px}
 <p>Class meets 2 days per week. Tap any card to flip it and mark that lesson complete. Progress is saved automatically. Finishing both days in a week pops up that week's check-in quiz.</p>
 </div>
 <div class="month-switch" id="monthSwitch">
-<button class="chip active" data-month="m1">Month One · Weeks 1–4</button>
-<button class="chip" data-month="m2">Month Two · Weeks 5–8</button>
+<button class="chip" data-month="m1">Month One · Weeks 1–4</button>
+<button class="chip active" data-month="m2">Month Two · Weeks 5–8</button>
 <button class="chip" data-month="m3">Month Three · Weeks 9–12</button>
 <button class="chip" data-month="m4">Month Four · Weeks 13–16</button>
 </div>
 </div>
 <div class="week-nav" id="weekNav"></div>
 <!-- ===== MONTH ONE ===== -->
-<div class="month-block active" data-month="m1">
+<div class="month-block" data-month="m1">
 <div class="week-card" id="week1">
 <h2 class="wk">Week 1 — Graphic Design Software &amp; Foundations</h2>
 <div class="day-grid">
@@ -1117,7 +1146,7 @@ input,select,textarea{font-size:16px}
 </div></div></div>
 </div><!-- /month-block m1 -->
 <!-- ===== MONTH TWO ===== -->
-<div class="month-block" data-month="m2">
+<div class="month-block active" data-month="m2">
 <div class="week-card" id="week5">
 <h2 class="wk">Week 5 — Check-In &amp; Check-Out</h2>
 <div class="day-grid">
@@ -2541,6 +2570,7 @@ document.getElementById('cqSubmit').addEventListener('click', ()=>{
   document.querySelectorAll(bucket==='reading' ? `.note-section[data-reading="${cqPendingKey}"]` : `.theater-item[data-screencast-id="${cqPendingKey}"]`).forEach(el=>el.classList.add(bucket==='reading'?'reading-complete':'learning-complete'));
   saveStudentRecord(student);
   updateGrade();
+  refreshCompletionGrayStates();
   modal.classList.remove('open');
   cqPendingType = null;
   cqPendingKey = null;
@@ -2852,6 +2882,31 @@ setInterval(()=>{if(student) saveStudentRecord(student);},30000);
 if(new URLSearchParams(location.search).get('resetdevice') === '1'){
   localStorage.removeItem('hm_device_lock');
 }
+function refreshCompletionGrayStates(){
+  if(!student) return;
+  const reading=student.contentQuizzes?.reading||{};
+  const videos=student.contentQuizzes?.screencasts||{};
+  const weekQuizzes=student.weekQuizzes||{};
+  Object.keys(reading).forEach(k=>document.querySelectorAll(`.note-section[data-reading="${k}"]`).forEach(el=>el.classList.add('reading-complete')));
+  Object.keys(videos).forEach(k=>{
+    document.querySelectorAll(`.theater-item[data-screencast-id="${k}"]`).forEach(el=>el.classList.add('learning-complete'));
+    document.querySelectorAll(`.media-card[data-screencast-id="${k}"], .media-card[data-track-key="${k}"]`).forEach(el=>el.classList.add('learning-complete'));
+  });
+  Object.keys(weekQuizzes).forEach(w=>{
+    const weekEl=document.getElementById('week'+Number(w));
+    if(weekEl) weekEl.classList.add('quiz-completed');
+  });
+  document.querySelectorAll('.assignment-card').forEach(el=>{
+    const select=el.querySelector('[data-assignment-status]');
+    const submit=el.querySelector('[data-project-submit]');
+    const id=select?.dataset.assignmentStatus || submit?.dataset.projectSubmit;
+    if(id && student.assignmentStatus?.[id]==='Submitted') el.classList.add('project-complete');
+  });
+  document.querySelectorAll('.flip-card[data-day]').forEach(card=>{
+    const w=Number((card.dataset.day||'').split('-')[0]);
+    if(weekQuizzes[w]) card.classList.add('done');
+  });
+}
 function enterApp(){
   gate.classList.add('hidden');
   try{ navigator.storage?.persist?.(); }catch(e){}
@@ -2883,6 +2938,11 @@ function enterApp(){
   updateProgress();
   updateGrade();
   theaterRenderSide();
+  refreshCompletionGrayStates();
+  const w5=document.getElementById('week5');
+  if(w5){ w5.classList.remove('future-week'); w5.querySelectorAll('.flip-card').forEach(c=>c.classList.add('visible')); }
+  const m2=document.querySelector('#monthSwitch .chip[data-month="m2"]');
+  if(m2 && courseWeekNumber(new Date())>=5 && courseWeekNumber(new Date())<=8 && !m2.classList.contains('active')) m2.click();
 }
 async function initAuth(){
   let cur = getCurrentStudent();
@@ -3027,6 +3087,7 @@ document.getElementById('wqSubmit').addEventListener('click', ()=>{
   student.weekQuizzes[week] = { score, total, reflection, completedAt:new Date().toISOString() };
   saveStudentRecord(student);
   updateGrade();
+  refreshCompletionGrayStates();
   submitReportSilently(`Week ${week} check-in complete`);
   setTimeout(()=>{ if(typeof checkWeekFinishedMilestones === 'function') checkWeekFinishedMilestones(); }, 1500);
   setTimeout(()=>{
@@ -4609,7 +4670,7 @@ function hmOpenWeek(w){ return typeof isCourseWeekOpen==='function' ? isCourseWe
 function hmAssignmentState(id){ return student && student.assignmentStatus ? (student.assignmentStatus[id] || 'Not started') : 'Not started'; }
 function hmSetAssignment(id,status){
  if(!student || window.__guestPreview){ showToast('Sign in to save assignment progress.'); return; }
- student.assignmentStatus = student.assignmentStatus || {}; student.assignmentStatus[id]=status; saveStudentRecord(student); renderAssignments(); renderHomeLearning(); if(typeof renderProgressView==='function') renderProgressView(); showToast(status==='Submitted'?'Project submission recorded.':'Project status saved.');
+ student.assignmentStatus = student.assignmentStatus || {}; student.assignmentStatus[id]=status; saveStudentRecord(student); renderAssignments(); refreshCompletionGrayStates(); renderHomeLearning(); if(typeof renderProgressView==='function') renderProgressView(); showToast(status==='Submitted'?'Project submission recorded.':'Project status saved.');
 }
 function hmCurrentProject(){
  if(!student) return HM_PROJECTS[0];
