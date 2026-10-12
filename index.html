@@ -805,6 +805,14 @@ input,select,textarea{font-size:16px}
 .rp-btn{border:0;border-radius:11px;padding:13px 16px;font:700 14px 'Inter',sans-serif;cursor:pointer;background:#2f6fed;color:#fff;min-height:44px}
 .rp-btn.ghost{background:#f2f4f7;color:#5b6270}
 </style>
+<style>
+/* HM_V3 styles */
+.theater-markrow{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:10px}
+.tn-mark{background:#1a8a52;color:#fff;border:1px solid #1a8a52;border-radius:11px;padding:11px 18px;font:700 13px 'Inter',sans-serif;cursor:pointer;min-height:44px;transition:.2s}
+.tn-mark:hover{filter:brightness(1.08)}
+.tn-mark.done{background:#e7f6ee;color:#1a8a52}
+#theaterWatchedNote{font-size:12px;color:var(--muted);flex:1;min-width:180px}
+</style>
 </head>
 <body><div aria-live="polite" class="offline-banner" id="offlineBanner" role="status">You are offline. Your local progress can still be saved on this device.</div><button aria-label="Accessibility and learning preferences" class="a11y-float" id="a11yBtn" type="button">Aa</button>
 <a class="skip-link" href="#mainContent">Skip to content</a>
@@ -1879,7 +1887,7 @@ input,select,textarea{font-size:16px}
 <!-- ========== SCREENCASTS (CINEMATIC THEATER PLAYER) ========== -->
 <section class="view" id="screencasts">
 <div class="view-head"><div><h2>Screencasts</h2><p>The released recordings are available in the cinematic theater. Additional recordings remain gray until they are released.</p></div></div>
-<div class="learning-check-note screen-note" role="note"><strong>Important — Screencast pop-out quiz:</strong> Watch the recording, then click <strong>Next ▶</strong> to save it as watched. A 5-question pop-out check will appear after the recording is completed.</div>
+<div class="learning-check-note screen-note" role="note"><strong>Important — Screencast pop-out quiz:</strong> Watch the recording, then click <strong>Mark as watched</strong> (or <strong>Next ▶</strong>) to save it as watched. A 5-question pop-out check will appear after the recording is completed.</div>
 <div class="theater" id="screencastTheater">
 <div class="theater-main">
 <div class="theater-stage" id="theaterStage">
@@ -1890,7 +1898,8 @@ input,select,textarea{font-size:16px}
 <span class="tn-index" id="theaterIndex">—</span>
 <button class="tn-btn" id="theaterNextBtn" type="button">Next ▶</button>
 </div>
-<div class="theater-tip" id="theaterTip">📌 <strong>Watch → Next ▶ → Quick Check.</strong> Finish the recording, then click <strong>Next ▶</strong> to save your progress and open the 5-question screencast check.</div>
+<div class="theater-markrow"><button type="button" class="tn-mark" id="theaterWatchedBtn">✓ Mark as watched</button><span id="theaterWatchedNote"></span></div>
+<div class="theater-tip" id="theaterTip">📌 <strong>Watch → Next ▶ → Quick Check.</strong> Finish the recording, then click <strong>Mark as watched</strong> (or <strong>Next ▶</strong>) to save your progress and open the 5-question screencast check.</div>
 <div class="theater-info">
 <div aria-hidden="true" class="ti-avatar">Ps</div>
 <div class="ti-meta">
@@ -2971,6 +2980,7 @@ document.getElementById('wqSubmit').addEventListener('click', ()=>{
   saveStudentRecord(student);
   updateGrade();
   submitReportSilently(`Week ${week} check-in complete`);
+  setTimeout(()=>{ if(typeof checkWeekFinishedMilestones === 'function') checkWeekFinishedMilestones(); }, 1500);
   setTimeout(()=>{
     modal.classList.remove('open');
     document.querySelectorAll('#wqQuizBody input').forEach(i=>i.disabled=false);
@@ -3057,7 +3067,12 @@ function toggleWeekFinished(w){
   if(nowDone) student.weekFinished[w] = new Date().toISOString(); else delete student.weekFinished[w];
   saveStudentRecord(student);
   renderWeekFinishButtons();
-  if(nowDone) checkWeekFinishedMilestones();
+  if(nowDone){
+    // Alternative to waiting for the study timer: open this week's quiz right away
+    if(student.studyTimers) delete student.studyTimers[String(w)];
+    if(student.weekQuizzes && student.weekQuizzes[w]) checkWeekFinishedMilestones();
+    else maybeShowWeekQuiz(String(w)); // milestone popup follows after the quiz is submitted
+  }
 }
 function checkWeekFinishedMilestones(){
   const f = student.weekFinished || {};
@@ -4297,7 +4312,32 @@ function theaterStartWatchTracking(id){
 }
 function theaterIsWatched(id){ return !!(student && student.videoConfirmed && student.videoConfirmed[id]); }
 function theaterIsOpened(id){ return !!(student && student.seenScreencasts && student.seenScreencasts.includes(id)); }
+/* HM_V3_PATCH — Mark as watched button on screencasts */
+function theaterUpdateWatchedBtn(){
+  const b = document.getElementById('theaterWatchedBtn'); if(!b) return;
+  const id = theaterCurrentId || ((getReleasedScreencasts()[0] || {}).id);
+  const w = !!id && theaterIsWatched(id);
+  b.classList.toggle('done', w);
+  b.textContent = w ? '✓ Watched' : '✓ Mark as watched';
+  const n = document.getElementById('theaterWatchedNote'); if(!n) return;
+  const q = (student && id) ? student.contentQuizzes.screencasts[id] : null;
+  n.textContent = q ? ('Check score: '+q.score+'/'+q.total) : (w ? 'Click again to take the 5-question check.' : 'Click when you finish this recording — the 5-question check opens.');
+}
+function theaterMarkWatchedClick(){
+  if(!student){ alert('Sign in first.'); return; }
+  const id = theaterCurrentId || ((getReleasedScreencasts()[0] || {}).id);
+  if(!id) return;
+  theaterClearWatchTracking(false);
+  const meta = allScreencasts.find(v=>v.id===id);
+  if(theaterIsWatched(id)){
+    if(student.contentQuizzes.screencasts[id]){ showToast('Already watched and checked ✓'); return; }
+    maybeShowContentQuiz('video', id, screencastQuizPool, 'Quick 5-question check for "'+(meta ? meta.label : 'this recording')+'":');
+    return;
+  }
+  theaterMarkWatched(id); // saves as watched and opens the 5-question check
+}
 function theaterUpdateProgressSummary(){
+  theaterUpdateWatchedBtn();
   const released = getReleasedScreencasts();
   const total = released.length;
   const watchedCount = released.filter(v=>theaterIsWatched(v.id)).length;
@@ -4491,6 +4531,7 @@ function theaterStep(delta){
   theaterPlay(v.id, v.label);
 }
 document.getElementById('theaterPrevBtn').addEventListener('click', ()=>theaterStep(-1));
+document.getElementById('theaterWatchedBtn').addEventListener('click', theaterMarkWatchedClick);
 document.getElementById('theaterNextBtn').addEventListener('click', ()=>theaterStep(1));
 if(allScreencasts.length){
   theaterShowPoster(allScreencasts[0].id, allScreencasts[0].label);
