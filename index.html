@@ -197,13 +197,6 @@ button{font-family:inherit;}
 .week-pill.active{background:var(--ink);color:#fff;border-color:var(--ink);}
 .month-block{display:none;}
  .month-block.active{display:block;}
-/* FORCE Week 5 Check-In/Check-Out to remain visible, even if stale lock classes exist. */
-.month-block[data-month="m2"].active #week5,#week5{visibility:visible!important;}
-.month-block[data-month="m2"].active #week5 .day-grid,#week5 .day-grid{display:grid!important;visibility:visible!important;opacity:1!important;}
-#week5.future-week{opacity:1!important;filter:none!important;pointer-events:auto!important;}
-#week5.future-week::after{display:none!important;}
-#week5.future-week .day-grid{display:grid!important;visibility:visible!important;}
-#week5 .locked-week-panel{display:none!important;}
 #week5 .flip-card{display:block!important;opacity:1!important;transform:none!important;visibility:visible!important;pointer-events:auto!important;}
 #week5 .flip-card .flip-card-inner{visibility:visible!important;}
 #week5 .flip-card-front,#week5 .flip-card-back{visibility:visible;}
@@ -1151,6 +1144,8 @@ input,select,textarea{font-size:16px}
 <div class="vocab-title">Big Ideas</div>
 <p class="big-ideas">Use Transform for controlled size, position, rotation, and perspective changes. Use Puppet Warp when you need more flexible, pin-based reshaping. Work non-destructively so the portrait can be adjusted again.</p>
 </div></div></div>
+</div><!-- /day-grid -->
+</div><!-- /week4 -->
 </div><!-- /month-block m1 -->
 <!-- ===== MONTH TWO ===== -->
 <div class="month-block active" data-month="m2">
@@ -2039,6 +2034,8 @@ input,select,textarea{font-size:16px}
 </div>
 <button class="lp-report-btn" id="lpReportBtn">✉ Send Progress Report</button>
 <div id="lpReportStatus" style="font-size:10.5px;color:#8f96a6;margin-top:6px;min-height:12px;"></div>
+<div class="lp-backup" style="display:flex;gap:6px;margin-top:8px;"><button class="lp-report-btn" id="lpExportBtn" type="button" style="margin:0;flex:1">⬇ Export backup</button><button class="lp-report-btn" id="lpImportBtn" type="button" style="margin:0;flex:1">⬆ Import</button></div>
+<input accept="application/json,.json" id="lpImportFile" style="display:none" type="file"/>
 
 <button class="lp-signout" id="lpSignOutBtn">Sign out of this device</button>
 <div class="lp-note">Every lesson card is a "layer." Flip a card in the Curriculum tab to mark that day's lesson complete — the total above and this panel's grade &amp; report stay visible even while the weekly breakdown is collapsed; tap "Weekly breakdown" to expand it. Progress reports are only sent when the student explicitly chooses "Send Progress Report."</div>
@@ -5021,36 +5018,9 @@ initLearningUpgrade();
   addEventListener('resize',sync); addEventListener('orientationchange',sync);
 })();
 initAuth();
-/* Correct Week 5 rendering after app startup/auth initialization. */
-(function ensureWeekFivePanel(){
- function revealWeekFive(){
-  const w5=document.getElementById('week5'), m2=document.querySelector('#curriculum .month-block[data-month="m2"]');
-  if(!w5||!m2)return;
-  const current=Math.max(5,courseWeekNumber(new Date()));
-  if(current===5){
-   document.querySelectorAll('#monthSwitch .chip').forEach(c=>c.classList.toggle('active',c.dataset.month==='m2'));
-   document.querySelectorAll('#curriculum .month-block').forEach(m=>m.classList.toggle('active',m.dataset.month==='m2'));
-   w5.classList.remove('future-week'); w5.classList.add('current-week');
-   w5.style.setProperty('display','block','important'); w5.style.setProperty('visibility','visible','important');
-   w5.querySelectorAll('.flip-card').forEach(c=>{c.classList.add('visible');c.style.setProperty('display','block','important');c.style.setProperty('opacity','1','important');c.style.setProperty('visibility','visible','important');});
-   const grid=w5.querySelector('.day-grid'); if(grid){grid.style.setProperty('display','grid','important');grid.style.setProperty('visibility','visible','important');}
-   const lock=w5.querySelector('.locked-week-panel'); if(lock)lock.style.setProperty('display','none','important');
-  }
- }
- if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',revealWeekFive,{once:true});else revealWeekFive();
- setTimeout(revealWeekFive,300);setTimeout(revealWeekFive,1200);
-})();
 </script>
 <div aria-hidden="true" class="a11y-panel" id="a11yPanel"><div class="a11y-card"><div class="a11y-head"><h3>Accessibility &amp; Learning Preferences</h3><button aria-label="Close" class="icon-close" id="a11yClose" type="button">×</button></div><label class="a11y-toggle"><input id="reduceMotionToggle" type="checkbox"/> Reduce motion</label><label class="a11y-toggle"><input id="largeTextToggle" type="checkbox"/> Larger text</label><p>These preferences are saved on this device.</p></div></div>
 <div aria-live="polite" class="completion-toast" id="completionToast" role="status"></div>
-<style id="hma-week5-emergency-fix">
-/* Fix the blank Week 5 lesson panel while preserving the rest of the course UI. */
-#curriculum .month-block[data-month="m2"].active #week5,#curriculum #week5{display:block!important;visibility:visible!important;height:auto!important;min-height:180px!important;overflow:visible!important;opacity:1!important;transform:none!important;position:relative!important}
-#curriculum .month-block[data-month="m2"].active #week5 .day-grid,#curriculum #week5 .day-grid{display:grid!important;visibility:visible!important;height:auto!important;min-height:380px!important;opacity:1!important;overflow:visible!important}
-#curriculum #week5 .flip-card{display:block!important;height:380px!important;min-height:380px!important;opacity:1!important;visibility:visible!important;transform:none!important}
-#curriculum #week5 .locked-week-panel{display:none!important}
-</style>
-\n
 <style id="hma-ipad-responsive-revision-fix">
 /* Responsive layout tuned for iPad portrait/landscape, split view, and touch input. */
 html{ -webkit-text-size-adjust:100%; text-size-adjust:100%; }
@@ -5084,17 +5054,6 @@ button,.chip,.week-pill,.flip-card{ touch-action:manipulation; }
   .day-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
   .flip-card{height:370px;}
 }
-/* Ensure Week 5 is a normal, readable revision panel, regardless of stale lock/animation state. */
-#curriculum .month-block[data-month="m2"].active #week5,
-#curriculum .month-block[data-month="m2"].active #week5 .day-grid,
-#curriculum .month-block[data-month="m2"].active #week5 .flip-card,
-#curriculum .month-block[data-month="m2"].active #week5 .flip-card-inner{
-  visibility:visible!important;opacity:1!important;transform:none!important;
-}
-#curriculum .month-block[data-month="m2"].active #week5.future-week{filter:none!important;opacity:1!important;}
-#curriculum .month-block[data-month="m2"].active #week5.future-week::after{display:none!important;}
-#curriculum .month-block[data-month="m2"].active #week5 .day-grid{display:grid!important;}
-#curriculum .month-block[data-month="m2"].active #week5 .flip-card{display:block!important;pointer-events:auto!important;}
 </style>
 
 </body>
