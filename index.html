@@ -4,6 +4,50 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<script id="hma-compat-storage-shim">
+/* If a browser blocks localStorage / sessionStorage (Safari private mode, strict
+   privacy settings, some in-app browsers), fall back to in-memory storage so
+   sign-in and progress never crash the page. Runs before the main script. */
+(function(){
+  function works(name){
+    try{ var s=window[name]; var k='__hma_t__'; s.setItem(k,'1'); s.removeItem(k); return true; }
+    catch(e){ return false; }
+  }
+  function memStore(){
+    var d={};
+    return {
+      getItem:function(k){ return Object.prototype.hasOwnProperty.call(d,k)?d[k]:null; },
+      setItem:function(k,v){ d[k]=String(v); },
+      removeItem:function(k){ delete d[k]; },
+      clear:function(){ d={}; },
+      key:function(i){ return Object.keys(d)[i]||null; },
+      get length(){ return Object.keys(d).length; }
+    };
+  }
+  ['localStorage','sessionStorage'].forEach(function(n){
+    if(!works(n)){
+      try{ Object.defineProperty(window,n,{value:memStore(),configurable:true}); }catch(e){}
+    }
+  });
+})();
+</script>
+
+<script id="hma-compat-browser-check">
+/* Very old browsers cannot run this site's code at all. Show a friendly notice instead of a blank page. */
+(function(){
+  var ok=true;
+  try{ new Function('var a={};return a?.b ?? 1;'); }catch(e){ ok=false; }
+  if(ok) return;
+  document.addEventListener('DOMContentLoaded',function(){
+    var d=document.createElement('div');
+    d.setAttribute('role','alert');
+    d.style.cssText='position:fixed;left:0;right:0;top:0;z-index:99999;background:#7c2d12;color:#fff;padding:14px 16px;font:600 14px/1.5 Arial,sans-serif;text-align:center';
+    d.textContent='Your browser is out of date, so some parts of this course site may not work. Please update Chrome, Safari, Edge or Firefox (or open this page in a newer browser).';
+    document.body.appendChild(d);
+  });
+})();
+</script>
+
 <title>Photoshop &amp; Graphic Design — Class of 2028</title>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
@@ -5247,5 +5291,159 @@ html,body{max-width:100%;overflow-x:hidden}
 /* iPad 7th gen portrait: keep cards comfortable */
 @media (min-width:700px) and (max-width:900px){ .view,.view.active{padding-left:24px;padding-right:24px} }
 </style>
+<style id="hma-compat-css">
+/* ---------- Text sizing & touch ---------- */
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+a,button,.flip-card{-webkit-tap-highlight-color:transparent}
+
+/* ---------- Horizontal overflow guard WITHOUT breaking position:sticky ----------
+   (overflow-x:hidden on both html AND body turns body into a scroll container,
+   which breaks sticky headers/panels in Safari & Chrome.) */
+html{overflow-x:hidden}
+body{overflow-x:visible}
+@supports (overflow:clip){
+  html,body{overflow-x:clip}
+}
+
+/* ---------- Long words / URLs never push the page wider than the screen ---------- */
+.canvas,.note-section,.flip-card-back,.assignment-card,.atw-content,.theater-about,.progress-card,.readme-lesson-card,.readme-step-card{
+  overflow-wrap:break-word;word-wrap:break-word;
+}
+table{max-width:100%}
+.progress-week-table{min-width:520px}           /* scrolls inside its own overflow-x wrapper */
+.canvas img,.canvas video,.canvas canvas,.canvas iframe,.canvas svg{max-width:100%}
+
+/* ---------- Safari / older WebKit: 3D flip cards ---------- */
+.flip-card{-webkit-perspective:1200px}
+.flip-card-inner{-webkit-transform-style:preserve-3d;transform-style:preserve-3d}
+.flip-card-front,.flip-card-back{-webkit-backface-visibility:hidden;backface-visibility:hidden}
+
+/* ---------- Safari: blurred overlays need the -webkit- prefix ---------- */
+.phase-modal-backdrop,.fb-modal,.wq-modal,.rp-backdrop,.course-search .search-backdrop,
+.theater-nav,.theater-tip,.view-head,.topbar{
+  -webkit-backdrop-filter:blur(8px);
+}
+.topbar{-webkit-backdrop-filter:blur(14px)}
+
+/* ---------- Fallbacks for browsers without the `inset` shorthand (Safari < 14.1, old Android) ---------- */
+#signInGate,.wq-modal,.capture-warning,.course-search,.a11y-panel,.rp-backdrop,
+.phase-modal-backdrop,.fb-modal,.sp-tips-modal,.search-backdrop{top:0;right:0;bottom:0;left:0}
+.theater-player iframe,.media-card .media-thumb iframe,.media-card .media-thumb .thumb-poster,
+.theater-player .thumb-poster,.media-card .media-thumb .thumb-poster img.thumb-preview,
+.theater-item .ti-thumb img{top:0;left:0}
+.hero::before{top:-60px;right:-60px}
+
+/* ---------- Fallback for browsers without aspect-ratio (Safari < 15, old Android WebView) ---------- */
+@supports not (aspect-ratio:1/1){
+  .theater-player{height:0;padding-top:56.25%}
+  .media-card .media-thumb{height:0;padding-top:62.5%}
+  .practice-image-only{height:0;padding-top:75%;position:relative}
+  .practice-image-only img{position:absolute;top:0;left:0}
+}
+
+/* ---------- Fallbacks for browsers without :has() — class toggled by script below ---------- */
+.wq-option.hma-checked{border-color:var(--c-curriculum);background:#f1f6ff;box-shadow:0 0 0 2px rgba(47,111,237,.08)}
+.wq-option.hma-checked .wq-option-letter{background:var(--c-curriculum);color:#fff}
+.wq-option.hma-checked .wq-option-check{display:flex}
+
+/* ---------- Dynamic viewport height for modals on mobile browsers whose URL bar resizes ---------- */
+@supports not (height:100dvh){
+  .wq-box,.phase-modal{max-height:calc(var(--hma-vh,1vh)*92)}
+  #layersPanel:not(.collapsed){max-height:calc(var(--hma-vh,1vh)*100 - var(--bar-h,64px) - 24px)}
+}
+
+/* ---------- Notches / rounded corners / home-indicator ---------- */
+.topbar{padding-left:max(12px,env(safe-area-inset-left));padding-right:max(12px,env(safe-area-inset-right))}
+.study-banner,.completion-toast{margin-bottom:env(safe-area-inset-bottom)}
+.a11y-float{left:max(22px,env(safe-area-inset-left));bottom:max(22px,env(safe-area-inset-bottom))}
+
+/* ---------- Very small phones (320–360px) ---------- */
+@media (max-width:380px){
+  .canvas{padding-left:10px;padding-right:10px}
+  .day-grid,.home-grid,.stat-row,.progress-grid,.assignment-grid,.practice-image-grid{grid-template-columns:minmax(0,1fr)}
+  .tab{padding-left:9px;padding-right:9px}
+  .wq-box .wq-head,.wq-scroll{padding-left:12px;padding-right:12px}
+  .hero{padding:22px 14px}
+  .si-card{padding:24px 18px}
+  .a11y-float{width:40px;height:40px}
+}
+
+/* ---------- Short landscape phones: keep modals fully reachable ---------- */
+@media (max-height:480px) and (orientation:landscape){
+  .wq-box,.phase-modal,.fb-box{max-height:calc(100vh - 12px)}
+  .wq-box .wq-head{padding-top:10px;padding-bottom:8px}
+  .si-card{max-height:calc(100vh - 20px);overflow:auto}
+  .study-banner{bottom:6px}
+}
+
+/* ---------- Large desktops / TVs: stay centred and readable ---------- */
+@media (min-width:1600px){ .workspace{max-width:1500px} }
+
+
+/* ---------- Sign-in card: never cut off on short / small screens ---------- */
+#signInGate{overflow-y:auto;-webkit-overflow-scrolling:touch;align-items:flex-start}
+#signInGate .si-card{margin:auto;max-height:none}
+@media (max-height:480px) and (orientation:landscape){ #signInGate .si-card{max-height:none;overflow:visible} }
+
+/* ---------- Firefox: hide the stray scrollbar track on the tab strip, keep scrolling ---------- */
+.tabs{scrollbar-width:none;-ms-overflow-style:none}
+</style>
+
+<script id="hma-compat-js">
+(function(){
+  /* 1) Radio highlight fallback where :has() is not supported */
+  var hasSupport = false;
+  try{ hasSupport = CSS.supports('selector(:has(*))'); }catch(e){}
+  if(!hasSupport){
+    document.addEventListener('change', function(e){
+      var t=e.target;
+      if(!t || t.type!=='radio') return;
+      var opt=t.closest && t.closest('.wq-option'); if(!opt) return;
+      document.querySelectorAll('input[type=radio][name="'+t.name+'"]').forEach(function(r){
+        var o=r.closest('.wq-option'); if(o) o.classList.toggle('hma-checked', r.checked);
+      });
+    });
+  }
+
+  /* 2) Lesson cards must never stay invisible (browsers without IntersectionObserver,
+        or cards that were inside a hidden month block when they loaded) */
+  function revealCards(){
+    var scope=document.querySelectorAll('.month-block.active .flip-card[data-day]');
+    scope.forEach(function(c){ c.classList.add('visible'); });
+  }
+  if(!('IntersectionObserver' in window)){
+    document.querySelectorAll('.flip-card').forEach(function(c){ c.classList.add('visible'); });
+  }
+  document.addEventListener('click', function(){ setTimeout(revealCards,450); }, true);
+  window.addEventListener('load', function(){ setTimeout(revealCards,800); });
+  window.addEventListener('resize', function(){ setTimeout(revealCards,300); });
+
+  /* 3) Real viewport-height variable for browsers without dvh (older iOS/Android) */
+  function setVh(){ document.documentElement.style.setProperty('--hma-vh',(window.innerHeight*0.01)+'px'); }
+  setVh();
+  window.addEventListener('resize', setVh);
+  window.addEventListener('orientationchange', function(){ setTimeout(setVh,250); });
+
+  /* 4) Keep the fixed top bar height variable accurate after rotation / font load / zoom */
+  function syncBar(){
+    var bar=document.querySelector('.topbar'); if(!bar) return;
+    document.documentElement.style.setProperty('--bar-h', bar.offsetHeight+'px');
+  }
+  window.addEventListener('load', syncBar);
+  window.addEventListener('orientationchange', function(){ setTimeout(syncBar,300); });
+  if(document.fonts && document.fonts.ready){ document.fonts.ready.then(syncBar); }
+
+  /* 5) Offline banner (element already exists in the page) */
+  var banner=document.getElementById('offlineBanner');
+  if(banner){
+    var upd=function(){ banner.classList.toggle('show', !navigator.onLine); };
+    window.addEventListener('online',upd); window.addEventListener('offline',upd); upd();
+  }
+
+  /* 6) Smooth-scroll fallback: browsers that ignore scroll options just jump instead of failing */
+  try{ window.scrollTo({top:0,behavior:'auto'}); window.scrollTo(0,0); }catch(e){}
+})();
+</script>
+
 </body>
 </html>
