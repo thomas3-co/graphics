@@ -5445,5 +5445,90 @@ table{max-width:100%}
 })();
 </script>
 
+
+<style id="hma-compat-ipad">
+/* ===== iPad layer (7th/8th/9th = 810x1080 · 10th/Air = 820x1180 · Pro 11 = 834x1194), portrait + landscape ===== */
+/* Real visible-height variable (set by script) so modals are never taller than the screen */
+.wq-box{height:min(calc(var(--hma-vh,1vh)*88),900px)!important;max-height:calc(var(--hma-vh,1vh)*92)!important}
+.phase-modal{max-height:calc(var(--hma-vh,1vh)*92)!important}
+.fb-box{max-height:calc(var(--hma-vh,1vh)*92)!important}
+@media (min-width:700px) and (max-width:1194px){
+  /* Top bar sits IN the page flow and sticks to the top: it can never cover or cut the content below it */
+  .app{padding-top:0!important;min-height:0!important}
+  .topbar{position:-webkit-sticky!important;position:sticky!important;top:0!important;left:auto!important;right:auto!important;
+          width:100%!important;box-sizing:border-box!important;height:auto!important;min-height:0!important;overflow:visible!important}
+  .view-head{position:static!important;top:auto!important}
+  .canvas{width:100%!important;max-width:100%!important;box-sizing:border-box!important;padding:22px clamp(14px,3vw,26px) 90px!important}
+  .view,.view.active{padding-left:0!important;padding-right:0!important;max-width:100%!important}
+  /* Jump-to-week / jump-to-section lands below the sticky bar */
+  .week-card,.note-section,.theater,#assignmentBoard,#practiceGrid,#assessmentBody{scroll-margin-top:150px!important}
+  /* Lesson cards: taller so back-side lessons are not clipped; back side scrolls with touch */
+  .day-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:16px!important}
+  .flip-card{height:470px!important;min-width:0}
+  .flip-card-front,.flip-card-back{padding:16px 18px!important}
+  .flip-card-back{-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
+  .home-grid,.progress-grid,.stat-row{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  .hero{padding:40px 30px!important}
+  .hero h1{font-size:clamp(28px,4.4vw,40px)!important}
+  /* Floating Layers panel: always inside the screen */
+  #layersPanel:not(.collapsed){top:12px!important;max-height:calc(var(--hma-vh,1vh)*100 - 24px)!important}
+  .workspace{display:block!important;max-width:100%!important}
+}
+/* Portrait iPads: single column for wide project layouts */
+@media (min-width:700px) and (max-width:900px){
+  .atw-main,.ep-main,.sp-project .layout{grid-template-columns:minmax(0,1fr)!important}
+  .atw-side,.ep-side{position:static!important;max-height:none!important}
+  .atw-grid-2,.ep-grid-2{grid-template-columns:minmax(0,1fr)!important}
+  .theater{flex-direction:column!important}
+  .theater-side{width:100%!important;max-height:none!important;position:static!important}
+  .theater-list{flex-direction:row!important;overflow-x:auto!important;overflow-y:hidden!important}
+  .theater-item{flex-direction:column!important;width:170px!important;flex:0 0 auto!important}
+  .theater-item .ti-thumb{width:100%!important;height:96px!important}
+}
+/* Landscape iPads: columns may shrink instead of overflowing */
+@media (min-width:901px) and (max-width:1194px){
+  .atw-main{grid-template-columns:minmax(0,260px) minmax(0,1fr)!important}
+  .ep-main{grid-template-columns:minmax(0,250px) minmax(0,1fr)!important}
+  .sp-project .layout{grid-template-columns:minmax(0,380px) minmax(0,1fr)!important}
+  .atw-side,.ep-side{top:12px!important}
+  .theater-side{width:300px!important;top:12px!important}
+}
+</style>
+<script id="hma-compat-ipad-js">
+(function(){
+  function bar(){ var b=document.querySelector('.topbar'); if(b) document.documentElement.style.setProperty('--bar-h', b.offsetHeight+'px'); }
+  function vh(){ document.documentElement.style.setProperty('--hma-vh',(window.innerHeight*0.01)+'px'); }
+  function all(){ vh(); bar(); }
+  all();
+  ['resize','orientationchange','load','pageshow'].forEach(function(ev){
+    window.addEventListener(ev,function(){ all(); setTimeout(all,150); setTimeout(all,500);
+      /* iPad Safari sometimes keeps the old layout after rotation: force a reflow */
+      void document.body.offsetHeight; });
+  });
+  if(window.visualViewport){ window.visualViewport.addEventListener('resize',vh); }
+  if('ResizeObserver' in window){ var tb=document.querySelector('.topbar'); if(tb) new ResizeObserver(bar).observe(tb); }
+  if(document.fonts&&document.fonts.ready) document.fonts.ready.then(all);
+
+  /* Diagnostic: open the page with ?debug=1 to see exactly what is wider than the screen */
+  if(/[?&]debug=1/.test(location.search)){
+    window.addEventListener('load',function(){ setTimeout(function(){
+      var W=document.documentElement.clientWidth, bad=[];
+      document.querySelectorAll('body *').forEach(function(el){
+        var r=el.getBoundingClientRect();
+        if(r.width>0 && (r.right>W+2 || r.left<-2) && getComputedStyle(el).position!=='fixed'){
+          var p=el.parentElement, inScroll=false;
+          while(p&&p!==document.body){ var o=getComputedStyle(p).overflowX; if(o==='auto'||o==='scroll'||o==='hidden'){inScroll=true;break;} p=p.parentElement; }
+          if(!inScroll && bad.length<8) bad.push((el.tagName+'.'+(el.className||'')+'#'+(el.id||'')).slice(0,60)+' right='+Math.round(r.right));
+        }
+      });
+      var d=document.createElement('pre');
+      d.style.cssText='position:fixed;left:6px;bottom:6px;right:6px;z-index:999999;background:#000;color:#0f0;font:11px/1.4 monospace;padding:8px;border-radius:8px;white-space:pre-wrap;max-height:40vh;overflow:auto;margin:0';
+      d.textContent='viewport '+innerWidth+'x'+innerHeight+' @'+devicePixelRatio+'x | bar '+(document.querySelector('.topbar')||{}).offsetHeight+'px\n'+navigator.userAgent+'\nOverflowing: '+(bad.length?'\n'+bad.join('\n'):'none');
+      d.onclick=function(){d.remove();}; document.body.appendChild(d);
+    },1200); });
+  }
+})();
+</script>
+
 </body>
 </html>
