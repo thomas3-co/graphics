@@ -897,6 +897,21 @@ input,select,textarea{font-size:16px}
 </div>
 </div>
 <!-- ========== CONTENT CHECK-IN MODAL (pops after a screencast or reading is completed) ========== -->
+<div aria-labelledby="fbHeading" aria-modal="true" class="fb-modal" id="fbModal" role="dialog">
+<div class="fb-box">
+<div class="fb-tag">WEEK 5 REVISION · FEEDBACK</div>
+<h3 id="fbHeading">Feedback for your instructor</h3>
+<p class="fb-sub">No quiz here — tell your instructor how the revision note went. It takes less than a minute.</p>
+<div class="fb-label">How clear was this revision note?</div>
+<div class="fb-rate" id="fbRate" role="radiogroup" aria-label="Clarity rating"></div>
+<div class="fb-label">Which weeks do you want to review again? <small>(optional)</small></div>
+<div class="fb-weeks" id="fbWeeks"></div>
+<label class="fb-label" for="fbComment">Comment or question <small>(optional)</small></label>
+<textarea id="fbComment" rows="4" maxlength="800" placeholder="e.g. I am not sure how to remove the white fringe…"></textarea>
+<div class="fb-status" id="fbStatus"></div>
+<div class="fb-actions"><button type="button" class="fb-skip" id="fbSkip">Skip</button><button type="button" class="fb-send" id="fbSend">Send to instructor</button></div>
+</div>
+</div>
 <div aria-labelledby="cqHeading" aria-modal="true" class="wq-modal" id="cqModal" role="dialog">
 <div class="wq-box">
 <div class="wq-head">
@@ -1785,10 +1800,10 @@ input,select,textarea{font-size:16px}
 <div class="view-head">
 <div>
 <h2>Read Me — Course Notes</h2>
-<p>Four focused weekly note packs. Open a card to study the lesson, review the vocabulary, use the tips, then choose <strong>Mark as Read</strong> when you are ready for the 5-question check.</p>
+<p>Four focused weekly note packs plus a Week 5 revision note. Open a card to study the lesson, review the vocabulary, use the tips, then choose <strong>Mark as Read</strong> when you are ready for the 5-question check.</p>
 </div>
 </div>
-<div class="learning-check-note" role="note"><strong>Important — Read Me pop-out quiz:</strong> After you finish a Read Me section, click <strong>Mark as Read</strong>. A 5-question pop-out check will appear. Complete it before moving on so your score is recorded.</div>
+<div class="learning-check-note" role="note"><strong>Important — Read Me pop-out quiz:</strong> After you finish a Read Me section, click <strong>Mark as Read</strong>. A 5-question pop-out check will appear. Complete it before moving on so your score is recorded. The <strong>Week 5 revision note</strong> has no quiz — it opens a short feedback form for your instructor instead.</div>
 <div class="marks-bar readme-marks" id="readmeMarksBar" aria-live="polite"><span>Read Me marks</span><b>0/20</b><small>0 of 4 checks completed</small></div>
 <div class="note-section" data-reading="readme-week1" id="readme-week1">
 <div class="note-actions">
@@ -1935,6 +1950,22 @@ input,select,textarea{font-size:16px}
 <span class="vocab" data-def="An editing approach that keeps original information available for later changes." tabindex="0">Non-Destructive Workflow</span><span class="vocab-def"> — An editing approach that keeps original information available for later changes.</span>
 </p></div>
 <div class="note-tip"><strong>Week 4 focus:</strong> Transform gives you controlled movement and scaling; Puppet Warp gives you flexible reshaping. Practice both deliberately and inspect the surrounding pixels after every major adjustment.</div>
+</div>
+<div class="note-section collapsed revision-note" data-revision="readme-week5" id="readme-week5" data-week="5">
+<div class="note-actions">
+<button class="note-dl" onclick="downloadSectionPDF('readme-week5','Week 5 — Revision of Weeks 1–4')">Download PDF</button>
+<button class="note-mark" data-revision-key="readme-week5" onclick="markRevisionRead('readme-week5', this)"><span aria-hidden="true" class="nm-circle"></span><span class="nm-label">Mark as Read</span></button>
+</div>
+<h3><span class="week-badge">WEEK 5</span> Revision · Weeks 1–4 <span class="rev-released">Released</span></h3>
+<p>Week 5 is a revision week. This note pulls together everything from Weeks 1–4 so you can check your understanding before the skills check: file handling, raster images, non-destructive editing, background removal and blur, then Transform and Puppet Warp. There is no quiz on this note — when you finish, choose <strong>Mark as Read</strong> and send a short note to your instructor.</p>
+<div class="readme-grid">
+<article class="readme-lesson-card"><div class="readme-card-icon">W1</div><div><h4>Week 1 — Open · Save · Export</h4><p>Open an existing file with <strong>File → Open</strong>, save your editable <strong>PSD</strong> as the master working file, and use <strong>File → Export → Export As</strong> for a delivery copy such as JPG or PNG. Never replace your editable master with a flattened export.</p></div></article>
+<article class="readme-lesson-card"><div class="readme-card-icon">W2</div><div><h4>Week 2 — Destructive vs. Non-Destructive</h4><p>A <strong>destructive</strong> edit permanently changes pixels; a <strong>non-destructive</strong> edit keeps the original available through layers, masks, adjustment layers and smart objects. A <strong>raster image</strong> is a grid of pixels, so work reversibly whenever you can.</p></div></article>
+<article class="readme-lesson-card"><div class="readme-card-icon">W3</div><div><h4>Week 3 — Remove · Refine · Place · Blur</h4><p>Isolate the subject, use the <strong>Smudge Tool</strong> carefully on fine edges, remove the <strong>white fringe</strong> with <strong>Filter → Other → Minimum</strong>, place the subject in the new scene, then add <strong>Gaussian Blur</strong> to the background for depth. Clean the edge before adding blur.</p></div></article>
+<article class="readme-lesson-card"><div class="readme-card-icon">W4</div><div><h4>Week 4 — Transform &amp; Puppet Warp</h4><p><strong>Transform</strong> controls size, position, rotation and perspective. <strong>Puppet Warp</strong> uses pins (control points) for flexible reshaping. Keep the edit flexible with layers or smart objects and inspect surrounding pixels after each adjustment.</p></div></article>
+</div>
+<div class="readme-vocab"><h4>Revision Vocabulary</h4><p><span class="vocab">PSD</span><span class="vocab-def"> — Editable Photoshop master file that keeps layers.</span></p><p><span class="vocab">Export</span><span class="vocab-def"> — A final-use copy (JPG, PNG) made for delivery.</span></p><p><span class="vocab">Non-Destructive Editing</span><span class="vocab-def"> — Editing that keeps original information available.</span></p><p><span class="vocab">Raster Image / Pixel</span><span class="vocab-def"> — An image built from a grid of colored pixels.</span></p><p><span class="vocab">White Fringe</span><span class="vocab-def"> — Light outline left after background removal; fix with Filter → Other → Minimum.</span></p><p><span class="vocab">Gaussian Blur</span><span class="vocab-def"> — Blur filter used to soften detail and create depth.</span></p><p><span class="vocab">Transform</span><span class="vocab-def"> — Changes size, position, rotation or perspective.</span></p><p><span class="vocab">Puppet Warp</span><span class="vocab-def"> — Pin-based tool for flexible reshaping.</span></p></div>
+<div class="note-tip"><strong>Revision checklist:</strong> Can you save a PSD and export a JPG? Can you explain destructive vs. non-destructive? Can you remove a background, clean the white fringe and add depth with Gaussian Blur? Can you use Transform and Puppet Warp without damaging the original? Note anything unsure in your feedback to the instructor.</div>
 </div>
 </section>
 <!-- ========== SCREENCASTS (CINEMATIC THEATER PLAYER) ========== -->
@@ -3301,6 +3332,7 @@ function updateGrade(){
   // Keep the Home workflow connected to the same active student record.
   if(typeof renderHomeLearning === 'function') renderHomeLearning();
   if(typeof updateMarksBars === 'function') updateMarksBars();
+  if(typeof restoreRevisionNote === 'function') restoreRevisionNote();
 }
 function weekStatus(w){
   const dayEls = weekDayEls(w);
@@ -3348,20 +3380,6 @@ function renderProgressView(){
     return `<tr><td>${v.label}</td><td><span class="pw-badge ${badgeClass}">${status}</span></td><td>${quiz? (quiz.score+'/'+quiz.total) : '—'}</td></tr>`;
   }).join('');
   body.innerHTML = `
-    <div class="progress-hero">
-      <div class="ph-grade"><b>${g.letter} · ${g.pct}%</b><span>Overall grade</span></div>
-      <div class="ph-bar-wrap"><span style="font-size:12.5px;color:#c9d3f5;">${student.completed.length} of ${cards.length} lessons complete</span>
-        <div class="ph-bar"><i style="width:${cards.length ? Math.round((student.completed.length/cards.length)*100) : 0}%"></i></div>
-      </div>
-    </div>
-    <div class="progress-linked-hub" aria-label="Progress navigation">
-      <div class="progress-linked-head"><div><span>CONNECTED LEARNING</span><h3>Jump from your progress to the lesson</h3><p>Your progress is connected directly to the Curriculum, Read Me, and Screencasts so you can continue without searching.</p></div></div>
-      <div class="progress-linked-grid">
-        <button type="button" onclick="goTab('curriculum')"><span class="pl-icon">01</span><span><b>Curriculum</b><small>See weekly lessons and completion</small></span><strong>→</strong></button>
-        <button type="button" onclick="goTab('notes')"><span class="pl-icon">02</span><span><b>Read Me</b><small>Review notes, vocabulary &amp; checks</small></span><strong>→</strong></button>
-        <button type="button" onclick="goTab('screencasts')"><span class="pl-icon">03</span><span><b>Screencasts</b><small>Continue watching in the cinematic theater</small></span><strong>→</strong></button>
-      </div>
-    </div>
     ${phaseOneTotalHTML()}
     <div class="progress-grid">
       <div class="progress-card" style="--pc-accent:#2f6fed"><h4>Lessons Completed</h4><div class="pc-big">${student.completed.length}/${cards.length}</div><div class="pc-sub">across ${TOTAL_WEEKS} weeks</div></div>
@@ -3372,8 +3390,8 @@ function renderProgressView(){
       <div class="progress-card" style="--pc-accent:#ff6a2c"><h4>Screencasts Watched</h4><div class="pc-big">${videosConfirmed}/${typeof getReleasedScreencasts==='function' ? getReleasedScreencasts().length : 3}</div><div class="pc-sub">fully watched</div></div>
       <div class="progress-card" style="--pc-accent:#ef476f"><h4>Practice Mark</h4><div class="pc-big">${practiceCreditSummary().earned.toFixed(1)} / 2.8</div><div class="pc-sub">0.7 mark × 4 practice days = 2.8 marks total</div></div>
       <div class="progress-card" style="--pc-accent:#5b6270"><h4>Materials Opened</h4><div class="pc-big">${(student.seenMaterials||[]).length}/23</div><div class="pc-sub">additional resources previewed</div></div>
-      <div class="progress-card" style="--pc-accent:#8b5cf6"><h4>Reading Checks</h4><div class="pc-big">${readingQuizEntries.length}/${readingPool.length}</div><div class="pc-sub">marks ${marksSum(readingQuizEntries)}</div></div>
-      <div class="progress-card" style="--pc-accent:#ff6a2c"><h4>Screencast Checks</h4><div class="pc-big">${screencastQuizEntries.length}/${typeof getReleasedScreencasts==='function' ? getReleasedScreencasts().length : 3}</div><div class="pc-sub">marks ${marksSum(screencastQuizEntries)}</div></div>
+      <div class="progress-card" style="--pc-accent:#8b5cf6"><h4>Reading Checks</h4><div class="pc-big">${readingQuizEntries.length}/${readingPool.length}</div><div class="pc-sub">marks ${fmtMark(phaseOneMarks().items[2].earned)}/${fmtMark(phaseOneMarks().items[2].total)}</div></div>
+      <div class="progress-card" style="--pc-accent:#ff6a2c"><h4>Screencast Checks</h4><div class="pc-big">${screencastQuizEntries.length}/${typeof getReleasedScreencasts==='function' ? getReleasedScreencasts().length : 3}</div><div class="pc-sub">marks ${fmtMark(phaseOneMarks().items[1].earned)}/${fmtMark(phaseOneMarks().items[1].total)}</div></div>
       <div class="progress-card" style="--pc-accent:#10b981"><h4>Phase 1 Assessment</h4><div class="pc-big">${student.phaseAssessments?.phase1 ? `${student.phaseAssessments.phase1.score}/${student.phaseAssessments.phase1.total}` : 'Not taken'}</div><div class="pc-sub">${student.phaseAssessments?.phase1 ? `${student.phaseAssessments.phase1.score}/${student.phaseAssessments.phase1.total} marks` : '15 questions · Weeks 1–4'}</div></div>
     </div>
     <div class="note-section collapsed" style="margin-top:22px;">
@@ -4739,6 +4757,68 @@ function renderAssignments(){
  el.querySelectorAll('[data-assignment-status]').forEach(s=>s.addEventListener('change',e=>hmSetAssignment(e.target.dataset.assignmentStatus,e.target.value)));
  el.querySelectorAll('[data-project-submit]').forEach(b=>b.addEventListener('click',()=>hmMarkSubmitted(b.dataset.projectSubmit)));
 }
+
+/* ===== Week 5 Revision note: no quiz, feedback form for the instructor ===== */
+let fbKey=null, fbRating=0, fbWeeks=new Set();
+function revisionRecord(key){ return (student&&student.revisionRead&&student.revisionRead[key])||null; }
+function restoreRevisionNote(){
+  document.querySelectorAll('.note-mark[data-revision-key]').forEach(btn=>{
+    const done=!!revisionRecord(btn.dataset.revisionKey);
+    btn.classList.toggle('done',done); btn.disabled=done;
+    const l=btn.querySelector('.nm-label'); if(l) l.textContent=done?'Read':'Mark as Read';
+  });
+}
+function markRevisionRead(key, btnEl){
+  if(!student){ alert('Sign in first.'); return; }
+  if(!revisionRecord(key)){
+    student.revisionRead=student.revisionRead||{};
+    student.revisionRead[key]={readAt:new Date().toISOString(),feedbackSent:false};
+    saveStudentRecord(student);
+    restoreRevisionNote();
+    if(typeof updateGrade==='function') updateGrade();
+  }
+  openFeedbackModal(key);
+}
+function openFeedbackModal(key){
+  fbKey=key; fbRating=0; fbWeeks=new Set();
+  const rate=document.getElementById('fbRate'), wk=document.getElementById('fbWeeks');
+  const faces=[['😕','Unclear'],['🙂','Okay'],['😀','Clear'],['🤩','Very clear']];
+  rate.innerHTML=faces.map((f,i)=>`<button type="button" class="fb-face" role="radio" aria-checked="false" data-v="${i+1}"><span>${f[0]}</span><small>${f[1]}</small></button>`).join('');
+  wk.innerHTML=[1,2,3,4].map(n=>`<button type="button" class="fb-chip" aria-pressed="false" data-w="${n}">Week ${n}</button>`).join('');
+  rate.querySelectorAll('.fb-face').forEach(b=>b.addEventListener('click',()=>{ fbRating=Number(b.dataset.v); rate.querySelectorAll('.fb-face').forEach(x=>{const on=x===b; x.classList.toggle('on',on); x.setAttribute('aria-checked',on?'true':'false');}); }));
+  wk.querySelectorAll('.fb-chip').forEach(b=>b.addEventListener('click',()=>{ const w=Number(b.dataset.w); const on=!fbWeeks.has(w); on?fbWeeks.add(w):fbWeeks.delete(w); b.classList.toggle('on',on); b.setAttribute('aria-pressed',on?'true':'false'); }));
+  document.getElementById('fbComment').value=''; document.getElementById('fbStatus').textContent='';
+  document.getElementById('fbSend').disabled=false;
+  document.getElementById('fbModal').classList.add('open');
+}
+function closeFeedbackModal(){ document.getElementById('fbModal').classList.remove('open'); }
+function sendRevisionFeedback(){
+  if(!student) return;
+  const comment=document.getElementById('fbComment').value.trim();
+  if(!fbRating && !comment && !fbWeeks.size){ document.getElementById('fbStatus').textContent='Pick a rating or write a short comment, or choose Skip.'; return; }
+  const labels=['','Unclear','Okay','Clear','Very clear'];
+  const weeks=[...fbWeeks].sort().map(n=>'Week '+n).join(', ')||'none';
+  const summary=[`Week 5 Revision note feedback`,`Student: ${student.name} (${student.email})`,`Clarity: ${fbRating?labels[fbRating]+' ('+fbRating+'/4)':'not rated'}`,`Wants to review again: ${weeks}`,`Comment: ${comment||'(none)'}`,`Device: ${getDeviceInfo()}`].join('\n');
+  const rec=student.revisionRead[fbKey]=student.revisionRead[fbKey]||{readAt:new Date().toISOString()};
+  Object.assign(rec,{feedbackSent:true,rating:fbRating,weeks:[...fbWeeks],comment,sentAt:new Date().toISOString()});
+  saveStudentRecord(student);
+  if(GOOGLE_FORM_ACTION_URL && GOOGLE_FORM_ENTRY_ID){
+    const fd=new URLSearchParams(); fd.append(GOOGLE_FORM_ENTRY_ID,summary);
+    fetch(GOOGLE_FORM_ACTION_URL,{method:'POST',mode:'no-cors',body:fd}).catch(()=>{});
+    document.getElementById('fbStatus').textContent='Sent — thank you!';
+    setTimeout(closeFeedbackModal,900);
+  } else {
+    const subject=encodeURIComponent(`Week 5 Revision feedback -- ${student.name} (${student.email})`);
+    window.location.href=`mailto:${REPORT_EMAIL}?subject=${subject}&body=${encodeURIComponent(summary)}`;
+    closeFeedbackModal();
+  }
+}
+document.addEventListener('DOMContentLoaded',()=>{
+  document.getElementById('fbSend')?.addEventListener('click',sendRevisionFeedback);
+  document.getElementById('fbSkip')?.addEventListener('click',closeFeedbackModal);
+  document.getElementById('fbModal')?.addEventListener('click',e=>{ if(e.target.id==='fbModal') closeFeedbackModal(); });
+  document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeFeedbackModal(); });
+});
 function fmtMark(n){ n=Number(n)||0; return Number.isInteger(n)?String(n):n.toFixed(1); }
 function phaseOneMarks(){
  const sum=o=>Object.values(o||{}).reduce((a,q)=>a+(Number(q&&q.score)||0),0);
@@ -4756,7 +4836,7 @@ function phaseOneMarks(){
 }
 function phaseOneTotalHTML(){
  const m=phaseOneMarks();
- return `<section class="p1-total" aria-label="Phase One marks total"><div class="p1-total-head"><span>Phase One Marks Total</span><b>${fmtMark(m.earned)}/${fmtMark(m.total)}</b></div><div class="p1-total-grid">${m.items.map(i=>`<div><small>${i.label}</small><b>${fmtMark(i.earned)}/${fmtMark(i.total)}</b></div>`).join('')}</div></section>`;
+ return `<section class="p1-total" aria-label="Phase One marks total"><div class="p1-total-head"><span>Phase One Marks Total</span><b>${fmtMark(m.earned)}/${fmtMark(m.total)}</b></div></section>`;
 }
 function updateMarksBars(){
  const m=phaseOneMarks();
@@ -4828,6 +4908,7 @@ function renderHomeLearning(){
   {n:6,label:'Project',sub:'Build & submit your next project',tab:'projects'}
  ];
  const phaseCard=(phase,steps,meta,score,detail,openByDefault)=>{
+   window.__hmaPhaseOpen=window.__hmaPhaseOpen||{}; openByDefault=!!window.__hmaPhaseOpen[phase];
    const pct=Math.max(0,Math.min(100,Number(score)||0));
    return `<section class="phase-workflow ${openByDefault?'is-open':''}" data-phase-workflow="${phase.toLowerCase().replace(/\s+/g,'-')}">
     <button class="phase-workflow-head" type="button" aria-expanded="${openByDefault?'true':'false'}">
@@ -4867,7 +4948,7 @@ function renderHomeLearning(){
  const renderedWorkflow=`${homeWorkflow}
  <div class="phase-workflows-wrap">
    <div class="phase-workflows-intro"><div><span class="workflow-kicker"><i></i> Your learning roadmap</span><h3>Choose your phase</h3><p>Phase One builds the foundation. Phase Two continues with independent learning, practice, assessment, and project work.</p></div><span class="workflow-cycle">${phase1Done?'Phase One complete':'Phase One in progress'}</span></div>
-   <div class="phase-workflows-grid">${phaseCard('Phase One',phase1Steps,'Weeks 1–4 · Foundation &amp; Phase One',(()=>{const m=phaseOneMarks();return m.total?m.earned/m.total*100:0;})(),`${fmtMark(phaseOneMarks().earned)}/${fmtMark(phaseOneMarks().total)} marks · ${g.detail}`,true)}${phaseCard('Phase Two',phase2Steps,'Weeks 5–8 · Independent learning &amp; practice',phase2Pct,`${phase2Completed}/${phase2Cards.length} curriculum lessons complete`,false)}</div>
+   <div class="phase-workflows-grid">${phaseCard('Phase One',phase1Steps,'Weeks 1–4 · Foundation &amp; Phase One',(()=>{const m=phaseOneMarks();return m.total?m.earned/m.total*100:0;})(),`${fmtMark(phaseOneMarks().earned)}/${fmtMark(phaseOneMarks().total)} marks · ${g.detail}`,false)}${phaseCard('Phase Two',phase2Steps,'Weeks 5–8 · Independent learning &amp; practice',phase2Pct,`${phase2Completed}/${phase2Cards.length} curriculum lessons complete`,false)}</div>
  </div>`;
  el.innerHTML=renderedWorkflow;
  el.querySelector('#homeWorkflowProgressBtn')?.addEventListener('click',()=>goTab('progress'));
@@ -4882,7 +4963,7 @@ function renderHomeLearning(){
    hmWorkflowGo(n,project);
  }));
  el.querySelectorAll('.phase-workflow-head').forEach(head=>head.addEventListener('click',()=>{
-   const card=head.closest('.phase-workflow'); const open=card.classList.toggle('is-open'); head.setAttribute('aria-expanded',open?'true':'false');
+   const card=head.closest('.phase-workflow'); const open=card.classList.toggle('is-open'); head.setAttribute('aria-expanded',open?'true':'false'); (window.__hmaPhaseOpen=window.__hmaPhaseOpen||{})[card.querySelector('.phase-icon')&&card.querySelector('.phase-icon').textContent==='01'?'Phase One':'Phase Two']=open;
  }));
  el.querySelectorAll('.phase-collapse-action').forEach(btn=>btn.addEventListener('click',e=>{e.stopPropagation(); const card=btn.closest('.phase-workflow'); card.classList.remove('is-open'); card.querySelector('.phase-workflow-head').setAttribute('aria-expanded','false');}));
  el.querySelectorAll('[data-phase-step]').forEach(btn=>btn.addEventListener('click',()=>{
@@ -5059,6 +5140,33 @@ button,.chip,.week-pill,.flip-card{ touch-action:manipulation; }
 .home-workflow-card .p1-total{margin:24px 24px 18px}
 .home-workflow-card .workflow-footer .hbtn.ghost{background:#eef3ff;color:#2f6fed;border:1px solid #c9d8fb;font-weight:700}
 .home-workflow-card .workflow-footer .hbtn.ghost:hover{background:#dfe9ff}
+</style>
+<style id="hma-w5-ui">
+.p1-total{padding:18px 22px}
+.p1-total-head{align-items:center}
+.p1-total-head b{font-size:34px}
+.revision-note .rev-released{margin-left:10px;padding:3px 10px;border-radius:999px;background:#e7f8ef;color:#13804d;font:700 11px 'Inter',sans-serif;letter-spacing:.06em;text-transform:uppercase;vertical-align:middle}
+.fb-modal{position:fixed;inset:0;z-index:4200;background:rgba(10,10,15,.68);display:none;align-items:center;justify-content:center;padding:18px;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.fb-modal.open{display:flex}
+.fb-box{width:min(560px,96vw);max-height:92dvh;overflow:auto;background:#fff;border-radius:22px;padding:26px;box-shadow:0 35px 100px rgba(0,0,0,.42)}
+.fb-tag{font:700 11px 'Inter',sans-serif;letter-spacing:.12em;color:#2f6fed}
+.fb-box h3{margin:6px 0 4px;font:700 22px 'Poppins',sans-serif;color:#101828}
+.fb-sub{margin:0 0 16px;color:#667085;font-size:13.5px;line-height:1.55}
+.fb-label{display:block;margin:14px 0 8px;font:700 13px 'Inter',sans-serif;color:#344054}.fb-label small{font-weight:500;color:#98a2b3}
+.fb-rate{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.fb-face{display:flex;flex-direction:column;align-items:center;gap:2px;padding:10px 4px;border:1.5px solid #dfe5f0;border-radius:14px;background:#f8fafc;cursor:pointer;font-family:inherit;transition:all .15s}
+.fb-face span{font-size:26px;line-height:1.1}.fb-face small{font:600 11px 'Inter',sans-serif;color:#667085}
+.fb-face:hover{border-color:#9db8ff}.fb-face.on{border-color:#2f6fed;background:#eaf0ff;box-shadow:0 4px 12px rgba(47,111,237,.18)}
+.fb-weeks{display:flex;flex-wrap:wrap;gap:8px}
+.fb-chip{padding:8px 14px;border-radius:999px;border:1.5px solid #dfe5f0;background:#fff;font:600 13px 'Inter',sans-serif;color:#344054;cursor:pointer}
+.fb-chip.on{background:#2f6fed;border-color:#2f6fed;color:#fff}
+#fbComment{width:100%;box-sizing:border-box;padding:12px;border:1.5px solid #dfe5f0;border-radius:12px;font:14px/1.5 'Inter',sans-serif;resize:vertical}
+#fbComment:focus{outline:none;border-color:#2f6fed;box-shadow:0 0 0 3px rgba(47,111,237,.15)}
+.fb-status{min-height:18px;margin-top:8px;font:600 12.5px 'Inter',sans-serif;color:#b54708}
+.fb-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:10px}
+.fb-actions button{min-height:44px;padding:0 20px;border-radius:12px;font:700 14px 'Inter',sans-serif;cursor:pointer;border:1px solid transparent}
+.fb-skip{background:#f2f4f7;color:#475467}.fb-send{background:linear-gradient(135deg,#2f6fed,#8b5cf6);color:#fff;box-shadow:0 8px 20px rgba(79,70,229,.3)}
+.fb-send:disabled{opacity:.5}
 </style>
 </body>
 </html>
