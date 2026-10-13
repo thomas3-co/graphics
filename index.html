@@ -901,13 +901,11 @@ input,select,textarea{font-size:16px}
 <div class="fb-box">
 <div class="fb-tag">WEEK 5 REVISION · FEEDBACK</div>
 <h3 id="fbHeading">Feedback for your instructor</h3>
-<p class="fb-sub">No quiz here — tell your instructor how the revision note went. It takes less than a minute.</p>
+<p class="fb-sub">No quiz here — rate the revision note and leave your instructor a short note.</p>
 <div class="fb-label">How clear was this revision note?</div>
 <div class="fb-rate" id="fbRate" role="radiogroup" aria-label="Clarity rating"></div>
-<div class="fb-label">Which weeks do you want to review again? <small>(optional)</small></div>
-<div class="fb-weeks" id="fbWeeks"></div>
-<label class="fb-label" for="fbComment">Comment or question <small>(optional)</small></label>
-<textarea id="fbComment" rows="4" maxlength="800" placeholder="e.g. I am not sure how to remove the white fringe…"></textarea>
+<label class="fb-label" for="fbComment">Note for your instructor <small>(optional)</small></label>
+<textarea id="fbComment" rows="4" maxlength="800" placeholder="Write a note for your instructor — what was clear, what was confusing, or any question you have…"></textarea>
 <div class="fb-status" id="fbStatus"></div>
 <div class="fb-actions"><button type="button" class="fb-skip" id="fbSkip">Skip</button><button type="button" class="fb-send" id="fbSend">Send to instructor</button></div>
 </div>
@@ -1970,8 +1968,6 @@ input,select,textarea{font-size:16px}
 </section>
 <!-- ========== SCREENCASTS (CINEMATIC THEATER PLAYER) ========== -->
 <section class="view" id="screencasts">
-<div class="view-head"><div><h2>Screencasts</h2><p>The released recordings are available in the cinematic theater. Additional recordings remain gray until they are released.</p></div></div>
-<div class="learning-check-note screen-note" role="note"><strong>Important — Screencast pop-out quiz:</strong> Watch the recording, then click <strong>Mark as watched</strong> (or <strong>Next ▶</strong>) to save it as watched. A 5-question pop-out check will appear after the recording is completed.</div>
 <div class="theater" id="screencastTheater">
 <div class="theater-main">
 <div class="theater-stage" id="theaterStage">
@@ -2039,7 +2035,7 @@ input,select,textarea{font-size:16px}
 </section>
 </main>
 <aside class="layers-panel collapsed" id="layersPanel">
-<div class="lp-head"><h3>Layers — Progress</h3></div>
+<div class="lp-head"><h3>Layers — Progress</h3><button aria-label="Close layers panel" class="lp-close" id="lpClose" type="button">×</button></div>
 <div class="lp-total" id="lpTotalPct">0%<span> complete</span></div>
 <div class="lp-bar"><i id="lpBar"></i></div>
 <button aria-controls="lpRows" aria-expanded="false" class="lp-rows-toggle" id="lpRowsToggle" type="button">
@@ -2296,6 +2292,21 @@ document.getElementById('lpToggle').addEventListener('click', function(){
   this.setAttribute('aria-expanded', collapsed ? 'false':'true');
   this.textContent = collapsed ? 'Layers ▸' : 'Layers ▾';
 });
+
+/* Floating Layers panel: close with the × button, the Escape key, or a tap outside it. */
+(function(){
+  const panel=document.getElementById('layersPanel'), toggle=document.getElementById('lpToggle');
+  if(!panel||!toggle) return;
+  const close=()=>{ if(!panel.classList.contains('collapsed')) toggle.click(); };
+  document.getElementById('lpClose')?.addEventListener('click',close);
+  document.addEventListener('keydown',e=>{ if(e.key==='Escape') close(); });
+  document.addEventListener('pointerdown',e=>{
+    if(panel.classList.contains('collapsed')) return;
+    if(panel.contains(e.target)||toggle.contains(e.target)) return;
+    if(e.target.closest('.wq-modal.open,.fb-modal.open,[id$="Modal"].open')) return;
+    close();
+  });
+})();
 /* Weekly-breakdown rows dropdown inside the Layers panel — collapsed by
    default (the overall % / bar / grade / report / sign-out stay visible
    regardless), and only opens when the student explicitly taps it. */
@@ -4759,7 +4770,7 @@ function renderAssignments(){
 }
 
 /* ===== Week 5 Revision note: no quiz, feedback form for the instructor ===== */
-let fbKey=null, fbRating=0, fbWeeks=new Set();
+let fbKey=null, fbRating=0;
 function revisionRecord(key){ return (student&&student.revisionRead&&student.revisionRead[key])||null; }
 function restoreRevisionNote(){
   document.querySelectorAll('.note-mark[data-revision-key]').forEach(btn=>{
@@ -4780,13 +4791,11 @@ function markRevisionRead(key, btnEl){
   openFeedbackModal(key);
 }
 function openFeedbackModal(key){
-  fbKey=key; fbRating=0; fbWeeks=new Set();
-  const rate=document.getElementById('fbRate'), wk=document.getElementById('fbWeeks');
+  fbKey=key; fbRating=0;
+  const rate=document.getElementById('fbRate');
   const faces=[['😕','Unclear'],['🙂','Okay'],['😀','Clear'],['🤩','Very clear']];
   rate.innerHTML=faces.map((f,i)=>`<button type="button" class="fb-face" role="radio" aria-checked="false" data-v="${i+1}"><span>${f[0]}</span><small>${f[1]}</small></button>`).join('');
-  wk.innerHTML=[1,2,3,4].map(n=>`<button type="button" class="fb-chip" aria-pressed="false" data-w="${n}">Week ${n}</button>`).join('');
   rate.querySelectorAll('.fb-face').forEach(b=>b.addEventListener('click',()=>{ fbRating=Number(b.dataset.v); rate.querySelectorAll('.fb-face').forEach(x=>{const on=x===b; x.classList.toggle('on',on); x.setAttribute('aria-checked',on?'true':'false');}); }));
-  wk.querySelectorAll('.fb-chip').forEach(b=>b.addEventListener('click',()=>{ const w=Number(b.dataset.w); const on=!fbWeeks.has(w); on?fbWeeks.add(w):fbWeeks.delete(w); b.classList.toggle('on',on); b.setAttribute('aria-pressed',on?'true':'false'); }));
   document.getElementById('fbComment').value=''; document.getElementById('fbStatus').textContent='';
   document.getElementById('fbSend').disabled=false;
   document.getElementById('fbModal').classList.add('open');
@@ -4795,12 +4804,11 @@ function closeFeedbackModal(){ document.getElementById('fbModal').classList.remo
 function sendRevisionFeedback(){
   if(!student) return;
   const comment=document.getElementById('fbComment').value.trim();
-  if(!fbRating && !comment && !fbWeeks.size){ document.getElementById('fbStatus').textContent='Pick a rating or write a short comment, or choose Skip.'; return; }
+  if(!fbRating && !comment){ document.getElementById('fbStatus').textContent='Pick a rating or write a note, or choose Skip.'; return; }
   const labels=['','Unclear','Okay','Clear','Very clear'];
-  const weeks=[...fbWeeks].sort().map(n=>'Week '+n).join(', ')||'none';
-  const summary=[`Week 5 Revision note feedback`,`Student: ${student.name} (${student.email})`,`Clarity: ${fbRating?labels[fbRating]+' ('+fbRating+'/4)':'not rated'}`,`Wants to review again: ${weeks}`,`Comment: ${comment||'(none)'}`,`Device: ${getDeviceInfo()}`].join('\n');
+  const summary=[`Week 5 Revision note feedback`,`Student: ${student.name} (${student.email})`,`Clarity: ${fbRating?labels[fbRating]+' ('+fbRating+'/4)':'not rated'}`,`Note for instructor: ${comment||'(none)'}`,`Device: ${getDeviceInfo()}`].join('\n');
   const rec=student.revisionRead[fbKey]=student.revisionRead[fbKey]||{readAt:new Date().toISOString()};
-  Object.assign(rec,{feedbackSent:true,rating:fbRating,weeks:[...fbWeeks],comment,sentAt:new Date().toISOString()});
+  Object.assign(rec,{feedbackSent:true,rating:fbRating,comment,sentAt:new Date().toISOString()});
   saveStudentRecord(student);
   if(GOOGLE_FORM_ACTION_URL && GOOGLE_FORM_ENTRY_ID){
     const fd=new URLSearchParams(); fd.append(GOOGLE_FORM_ENTRY_ID,summary);
@@ -5167,6 +5175,16 @@ button,.chip,.week-pill,.flip-card{ touch-action:manipulation; }
 .fb-actions button{min-height:44px;padding:0 20px;border-radius:12px;font:700 14px 'Inter',sans-serif;cursor:pointer;border:1px solid transparent}
 .fb-skip{background:#f2f4f7;color:#475467}.fb-send{background:linear-gradient(135deg,#2f6fed,#8b5cf6);color:#fff;box-shadow:0 8px 20px rgba(79,70,229,.3)}
 .fb-send:disabled{opacity:.5}
+</style>
+<style id="hma-float-panel">
+.layers-panel .lp-close{display:none;margin-left:auto;width:32px;height:32px;border-radius:10px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.06);color:#dfe2ea;font:400 20px/1 'Inter',sans-serif;cursor:pointer}
+.layers-panel .lp-close:hover{background:rgba(255,255,255,.14)}
+#layersPanel:not(.collapsed) .lp-close{display:inline-flex;align-items:center;justify-content:center}
+#layersPanel:not(.collapsed) .lp-head{align-items:center;margin-bottom:10px}
+#layersPanel:not(.collapsed){position:fixed;top:calc(var(--bar-h,64px) + 12px);right:12px;left:auto;width:min(330px,calc(100vw - 24px));max-height:calc(100vh - var(--bar-h,64px) - 24px);max-height:calc(100dvh - var(--bar-h,64px) - 24px);padding:18px 16px 22px;border:1px solid rgba(255,255,255,.12);border-radius:20px;box-shadow:0 24px 60px rgba(5,10,25,.45);z-index:950;animation:lpFloatIn .22s ease both;overscroll-behavior:contain}
+@keyframes lpFloatIn{from{opacity:0;transform:translateY(-8px) scale(.98)}to{opacity:1;transform:none}}
+@media (min-width:981px) and (pointer:fine){.workspace:has(#layersPanel:not(.collapsed)){padding-right:64px}}
+@media (prefers-reduced-motion:reduce){#layersPanel:not(.collapsed){animation:none}}
 </style>
 </body>
 </html>
