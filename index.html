@@ -5955,6 +5955,14 @@ table{max-width:100%}
       '<div id="siPass2Wrap" style="display:none"><label for="siPass2">Confirm password</label><input id="siPass2" name="password2" type="password" autocomplete="new-password" placeholder="Type the password again"></div>'+
       '<label class="hma-show"><input type="checkbox" id="siShow"> Show password</label>';
     form.insertBefore(box,$('siSubmit'));
+    /* Some files already contain their own extra password box: hide it so only one set of password fields shows */
+    form.querySelectorAll('input[type=password]').forEach(function(inp){
+      if(inp.id==='siPass'||inp.id==='siPass2') return;
+      inp.removeAttribute('required'); inp.style.display='none';
+      var lab=inp.id?form.querySelector('label[for="'+inp.id+'"]'):null;
+      if(!lab&&inp.previousElementSibling&&inp.previousElementSibling.tagName==='LABEL') lab=inp.previousElementSibling;
+      if(lab) lab.style.display='none';
+    });
     $('siShow').addEventListener('change',function(){ $('siPass').type=$('siPass2').type=this.checked?'text':'password'; });
     bar.addEventListener('click',function(e){ var b=e.target.closest('button'); if(b) setMode(b.dataset.mode); });
     var p=document.querySelector('.si-card p'); if(p) p.textContent='Use the same name, email and password on any device or browser to continue where you left off.';
@@ -5987,6 +5995,14 @@ table{max-width:100%}
     ['siPass','siPass2'].forEach(function(id){ if($(id)) $(id).value=''; });
     info(''); enterApp();
   }
+  function probe(){
+    fetch(HMA_CLOUD_URL,{method:'GET'}).then(function(r){return r.text();}).then(function(t){
+      if(t.indexOf('Course backend is running')>-1) info('The backend is online, but this request failed. Please try again in a moment.');
+      else info('The address answered with a Google page instead of the course backend. Instructor: in Apps Script open Deploy > Manage deployments > Edit, set "Who has access" to Anyone, choose New version, then Deploy.');
+    }).catch(function(){
+      info('This browser is not allowed to read the backend. Instructor: (1) "Who has access" must be Anyone, (2) deploy a New version after changing it, (3) the saved address must end with /exec.');
+    });
+  }
   window.attemptSignIn=function(){
     if(!HMA_CLOUD_URL){ return window.__hmOrigAttempt && window.__hmOrigAttempt(); }
     siClearError(); info('');
@@ -6001,7 +6017,7 @@ table{max-width:100%}
       busy(false);
       if(!res||!res.ok){ if(res&&res.error==='EXISTS') setMode('login'); if(res&&res.error==='NEEDPASS') setMode('register'); siShowError(MSG[res&&res.error]||'Something went wrong on the server. Please try again.'); return; }
       finishSignIn(res,name,email);
-    }).catch(function(){ busy(false); siShowError('Could not reach the server. Check your internet connection and try again.'); });
+    }).catch(function(){ busy(false); siShowError('Could not reach the server. Check your internet connection and try again.'); probe(); });
   };
 
   /* ---------- keep the page safe on shared computers ---------- */
