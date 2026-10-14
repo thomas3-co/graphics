@@ -5398,7 +5398,7 @@ initLearningUpgrade();
   if('ResizeObserver' in window) new ResizeObserver(sync).observe(bar);
   addEventListener('resize',sync); addEventListener('orientationchange',sync);
 })();
-initAuth();
+window.__hmOrigInitAuth=initAuth;window.__hmBootTimer=setTimeout(function(){if(!window.__hmCloudReady){initAuth();}},2500);
 </script>
 <div aria-hidden="true" class="a11y-panel" id="a11yPanel"><div class="a11y-card"><div class="a11y-head"><h3>Accessibility &amp; Learning Preferences</h3><button aria-label="Close" class="icon-close" id="a11yClose" type="button">×</button></div><label class="a11y-toggle"><input id="reduceMotionToggle" type="checkbox"/> Reduce motion</label><label class="a11y-toggle"><input id="largeTextToggle" type="checkbox"/> Larger text</label><p>These preferences are saved on this device.</p></div></div>
 <div aria-live="polite" class="completion-toast" id="completionToast" role="status"></div>
@@ -5804,6 +5804,251 @@ table{max-width:100%}
       d.onclick=function(){d.remove();}; document.body.appendChild(d);
     },1200); });
   }
+})();
+</script>
+
+
+
+<style id="hma-cloud-css">
+.hma-mode{display:flex;gap:6px;background:#eef1f6;border-radius:12px;padding:4px;margin-bottom:14px}
+.hma-mode button{flex:1;border:0;background:transparent;border-radius:9px;padding:10px;font:700 13px 'Inter',Arial,sans-serif;color:#5b6270;cursor:pointer;min-height:40px}
+.hma-mode button.on{background:#fff;color:#2f6fed;box-shadow:0 2px 8px rgba(15,17,23,.12)}
+.hma-show{display:flex;align-items:center;font-size:12.5px;font-weight:600;margin:-4px 0 14px;color:#5b6270;cursor:pointer}
+.hma-show input{width:auto!important;margin:0 8px 0 0!important}
+.hma-info{background:#eef4ff;border:1px solid #cddcff;color:#1f4fb8;font-size:12.5px;padding:10px 12px;border-radius:10px;margin-bottom:14px;line-height:1.5;display:none}
+.hma-info.show{display:block}
+.hma-sync{font-size:11px;color:#9aa2b1;margin-top:8px;text-align:center}
+.hma-sync.ok{color:#5fd39a}.hma-sync.bad{color:#ffb4a6}
+</style>
+<script id="hma-cloud-js">
+(function(){
+  "use strict";
+  /* The installer puts your Google Apps Script Web App URL here. */
+  var HMA_CLOUD_URL = "https://script.google.com/macros/s/AKfycbzW8hRO-dUA-kWwWt1R4yhjo0cNXR-z_NgNllDHajd76LaUB8Uv1JT7rW3d65j4cqSl/exec";
+  window.__hmCloudReady = true;
+
+  var SESS_KEY='hm_cloud_session', GUEST='guest-preview@local';
+  var lastCloudAt='', lastSig='', pushTimer=null, pushing=false, dirty=false, lastPull=0, mode='login';
+  var $=function(id){return document.getElementById(id);};
+
+  /* ---------- sync indicator (inside the Layers panel) ---------- */
+  function setSync(state){
+    var el=$('hmaSync'); if(!el) return;
+    var t={ok:'☁ Saved to your account',saving:'☁ Saving…',offline:'☁ Offline — will save when online',auth:'☁ Please sign in again',err:'☁ Could not save yet — retrying'}[state]||'';
+    el.textContent=t; el.className='hma-sync '+(state==='ok'?'ok':(state==='saving'?'':'bad'));
+  }
+
+  /* ---------- remembered session (this browser): localStorage + cookie + IndexedDB ---------- */
+  function readSession(){ try{ return JSON.parse(localStorage.getItem(SESS_KEY)||'null'); }catch(e){ return null; } }
+  function writeSession(s){
+    var v=JSON.stringify(s);
+    try{ localStorage.setItem(SESS_KEY,v); }catch(e){}
+    try{ document.cookie='hm_ct='+encodeURIComponent(v)+'; max-age=31536000; path=/; SameSite=Lax'; }catch(e){}
+    try{ idbSet('cloud_session',v); }catch(e){}
+  }
+  function clearSession(){
+    try{ localStorage.removeItem(SESS_KEY); }catch(e){}
+    try{ document.cookie='hm_ct=; max-age=0; path=/; SameSite=Lax'; }catch(e){}
+    try{ idbDel('cloud_session'); }catch(e){}
+  }
+  async function restoreSession(){
+    var s=readSession(); if(s&&s.token) return s;
+    try{ var m=document.cookie.match(/(?:^|;\s*)hm_ct=([^;]+)/); if(m){ s=JSON.parse(decodeURIComponent(m[1])); if(s&&s.token){ try{localStorage.setItem(SESS_KEY,JSON.stringify(s));}catch(e){} return s; } } }catch(e){}
+    try{ var v=await idbGet('cloud_session'); if(v){ s=JSON.parse(v); if(s&&s.token){ try{localStorage.setItem(SESS_KEY,v);}catch(e){} return s; } } }catch(e){}
+    return null;
+  }
+
+  /* ---------- server calls ---------- */
+  function api(action,payload,timeoutMs){
+    var ctl=('AbortController' in window)?new AbortController():null;
+    var t=ctl?setTimeout(function(){ctl.abort();},timeoutMs||25000):null;
+    return fetch(HMA_CLOUD_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},
+        body:JSON.stringify(Object.assign({action:action},payload)),signal:ctl?ctl.signal:undefined})
+      .then(function(r){return r.json();})
+      .then(function(j){ if(t)clearTimeout(t); return j; },function(e){ if(t)clearTimeout(t); throw e; });
+  }
+  function sig(){ try{ var c=Object.assign({},student); delete c.lastSavedAt; return JSON.stringify(c); }catch(e){ return String(Math.random()); } }
+
+  /* ---------- saving progress to the account ---------- */
+  function schedulePush(){
+    if(!student||!student.email||student.email===GUEST) return;
+    var s=readSession(); if(!s||s.email!==student.email) return;
+    if(!dirty && sig()===lastSig) return;          // nothing really changed
+    dirty=true; setSync('saving');
+    clearTimeout(pushTimer); pushTimer=setTimeout(function(){ pushTimer=null; pushNow(); },2500);
+  }
+  async function pushNow(){
+    var s=readSession(); if(!s||!student||student.email!==s.email||student.email===GUEST) return true;
+    if(pushing){ dirty=true; return false; }
+    pushing=true; dirty=false; var mine=sig();
+    try{
+      var res=await api('push',{email:s.email,token:s.token,record:student});
+      if(res&&res.ok){ lastCloudAt=res.updatedAt; lastSig=mine; setSync('ok'); return true; }
+      if(res&&res.error==='AUTH'){ dirty=true; setSync('auth'); needRelogin(); return false; }
+      dirty=true; setSync('err'); return false;
+    }catch(e){ dirty=true; setSync('offline'); return false; }
+    finally{ pushing=false; }
+  }
+  function flushOnLeave(){
+    var s=readSession(); if(!s||!student||student.email!==s.email||student.email===GUEST) return;
+    if(!dirty && !pushTimer && sig()===lastSig) return;
+    try{ fetch(HMA_CLOUD_URL,{method:'POST',mode:'no-cors',keepalive:true,headers:{'Content-Type':'text/plain;charset=utf-8'},
+        body:JSON.stringify({action:'push',email:s.email,token:s.token,record:student})}); }catch(e){}
+  }
+  setInterval(function(){ if(dirty && !pushing) pushNow(); },30000);
+  window.addEventListener('online',function(){ if(dirty) pushNow(); maybePull(true); });
+  window.addEventListener('pagehide',flushOnLeave);
+  document.addEventListener('visibilitychange',function(){ if(document.visibilityState==='hidden') flushOnLeave(); else maybePull(); });
+
+  /* ---------- picking up progress made on another device ---------- */
+  function applyRemote(rec){
+    var m=mergeStudentRecords(normalizeStudentRecord(rec,student.email),student);
+    m.name=student.name; m.email=student.email; student=m;
+    completed=Array.from(new Set(student.completed||[])); student.completed=completed.slice();
+    cards.forEach(function(c){ c.classList.toggle('done',completed.indexOf(c.dataset.day)>-1); });
+    readingSeen.clear(); (student.readingSeen||[]).forEach(function(k){ readingSeen.add(k); });
+    document.querySelectorAll('.note-mark[data-reading-key]').forEach(function(btn){
+      if(readingSeen.has(btn.dataset.readingKey)){ var l=btn.querySelector('.nm-label'); if(l) l.textContent='Read'; btn.classList.add('done'); btn.disabled=true; }
+    });
+    try{ updateProgress(); updateGrade(); theaterRenderSide(); refreshCompletionGrayStates(); renderWeekFinishButtons(); renderHomeLearning(); }catch(e){ console.error(e); }
+  }
+  function maybePull(force){
+    var s=readSession(); if(!s||!student||student.email!==s.email||student.email===GUEST) return;
+    if(!force && Date.now()-lastPull<20000) return; lastPull=Date.now();
+    api('pull',{email:s.email,token:s.token},15000).then(function(res){
+      if(res&&res.ok&&res.updatedAt&&res.updatedAt!==lastCloudAt){ lastCloudAt=res.updatedAt; if(res.record) applyRemote(res.record); }
+      else if(res&&res.error==='AUTH') needRelogin();
+    }).catch(function(){});
+  }
+
+  /* ---------- sign-in screen ---------- */
+  var MSG={
+    EXISTS:'An account with this email already exists. Choose “Sign in” and use your password.',
+    BADLOGIN:'Name, email or password is not correct.',
+    NOACCOUNT:'No account found for this email yet. Choose “Create account” first.',
+    LOCKED:'Too many wrong attempts. Please wait 15 minutes and try again.',
+    NEEDPASS:'Your password was reset by your instructor. Choose “Create account” to set a new one (your progress is kept).',
+    WEAKPASS:'Password must be at least 6 characters.',
+    TOOBIG:'Your saved data is too large. Please tell your instructor.'
+  };
+  function info(msg){ var el=$('hmaInfo'); if(!el) return; el.textContent=msg||''; el.classList.toggle('show',!!msg); }
+  function setMode(m){
+    mode=m;
+    document.querySelectorAll('.hma-mode button').forEach(function(b){ b.classList.toggle('on',b.dataset.mode===m); b.setAttribute('aria-pressed',b.dataset.mode===m?'true':'false'); });
+    var reg=m==='register';
+    $('siPass2Wrap').style.display=reg?'block':'none';
+    $('siPass').setAttribute('autocomplete',reg?'new-password':'current-password');
+    $('siHeading').textContent=reg?'Create your account':'Sign in to start';
+    $('siSubmit').textContent=reg?'Create account':'Sign In';
+    siClearError();
+  }
+  function buildGate(){
+    var form=$('siForm'); if(!form||form.dataset.cloud) return; form.dataset.cloud='1';
+    var bar=document.createElement('div'); bar.className='hma-mode';
+    bar.innerHTML='<button type="button" data-mode="login" class="on">Sign in</button><button type="button" data-mode="register">Create account</button>';
+    form.insertBefore(bar,form.firstChild);
+    var inf=document.createElement('div'); inf.id='hmaInfo'; inf.className='hma-info'; inf.setAttribute('role','status');
+    form.insertBefore(inf,bar.nextSibling);
+    var email=$('siEmail'); email.setAttribute('autocomplete','username');
+    var box=document.createElement('div');
+    box.innerHTML='<label for="siPass">Password</label><input id="siPass" name="password" type="password" autocomplete="current-password" minlength="6" required placeholder="At least 6 characters">'+
+      '<div id="siPass2Wrap" style="display:none"><label for="siPass2">Confirm password</label><input id="siPass2" name="password2" type="password" autocomplete="new-password" placeholder="Type the password again"></div>'+
+      '<label class="hma-show"><input type="checkbox" id="siShow"> Show password</label>';
+    form.insertBefore(box,$('siSubmit'));
+    $('siShow').addEventListener('change',function(){ $('siPass').type=$('siPass2').type=this.checked?'text':'password'; });
+    bar.addEventListener('click',function(e){ var b=e.target.closest('button'); if(b) setMode(b.dataset.mode); });
+    var p=document.querySelector('.si-card p'); if(p) p.textContent='Use the same name, email and password on any device or browser to continue where you left off.';
+    var fine=document.querySelector('.si-fine');
+    if(fine&&fine.firstChild&&fine.firstChild.nodeType===3) fine.firstChild.nodeValue='Your progress is saved to your account online, so it follows you to any device or browser. Keep your password private. If you forget it, ask your instructor to reset it. Questions? ';
+    var out=$('lpSignOutBtn');
+    if(out&&!$('hmaSync')){ var sy=document.createElement('div'); sy.id='hmaSync'; sy.className='hma-sync'; out.parentNode.insertBefore(sy,out); }
+  }
+  function showGate(msg,cur){
+    var gate=$('signInGate'); if(!gate) return;
+    if(cur){ if($('siName')) $('siName').value=cur.name||''; if($('siEmail')) $('siEmail').value=cur.email||''; }
+    info(msg); gate.classList.remove('hidden');
+  }
+  function needRelogin(){
+    var s=readSession(); clearSession(); setMode('login');
+    showGate('Your session ended. Please sign in again to keep saving your progress.',s);
+  }
+  function busy(on){ var b=$('siSubmit'); if(!b) return; b.disabled=on; if(on) b.textContent='Please wait…'; else setMode(mode); }
+
+  function finishSignIn(res,name,email){
+    writeSession({email:email,name:res.name||name,token:res.token});
+    lastCloudAt=res.updatedAt||'';
+    var local=loadStudentRecord(email);
+    var rec=res.record?normalizeStudentRecord(res.record,email):null;
+    var merged=rec?mergeStudentRecords(rec,local):local;
+    merged.name=res.name||name; merged.email=email;
+    student=merged; window.__guestPreview=false;
+    saveStudentRecord(student);
+    setCurrentStudent({name:merged.name,email:email});
+    ['siPass','siPass2'].forEach(function(id){ if($(id)) $(id).value=''; });
+    info(''); enterApp();
+  }
+  window.attemptSignIn=function(){
+    if(!HMA_CLOUD_URL){ return window.__hmOrigAttempt && window.__hmOrigAttempt(); }
+    siClearError(); info('');
+    var name=$('siName').value.trim(), email=$('siEmail').value.trim().toLowerCase();
+    var pw=$('siPass').value, pw2=$('siPass2').value;
+    if(!name||!EMAIL_RE.test(email)){ siShowError('Please enter your first name and a valid email address.'); return; }
+    if(pw.length<6){ siShowError('Password must be at least 6 characters.'); return; }
+    if(mode==='register'&&pw!==pw2){ siShowError('The two passwords do not match.'); return; }
+    busy(true);
+    var p=(mode==='register')?api('register',{name:name,email:email,password:pw,record:loadStudentRecord(email)}):api('login',{name:name,email:email,password:pw});
+    p.then(function(res){
+      busy(false);
+      if(!res||!res.ok){ if(res&&res.error==='EXISTS') setMode('login'); if(res&&res.error==='NEEDPASS') setMode('register'); siShowError(MSG[res&&res.error]||'Something went wrong on the server. Please try again.'); return; }
+      finishSignIn(res,name,email);
+    }).catch(function(){ busy(false); siShowError('Could not reach the server. Check your internet connection and try again.'); });
+  };
+
+  /* ---------- keep the page safe on shared computers ---------- */
+  var _save=window.saveStudentRecord;
+  window.saveStudentRecord=function(rec){ var r=_save.apply(this,arguments); if(HMA_CLOUD_URL) schedulePush(); return r; };
+  var _forget=window.forgetSession;
+  window.forgetSession=function(){
+    var s=readSession(), email=s&&s.email, done=Promise.resolve();
+    if(s&&HMA_CLOUD_URL){
+      done=pushNow().then(function(ok){
+        return api('logout',{email:s.email,token:s.token},8000).catch(function(){}).then(function(){
+          if(ok){ try{ localStorage.removeItem(studentKey(email)); localStorage.removeItem('hm_last_student_snapshot'); idbDel('record:'+email); }catch(e){} }
+        });
+      }).catch(function(){});
+    }
+    return done.then(function(){ try{ localStorage.removeItem('completedDays'); }catch(e){} clearSession(); return _forget(); });
+  };
+
+  /* ---------- start-up ---------- */
+  async function boot(){
+    try{
+      try{ localStorage.removeItem('hm_device_lock'); }catch(e){}   // one student can now use any device
+      if(!HMA_CLOUD_URL){ if(window.__hmOrigInitAuth) window.__hmOrigInitAuth(); return; }
+      buildGate();
+      var s=await restoreSession();
+      if(s){
+        try{ await restoreRecordFromBackup(s.email); }catch(e){}
+        var local=loadStudentRecord(s.email);
+        try{
+          var res=await api('pull',{email:s.email,token:s.token},15000);
+          if(res&&res.ok){
+            lastCloudAt=res.updatedAt||''; var rec=res.record?normalizeStudentRecord(res.record,s.email):null;
+            student=rec?mergeStudentRecords(rec,local):local; student.name=res.name||s.name; student.email=s.email;
+            window.__guestPreview=false; setCurrentStudent({name:student.name,email:s.email});
+            saveStudentRecord(student); enterApp(); return;
+          }
+          if(res&&res.error==='AUTH'){ clearSession(); setMode('login'); showGate('Please sign in again.',s); return; }
+        }catch(e){ /* offline: continue with the copy saved on this device */ }
+        student=local; student.name=s.name; student.email=s.email; window.__guestPreview=false;
+        setCurrentStudent({name:s.name,email:s.email}); enterApp(); setSync('offline'); dirty=true; return;
+      }
+      var cur=getCurrentStudent();
+      if(cur){ setMode('register'); showGate('Create a password to keep your progress safe and open it on any device or browser.',cur); }
+      else { setMode('login'); showGate('',null); }
+    }catch(err){ console.error(err); if(window.__hmOrigInitAuth) window.__hmOrigInitAuth(); }
+  }
+  boot();
 })();
 </script>
 
