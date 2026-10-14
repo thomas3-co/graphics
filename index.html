@@ -699,6 +699,27 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
  .cq-top-actions .cq-submit-top{width:auto!important;min-height:40px;}
 }
 
+
+/* ===== DEVICE-RESPONSIVE SAFETY NET ===== */
+@media(max-width:520px){
+  .canvas{padding:22px 12px 60px;}
+  .hero{padding:34px 22px;border-radius:16px;}
+  .hero h1{font-size:1.9rem;}
+  .home-grid,.stat-row,.progress-grid{grid-template-columns:1fr;}
+  .day-grid{grid-template-columns:1fr;}
+  .flip-card{height:360px;}
+  .theater-player{aspect-ratio:16/10;}
+  .si-card{padding:26px 20px;}
+}
+@media(min-width:521px) and (max-width:900px){
+  .day-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .canvas{padding-left:18px;padding-right:18px;}
+}
+@media(orientation:landscape) and (max-height:600px){
+  #signInGate{align-items:flex-start;overflow-y:auto;}
+  .si-card{margin:18px auto;}
+}
+
 </style>
 <style>
 /* Professional learning-platform upgrades — intentionally no dark/light theme switch. */
@@ -899,6 +920,51 @@ input,select,textarea{font-size:16px}
 .tn-mark.done{background:#e7f6ee;color:#1a8a52}
 #theaterWatchedNote{font-size:12px;color:var(--muted);flex:1;min-width:180px}
 </style>
+
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+<script id="hma-cloud-sync-config">
+/*
+  CLOUD SYNC SETUP
+  ----------------
+  Create a Firebase project, enable Email/Password Authentication and Firestore,
+  then replace the values below with your Firebase Web App configuration.
+
+  The rest of the course UI/workflow is intentionally left unchanged.
+*/
+window.HMA_FIREBASE_CONFIG = {
+  apiKey: "PASTE_FIREBASE_API_KEY",
+  authDomain: "PASTE_FIREBASE_AUTH_DOMAIN",
+  projectId: "PASTE_FIREBASE_PROJECT_ID",
+  storageBucket: "PASTE_FIREBASE_STORAGE_BUCKET",
+  messagingSenderId: "PASTE_FIREBASE_MESSAGING_SENDER_ID",
+  appId: "PASTE_FIREBASE_APP_ID"
+};
+
+window.HMA_CLOUD_SYNC_ENABLED =
+  !!window.HMA_FIREBASE_CONFIG &&
+  !Object.values(window.HMA_FIREBASE_CONFIG).some(v => String(v).startsWith("PASTE_FIREBASE_"));
+
+window.HMA_FIREBASE_READY = false;
+window.HMA_AUTH = null;
+window.HMA_DB = null;
+
+try {
+  if (window.HMA_CLOUD_SYNC_ENABLED && window.firebase) {
+    firebase.initializeApp(window.HMA_FIREBASE_CONFIG);
+    window.HMA_AUTH = firebase.auth();
+    window.HMA_DB = firebase.firestore();
+    window.HMA_FIREBASE_READY = true;
+    // Firebase Auth's LOCAL persistence keeps the student signed in across
+    // browser restarts and devices when the same account is used.
+    window.HMA_AUTH.setPersistence(firebase.auth.Auth.Persistence.LOCAL).catch(()=>{});
+  }
+} catch (e) {
+  console.warn("HMA cloud sync could not initialize; local progress remains available.", e);
+}
+</script>
+
 </head>
 <body><div aria-live="polite" class="offline-banner" id="offlineBanner" role="status">You are offline. Your local progress can still be saved on this device.</div><button aria-label="Accessibility and learning preferences" class="a11y-float" id="a11yBtn" type="button">Aa</button>
 <a class="skip-link" href="#mainContent">Skip to content</a>
@@ -907,13 +973,15 @@ input,select,textarea{font-size:16px}
 <div class="si-card">
 <div aria-hidden="true" class="si-mark">Ps</div>
 <h2 id="siHeading">Sign in to start</h2>
-<p>Enter your name and the email your instructor has on file. Your progress, weekly check-ins, and grade are tracked under this account for Class of 2028.</p>
+<p>Enter your name, student email, and password. Your progress, weekly check-ins, and grade are saved under this account for Class of 2028.</p>
 <div class="si-error" id="siError" role="alert"></div>
 <form id="siForm" novalidate="">
 <label for="siName">First Name</label>
 <input autocomplete="name" id="siName" name="name" placeholder="e.g. Mamush " required="" type="text"/>
 <label for="siEmail">Student email</label>
 <input autocomplete="email" id="siEmail" name="email" placeholder="You@hmacademy.org" required="" type="email"/>
+<label for="siPassword">Password</label>
+<input autocomplete="current-password" id="siPassword" name="password" placeholder="Enter your password" required="" type="password" minlength="6"/>
 <button class="si-btn" id="siSubmit" type="submit">Sign In</button>
 </form>
 <div style="margin-top:12px;text-align:center;"><a href="#" id="guestSignInLink" style="color:#2f6fed;font-weight:800;text-decoration:none;">Guest sign-in / preview</a></div>
@@ -2786,6 +2854,128 @@ function getDeviceInfo(){
     return `${type} · ${browser} on ${os}${res ? ' · '+res : ''}`;
   }catch(e){ return 'Unknown device'; }
 }
+
+/* ---------- 1-YEAR CROSS-BROWSER CLOUD STUDENT SYNC ---------- */
+const HMA_CLOUD_COLLECTION = 'hmaStudents';
+const HMA_SESSION_KEY = 'hm_cloud_session_v1';
+const HMA_SESSION_MAX_AGE = 60 * 60 * 24 * 365;
+
+function hmaCloudReady(){
+  return !!(window.HMA_FIREBASE_READY && window.HMA_AUTH && window.HMA_DB);
+}
+function hmaCloudSessionGet(){
+  try{
+    const raw = localStorage.getItem(HMA_SESSION_KEY);
+    if(!raw) return null;
+    const s = JSON.parse(raw);
+    if(!s || !s.email || !s.savedAt) return null;
+    if((Date.now() - Number(s.savedAt)) > HMA_SESSION_MAX_AGE * 1000){
+      localStorage.removeItem(HMA_SESSION_KEY);
+      return null;
+    }
+    return s;
+  }catch(e){ return null; }
+}
+function hmaCloudSessionSet(user){
+  try{
+    localStorage.setItem(HMA_SESSION_KEY, JSON.stringify({
+      email: user.email.toLowerCase(),
+      name: user.displayName || '',
+      savedAt: Date.now()
+    }));
+  }catch(e){}
+}
+function hmaCloudSessionClear(){
+  try{ localStorage.removeItem(HMA_SESSION_KEY); }catch(e){}
+}
+function hmaCloudDoc(email){
+  return window.HMA_DB.collection(HMA_CLOUD_COLLECTION).doc(email.trim().toLowerCase());
+}
+function hmaStripCloudMeta(rec){
+  const copy = JSON.parse(JSON.stringify(rec || {}));
+  delete copy._cloudUid;
+  delete copy._cloudEmail;
+  return copy;
+}
+async function hmaCloudLoadStudent(email){
+  if(!hmaCloudReady()) return null;
+  const user = window.HMA_AUTH.currentUser;
+  if(!user || user.email.toLowerCase() !== email.trim().toLowerCase()) return null;
+  try{
+    const snap = await hmaCloudDoc(email).get();
+    if(!snap.exists) return null;
+    const data = snap.data() || {};
+    const record = data.record || data;
+    return normalizeStudentRecord(record, email);
+  }catch(e){
+    console.warn('Cloud student record could not be loaded.', e);
+    return null;
+  }
+}
+async function hmaCloudSaveStudent(rec){
+  if(!hmaCloudReady() || !rec || !rec.email) return false;
+  const user = window.HMA_AUTH.currentUser;
+  if(!user || user.email.toLowerCase() !== rec.email.toLowerCase()) return false;
+  try{
+    const normalized = normalizeStudentRecord(rec);
+    normalized.lastSavedAt = new Date().toISOString();
+    await hmaCloudDoc(normalized.email).set({
+      record: hmaStripCloudMeta(normalized),
+      name: normalized.name || user.displayName || '',
+      email: normalized.email,
+      updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+    }, {merge:true});
+    return true;
+  }catch(e){
+    console.warn('Cloud student record could not be saved.', e);
+    return false;
+  }
+}
+async function hmaCloudSignIn(email,password,name){
+  if(!hmaCloudReady()) return null;
+  let cred = null;
+  try{
+    cred = await window.HMA_AUTH.signInWithEmailAndPassword(email,password);
+  }catch(err){
+    // If this is a brand-new student account, create it automatically.
+    if(err && (err.code === 'auth/user-not-found' || err.code === 'auth/invalid-credential')){
+      try{
+        cred = await window.HMA_AUTH.createUserWithEmailAndPassword(email,password);
+        if(name) await cred.user.updateProfile({displayName:name});
+      }catch(createErr){
+        throw createErr;
+      }
+    }else{
+      throw err;
+    }
+  }
+  hmaCloudSessionSet(cred.user);
+  return cred.user;
+}
+async function hmaCloudRestore(){
+  if(!hmaCloudReady()) return null;
+  try{
+    const user = window.HMA_AUTH.currentUser;
+    if(!user) return null;
+    const session = hmaCloudSessionGet();
+    if(session && session.email !== user.email.toLowerCase()) return null;
+    const record = await hmaCloudLoadStudent(user.email);
+    return {
+      name: (record && record.name) || user.displayName || '',
+      email: user.email.toLowerCase(),
+      record
+    };
+  }catch(e){
+    return null;
+  }
+}
+async function hmaCloudSignOut(){
+  hmaCloudSessionClear();
+  if(hmaCloudReady()){
+    try{ await window.HMA_AUTH.signOut(); }catch(e){}
+  }
+}
+
 /* ---------- SIGN-IN / DEVICE LOCK ---------- */
 const gate = document.getElementById('signInGate');
 const siError = document.getElementById('siError');
@@ -2848,6 +3038,11 @@ function saveStudentRecord(rec){
     localStorage.setItem('hm_last_saved_at', normalized.lastSavedAt);
     localStorage.setItem('hm_last_student_snapshot', serialized);
     if(student && student.email === normalized.email) student = normalized;
+    /* Keep the exact same progress record synchronized to the student's cloud account. */
+    if(hmaCloudReady() && window.HMA_AUTH.currentUser &&
+       window.HMA_AUTH.currentUser.email.toLowerCase() === normalized.email.toLowerCase()){
+      hmaCloudSaveStudent(normalized).catch(()=>{});
+    }
     window.__lastSaveOk = true;
     updateSaveStatus('Saved just now');
     // Re-link every view only when the student's data actually changed.
@@ -2898,32 +3093,91 @@ function mergeStudentRecords(base,extra){
   return normalizeStudentRecord(base);
 }
 let student = null; // active record for this session
-function attemptSignIn(){
+async function attemptSignIn(){
   siClearError();
   const name = document.getElementById('siName').value.trim();
   const email = document.getElementById('siEmail').value.trim().toLowerCase();
+  const passwordEl = document.getElementById('siPassword');
+  const password = passwordEl ? passwordEl.value : '';
+
   if(!name || !email || !EMAIL_RE.test(email)){
     siShowError('Please enter your First Name and a valid email address.');
     return;
   }
-  const lock = getDeviceLock();
-  if(lock && lock.email !== email){
-    siShowError(`This device is already enrolled to ${lock.email}. It can't be used to sign in or enroll with a different email. If this is a mistake, ask your instructor to reset this device.`);
+  if(hmaCloudReady() && password.length < 6){
+    siShowError('Please enter a password with at least 6 characters.');
     return;
   }
-  if(!lock){
-    localStorage.setItem('hm_device_lock', JSON.stringify({ email, name, ts:new Date().toISOString() }));
+
+  const submitBtn = document.getElementById('siSubmit');
+  if(submitBtn){
+    submitBtn.disabled = true;
+    submitBtn.dataset.originalText = submitBtn.textContent;
+    submitBtn.textContent = hmaCloudReady() ? 'Signing in…' : 'Opening…';
   }
-  const accountRecord = loadStudentRecord(email);
-  let guestRecord = null;
-  try{ const raw=localStorage.getItem(studentKey('guest-preview@local')); if(raw) guestRecord=normalizeStudentRecord(JSON.parse(raw),'guest-preview@local'); }catch(e){}
-  student = mergeStudentRecords(accountRecord, guestRecord);
-  student.name = name;
-  student.email = email;
-  window.__guestPreview=false;
-  saveStudentRecord(student);
-  setCurrentStudent({ name, email });
-  enterApp();
+
+  try{
+    /* Cross-browser mode: Firebase Authentication + Firestore */
+    if(hmaCloudReady()){
+      const cloudUser = await hmaCloudSignIn(email,password,name);
+      const cloudRecord = await hmaCloudLoadStudent(cloudUser.email);
+      const localRecord = loadStudentRecord(email);
+
+      /*
+        Preserve existing local progress the first time an old account is moved
+        to the cloud. After the cloud record exists, the cloud copy is authoritative.
+      */
+      if(!cloudRecord){
+        student = localRecord;
+        student.name = name;
+        student.email = email;
+        await hmaCloudSaveStudent(student);
+      }else{
+        student = normalizeStudentRecord(cloudRecord,email);
+        student.name = name || student.name || cloudUser.displayName || '';
+        student.email = email;
+        saveStudentRecord(student);
+      }
+
+      setCurrentStudent({ name: student.name, email: student.email });
+      enterApp();
+      return;
+    }
+
+    /* Original local/offline fallback when Firebase is not configured. */
+    const lock = getDeviceLock();
+    if(lock && lock.email !== email){
+      siShowError(`This device is already enrolled to ${lock.email}. It can't be used to sign in or enroll with a different email. If this is a mistake, ask your instructor to reset this device.`);
+      return;
+    }
+    if(!lock){
+      localStorage.setItem('hm_device_lock', JSON.stringify({ email, name, ts:new Date().toISOString() }));
+    }
+    const accountRecord = loadStudentRecord(email);
+    let guestRecord = null;
+    try{ const raw=localStorage.getItem(studentKey('guest-preview@local')); if(raw) guestRecord=normalizeStudentRecord(JSON.parse(raw),'guest-preview@local'); }catch(e){}
+    student = mergeStudentRecords(accountRecord, guestRecord);
+    student.name = name;
+    student.email = email;
+    window.__guestPreview=false;
+    saveStudentRecord(student);
+    setCurrentStudent({ name, email });
+    enterApp();
+  }catch(err){
+    console.error('Sign-in failed:',err);
+    let msg = 'Sign-in failed. Please check your email and password.';
+    if(err && err.code === 'auth/wrong-password') msg = 'Incorrect password. Please try again.';
+    else if(err && err.code === 'auth/invalid-email') msg = 'Please enter a valid email address.';
+    else if(err && err.code === 'auth/email-already-in-use') msg = 'That account already exists. Use the correct password.';
+    else if(err && err.code === 'auth/weak-password') msg = 'Password must be at least 6 characters.';
+    else if(err && err.code === 'auth/network-request-failed') msg = 'Network connection failed. Check your internet connection and try again.';
+    siShowError(msg);
+  }finally{
+    if(submitBtn){
+      submitBtn.disabled = false;
+      submitBtn.textContent = submitBtn.dataset.originalText || 'Sign In';
+    }
+  }
 }
 document.getElementById('siForm').addEventListener('submit', e=>{ e.preventDefault(); attemptSignIn(); });
 function continueAsGuest(){
@@ -2937,10 +3191,12 @@ function continueAsGuest(){
 }
 document.getElementById('guestSignInLink')?.addEventListener('click', e=>{ e.preventDefault(); continueAsGuest(); });
 document.getElementById('continueGuestBtn')?.addEventListener('click', continueAsGuest);
-document.getElementById('lpSignOutBtn').addEventListener('click', ()=>{
-  if(!confirm('Sign out? Your progress stays saved on this device for your account, but you\'ll need to sign back in with the same email.')) return;
+document.getElementById('lpSignOutBtn').addEventListener('click', async ()=>{
+  if(!confirm('Sign out? Your progress stays saved to your account, and you can sign back in from another browser or device.')) return;
   localStorage.removeItem('hm_current_student');
-  forgetSession().then(()=>location.reload());
+  await hmaCloudSignOut();
+  await forgetSession();
+  location.reload();
 });
 window.addEventListener('beforeunload',()=>{if(student) saveStudentRecord(student);});
 document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden' && student) saveStudentRecord(student);});
@@ -3017,6 +3273,27 @@ function enterApp(){
   if(m2 && courseWeekNumber(new Date())>=5 && courseWeekNumber(new Date())<=8 && !m2.classList.contains('active')) m2.click();
 }
 async function initAuth(){
+  /* Cloud account is checked first. Firebase restores the signed-in student
+     even after closing the browser and on another browser/device. */
+  if(hmaCloudReady()){
+    try{
+      const cloud = await hmaCloudRestore();
+      if(cloud && cloud.email){
+        const cloudRecord = cloud.record || loadStudentRecord(cloud.email);
+        student = normalizeStudentRecord(cloudRecord,cloud.email);
+        student.name = cloud.name || student.name;
+        student.email = cloud.email;
+        window.__guestPreview = false;
+        saveStudentRecord(student);
+        setCurrentStudent({name:student.name,email:student.email});
+        enterApp();
+        return;
+      }
+    }catch(e){
+      console.warn('Cloud session restore failed; showing sign-in.',e);
+    }
+  }
+
   let cur = getCurrentStudent();
   if(!cur){ try{ cur = await restoreSavedSession(); }catch(e){} }
   if(cur){
@@ -3028,7 +3305,7 @@ async function initAuth(){
     enterApp();
     return;
   }
-  // No saved session: keep the sign-in gate visible until the student explicitly chooses.
+
   window.__guestPreview = false;
   const lock = getDeviceLock();
   if(lock){
