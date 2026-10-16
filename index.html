@@ -6003,6 +6003,7 @@ table{max-width:100%}
       info('This browser is not allowed to read the backend. Instructor: (1) "Who has access" must be Anyone, (2) deploy a New version after changing it, (3) the saved address must end with /exec.');
     });
   }
+  function dev(){ try{ return typeof getDeviceInfo==='function'?getDeviceInfo():''; }catch(e){ return ''; } }
   window.attemptSignIn=function(){
     if(!HMA_CLOUD_URL){ return window.__hmOrigAttempt && window.__hmOrigAttempt(); }
     siClearError(); info('');
@@ -6012,7 +6013,7 @@ table{max-width:100%}
     if(pw.length<6){ siShowError('Password must be at least 6 characters.'); return; }
     if(mode==='register'&&pw!==pw2){ siShowError('The two passwords do not match.'); return; }
     busy(true);
-    var p=(mode==='register')?api('register',{name:name,email:email,password:pw,record:loadStudentRecord(email)}):api('login',{name:name,email:email,password:pw});
+    var p=(mode==='register')?api('register',{name:name,email:email,password:pw,device:dev(),record:loadStudentRecord(email)}):api('login',{name:name,email:email,password:pw,device:dev()});
     p.then(function(res){
       busy(false);
       if(!res||!res.ok){ if(res&&res.error==='EXISTS') setMode('login'); if(res&&res.error==='NEEDPASS') setMode('register'); siShowError(MSG[res&&res.error]||'Something went wrong on the server. Please try again.'); return; }
@@ -6065,6 +6066,69 @@ table{max-width:100%}
     }catch(err){ console.error(err); if(window.__hmOrigInitAuth) window.__hmOrigInitAuth(); }
   }
   boot();
+})();
+</script>
+
+
+<script id="hma-app-js">
+(function(){
+  "use strict";
+  /* ===== "Install as app": icon, name and full-screen mode for iPhone, iPad, Android and desktop ===== */
+  function rr(x,a,b,w,h,r){ x.beginPath(); x.moveTo(a+r,b); x.arcTo(a+w,b,a+w,b+h,r); x.arcTo(a+w,b+h,a,b+h,r); x.arcTo(a,b+h,a,b,r); x.arcTo(a,b,a+w,b,r); x.closePath(); }
+  function draw(size,rounded){
+    try{
+      var c=document.createElement('canvas'); c.width=c.height=size; var x=c.getContext('2d'); if(!x||!c.toDataURL) return '';
+      var g=x.createLinearGradient(0,0,size,size); g.addColorStop(0,'#2f6fed'); g.addColorStop(1,'#8b5cf6');
+      x.save(); if(rounded){ rr(x,0,0,size,size,size*.22); x.clip(); }
+      x.fillStyle=g; x.fillRect(0,0,size,size);
+      var rg=x.createRadialGradient(size*.82,size*.12,0,size*.82,size*.12,size*.75); rg.addColorStop(0,'rgba(255,255,255,.38)'); rg.addColorStop(1,'rgba(255,255,255,0)');
+      x.fillStyle=rg; x.fillRect(0,0,size,size); x.restore();
+      /* three stacked "layers" with a Ps card on top (kept inside the safe zone so it also works as a masked icon) */
+      [[.28,.20,.30],[.23,.27,.55]].forEach(function(l){ x.save(); x.globalAlpha=l[2]; x.fillStyle='#ffffff'; rr(x,size*l[0],size*l[1],size*.50,size*.36,size*.06); x.fill(); x.restore(); });
+      x.save(); x.shadowColor='rgba(15,17,40,.35)'; x.shadowBlur=size*.05; x.shadowOffsetY=size*.02; x.fillStyle='#ffffff'; rr(x,size*.18,size*.34,size*.50,size*.36,size*.07); x.fill(); x.restore();
+      x.fillStyle='#2f6fed'; x.textAlign='center'; x.textBaseline='middle'; x.font='800 '+Math.round(size*.21)+'px Poppins,"Arial Black",Arial,sans-serif';
+      x.fillText('Ps',size*.43,size*.53);
+      x.fillStyle='#ff7a2d'; x.beginPath(); x.arc(size*.74,size*.72,size*.065,0,Math.PI*2); x.fill();
+      return c.toDataURL('image/png');
+    }catch(e){ return ''; }
+  }
+  function head(tag,attrs){ var el=document.createElement(tag); for(var k in attrs) el.setAttribute(k,attrs[k]); document.head.appendChild(el); return el; }
+  function meta(n,v){ if(!document.querySelector('meta[name="'+n+'"]')) head('meta',{name:n,content:v}); }
+  function setup(){
+    var i180=draw(180,false), i192=draw(192,true), i512=draw(512,true), i32=draw(64,true);
+    if(i32){ document.querySelectorAll('link[rel~="icon"]').forEach(function(l){ l.remove(); }); head('link',{rel:'icon',type:'image/png',href:i32}); }
+    if(i180){ document.querySelectorAll('link[rel="apple-touch-icon"]').forEach(function(l){ l.remove(); }); head('link',{rel:'apple-touch-icon',sizes:'180x180',href:i180}); }
+    meta('theme-color','#15171d'); meta('apple-mobile-web-app-capable','yes'); meta('mobile-web-app-capable','yes');
+    meta('apple-mobile-web-app-title','Design 2028'); meta('apple-mobile-web-app-status-bar-style','black-translucent'); meta('application-name','Design 2028');
+    if(i192&&i512&&window.Blob&&window.URL&&URL.createObjectURL){
+      try{
+        var base=location.href.split('#')[0].split('?')[0];
+        var man={name:'Photoshop & Graphic Design — Class of 2028',short_name:'Design 2028',description:'Course workspace: lessons, screencasts, practice files and progress.',
+          start_url:base,scope:base.replace(/[^\/]*$/,''),display:'standalone',orientation:'any',background_color:'#15171d',theme_color:'#15171d',
+          icons:[{src:i192,sizes:'192x192',type:'image/png',purpose:'any'},{src:i512,sizes:'512x512',type:'image/png',purpose:'any'},{src:i512,sizes:'512x512',type:'image/png',purpose:'maskable'}]};
+        document.querySelectorAll('link[rel="manifest"]').forEach(function(l){ l.remove(); });
+        head('link',{rel:'manifest',href:URL.createObjectURL(new Blob([JSON.stringify(man)],{type:'application/manifest+json'}))});
+      }catch(e){}
+    }
+  }
+  setup();
+
+  /* ----- "Install as app" button inside the Layers panel ----- */
+  var deferred=null;
+  window.addEventListener('beforeinstallprompt',function(e){ e.preventDefault(); deferred=e; });
+  var standalone=(window.matchMedia&&window.matchMedia('(display-mode: standalone)').matches)||window.navigator.standalone===true;
+  function toast(m){ if(typeof showToast==='function') showToast(m); else alert(m); }
+  var out=document.getElementById('lpSignOutBtn');
+  if(out&&!standalone&&!document.getElementById('hmaInstallBtn')){
+    var b=document.createElement('button'); b.id='hmaInstallBtn'; b.type='button'; b.className='lp-report-btn'; b.style.marginTop='8px';
+    b.textContent='📲 Install as app';
+    b.addEventListener('click',function(){
+      if(deferred){ deferred.prompt(); deferred.userChoice&&deferred.userChoice.then(function(){ deferred=null; }); return; }
+      var ios=/iphone|ipad|ipod/i.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+      toast(ios?'Tap the Share button, then “Add to Home Screen”.':'Open your browser menu and choose “Install app” or “Add to Home screen”.');
+    });
+    out.parentNode.insertBefore(b,out);
+  }
 })();
 </script>
 
