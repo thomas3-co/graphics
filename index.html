@@ -6037,6 +6037,24 @@ table{max-width:100%}
     return done.then(function(){ try{ localStorage.removeItem('completedDays'); }catch(e){} clearSession(); return _forget(); });
   };
 
+  /* ---------- Week 5 revision feedback: send it to the instructor's Sheet (no email window) ---------- */
+  var _sendFb=window.sendRevisionFeedback;
+  window.sendRevisionFeedback=function(){
+    var s=readSession();
+    if(!HMA_CLOUD_URL||!s||!student||student.email===GUEST||typeof fbRating==='undefined') return _sendFb&&_sendFb();
+    var comment=$('fbComment').value.trim();
+    if(!fbRating&&!comment){ $('fbStatus').textContent='Pick a rating or write a note, or choose Skip.'; return; }
+    student.revisionRead=student.revisionRead||{};
+    var rec=student.revisionRead[fbKey]=student.revisionRead[fbKey]||{readAt:new Date().toISOString()};
+    Object.assign(rec,{feedbackSent:true,rating:fbRating,comment:comment,sentAt:new Date().toISOString()});
+    saveStudentRecord(student);
+    $('fbSend').disabled=true; $('fbStatus').style.color='#15803d'; $('fbStatus').textContent='Sending…';
+    pushNow().then(function(ok){
+      $('fbStatus').textContent=ok?'Sent to your instructor — thank you!':'Saved. It will reach your instructor when you are online.';
+      setTimeout(function(){ $('fbSend').disabled=false; $('fbStatus').style.color=''; closeFeedbackModal(); },1100);
+    });
+  };
+
   /* ---------- start-up ---------- */
   async function boot(){
     try{
@@ -6068,6 +6086,7 @@ table{max-width:100%}
   boot();
 })();
 </script>
+
 
 
 <script id="hma-app-js">
