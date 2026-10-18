@@ -5810,6 +5810,13 @@ table{max-width:100%}
 
 
 <style id="hma-course-css">
+.study-banner{top:calc(var(--bar-h,64px) + 10px)!important;bottom:auto!important;transform:translate(-50%,-26px)!important;z-index:3500;overflow:hidden;padding:12px 18px 16px!important;box-shadow:0 14px 40px rgba(0,0,0,.35)}
+.study-banner.show{transform:translate(-50%,0)!important}
+.study-banner .sb-bar{position:absolute;left:0;right:0;bottom:0;height:5px;background:rgba(255,255,255,.18)}
+.study-banner .sb-bar i{display:block;height:100%;background:linear-gradient(90deg,#2f6fed,#10b981);transition:width 1s linear}
+.study-banner.urgent .sb-bar i{background:linear-gradient(90deg,#f59e0b,#ef4444)}
+.study-banner.urgent .sb-time{color:#fbbf24;animation:hmaPulse 1s ease-in-out infinite}
+@keyframes hmaPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
 .hma-weekly{margin:22px 0;padding:20px;border:1px solid #dce6f4;border-radius:20px;background:linear-gradient(135deg,#fff,#f6f9ff);box-shadow:0 8px 24px rgba(30,60,100,.07)}
 .hma-wk-head{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;margin-bottom:14px;flex-wrap:wrap}
 .hma-wk-k{font:800 10px 'Inter',sans-serif;letter-spacing:.12em;color:#2f6fed}
@@ -6035,6 +6042,15 @@ html.hma-hide .app,html.hma-hide .wq-modal,html.hma-hide .phase-modal-backdrop,h
   document.body.classList.add('hma-protect');
   window.addEventListener('beforeprint',blackout);
 
+  /* ====== 8) The 2-minute study countdown sits at the TOP of the screen ====== */
+  window.showStudyBanner=function(w,left){
+    var total=(typeof STUDY_SECONDS!=='undefined'?STUDY_SECONDS:120), el=studyBannerEl();
+    var m=Math.floor(left/60), s=String(left%60).padStart(2,'0'), pct=Math.max(0,Math.min(100,left/total*100));
+    el.classList.toggle('urgent',left<=20);
+    el.innerHTML='<div class="sb-ico" aria-hidden="true">📖</div><div class="sb-copy"><b>Study time · Week '+w+'</b><span>Review your lesson card. Your quiz opens automatically when the timer ends.</span></div><div class="sb-time">'+m+':'+s+'</div><div class="sb-bar"><i style="width:'+pct+'%"></i></div>';
+    el.classList.add('show');
+  };
+
   /* Keep local-only fields (feedback, weekly submissions) when records are merged across devices */
   var _merge=window.mergeStudentRecords;
   window.mergeStudentRecords=function(base,extra){
@@ -6056,6 +6072,7 @@ html.hma-hide .app,html.hma-hide .wq-modal,html.hma-hide .phase-modal-backdrop,h
   try{ window.renderHomeLearning(); }catch(e){}
 })();
 </script>
+
 
 
 
@@ -6350,6 +6367,7 @@ html.hma-hide .app,html.hma-hide .wq-modal,html.hma-hide .phase-modal-backdrop,h
   boot();
 })();
 </script>
+
 
 
 
