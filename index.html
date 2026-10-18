@@ -5825,10 +5825,9 @@ table{max-width:100%}
 .hma-wk-sum{display:grid;gap:7px;margin:4px 0 6px}.hma-wk-sum div{display:flex;justify-content:space-between;gap:10px;padding:9px 12px;border-radius:10px;background:#f6f8fb;font-size:13px}.hma-wk-sum b{color:#17345f}
 .w6-actions{margin-top:10px}.w6-actions .hbtn{font-size:12.5px;padding:9px 14px}
 .note-dl{display:none!important}
-.hma-wm{position:fixed;top:0;right:0;bottom:0;left:0;z-index:2147483000;pointer-events:none;background-repeat:repeat}
-.hma-blackout{position:fixed;top:0;right:0;bottom:0;left:0;z-index:2147483646;background:#05060a;color:#fff;display:none;align-items:center;justify-content:center;text-align:center;padding:24px;font:700 19px/1.5 Inter,Arial,sans-serif}
+.hma-blackout{position:fixed;top:0;right:0;bottom:0;left:0;z-index:2147483646;background:#000;color:#fff;display:none;align-items:center;justify-content:center;text-align:center;padding:24px;font:700 19px/1.5 Inter,Arial,sans-serif}
 .hma-blackout.show{display:flex}
-html.hma-hide .app{visibility:hidden}
+html.hma-hide .app,html.hma-hide .wq-modal,html.hma-hide .phase-modal-backdrop,html.hma-hide .fb-modal{visibility:hidden}
 .hma-protect *:not(input):not(textarea):not(select){-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
 .hma-protect input,.hma-protect textarea{-webkit-user-select:text;user-select:text}
 .hma-protect img{-webkit-user-drag:none}
@@ -5997,21 +5996,9 @@ html.hma-hide .app{visibility:hidden}
      - puts the student's name + email on every screen (any leaked screenshot is traceable),
      - blocks copy, right-click, drag, print, and hides the page when the tab is switched away. */
   var GUESTID='guest-preview@local';
-  function xml(x){ return String(x).replace(/[&<>"]/g,function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
-  var wm=document.createElement('div'); wm.className='hma-wm'; wm.setAttribute('aria-hidden','true'); wm.style.display='none'; document.body.appendChild(wm);
-  var wmKey='';
-  function updateWatermark(){
-    if(!student||!student.email||student.email===GUESTID){ wm.style.display='none'; return; }
-    var day=new Date().toLocaleDateString(), key=student.email+'|'+(student.name||'')+'|'+day;
-    if(key===wmKey){ wm.style.display='block'; return; } wmKey=key;
-    var svg='<svg xmlns="http://www.w3.org/2000/svg" width="460" height="280"><g transform="rotate(-24 230 140)"><text x="230" y="130" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" font-weight="700" fill="rgba(100,110,140,0.22)">'+xml((student.name||'')+' · '+student.email)+'</text><text x="230" y="152" text-anchor="middle" font-family="Arial,sans-serif" font-size="12" fill="rgba(100,110,140,0.18)">'+xml(day+' · Class of 2028')+'</text></g></svg>';
-    wm.style.backgroundImage='url("data:image/svg+xml;utf8,'+encodeURIComponent(svg)+'")'; wm.style.display='block';
-  }
-  window.hmaUpdateWatermark=updateWatermark;
-  setInterval(updateWatermark,2000);
 
   var bo=document.createElement('div'); bo.className='hma-blackout'; bo.setAttribute('role','alert');
-  bo.innerHTML='<div><div style="font-size:42px;margin-bottom:10px">🔒</div>Screenshots and screen recording are not allowed.<div style="font-weight:500;font-size:13px;color:#aab3c7;margin-top:8px">This attempt was recorded. Your name and email appear on every screen.</div></div>';
+  bo.innerHTML='<div><div style="font-size:42px;margin-bottom:10px">🔒</div>Screenshots and screen recording are not allowed.<div style="font-weight:500;font-size:13px;color:#aab3c7;margin-top:8px">This attempt was recorded.</div></div>';
   document.body.appendChild(bo);
   var boT=null, lastAt=0;
   function blackout(){ bo.classList.add('show'); clearTimeout(boT); boT=setTimeout(function(){ bo.classList.remove('show'); },2600); }
@@ -6023,13 +6010,23 @@ html.hma-hide .app{visibility:hidden}
     if(student.securityEvents.length>40) student.securityEvents.shift();
     try{ saveStudentRecord(student); }catch(e){}
   }
-  function attempt(type){ blackout(); var n=Date.now(); if(n-lastAt<1500) return; lastAt=n; clearClip(); logShot(type); }
+  function quizOpen(){ return ['cqModal','wqModal','phaseAssessmentModal'].some(function(id){ var m=document.getElementById(id); return m&&m.classList.contains('open'); }); }
+  function attempt(type){ blackout(); var n=Date.now(); if(n-lastAt<1500) return; lastAt=n; clearClip(); logShot(quizOpen()?type+'-in-quiz':type); }
+  /* Black out the moment the screenshot shortcut starts (Cmd/Win + Shift are pressed BEFORE the final key), and keep it black while it is held */
+  var held=false;
+  function hold(){ held=true; clearTimeout(boT); bo.classList.add('show'); }
+  function release(){ if(!held) return; held=false; if(!document.hidden) bo.classList.remove('show'); }
   function isShotKey(e){ return e.key==='PrintScreen'||e.code==='PrintScreen'||((e.metaKey||e.ctrlKey)&&e.shiftKey&&(e.code==='KeyS'||e.code==='Digit3'||e.code==='Digit4'||e.code==='Digit5')); }
   document.addEventListener('keydown',function(e){
+    if(e.metaKey&&e.shiftKey&&!isShotKey(e)){ blackout(); }
     if(isShotKey(e)){ e.preventDefault(); attempt('screenshot-shortcut'); return; }
     if((e.metaKey||e.ctrlKey)&&!e.shiftKey&&!e.altKey){ var k=(e.key||'').toLowerCase(); if(k==='p'||k==='s'||k==='u'){ e.preventDefault(); if(k==='p') attempt('print'); } }
   },true);
   document.addEventListener('keyup',function(e){ if(e.key==='PrintScreen'||e.code==='PrintScreen') attempt('printscreen-key'); },true);
+  /* Inside a quiz: the moment the window loses focus (snipping tools, other apps) the whole screen goes black until the student comes back */
+  window.addEventListener('blur',function(){ if(quizOpen()) hold(); });
+  window.addEventListener('focus',release);
+  document.addEventListener('visibilitychange',function(){ if(document.hidden&&quizOpen()) hold(); else release(); });
   function isField(x){ return x&&(/^(INPUT|TEXTAREA|SELECT)$/.test(x.tagName)||x.isContentEditable); }
   ['copy','cut'].forEach(function(n){ document.addEventListener(n,function(e){ if(!isField(e.target)) e.preventDefault(); },true); });
   document.addEventListener('contextmenu',function(e){ if(!isField(e.target)) e.preventDefault(); },true);
@@ -6054,13 +6051,12 @@ html.hma-hide .app{visibility:hidden}
     var r=_rhl.apply(this,arguments);
     try{ document.querySelectorAll('#homeLearningPanel small').forEach(function(el){ if(/15 questions/.test(el.textContent)) el.textContent=el.textContent.replace('15 questions','20 questions'); }); }catch(e){}
     try{ renderWeeklyCard(); }catch(e){}
-    try{ updateWatermark(); }catch(e){}
     return r;
   };
   try{ window.renderHomeLearning(); }catch(e){}
-  try{ updateWatermark(); }catch(e){}
 })();
 </script>
+
 
 
 <style id="hma-cloud-css">
@@ -6354,6 +6350,7 @@ html.hma-hide .app{visibility:hidden}
   boot();
 })();
 </script>
+
 
 
 
