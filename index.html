@@ -5824,6 +5824,15 @@ table{max-width:100%}
 .hma-wk-tile.done{border-color:#bfe3cf;background:#f4fcf7;cursor:default}.hma-wk-tile.done span{color:#15803d}
 .hma-wk-sum{display:grid;gap:7px;margin:4px 0 6px}.hma-wk-sum div{display:flex;justify-content:space-between;gap:10px;padding:9px 12px;border-radius:10px;background:#f6f8fb;font-size:13px}.hma-wk-sum b{color:#17345f}
 .w6-actions{margin-top:10px}.w6-actions .hbtn{font-size:12.5px;padding:9px 14px}
+.note-dl{display:none!important}
+.hma-wm{position:fixed;top:0;right:0;bottom:0;left:0;z-index:2147483000;pointer-events:none;background-repeat:repeat}
+.hma-blackout{position:fixed;top:0;right:0;bottom:0;left:0;z-index:2147483646;background:#05060a;color:#fff;display:none;align-items:center;justify-content:center;text-align:center;padding:24px;font:700 19px/1.5 Inter,Arial,sans-serif}
+.hma-blackout.show{display:flex}
+html.hma-hide .app{visibility:hidden}
+.hma-protect *:not(input):not(textarea):not(select){-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+.hma-protect input,.hma-protect textarea{-webkit-user-select:text;user-select:text}
+.hma-protect img{-webkit-user-drag:none}
+@media print{html{display:none!important}}
 </style>
 <script id="hma-course-js">
 (function(){
@@ -5976,11 +5985,67 @@ table{max-width:100%}
   }
   window.hmaRenderWeekly=renderWeeklyCard;
 
+
+  /* ====== 6) Read Me: no download button ====== */
+  window.downloadSectionPDF=function(){};
+  try{ document.querySelectorAll('.note-dl').forEach(function(b){ if(b.parentNode) b.parentNode.removeChild(b); }); }catch(e){}
+  try{ var rp=document.querySelector('.home-card[onclick*="notes"] p'); if(rp) rp.textContent='Deep-dive written lessons with tools, tips, analogies and step-by-step instructions.'; }catch(e){}
+
+  /* ====== 7) Content protection ======
+     A website cannot stop the operating system from taking a screenshot. What this does instead:
+     - blacks out the screen and logs the attempt whenever a screenshot/print shortcut is detected,
+     - puts the student's name + email on every screen (any leaked screenshot is traceable),
+     - blocks copy, right-click, drag, print, and hides the page when the tab is switched away. */
+  var GUESTID='guest-preview@local';
+  function xml(x){ return String(x).replace(/[&<>"]/g,function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+  var wm=document.createElement('div'); wm.className='hma-wm'; wm.setAttribute('aria-hidden','true'); wm.style.display='none'; document.body.appendChild(wm);
+  var wmKey='';
+  function updateWatermark(){
+    if(!student||!student.email||student.email===GUESTID){ wm.style.display='none'; return; }
+    var day=new Date().toLocaleDateString(), key=student.email+'|'+(student.name||'')+'|'+day;
+    if(key===wmKey){ wm.style.display='block'; return; } wmKey=key;
+    var svg='<svg xmlns="http://www.w3.org/2000/svg" width="460" height="280"><g transform="rotate(-24 230 140)"><text x="230" y="130" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" font-weight="700" fill="rgba(100,110,140,0.22)">'+xml((student.name||'')+' · '+student.email)+'</text><text x="230" y="152" text-anchor="middle" font-family="Arial,sans-serif" font-size="12" fill="rgba(100,110,140,0.18)">'+xml(day+' · Class of 2028')+'</text></g></svg>';
+    wm.style.backgroundImage='url("data:image/svg+xml;utf8,'+encodeURIComponent(svg)+'")'; wm.style.display='block';
+  }
+  window.hmaUpdateWatermark=updateWatermark;
+  setInterval(updateWatermark,2000);
+
+  var bo=document.createElement('div'); bo.className='hma-blackout'; bo.setAttribute('role','alert');
+  bo.innerHTML='<div><div style="font-size:42px;margin-bottom:10px">🔒</div>Screenshots and screen recording are not allowed.<div style="font-weight:500;font-size:13px;color:#aab3c7;margin-top:8px">This attempt was recorded. Your name and email appear on every screen.</div></div>';
+  document.body.appendChild(bo);
+  var boT=null, lastAt=0;
+  function blackout(){ bo.classList.add('show'); clearTimeout(boT); boT=setTimeout(function(){ bo.classList.remove('show'); },2600); }
+  function clearClip(){ try{ if(navigator.clipboard&&navigator.clipboard.writeText) navigator.clipboard.writeText('Screenshots are not allowed.'); }catch(e){} }
+  function logShot(type){
+    if(!student||!student.email||student.email===GUESTID) return;
+    student.securityEvents=student.securityEvents||[];
+    student.securityEvents.push({type:type,at:new Date().toISOString()});
+    if(student.securityEvents.length>40) student.securityEvents.shift();
+    try{ saveStudentRecord(student); }catch(e){}
+  }
+  function attempt(type){ blackout(); var n=Date.now(); if(n-lastAt<1500) return; lastAt=n; clearClip(); logShot(type); }
+  function isShotKey(e){ return e.key==='PrintScreen'||e.code==='PrintScreen'||((e.metaKey||e.ctrlKey)&&e.shiftKey&&(e.code==='KeyS'||e.code==='Digit3'||e.code==='Digit4'||e.code==='Digit5')); }
+  document.addEventListener('keydown',function(e){
+    if(isShotKey(e)){ e.preventDefault(); attempt('screenshot-shortcut'); return; }
+    if((e.metaKey||e.ctrlKey)&&!e.shiftKey&&!e.altKey){ var k=(e.key||'').toLowerCase(); if(k==='p'||k==='s'||k==='u'){ e.preventDefault(); if(k==='p') attempt('print'); } }
+  },true);
+  document.addEventListener('keyup',function(e){ if(e.key==='PrintScreen'||e.code==='PrintScreen') attempt('printscreen-key'); },true);
+  function isField(x){ return x&&(/^(INPUT|TEXTAREA|SELECT)$/.test(x.tagName)||x.isContentEditable); }
+  ['copy','cut'].forEach(function(n){ document.addEventListener(n,function(e){ if(!isField(e.target)) e.preventDefault(); },true); });
+  document.addEventListener('contextmenu',function(e){ if(!isField(e.target)) e.preventDefault(); },true);
+  document.addEventListener('dragstart',function(e){ e.preventDefault(); },true);
+  document.addEventListener('visibilitychange',function(){ document.documentElement.classList.toggle('hma-hide',document.hidden); });
+  document.body.classList.add('hma-protect');
+  window.addEventListener('beforeprint',blackout);
+
   /* Keep local-only fields (feedback, weekly submissions) when records are merged across devices */
   var _merge=window.mergeStudentRecords;
   window.mergeStudentRecords=function(base,extra){
     var keep={}; ['revisionRead','weekSubmissions'].forEach(function(k){ keep[k]=Object.assign({},(extra&&extra[k])||{},(base&&base[k])||{}); });
-    var out=_merge(base,extra); Object.keys(keep).forEach(function(k){ out[k]=keep[k]; }); return out;
+    var ev=[].concat((extra&&extra.securityEvents)||[],(base&&base.securityEvents)||[]), seen={}, evs=[];
+    ev.forEach(function(x){ var k=(x.at||'')+'|'+(x.type||''); if(!seen[k]){ seen[k]=1; evs.push(x); } });
+    evs.sort(function(a,b){ return String(a.at).localeCompare(String(b.at)); });
+    var out=_merge(base,extra); Object.keys(keep).forEach(function(k){ out[k]=keep[k]; }); out.securityEvents=evs.slice(-40); return out;
   };
 
   /* Re-render the weekly card and fix the home text whenever the Home workflow redraws */
@@ -5989,11 +6054,14 @@ table{max-width:100%}
     var r=_rhl.apply(this,arguments);
     try{ document.querySelectorAll('#homeLearningPanel small').forEach(function(el){ if(/15 questions/.test(el.textContent)) el.textContent=el.textContent.replace('15 questions','20 questions'); }); }catch(e){}
     try{ renderWeeklyCard(); }catch(e){}
+    try{ updateWatermark(); }catch(e){}
     return r;
   };
   try{ window.renderHomeLearning(); }catch(e){}
+  try{ updateWatermark(); }catch(e){}
 })();
 </script>
+
 
 <style id="hma-cloud-css">
 .hma-mode{display:flex;gap:6px;background:#eef1f6;border-radius:12px;padding:4px;margin-bottom:14px}
@@ -6153,7 +6221,7 @@ table{max-width:100%}
     bar.addEventListener('click',function(e){ var b=e.target.closest('button'); if(b) setMode(b.dataset.mode); });
     var p=document.querySelector('.si-card p'); if(p) p.textContent='Use the same name, email and password on any device or browser to continue where you left off.';
     var fine=document.querySelector('.si-fine');
-    if(fine&&fine.firstChild&&fine.firstChild.nodeType===3) fine.firstChild.nodeValue='Your progress is saved to your account online, so it follows you to any device or browser. Keep your password private. If you forget it, ask your instructor to reset it. Questions? ';
+    if(fine&&fine.firstChild&&fine.firstChild.nodeType===3) fine.firstChild.nodeValue='Your progress is saved to your account online, so it follows you to any device or browser. Keep your password private. If you forget it, ask your instructor to reset it. For security, each sign-in records the time, the type of device you use and a device ID, and screenshot attempts are logged. Questions? ';
     var out=$('lpSignOutBtn');
     if(out&&!$('hmaSync')){ var sy=document.createElement('div'); sy.id='hmaSync'; sy.className='hma-sync'; out.parentNode.insertBefore(sy,out); }
   }
@@ -6189,7 +6257,19 @@ table{max-width:100%}
       info('This browser is not allowed to read the backend. Instructor: (1) "Who has access" must be Anyone, (2) deploy a New version after changing it, (3) the saved address must end with /exec.');
     });
   }
-  function dev(){ try{ return typeof getDeviceInfo==='function'?getDeviceInfo():''; }catch(e){ return ''; } }
+  function dev(){
+    var t=''; try{ t=Intl.DateTimeFormat().resolvedOptions().timeZone||''; }catch(e){}
+    try{ return (typeof getDeviceInfo==='function'?getDeviceInfo():'')+(t?' · '+t:''); }catch(e){ return t; }
+  }
+  /* A random ID for this browser/device. It is generated here (browsers cannot read a real serial number) and the sign-in screen tells students it is recorded. */
+  function devId(){
+    var id=''; try{ id=localStorage.getItem('hm_device_id')||''; }catch(e){}
+    if(!id){ try{ var m=document.cookie.match(/(?:^|;\s*)hm_did=([^;]+)/); if(m) id=decodeURIComponent(m[1]); }catch(e){} }
+    if(!id){ id=(window.crypto&&crypto.randomUUID)?crypto.randomUUID():('d'+Date.now().toString(36)+Math.random().toString(36).slice(2,10)); }
+    try{ localStorage.setItem('hm_device_id',id); }catch(e){}
+    try{ document.cookie='hm_did='+encodeURIComponent(id)+'; max-age=63072000; path=/; SameSite=Lax'; }catch(e){}
+    return id;
+  }
   window.attemptSignIn=function(){
     if(!HMA_CLOUD_URL){ return window.__hmOrigAttempt && window.__hmOrigAttempt(); }
     siClearError(); info('');
@@ -6199,7 +6279,7 @@ table{max-width:100%}
     if(pw.length<6){ siShowError('Password must be at least 6 characters.'); return; }
     if(mode==='register'&&pw!==pw2){ siShowError('The two passwords do not match.'); return; }
     busy(true);
-    var p=(mode==='register')?api('register',{name:name,email:email,password:pw,device:dev(),record:loadStudentRecord(email)}):api('login',{name:name,email:email,password:pw,device:dev()});
+    var p=(mode==='register')?api('register',{name:name,email:email,password:pw,device:dev(),deviceId:devId(),record:loadStudentRecord(email)}):api('login',{name:name,email:email,password:pw,device:dev(),deviceId:devId()});
     p.then(function(res){
       busy(false);
       if(!res||!res.ok){ if(res&&res.error==='EXISTS') setMode('login'); if(res&&res.error==='NEEDPASS') setMode('register'); siShowError(MSG[res&&res.error]||'Something went wrong on the server. Please try again.'); return; }
@@ -6274,6 +6354,7 @@ table{max-width:100%}
   boot();
 })();
 </script>
+
 
 
 
