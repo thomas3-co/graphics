@@ -5810,6 +5810,47 @@ table{max-width:100%}
 
 
 <style id="hma-course-css">
+.hma-pg{margin:0 0 16px;padding:16px 18px;border-radius:16px;background:linear-gradient(135deg,#101522,#1a2236);color:#fff;border:1px solid rgba(255,255,255,.08);box-shadow:0 10px 26px rgba(7,12,25,.16)}
+.hma-pg-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.hma-pg-head span{font:800 12px 'Inter',sans-serif;letter-spacing:.1em;color:#aeb8cf}.hma-pg-head small{color:#8f9ab3;font-size:11.5px}
+.hma-pg-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.hma-pg-card{position:relative;overflow:hidden;padding:12px 14px 16px;border-radius:14px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1)}
+.hma-pg-card small{display:block;font:700 11px 'Inter',sans-serif;color:#aeb8cf;margin-bottom:4px}
+.hma-pg-card b{font:800 28px 'Poppins',sans-serif}
+.hma-pg-card em{position:absolute;top:12px;right:12px;font:800 15px 'Poppins',sans-serif;font-style:normal;padding:3px 10px;border-radius:999px;background:var(--c);color:#fff}
+.hma-pg-card span{display:block;font-size:11px;color:#aeb8cf;margin-top:2px}
+.hma-pg-card i{position:absolute;left:0;bottom:0;height:4px;background:var(--c)}
+.hma-pg-card.off{opacity:.6}.hma-pg-card.off b{color:#8f9ab3}
+#hmaChat{position:fixed;right:max(16px,env(safe-area-inset-right));bottom:max(16px,env(safe-area-inset-bottom));z-index:3200;font-family:'Inter',Arial,sans-serif}
+#hmaChat[hidden]{display:none}
+#hmaChatBtn{width:58px;height:58px;border-radius:50%;border:0;background:linear-gradient(135deg,#2f6fed,#8b5cf6);color:#fff;font-size:26px;cursor:pointer;box-shadow:0 10px 26px rgba(47,111,237,.45);position:relative}
+#hmaChatBadge{position:absolute;top:-4px;right:-4px;min-width:20px;height:20px;border-radius:10px;background:#ef4444;color:#fff;font:800 11px/20px Inter,sans-serif;padding:0 5px}
+#hmaChatBadge[hidden]{display:none}
+#hmaChatPanel{position:absolute;right:0;bottom:70px;width:min(370px,calc(100vw - 24px));height:min(540px,calc(100vh - 120px));background:#fff;border-radius:20px;box-shadow:0 24px 70px rgba(10,15,35,.38);display:flex;flex-direction:column;overflow:hidden;border:1px solid #e3e7ee}
+#hmaChatPanel[hidden]{display:none}
+.hma-ch-head{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:14px 16px;background:linear-gradient(135deg,#1c2030,#3b2a7a);color:#fff}
+.hma-ch-head b{display:block;font-size:15px}.hma-ch-head small{color:#c9d3f5;font-size:11px}
+.hma-ch-head button{background:rgba(255,255,255,.14);border:0;color:#fff;width:32px;height:32px;border-radius:10px;font-size:20px;cursor:pointer}
+.hma-ch-body{flex:1;overflow:auto;padding:14px;background:#f6f8fb;display:flex;flex-direction:column;gap:10px}
+.hma-b{max-width:88%;padding:10px 12px;border-radius:14px;font-size:13px;line-height:1.5;white-space:pre-wrap;word-wrap:break-word}
+.hma-b small{display:block;margin-top:5px;font-size:10.5px;opacity:.75}.hma-b em{display:block;font-style:normal;font-weight:800;font-size:10.5px;margin-bottom:3px;opacity:.85}
+.hma-b.me{align-self:flex-end;background:#2f6fed;color:#fff;border-bottom-right-radius:4px}.hma-b.ins{align-self:flex-start;background:#fff;border:1px solid #dfe5ee;color:#1f2937;border-bottom-left-radius:4px}
+.hma-ch-empty{margin:auto;text-align:center;color:#8a93a3;font-size:13px;padding:20px;line-height:1.6}
+.hma-ch-form{padding:10px 12px 12px;border-top:1px solid #e3e7ee;background:#fff}
+.hma-ch-form select,.hma-ch-form textarea{width:100%;box-sizing:border-box;border:1.5px solid #dfe5f0;border-radius:10px;padding:9px 10px;font:13px/1.45 Inter,Arial,sans-serif;margin-bottom:8px;background:#fff}
+.hma-ch-form textarea{resize:none}
+.hma-ch-row{display:flex;justify-content:space-between;align-items:center;gap:10px}.hma-ch-row span{font-size:11.5px;color:#15803d;font-weight:700}
+.hma-ch-row button{border:0;background:#2f6fed;color:#fff;border-radius:10px;padding:10px 18px;font:800 13px Inter,sans-serif;cursor:pointer;min-height:40px}.hma-ch-row button:disabled{opacity:.5}
+.hma-prof{position:fixed;top:0;right:0;bottom:0;left:0;z-index:4800;background:rgba(10,14,25,.78);display:none;align-items:center;justify-content:center;padding:16px;overflow:auto}
+.hma-prof.show{display:flex}
+.hma-prof-box{background:#fff;border-radius:22px;max-width:460px;width:100%;padding:26px;box-shadow:0 30px 90px rgba(0,0,0,.45)}
+.hma-prof-box h3{margin:0 0 6px;font:700 21px 'Poppins',sans-serif}.hma-prof-box p{margin:0 0 14px;color:#667085;font-size:13px;line-height:1.55}
+.hma-prof-box label{display:block;font:700 12.5px Inter,sans-serif;margin:12px 0 6px;color:#344054}
+.hma-prof-box input{width:100%;box-sizing:border-box;padding:12px;border:1.5px solid #dfe5f0;border-radius:12px;font:15px Inter,sans-serif}
+.hma-prof-box input[readonly]{background:#f2f4f7;color:#667085}
+.hma-prof-err{min-height:18px;margin-top:10px;color:#b42318;font:600 12.5px Inter,sans-serif}
+.hma-prof-box button{width:100%;margin-top:6px;padding:13px;border:0;border-radius:12px;background:linear-gradient(135deg,#2f6fed,#8b5cf6);color:#fff;font:800 14px Inter,sans-serif;cursor:pointer;min-height:46px}
+.hma-prof-note{margin-top:12px;font-size:11.5px;color:#7a8699;line-height:1.5}
 .study-banner{top:calc(var(--bar-h,64px) + 10px)!important;bottom:auto!important;transform:translate(-50%,-26px)!important;z-index:3500;overflow:hidden;padding:12px 18px 16px!important;box-shadow:0 14px 40px rgba(0,0,0,.35)}
 .study-banner.show{transform:translate(-50%,0)!important}
 .study-banner .sb-bar{position:absolute;left:0;right:0;bottom:0;height:5px;background:rgba(255,255,255,.18)}
@@ -5875,7 +5916,8 @@ html.hma-hide .app,html.hma-hide .wq-modal,html.hma-hide .phase-modal-backdrop,h
   function shuf(arr,r){ var a=arr.slice(); for(var i=a.length-1;i>0;i--){ var j=Math.floor(r()*(i+1)); var x=a[i]; a[i]=a[j]; a[j]=x; } return a; }
   /* Same student => same paper every time (reload-proof). Different students => different questions, order and answer positions. */
   function buildPaper(email){
-    var r=rng(hash(String(email||'guest').toLowerCase()+'|phase1|v1')), picked=[];
+    var rc=0; try{ (student.resets||[]).forEach(function(x){ if(x.k==='phase1'||x.k==='all') rc++; }); }catch(e){}
+    var r=rng(hash(String(email||'guest').toLowerCase()+'|phase1|v1'+(rc?'|r'+rc:''))), picked=[];
     [1,2,3,4].forEach(function(w){
       var items=[]; BANK.forEach(function(b,i){ if(b[0]===w) items.push(i); });
       shuf(items,r).slice(0,5).forEach(function(i){ picked.push(i); });
@@ -6018,7 +6060,12 @@ html.hma-hide .app,html.hma-hide .wq-modal,html.hma-hide .phase-modal-backdrop,h
     try{ saveStudentRecord(student); }catch(e){}
   }
   function quizOpen(){ return ['cqModal','wqModal','phaseAssessmentModal'].some(function(id){ var m=document.getElementById(id); return m&&m.classList.contains('open'); }); }
-  function attempt(type){ blackout(); var n=Date.now(); if(n-lastAt<1500) return; lastAt=n; clearClip(); logShot(quizOpen()?type+'-in-quiz':type); }
+  function attempt(type){
+    var inQuiz=quizOpen(); blackout();
+    var n=Date.now(); if(n-lastAt<1500) return; lastAt=n;
+    clearClip(); logShot(inQuiz?type+'-in-quiz':type);
+    if(inQuiz){ try{ invalidateActiveAssessment('screenshot attempt'); }catch(e){} }   /* the quiz is submitted automatically with a score of ZERO */
+  }
   /* Black out the moment the screenshot shortcut starts (Cmd/Win + Shift are pressed BEFORE the final key), and keep it black while it is held */
   var held=false;
   function hold(){ held=true; clearTimeout(boT); bo.classList.add('show'); }
@@ -6051,15 +6098,197 @@ html.hma-hide .app,html.hma-hide .wq-modal,html.hma-hide .phase-modal-backdrop,h
     el.classList.add('show');
   };
 
-  /* Keep local-only fields (feedback, weekly submissions) when records are merged across devices */
+  /* ====== 9) Each phase is graded out of 100% with its own letter (no course-wide grade) ====== */
+  function fm(n){ n=Number(n)||0; return Number.isInteger(n)?String(n):n.toFixed(1); }
+  function lt(p){ return p>=97?'A+':p>=93?'A':p>=90?'A-':p>=87?'B+':p>=83?'B':p>=80?'B-':p>=77?'C+':p>=73?'C':p>=70?'C-':p>=67?'D+':p>=63?'D':p>=60?'D-':'F'; }
+  var _pom=window.phaseOneMarks;
+  window.phaseOneMarks=function(){
+    var m=_pom?_pom():{items:[],earned:0,total:0}, q=student&&student.phaseAssessments&&student.phaseAssessments.phase1, done=!!(q&&q.completedAt), open=false;
+    try{ open=phaseAssessmentAvailable(); }catch(e){}
+    var items=m.items.concat([{label:'Phase Assessment',earned:done?(Number(q.score)||0):0,total:(done||open)?20:0}]);
+    return {items:items,earned:items.reduce(function(a,i){return a+i.earned;},0),total:items.reduce(function(a,i){return a+i.total;},0)};
+  };
+  function phaseGrades(){
+    var m=window.phaseOneMarks(), pct=m.total?Math.round(m.earned/m.total*1000)/10:0;
+    var out=[{n:1,name:'Phase 1',earned:m.earned,total:m.total,pct:pct,letter:lt(pct),has:m.total>0}];
+    for(var n=2;n<=4;n++) out.push({n:n,name:'Phase '+n,has:false});
+    return out;
+  }
+  window.hmaPhaseGrades=phaseGrades;
+  window.computeGrade=function(){
+    if(!student) return {pct:0,letter:'—',detail:'Sign in to start tracking.'};
+    var g=phaseGrades()[0];
+    return {pct:Math.round(g.pct),letter:g.letter,detail:'Phase 1 · '+fm(g.earned)+' / '+fm(g.total)+' marks'};
+  };
+  window.phaseOneTotalHTML=function(){
+    if(!student) return '';
+    var cards=phaseGrades().map(function(g){
+      if(!g.has) return '<div class="hma-pg-card off"><small>'+g.name+'</small><b>—</b><span>No graded marks yet</span></div>';
+      var c=g.pct>=80?'#16a34a':g.pct>=60?'#d97706':'#dc2626';
+      return '<div class="hma-pg-card" style="--c:'+c+'"><small>'+g.name+'</small><b>'+g.pct.toFixed(1).replace(/\.0$/,'')+'%</b><em>'+g.letter+'</em><span>'+fm(g.earned)+' / '+fm(g.total)+' marks</span><i style="width:'+Math.min(100,g.pct)+'%"></i></div>';
+    }).join('');
+    return '<section class="hma-pg" aria-label="Phase grades"><div class="hma-pg-head"><span>PHASE GRADES</span><small>Each phase is graded out of 100% with its own letter</small></div><div class="hma-pg-grid">'+cards+'</div></section>';
+  };
+  var _ug=window.updateGrade;
+  window.updateGrade=function(){
+    var r=_ug?_ug.apply(this,arguments):undefined;
+    try{ var sg=document.getElementById('sbGrade'); if(sg) sg.title='Phase 1 grade'; var lab=document.querySelector('.lp-grade > span:first-child'); if(lab) lab.textContent='Phase 1 grade'; }catch(e){}
+    return r;
+  };
+
+  /* ====== 10) Data repair, instructor resets, and merging between devices ====== */
+  /* An ended-early weekly quiz used to be saved as x/5 although every weekly quiz has 3 questions. Fixed here (and in the Sheet). */
+  function repairRecord(s){
+    if(!s) return false; var ch=false, wq=s.weekQuizzes||{};
+    Object.keys(wq).forEach(function(k){ var q=wq[k]; if(q&&q.invalidated&&q.total===5){ q.total=3; ch=true; } });
+    return ch;
+  }
+  if(typeof window.invalidateActiveAssessment==='function'){
+    var _inv=window.invalidateActiveAssessment;
+    window.invalidateActiveAssessment=function(reason){
+      var r=_inv.apply(this,arguments);
+      try{ if(repairRecord(student)) saveStudentRecord(student); }catch(e){}
+      return r;
+    };
+  }
+  /* A reset made by the instructor removes the old result on every device (anything completed before the reset). */
+  function applyResets(rec){
+    if(!rec||!rec.resets) return false; var ch=false;
+    function kill(o,key,at){ if(o&&o[key]&&String(o[key].completedAt||'')<=at){ delete o[key]; ch=true; } }
+    rec.resets.forEach(function(r){
+      var k=String(r.k||''), at=String(r.at||''), cq=rec.contentQuizzes||{};
+      if(k==='all'){
+        ['phase1','phase2','phase3','phase4'].forEach(function(p){ kill(rec.phaseAssessments,p,at); });
+        Object.keys(rec.weekQuizzes||{}).forEach(function(w){ kill(rec.weekQuizzes,w,at); });
+        Object.keys(cq.reading||{}).forEach(function(x){ kill(cq.reading,x,at); });
+        Object.keys(cq.screencasts||{}).forEach(function(x){ kill(cq.screencasts,x,at); });
+      }
+      else if(/^phase\d$/.test(k)) kill(rec.phaseAssessments,k,at);
+      else if(k.indexOf('week:')===0) kill(rec.weekQuizzes,k.slice(5),at);
+      else if(k.indexOf('reading:')===0) kill(cq.reading,k.slice(8),at);
+      else if(k.indexOf('screencast:')===0) kill(cq.screencasts,k.slice(11),at);
+    });
+    return ch;
+  }
+  function unionBy(a,b,keyf){ var seen={},out=[]; [].concat(a||[],b||[]).forEach(function(x){ var k=keyf(x); if(!seen[k]){ seen[k]=1; out.push(x); } }); return out; }
+  function byAt(a,b){ return String(a.at).localeCompare(String(b.at)); }
   var _merge=window.mergeStudentRecords;
   window.mergeStudentRecords=function(base,extra){
     var keep={}; ['revisionRead','weekSubmissions'].forEach(function(k){ keep[k]=Object.assign({},(extra&&extra[k])||{},(base&&base[k])||{}); });
-    var ev=[].concat((extra&&extra.securityEvents)||[],(base&&base.securityEvents)||[]), seen={}, evs=[];
-    ev.forEach(function(x){ var k=(x.at||'')+'|'+(x.type||''); if(!seen[k]){ seen[k]=1; evs.push(x); } });
-    evs.sort(function(a,b){ return String(a.at).localeCompare(String(b.at)); });
-    var out=_merge(base,extra); Object.keys(keep).forEach(function(k){ out[k]=keep[k]; }); out.securityEvents=evs.slice(-40); return out;
+    var ev=unionBy(extra&&extra.securityEvents,base&&base.securityEvents,function(x){ return (x.at||'')+'|'+(x.type||''); }).sort(byAt).slice(-40);
+    var cm=unionBy(extra&&extra.complaints,base&&base.complaints,function(x){ return x.id; }).sort(byAt).slice(-100);
+    var rs=unionBy(extra&&extra.resets,base&&base.resets,function(x){ return (x.k||'')+'|'+(x.at||''); });
+    var bp=base&&base.profile, ep=extra&&extra.profile;
+    var prof=(bp&&bp.completedAt)?bp:((ep&&ep.completedAt)?ep:(bp||ep||null));
+    var out=_merge(base,extra);
+    Object.keys(keep).forEach(function(k){ out[k]=keep[k]; });
+    out.securityEvents=ev; out.complaints=cm; out.resets=rs; if(prof) out.profile=prof;
+    applyResets(out); repairRecord(out);
+    return out;
   };
+  /* After the cloud copy arrives: refresh whatever the instructor changed (resets, replies, profile) */
+  window.hmaAfterRemote=function(){
+    if(!student) return;
+    try{
+      var cq=student.contentQuizzes||{}, rd=cq.reading||{}, sc=cq.screencasts||{}, wq=student.weekQuizzes||{};
+      document.querySelectorAll('.note-section[data-reading]').forEach(function(el){ if(!rd[el.dataset.reading]) el.classList.remove('reading-complete'); });
+      document.querySelectorAll('.theater-item[data-screencast-id],.media-card[data-screencast-id]').forEach(function(el){ if(!sc[el.dataset.screencastId]) el.classList.remove('learning-complete'); });
+      document.querySelectorAll('.week-card.quiz-completed').forEach(function(el){ if(!wq[el.id.replace('week','')]) el.classList.remove('quiz-completed'); });
+      if(typeof renderAssessmentView==='function') renderAssessmentView();
+      if(typeof renderPhaseAssessment==='function') renderPhaseAssessment();
+      if(typeof updateGrade==='function') updateGrade();
+      if(typeof renderHomeLearning==='function') renderHomeLearning();
+    }catch(e){}
+    try{ checkProfile(); }catch(e){}
+    try{ chatBadge(); }catch(e){}
+  };
+
+  /* ====== 11) Help & complaints chat (bottom-right corner, linked to the instructor's Sheet) ====== */
+  var TOPICS=['Technical problem','Quiz or marks','Lesson content','Project','Other'];
+  var chat=document.createElement('div'); chat.id='hmaChat'; chat.hidden=true;
+  chat.innerHTML='<button type="button" id="hmaChatBtn" aria-label="Help and complaints" aria-expanded="false">💬<span id="hmaChatBadge" hidden></span></button>'+
+    '<div id="hmaChatPanel" role="dialog" aria-label="Help and complaints" hidden><div class="hma-ch-head"><div><b>Help &amp; complaints</b><small>Your message goes straight to your instructor</small></div><button type="button" id="hmaChatClose" aria-label="Close">×</button></div>'+
+    '<div class="hma-ch-body" id="hmaChatBody"></div><div class="hma-ch-form"><select id="hmaChatTopic" aria-label="Topic">'+TOPICS.map(function(x){ return '<option>'+x+'</option>'; }).join('')+'</select>'+
+    '<textarea id="hmaChatText" rows="3" maxlength="1200" placeholder="Describe your problem or complaint…"></textarea><div class="hma-ch-row"><span id="hmaChatStatus"></span><button type="button" id="hmaChatSend">Send</button></div></div></div>';
+  document.body.appendChild(chat);
+  var cid=function(id){ return document.getElementById(id); }, replies={};
+  function esc2(x){ return String(x==null?'':x).replace(/[&<>"]/g,function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+  function fmtT(iso){ try{ var d=new Date(iso); return isNaN(d)?'':d.toLocaleString(undefined,{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'}); }catch(e){ return ''; } }
+  function seenKey(){ return 'hm_chat_seen_'+((student&&student.email)||''); }
+  function getSeen(){ try{ return JSON.parse(localStorage.getItem(seenKey())||'{}'); }catch(e){ return {}; } }
+  function sig(r){ return r.repliedAt+'|'+String(r.reply||'').length; }
+  function unread(){ var s=getSeen(), n=0; Object.keys(replies).forEach(function(id){ var r=replies[id]; if(r.reply&&s[id]!==sig(r)) n++; }); return n; }
+  function chatBadge(){ var b=cid('hmaChatBadge'); if(!b) return; var n=unread(); b.hidden=!n; b.textContent=n; }
+  function markSeen(){ var s=getSeen(); Object.keys(replies).forEach(function(id){ var r=replies[id]; if(r.reply) s[id]=sig(r); }); try{ localStorage.setItem(seenKey(),JSON.stringify(s)); }catch(e){} chatBadge(); }
+  function renderChat(){
+    var body=cid('hmaChatBody'), list=((student&&student.complaints)||[]).slice().sort(byAt);
+    if(!list.length){ body.innerHTML='<div class="hma-ch-empty">💬<br>Have a problem or a complaint?<br>Write it below. Your instructor reads it and replies right here.</div>'; return; }
+    body.innerHTML=list.map(function(c){
+      var r=replies[c.id], st=r&&r.status==='Resolved'?'✓ Resolved':(r&&r.reply?'✓ Replied':'Sent ✓ · waiting for a reply');
+      var h='<div class="hma-b me"><em>'+esc2(c.topic)+'</em>'+esc2(c.text)+'<small>'+fmtT(c.at)+' · '+st+'</small></div>';
+      if(r&&r.reply) h+='<div class="hma-b ins"><em>Instructor</em>'+esc2(r.reply)+'<small>'+fmtT(r.repliedAt)+'</small></div>';
+      return h;
+    }).join('');
+    body.scrollTop=body.scrollHeight;
+  }
+  function fetchReplies(){
+    var c=window.hmaCloud; if(!c||!c.session) return; var s=c.session(); if(!s) return;
+    c.api('replies',{email:s.email,token:s.token},12000).then(function(res){
+      if(res&&res.ok){ replies={}; (res.replies||[]).forEach(function(r){ replies[r.id]=r; }); renderChat(); if(!cid('hmaChatPanel').hidden) markSeen(); else chatBadge(); }
+    }).catch(function(){});
+  }
+  function openChat(){ cid('hmaChatPanel').hidden=false; cid('hmaChatBtn').setAttribute('aria-expanded','true'); renderChat(); fetchReplies(); markSeen(); }
+  function closeChat(){ cid('hmaChatPanel').hidden=true; cid('hmaChatBtn').setAttribute('aria-expanded','false'); }
+  function sendChat(){
+    var text=cid('hmaChatText').value.trim(), st=cid('hmaChatStatus');
+    if(!student) return;
+    if(text.length<5){ st.style.color='#b42318'; st.textContent='Please write a little more.'; return; }
+    student.complaints=student.complaints||[];
+    student.complaints.push({id:'c'+Date.now().toString(36)+Math.random().toString(36).slice(2,6),at:new Date().toISOString(),topic:cid('hmaChatTopic').value,text:text});
+    if(student.complaints.length>100) student.complaints.shift();
+    saveStudentRecord(student); cid('hmaChatText').value=''; st.style.color='#15803d'; st.textContent='Sending…'; cid('hmaChatSend').disabled=true; renderChat();
+    var done=function(ok){ st.textContent=ok===false?'Saved. It will reach your instructor when you are online.':'Sent ✓ Your instructor will reply here.'; cid('hmaChatSend').disabled=false; };
+    if(typeof window.hmaPushNow==='function') window.hmaPushNow().then(done,function(){ done(false); }); else done(false);
+  }
+  cid('hmaChatBtn').addEventListener('click',function(){ if(cid('hmaChatPanel').hidden) openChat(); else closeChat(); });
+  cid('hmaChatClose').addEventListener('click',closeChat);
+  cid('hmaChatSend').addEventListener('click',sendChat);
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape'&&!cid('hmaChatPanel').hidden) closeChat(); });
+  var chatWasHidden=true;
+  function chatVisibility(){
+    var show=!!(student&&student.email&&student.email!==GUESTID&&window.hmaCloud&&!quizOpen());
+    chat.hidden=!show; if(!show){ cid('hmaChatPanel').hidden=true; chatWasHidden=true; } else if(chatWasHidden){ chatWasHidden=false; fetchReplies(); }
+  }
+  setInterval(chatVisibility,1500);
+  setInterval(function(){ if(!chat.hidden) fetchReplies(); },60000);
+  window.hmaChatRefresh=chatVisibility;
+
+  /* ====== 12) Father's and grandfather's name: asked once from EVERY student (including ones who were already signed in) ====== */
+  var pm=document.createElement('div'); pm.className='hma-prof'; pm.id='hmaProfile'; pm.setAttribute('role','dialog'); pm.setAttribute('aria-modal','true');
+  pm.innerHTML='<div class="hma-prof-box"><h3>Complete your profile</h3><p>Your instructor needs your full name. Please write your father\'s name and your grandfather\'s name exactly as they appear on your ID. This is saved to your student account.</p>'+
+    '<label for="hmaPfFirst">Your first name</label><input id="hmaPfFirst" readonly>'+
+    '<label for="hmaPfFather">Father\'s name</label><input id="hmaPfFather" autocomplete="off" maxlength="40" placeholder="e.g. Tadesse">'+
+    '<label for="hmaPfGrand">Grandfather\'s name</label><input id="hmaPfGrand" autocomplete="off" maxlength="40" placeholder="If you do not have one, write a dash (-)">'+
+    '<div class="hma-prof-err" id="hmaPfErr" role="alert"></div><button type="button" id="hmaPfSave">Save and continue</button>'+
+    '<div class="hma-prof-note">For security, each sign-in records the time, the type of device you use and a device ID, and screenshot attempts are logged.</div></div>';
+  document.body.appendChild(pm);
+  var NAME_RE; try{ NAME_RE=new RegExp("^[\\p{L}\\p{M}' .-]{1,40}$","u"); }catch(e){ NAME_RE=/^[^0-9<>@#$%^&*()_+=\[\]{};:"\\|,\/?]{1,40}$/; }
+  function needProfile(){ return !!(student&&student.email&&student.email!==GUESTID&&!(student.profile&&student.profile.fatherName&&student.profile.grandfatherName)); }
+  function checkProfile(){
+    if(needProfile()&&!quizOpen()){ var f=cid('hmaPfFirst'); if(f&&student) f.value=student.name||''; pm.classList.add('show'); }
+    else pm.classList.remove('show');
+  }
+  cid('hmaPfSave').addEventListener('click',function(){
+    var f=cid('hmaPfFather').value.trim(), g=cid('hmaPfGrand').value.trim(), er=cid('hmaPfErr');
+    if(f.length<2||!NAME_RE.test(f)){ er.textContent="Please write your father's name (letters only)."; return; }
+    if(g.length<1||!NAME_RE.test(g)){ er.textContent="Please write your grandfather's name, or a dash (-) if you do not have one."; return; }
+    er.textContent='';
+    student.profile={fatherName:f,grandfatherName:g,fullName:[student.name||'',f,g==='-'?'':g].filter(Boolean).join(' '),completedAt:new Date().toISOString()};
+    saveStudentRecord(student); pm.classList.remove('show');
+    if(typeof window.hmaPushNow==='function') window.hmaPushNow();
+    try{ showToast('Thank you — your profile is saved.'); }catch(e){}
+  });
+  setInterval(checkProfile,2500);
 
   /* Re-render the weekly card and fix the home text whenever the Home workflow redraws */
   var _rhl=window.renderHomeLearning;
@@ -6067,11 +6296,13 @@ html.hma-hide .app,html.hma-hide .wq-modal,html.hma-hide .phase-modal-backdrop,h
     var r=_rhl.apply(this,arguments);
     try{ document.querySelectorAll('#homeLearningPanel small').forEach(function(el){ if(/15 questions/.test(el.textContent)) el.textContent=el.textContent.replace('15 questions','20 questions'); }); }catch(e){}
     try{ renderWeeklyCard(); }catch(e){}
+    try{ checkProfile(); }catch(e){}
     return r;
   };
   try{ window.renderHomeLearning(); }catch(e){}
 })();
 </script>
+
 
 
 
@@ -6163,6 +6394,7 @@ html.hma-hide .app,html.hma-hide .wq-modal,html.hma-hide .phase-modal-backdrop,h
         body:JSON.stringify({action:'push',email:s.email,token:s.token,record:student})}); }catch(e){}
   }
   setInterval(function(){ if(dirty && !pushing) pushNow(); },30000);
+  setInterval(function(){ if(!document.hidden) maybePull(); },60000);
   window.addEventListener('online',function(){ if(dirty) pushNow(); maybePull(true); });
   window.addEventListener('pagehide',flushOnLeave);
   document.addEventListener('visibilitychange',function(){ if(document.visibilityState==='hidden') flushOnLeave(); else maybePull(); });
@@ -6178,6 +6410,7 @@ html.hma-hide .app,html.hma-hide .wq-modal,html.hma-hide .phase-modal-backdrop,h
       if(readingSeen.has(btn.dataset.readingKey)){ var l=btn.querySelector('.nm-label'); if(l) l.textContent='Read'; btn.classList.add('done'); btn.disabled=true; }
     });
     try{ updateProgress(); updateGrade(); theaterRenderSide(); refreshCompletionGrayStates(); renderWeekFinishButtons(); renderHomeLearning(); }catch(e){ console.error(e); }
+    try{ if(window.hmaAfterRemote) window.hmaAfterRemote(); }catch(e){}
   }
   function maybePull(force){
     var s=readSession(); if(!s||!student||student.email!==s.email||student.email===GUEST) return;
@@ -6261,6 +6494,7 @@ html.hma-hide .app,html.hma-hide .wq-modal,html.hma-hide .phase-modal-backdrop,h
     setCurrentStudent({name:merged.name,email:email});
     ['siPass','siPass2'].forEach(function(id){ if($(id)) $(id).value=''; });
     info(''); enterApp();
+    try{ if(window.hmaAfterRemote) window.hmaAfterRemote(); }catch(e){}
   }
   function probe(){
     fetch(HMA_CLOUD_URL,{method:'GET'}).then(function(r){return r.text();}).then(function(t){
@@ -6335,6 +6569,7 @@ html.hma-hide .app,html.hma-hide .wq-modal,html.hma-hide .phase-modal-backdrop,h
   };
 
   window.hmaPushNow=pushNow;
+  window.hmaCloud={api:api,session:readSession,pushNow:pushNow};
 
   /* ---------- start-up ---------- */
   async function boot(){
@@ -6352,7 +6587,11 @@ html.hma-hide .app,html.hma-hide .wq-modal,html.hma-hide .phase-modal-backdrop,h
             lastCloudAt=res.updatedAt||''; var rec=res.record?normalizeStudentRecord(res.record,s.email):null;
             student=rec?mergeStudentRecords(rec,local):local; student.name=res.name||s.name; student.email=s.email;
             window.__guestPreview=false; setCurrentStudent({name:student.name,email:s.email});
-            saveStudentRecord(student); enterApp(); return;
+            saveStudentRecord(student); enterApp();
+            try{ if(window.hmaAfterRemote) window.hmaAfterRemote(); }catch(e){}
+            /* students who stay signed in are recorded too (device type + ID), after the update */
+            api('device',{email:s.email,token:s.token,device:dev(),deviceId:devId()},15000).catch(function(){});
+            return;
           }
           if(res&&res.error==='AUTH'){ clearSession(); setMode('login'); showGate('Please sign in again.',s); return; }
         }catch(e){ /* offline: continue with the copy saved on this device */ }
@@ -6367,6 +6606,7 @@ html.hma-hide .app,html.hma-hide .wq-modal,html.hma-hide .phase-modal-backdrop,h
   boot();
 })();
 </script>
+
 
 
 
