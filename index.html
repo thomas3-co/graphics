@@ -6819,7 +6819,7 @@ html.hma-hide .app,html.hma-hide .wq-modal,html.hma-hide .phase-modal-backdrop,h
     '<div class="hn-tabs"><button class="on" data-f="all" type="button">All</button><button data-f="unread" type="button">Unread</button></div><div class="hn-list" id="hnList" aria-live="polite"></div>';
   document.body.appendChild(panel);   /* on <body>, not inside the top bar, so it can never be clipped or overlap the menu */
 
-  var list=[], known=null, knownFor='', filter='all', busy=false, openNow=false;
+  var list=[], known=null, knownFor='', filter='all', busy=false, openNow=false, apiError='';
   function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
   function sess(){ try{ return window.hmaCloud&&window.hmaCloud.session&&window.hmaCloud.session(); }catch(e){ return null; } }
   function ago(iso){
@@ -6835,13 +6835,13 @@ html.hma-hide .app,html.hma-hide .wq-modal,html.hma-hide .phase-modal-backdrop,h
     var u=unread();
     badge.hidden=!u; badge.textContent=u>99?'99+':String(u);
     bell.setAttribute('aria-label',u?('Notifications, '+u+' unread'):'Notifications');
-    $('hnSub').textContent=u?(u+' unread'):'You are all caught up';
+    $('hnSub').textContent=apiError?apiError:(u?(u+' unread'):'You are all caught up');
     $('hnAll').disabled=!u;
     var items=list.filter(function(n){return filter==='all'||!n.read;}).sort(function(a,b){ return ((b.priority==='urgent'&&!b.read)?1:0)-((a.priority==='urgent'&&!a.read)?1:0); });
     $('hnList').innerHTML=items.length?items.map(function(n){
       return '<button class="hn-item'+(n.read?'':' unread')+(n.priority==='urgent'?' urgent':'')+'" data-id="'+esc(n.id)+'" type="button"><span class="hn-ico '+esc(n.kind)+'" aria-hidden="true">'+icon(n)+'</span>'+
         '<span class="hn-body"><span class="hn-t">'+esc(n.title)+'</span><span class="hn-m">'+esc(String(n.message||'').replace(/\n\nAttachment:\s*https?:\/\/\S+/i,''))+'</span>'+(n.attachmentUrl&&/^https?:\/\//i.test(n.attachmentUrl)?'<span class="hn-attachment" role="link" tabindex="0" data-attachment="'+esc(n.attachmentUrl)+'">📎 Open announcement attachment</span>':'')+'<span class="hn-time">'+esc(ago(n.created))+(n.kind==='announcement'?' · Announcement':'')+(n.priority==='urgent'?' · Urgent':'')+'</span></span>'+(n.read?'':'<i class="hn-dot" aria-label="Unread"></i>')+'</button>';
-    }).join(''):'<div class="hn-empty"><span>'+(filter==='all'?'🔔':'✅')+'</span>'+(filter==='all'?'No notifications yet. Announcements and updates from your instructor will appear here.':'No unread notifications.')+'</div>';
+    }).join(''):(apiError?'<div class="hn-empty"><span>⚠️</span>'+esc(apiError)+'</div>':'<div class="hn-empty"><span>'+(filter==='all'?'🔔':'✅')+'</span>'+(filter==='all'?'No notifications yet. Announcements and updates from your instructor will appear here.':'No unread notifications.')+'</div>');
   }
   function place(){
     var r=bell.getBoundingClientRect(), vw=document.documentElement.clientWidth, w=Math.min(380,vw-16);
@@ -6866,7 +6866,12 @@ html.hma-hide .app,html.hma-hide .wq-modal,html.hma-hide .phase-modal-backdrop,h
     var s=sess(); if(!s||!window.hmaCloud){ show(false); return; }
     show(true); if(busy) return; busy=true;
     window.hmaCloud.api('studentNotifications',{email:s.email,token:s.token},15000).then(function(res){
-      busy=false; if(!res||!res.ok) return;
+      busy=false;
+      if(!res||!res.ok){
+        apiError=(res&&res.error==='AUTH')?'Your session expired. Refresh this page and sign in again.':'Notification service returned an error. Check the Apps Script deployment and sheet headers.';
+        render(); return;
+      }
+      apiError='';
       var items=res.notifications||[], fresh=[], first=(known===null||knownFor!==s.email);
       if(first){ known={}; knownFor=s.email; items.forEach(function(n){known[n.id]=1;}); }
       else items.forEach(function(n){ if(!known[n.id]){ known[n.id]=1; if(!n.read) fresh.push(n); } });
@@ -6877,7 +6882,7 @@ html.hma-hide .app,html.hma-hide .wq-modal,html.hma-hide .phase-modal-backdrop,h
         try{ if(typeof showToast==='function') showToast('🔔 '+fresh[0].title+(fresh.length>1?' (+'+(fresh.length-1)+' more)':'')); }catch(e){}
         try{ if(window.hmaCloud.pull) window.hmaCloud.pull(true); }catch(e){}   /* pick up the instructor's progress changes right away */
       }
-    }).catch(function(){ busy=false; });
+    }).catch(function(){ busy=false; apiError='Could not connect to the notification service. Check the Apps Script URL and deployment access.'; render(); });
   }
   bell.addEventListener('click',function(e){ e.stopPropagation(); setOpen(!openNow); });
   $('hnAll').addEventListener('click',function(){ markRead([],true); });
