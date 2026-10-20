@@ -6744,6 +6744,7 @@ html.hma-hide .app,html.hma-hide .wq-modal,html.hma-hide .phase-modal-backdrop,h
 .hn-item.open .hn-m{display:block;-webkit-line-clamp:unset}
 .hn-time{font-size:11px;color:#98a2b3;margin-top:2px}
 .hn-dot{flex:0 0 9px;width:9px;height:9px;border-radius:50%;background:#2f6fed;margin-top:6px}
+.hn-item.urgent{box-shadow:inset 3px 0 0 #ef476f}.hn-item.urgent .hn-ico{background:#fde8e8}.hn-item.urgent .hn-t{color:#b91c1c}
 .hn-empty{text-align:center;color:#98a2b3;padding:34px 16px;font-size:13px}.hn-empty span{display:block;font-size:30px;margin-bottom:6px}
 @media (max-width:600px){#hnPanel{border-radius:16px}.hn-bell{width:36px;height:36px}}
 @media (prefers-reduced-motion:reduce){.hn-bell.ring svg,#hnPanel{animation:none}}
@@ -6800,7 +6801,7 @@ html.hma-hide .app,html.hma-hide .wq-modal,html.hma-hide .phase-modal-backdrop,h
     if(s<604800) return Math.floor(s/86400)+' d ago';
     return new Date(t).toLocaleDateString([], {month:'short',day:'numeric'});
   }
-  function icon(n){ return n.kind==='announcement'?'📢':(/progress|reset|record|data/i.test(n.title)?'📈':'🔔'); }
+  function icon(n){ return n.priority==='urgent'?'🚨':n.kind==='announcement'?'📢':(/progress|reset|record|data/i.test(n.title)?'📈':'🔔'); }
   function unread(){ return list.filter(function(n){return !n.read;}).length; }
   function render(){
     var u=unread();
@@ -6808,10 +6809,10 @@ html.hma-hide .app,html.hma-hide .wq-modal,html.hma-hide .phase-modal-backdrop,h
     bell.setAttribute('aria-label',u?('Notifications, '+u+' unread'):'Notifications');
     $('hnSub').textContent=u?(u+' unread'):'You are all caught up';
     $('hnAll').disabled=!u;
-    var items=list.filter(function(n){return filter==='all'||!n.read;});
+    var items=list.filter(function(n){return filter==='all'||!n.read;}).sort(function(a,b){ return ((b.priority==='urgent'&&!b.read)?1:0)-((a.priority==='urgent'&&!a.read)?1:0); });
     $('hnList').innerHTML=items.length?items.map(function(n){
-      return '<button class="hn-item'+(n.read?'':' unread')+'" data-id="'+esc(n.id)+'" type="button"><span class="hn-ico '+esc(n.kind)+'" aria-hidden="true">'+icon(n)+'</span>'+
-        '<span class="hn-body"><span class="hn-t">'+esc(n.title)+'</span><span class="hn-m">'+esc(n.message)+'</span><span class="hn-time">'+esc(ago(n.created))+(n.kind==='announcement'?' · Announcement':'')+'</span></span>'+(n.read?'':'<i class="hn-dot" aria-label="Unread"></i>')+'</button>';
+      return '<button class="hn-item'+(n.read?'':' unread')+(n.priority==='urgent'?' urgent':'')+'" data-id="'+esc(n.id)+'" type="button"><span class="hn-ico '+esc(n.kind)+'" aria-hidden="true">'+icon(n)+'</span>'+
+        '<span class="hn-body"><span class="hn-t">'+esc(n.title)+'</span><span class="hn-m">'+esc(n.message)+'</span><span class="hn-time">'+esc(ago(n.created))+(n.kind==='announcement'?' · Announcement':'')+(n.priority==='urgent'?' · Urgent':'')+'</span></span>'+(n.read?'':'<i class="hn-dot" aria-label="Unread"></i>')+'</button>';
     }).join(''):'<div class="hn-empty"><span>'+(filter==='all'?'🔔':'✅')+'</span>'+(filter==='all'?'No notifications yet. Announcements and updates from your instructor will appear here.':'No unread notifications.')+'</div>';
   }
   function place(){
