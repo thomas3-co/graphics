@@ -3630,6 +3630,21 @@ function askReportPermission(trigger){
 /* ---------- GRADING ---------- */
 function computeGrade(){
   if(!student) return { pct:0, letter:'—', detail:'Sign in to start tracking.' };
+  // Instructor grade from the Google Sheet is authoritative when present.
+  // The locally calculated grade remains the fallback when no teacher grade has been entered.
+  if(student.teacherGrade!==undefined && String(student.teacherGrade).trim()!==''){
+    const raw=String(student.teacherGrade).trim();
+    const n=parseFloat(raw.replace('%',''));
+    let pct=Number.isFinite(n) ? Math.max(0,Math.min(100,n)) : 0;
+    let letter=raw;
+    if(Number.isFinite(n)){
+      if(n>=97) letter='A+'; else if(n>=93) letter='A'; else if(n>=90) letter='A-';
+      else if(n>=87) letter='B+'; else if(n>=83) letter='B'; else if(n>=80) letter='B-';
+      else if(n>=77) letter='C+'; else if(n>=73) letter='C'; else if(n>=70) letter='C-';
+      else if(n>=67) letter='D+'; else if(n>=63) letter='D'; else if(n>=60) letter='D-'; else letter='Needs Improvement';
+    }
+    return {pct:Math.round(pct),letter:letter,detail:'Instructor grade · synced from Google Sheet'};
+  }
   const totalLessons = cards.length;
   const completionPct = totalLessons ? (student.completed.length/totalLessons)*100 : 0;
   const quizzesTaken = Object.keys(student.weekQuizzes).length;
@@ -6421,15 +6436,42 @@ html.hma-hide .app,html.hma-hide .wq-modal,html.hma-hide .phase-modal-backdrop,h
         body:JSON.stringify({action:'push',email:s.email,token:s.token,record:student})}); }catch(e){}
   }
   setInterval(function(){ if(dirty && !pushing) pushNow(); },30000);
-  setInterval(function(){ if(!document.hidden) maybePull(); },60000);
+  setInterval(function(){ if(!document.hidden) maybePull(); },3000);
   window.addEventListener('online',function(){ if(dirty) pushNow(); maybePull(true); });
   window.addEventListener('pagehide',flushOnLeave);
   document.addEventListener('visibilitychange',function(){ if(document.visibilityState==='hidden') flushOnLeave(); else maybePull(); });
+
+  /* ---------- instructor grade notifications ---------- */
+  var lastTeacherGrade='';
+  var gradeNoticeReady=false;
+  function requestGradeNotifications(){
+    try{
+      if('Notification' in window && Notification.permission==='default') Notification.requestPermission().catch(function(){});
+    }catch(e){}
+  }
+  function showGradeUpdateNotice(newGrade){
+    var text='Your instructor updated your grade to '+newGrade+'.';
+    try{ if(typeof showToast==='function') showToast('Grade updated ✓ '+newGrade); }catch(e){}
+    try{
+      if('Notification' in window && Notification.permission==='granted'){
+        new Notification('HMA Grade Updated',{body:text,tag:'hma-grade-update'});
+      }
+    }catch(e){}
+  }
+  function handleTeacherGrade(rec){
+    var g=rec&&rec.teacherGrade!==undefined ? String(rec.teacherGrade).trim() : '';
+    if(!gradeNoticeReady){ lastTeacherGrade=g; gradeNoticeReady=true; return; }
+    if(g!==lastTeacherGrade){
+      lastTeacherGrade=g;
+      if(g!=='') showGradeUpdateNotice(g);
+    }
+  }
 
   /* ---------- picking up progress made on another device ---------- */
   function applyRemote(rec){
     var m=mergeStudentRecords(normalizeStudentRecord(rec,student.email),student);
     m.name=student.name; m.email=student.email; student=m;
+    handleTeacherGrade(student);
     completed=Array.from(new Set(student.completed||[])); student.completed=completed.slice();
     cards.forEach(function(c){ c.classList.toggle('done',completed.indexOf(c.dataset.day)>-1); });
     readingSeen.clear(); (student.readingSeen||[]).forEach(function(k){ readingSeen.add(k); });
@@ -6441,7 +6483,7 @@ html.hma-hide .app,html.hma-hide .wq-modal,html.hma-hide .phase-modal-backdrop,h
   }
   function maybePull(force){
     var s=readSession(); if(!s||!student||student.email!==s.email||student.email===GUEST) return;
-    if(!force && Date.now()-lastPull<20000) return; lastPull=Date.now();
+    if(!force && Date.now()-lastPull<3000) return; lastPull=Date.now();
     api('pull',{email:s.email,token:s.token},15000).then(function(res){
       if(res&&res.ok&&res.updatedAt&&res.updatedAt!==lastCloudAt){ lastCloudAt=res.updatedAt; if(res.record) applyRemote(res.record); }
       else if(res&&res.error==='AUTH') needRelogin();
@@ -6545,6 +6587,7 @@ html.hma-hide .app,html.hma-hide .wq-modal,html.hma-hide .phase-modal-backdrop,h
     return id;
   }
   window.attemptSignIn=function(){
+    requestGradeNotifications();
     if(!HMA_CLOUD_URL){ return window.__hmOrigAttempt && window.__hmOrigAttempt(); }
     siClearError(); info('');
     var name=$('siName').value.trim(), email=$('siEmail').value.trim().toLowerCase();
