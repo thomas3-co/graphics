@@ -1072,6 +1072,7 @@ try {
 <span class="sb-name" id="sbName"></span>
 <span class="sb-grade" id="sbGrade">—</span>
 </div>
+<div class="hn-wrap" id="hnWrap" style="display:none"><button aria-expanded="false" aria-haspopup="dialog" aria-label="Notifications" class="hn-bell" id="hnBell" type="button"><svg aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg><span class="hn-badge" hidden id="hnBadge">0</span></button></div>
 <button aria-controls="layersPanel" aria-expanded="false" class="panel-toggle" id="lpToggle">Layers ▸</button>
 </header>
 <div class="workspace">
@@ -6603,7 +6604,7 @@ html.hma-hide .app,html.hma-hide .wq-modal,html.hma-hide .phase-modal-backdrop,h
   };
 
   window.hmaPushNow=pushNow;
-  window.hmaCloud={api:api,session:readSession,pushNow:pushNow};
+  window.hmaCloud={api:api,session:readSession,pushNow:pushNow,pull:maybePull};
 
   /* ---------- start-up ---------- */
   async function boot(){
@@ -6711,33 +6712,186 @@ html.hma-hide .app,html.hma-hide .wq-modal,html.hma-hide .phase-modal-backdrop,h
 </script>
 
 
-<script id="hma-student-notifications">
+<style id="hma-notify-css">
+.hn-wrap{position:relative;flex:0 0 auto;display:flex;align-items:center}
+.hn-bell{position:relative;width:40px;height:40px;padding:0;border-radius:12px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);color:#fff;display:grid;place-items:center;cursor:pointer;transition:background .15s,transform .15s}
+.hn-bell:hover{background:rgba(255,255,255,.18)}.hn-bell:active{transform:scale(.95)}
+.hn-bell:focus-visible{outline:2px solid #8fb4ff;outline-offset:2px}
+.hn-bell svg{width:20px;height:20px;transform-origin:50% 4px}
+.hn-bell.ring svg{animation:hnRing 1.1s ease}
+@keyframes hnRing{0%,100%{transform:rotate(0)}12%{transform:rotate(16deg)}28%{transform:rotate(-14deg)}44%{transform:rotate(10deg)}60%{transform:rotate(-7deg)}76%{transform:rotate(4deg)}}
+.hn-badge{position:absolute;top:-6px;right:-6px;min-width:20px;height:20px;padding:0 5px;box-sizing:border-box;border-radius:99px;background:#ef476f;color:#fff;font:800 10.5px/16px Inter,Arial,sans-serif;text-align:center;border:2px solid #15171d;box-shadow:0 2px 8px rgba(239,71,111,.5)}
+.hn-badge[hidden]{display:none}
+#hnPanel{position:fixed;z-index:1200;left:0;top:0;width:380px;display:flex;flex-direction:column;background:#fff;color:#1a1d24;border-radius:18px;box-shadow:0 24px 60px rgba(10,14,25,.38),0 0 0 1px rgba(15,23,42,.08);overflow:hidden;font-family:Inter,Arial,sans-serif;animation:hnIn .16s ease-out}
+#hnPanel[hidden]{display:none}
+@keyframes hnIn{from{opacity:0;transform:translateY(-6px) scale(.98)}to{opacity:1;transform:none}}
+.hn-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 16px;background:linear-gradient(135deg,#1c2030,#2f4b9a);color:#fff}
+.hn-head b{display:block;font-size:15px}.hn-head small{display:block;color:#c9d3f5;font-size:11.5px;margin-top:1px}
+.hn-link{border:0;background:rgba(255,255,255,.14);color:#fff;border-radius:9px;padding:7px 11px;font:700 11.5px Inter,Arial,sans-serif;cursor:pointer;white-space:nowrap}
+.hn-link:hover{background:rgba(255,255,255,.26)}.hn-link[disabled]{opacity:.45;cursor:default}
+.hn-tabs{display:flex;gap:6px;padding:10px 12px 6px;background:#fff}
+.hn-tabs button{border:0;background:#eef1f6;color:#475467;border-radius:99px;padding:6px 13px;font:700 12px Inter,Arial,sans-serif;cursor:pointer}
+.hn-tabs button.on{background:#2f6fed;color:#fff}
+.hn-list{overflow:auto;overscroll-behavior:contain;padding:4px 8px 10px;min-height:120px}
+.hn-item{display:flex;align-items:flex-start;gap:12px;width:100%;text-align:left;border:0;background:transparent;border-radius:12px;padding:11px 10px;cursor:pointer;font:inherit;color:inherit}
+.hn-item:hover{background:#f5f7fb}.hn-item.unread{background:#f2f6ff}.hn-item.unread:hover{background:#e8f0ff}
+.hn-item:focus-visible{outline:2px solid #2f6fed;outline-offset:-2px}
+.hn-ico{flex:0 0 38px;width:38px;height:38px;border-radius:12px;display:grid;place-items:center;font-size:18px;background:#eaf0ff}
+.hn-ico.announcement{background:linear-gradient(135deg,#ffedd5,#fde0cc)}
+.hn-body{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.hn-t{font-weight:800;font-size:13.5px;line-height:1.3}
+.hn-m{font-size:12.5px;line-height:1.45;color:#475467;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;white-space:pre-wrap;word-break:break-word}
+.hn-item.open .hn-m{display:block;-webkit-line-clamp:unset}
+.hn-time{font-size:11px;color:#98a2b3;margin-top:2px}
+.hn-dot{flex:0 0 9px;width:9px;height:9px;border-radius:50%;background:#2f6fed;margin-top:6px}
+.hn-empty{text-align:center;color:#98a2b3;padding:34px 16px;font-size:13px}.hn-empty span{display:block;font-size:30px;margin-bottom:6px}
+@media (max-width:600px){#hnPanel{border-radius:16px}.hn-bell{width:36px;height:36px}}
+@media (prefers-reduced-motion:reduce){.hn-bell.ring svg,#hnPanel{animation:none}}
+</style>
+
+<script id="hma-notify-js">
 (function(){
-  var ENDPOINT='https://script.google.com/macros/s/AKfycbzW8hRO-dUA-kWwWt1R4yhjo0cNXR-z_NgNllDHajd76LaUB8Uv1JT7rW3d65j4cqSl/exec';
-  var css=document.createElement('style');
-  css.textContent='#hmaNoticeBtn{position:fixed;right:22px;top:12px;z-index:12000;border:1px solid #ffffff35;background:#292d38;color:#fff;border-radius:12px;width:42px;height:40px;cursor:pointer;font-size:20px}#hmaNoticeBadge{position:absolute;right:-5px;top:-5px;background:#ef4444;color:#fff;border-radius:99px;font:700 10px Arial;padding:3px 5px;min-width:17px}#hmaNoticePanel{display:none;position:fixed;right:18px;top:60px;z-index:12001;width:min(380px,calc(100vw - 28px));max-height:70vh;overflow:auto;background:#fff;color:#1a1d24;border:1px solid #dce1e9;border-radius:16px;box-shadow:0 18px 60px #0003;padding:14px;font:13px/1.5 Inter,Arial,sans-serif}#hmaNoticePanel.open{display:block}.hma-notice{padding:12px 4px;border-bottom:1px solid #edf0f4}.hma-notice b{display:block}.hma-notice small{color:#697386}.hma-notice p{margin:5px 0 0;white-space:pre-wrap}';
-  document.head.appendChild(css);
-  var btn=document.createElement('button');btn.id='hmaNoticeBtn';btn.type='button';btn.title='Notifications';btn.setAttribute('aria-label','Notifications');btn.innerHTML='♧<span id="hmaNoticeBadge" style="display:none">0</span>';
-  // Use a proper bell glyph, independent of the site's existing navigation layout.
-  btn.innerHTML='🔔<span id="hmaNoticeBadge" style="display:none">0</span>';
-  var panel=document.createElement('div');panel.id='hmaNoticePanel';panel.setAttribute('role','dialog');panel.setAttribute('aria-label','Student notifications');
-  panel.innerHTML='<b style="font-size:16px">Notifications & announcements</b><div id="hmaNoticeItems" style="margin-top:8px">Sign in to see course updates.</div>';
-  document.body.appendChild(btn);document.body.appendChild(panel);
-  btn.addEventListener('click',function(){panel.classList.toggle('open');if(panel.classList.contains('open'))load(true);});
-  document.addEventListener('click',function(e){if(!panel.contains(e.target)&&!btn.contains(e.target))panel.classList.remove('open');});
-  function session(){try{return JSON.parse(localStorage.getItem('hm_cloud_session_v1')||'null')}catch(e){return null}}
-  function esc(x){return String(x==null?'':x).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
-  function load(showErrors){
-    var s=session();if(!s||!s.email||!s.token){if(showErrors)document.getElementById('hmaNoticeItems').textContent='Sign in to see course updates.';return}
-    fetch(ENDPOINT,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({action:'studentNotifications',email:s.email,token:s.token})})
-    .then(function(r){return r.json()}).then(function(r){
-      if(!r||!r.ok)throw new Error('Notifications are not available yet.');
-      var items=r.notifications||[], unread=items.filter(function(n){return !n.read}).length, badge=document.getElementById('hmaNoticeBadge');
-      badge.textContent=unread>99?'99+':String(unread);badge.style.display=unread?'block':'none';
-      document.getElementById('hmaNoticeItems').innerHTML=items.length?items.map(function(n){return '<div class="hma-notice"><b>'+esc(n.title)+'</b><small>'+esc(n.created?new Date(n.created).toLocaleString():'')+'</small><p>'+esc(n.message)+'</p></div>'}).join(''):'No notifications yet.';
-    }).catch(function(){if(showErrors)document.getElementById('hmaNoticeItems').textContent='Could not load notifications. Please try again later.'});
+  "use strict";
+  /* ===== A) Instructor changes always win: when the Student Center edits or resets a student's record,
+         the site replaces those fields instead of merging them back together. ===== */
+  var KEYS=['completed','weekQuizzes','readingSeen','videoConfirmed','seenScreencasts','seenPractice','seenMaterials','contentQuizzes','assignmentStatus','phaseAssessments','weekFinished'];
+  var RESET_KEYS=['vocabSeen','studyTimers','celebrations'];
+  var _merge=window.mergeStudentRecords;
+  if(typeof _merge==='function'){
+    window.mergeStudentRecords=function(base,extra){
+      var snap=null,bc='',br='';
+      try{
+        if(base&&extra){
+          bc=String(base.adminControlAt||''); br=String(base.adminResetAt||'');
+          var ec=String(extra.adminControlAt||''), er=String(extra.adminResetAt||'');
+          if(bc>ec||br>er){
+            snap={}; var ks=KEYS.slice(); if(br>er) ks=ks.concat(RESET_KEYS);
+            ks.forEach(function(k){ snap[k]=(base[k]===undefined)?undefined:JSON.parse(JSON.stringify(base[k])); });
+          }
+        }
+      }catch(e){ snap=null; }
+      var out=_merge.apply(this,arguments);
+      if(snap){
+        Object.keys(snap).forEach(function(k){ if(snap[k]===undefined) delete out[k]; else out[k]=snap[k]; });
+        if(bc) out.adminControlAt=bc; if(br) out.adminResetAt=br;
+        try{ out=normalizeStudentRecord(out); }catch(e){}
+      }
+      return out;
+    };
   }
-  setInterval(function(){load(false)},60000);window.addEventListener('focus',function(){load(false)});load(false);
+
+  /* ===== B) Bell + notification panel ===== */
+  var $=function(id){return document.getElementById(id);};
+  var wrap=$('hnWrap'), bell=$('hnBell'), badge=$('hnBadge');
+  if(!wrap||!bell) return;
+  var panel=document.createElement('div');
+  panel.id='hnPanel'; panel.hidden=true; panel.setAttribute('role','dialog'); panel.setAttribute('aria-label','Notifications');
+  panel.innerHTML='<div class="hn-head"><div><b>Notifications</b><small id="hnSub">Loading…</small></div><button class="hn-link" id="hnAll" type="button">Mark all read</button></div>'+
+    '<div class="hn-tabs"><button class="on" data-f="all" type="button">All</button><button data-f="unread" type="button">Unread</button></div><div class="hn-list" id="hnList" aria-live="polite"></div>';
+  document.body.appendChild(panel);   /* on <body>, not inside the top bar, so it can never be clipped or overlap the menu */
+
+  var list=[], known=null, knownFor='', filter='all', busy=false, openNow=false;
+  function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+  function sess(){ try{ return window.hmaCloud&&window.hmaCloud.session&&window.hmaCloud.session(); }catch(e){ return null; } }
+  function ago(iso){
+    var t=new Date(iso).getTime(); if(isNaN(t)) return '';
+    var s=Math.max(0,(Date.now()-t)/1000);
+    if(s<60) return 'Just now'; if(s<3600) return Math.floor(s/60)+' min ago'; if(s<86400) return Math.floor(s/3600)+' h ago';
+    if(s<604800) return Math.floor(s/86400)+' d ago';
+    return new Date(t).toLocaleDateString([], {month:'short',day:'numeric'});
+  }
+  function icon(n){ return n.kind==='announcement'?'📢':(/progress|reset|record|data/i.test(n.title)?'📈':'🔔'); }
+  function unread(){ return list.filter(function(n){return !n.read;}).length; }
+  function render(){
+    var u=unread();
+    badge.hidden=!u; badge.textContent=u>99?'99+':String(u);
+    bell.setAttribute('aria-label',u?('Notifications, '+u+' unread'):'Notifications');
+    $('hnSub').textContent=u?(u+' unread'):'You are all caught up';
+    $('hnAll').disabled=!u;
+    var items=list.filter(function(n){return filter==='all'||!n.read;});
+    $('hnList').innerHTML=items.length?items.map(function(n){
+      return '<button class="hn-item'+(n.read?'':' unread')+'" data-id="'+esc(n.id)+'" type="button"><span class="hn-ico '+esc(n.kind)+'" aria-hidden="true">'+icon(n)+'</span>'+
+        '<span class="hn-body"><span class="hn-t">'+esc(n.title)+'</span><span class="hn-m">'+esc(n.message)+'</span><span class="hn-time">'+esc(ago(n.created))+(n.kind==='announcement'?' · Announcement':'')+'</span></span>'+(n.read?'':'<i class="hn-dot" aria-label="Unread"></i>')+'</button>';
+    }).join(''):'<div class="hn-empty"><span>'+(filter==='all'?'🔔':'✅')+'</span>'+(filter==='all'?'No notifications yet. Announcements and updates from your instructor will appear here.':'No unread notifications.')+'</div>';
+  }
+  function place(){
+    var r=bell.getBoundingClientRect(), vw=document.documentElement.clientWidth, w=Math.min(380,vw-16);
+    panel.style.width=w+'px';
+    panel.style.left=Math.max(8,Math.min(r.right-w,vw-w-8))+'px';
+    panel.style.top=(r.bottom+10)+'px';
+    panel.style.maxHeight=Math.max(220,window.innerHeight-r.bottom-24)+'px';
+  }
+  function setOpen(on){
+    openNow=on; panel.hidden=!on; bell.setAttribute('aria-expanded',on?'true':'false');
+    if(on){ place(); render(); fetchN(); }
+  }
+  function show(on){ wrap.style.display=on?'':'none'; if(!on&&openNow) setOpen(false); }
+  function ring(){ bell.classList.remove('ring'); void bell.offsetWidth; bell.classList.add('ring'); }
+  function markRead(ids,all){
+    var s=sess(); if(!s) return;
+    list.forEach(function(n){ if(all||ids.indexOf(n.id)>-1) n.read=true; });
+    render();
+    window.hmaCloud.api('studentNotificationsRead',{email:s.email,token:s.token,ids:ids,all:!!all},15000).catch(function(){});
+  }
+  function fetchN(){
+    var s=sess(); if(!s||!window.hmaCloud){ show(false); return; }
+    show(true); if(busy) return; busy=true;
+    window.hmaCloud.api('studentNotifications',{email:s.email,token:s.token},15000).then(function(res){
+      busy=false; if(!res||!res.ok) return;
+      var items=res.notifications||[], fresh=[], first=(known===null||knownFor!==s.email);
+      if(first){ known={}; knownFor=s.email; items.forEach(function(n){known[n.id]=1;}); }
+      else items.forEach(function(n){ if(!known[n.id]){ known[n.id]=1; if(!n.read) fresh.push(n); } });
+      list=items; render();
+      if(first&&unread()) ring();
+      if(fresh.length){
+        ring();
+        try{ if(typeof showToast==='function') showToast('🔔 '+fresh[0].title+(fresh.length>1?' (+'+(fresh.length-1)+' more)':'')); }catch(e){}
+        try{ if(window.hmaCloud.pull) window.hmaCloud.pull(true); }catch(e){}   /* pick up the instructor's progress changes right away */
+      }
+    }).catch(function(){ busy=false; });
+  }
+  bell.addEventListener('click',function(e){ e.stopPropagation(); setOpen(!openNow); });
+  $('hnAll').addEventListener('click',function(){ markRead([],true); });
+  panel.querySelector('.hn-tabs').addEventListener('click',function(e){
+    var b=e.target.closest('button'); if(!b) return; filter=b.dataset.f;
+    panel.querySelectorAll('.hn-tabs button').forEach(function(x){ x.classList.toggle('on',x===b); }); render();
+  });
+  $('hnList').addEventListener('click',function(e){
+    var it=e.target.closest('.hn-item'); if(!it) return;
+    it.classList.toggle('open');
+    var id=it.dataset.id, n=list.filter(function(x){return x.id===id;})[0];
+    if(n&&!n.read){ markRead([id],false); }
+  });
+  document.addEventListener('click',function(e){ if(openNow&&!panel.contains(e.target)&&!wrap.contains(e.target)) setOpen(false); });
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape'&&openNow){ setOpen(false); bell.focus(); } });
+  window.addEventListener('resize',function(){ if(openNow) place(); });
+  window.addEventListener('scroll',function(){ if(openNow) place(); },true);
+  window.addEventListener('online',fetchN);
+  document.addEventListener('visibilitychange',function(){ if(!document.hidden) fetchN(); });
+  setInterval(function(){ if(!document.hidden) fetchN(); },45000);
+  setInterval(function(){ if(!sess()) show(false); },5000);
+
+  /* ===== C) After the site receives instructor changes, refresh the screens ===== */
+  function syncUi(){
+    try{
+      if(typeof student==='undefined'||!student) return;
+      var seen=student.readingSeen||[];
+      document.querySelectorAll('.note-mark[data-reading-key]').forEach(function(btn){
+        if(seen.indexOf(btn.dataset.readingKey)<0&&btn.classList.contains('done')){
+          btn.classList.remove('done'); btn.disabled=false; var l=btn.querySelector('.nm-label'); if(l) l.textContent='Mark as Read';
+        }
+      });
+      ['renderProgressView','renderPhaseAssessment','renderAssignments','updatePracticeCreditUI','renderHomeLearning'].forEach(function(fn){
+        try{ if(typeof window[fn]==='function') window[fn](); }catch(e){}
+      });
+    }catch(e){}
+  }
+  var prev=window.hmaAfterRemote;
+  window.hmaAfterRemote=function(){
+    try{ if(prev) prev.apply(this,arguments); }catch(e){}
+    syncUi(); setTimeout(fetchN,400);
+  };
+  setTimeout(fetchN,2500); setTimeout(fetchN,8000);
 })();
 </script>
 
