@@ -541,11 +541,6 @@ footer.appfoot .foot-classroom a:hover{text-decoration:underline;}
 }
 .practice-day .project-label{background:linear-gradient(135deg,#7c3aed,#4f46e5);}
 .practice-day .flip-card-front{background:linear-gradient(145deg,#4f46e5,#7c3aed);}
-/* Week 5 cards: orange assessment/practice treatment */
-#week5 .week5-orange .flip-card-front{background:linear-gradient(145deg,#ff9800,#ff6a2c);border-left:5px solid #ff9800;color:#fff;}
-#week5 .week5-orange .flip-card-back{border:3px solid #ff9800;background:#fffaf3;}
-#week5 .week5-orange .project-label,#week5 .week5-orange .practice-label{background:linear-gradient(135deg,#ff9800,#ff6a2c);color:#fff;}
-#week5 .week5-orange .flip-hint{color:rgba(255,255,255,.88);}
 .theater-stage{background:radial-gradient(circle at 50% 42%,rgba(70,78,105,.32),rgba(8,10,18,.96) 72%);padding:10px;box-sizing:border-box;border-radius:16px;box-shadow:0 18px 50px rgba(13,18,35,.18);}
 .theater-stage.is-playing{box-shadow:0 22px 65px rgba(13,18,35,.24);}
 .theater-player{border-radius:10px;box-shadow:0 12px 34px rgba(0,0,0,.28);}
@@ -1101,7 +1096,7 @@ try {
     <div class="workflow-node"><button type="button" class="workflow-click" onclick="goTab('screencasts')"><span class="workflow-node-top"><span class="workflow-number">02</span><span class="workflow-node-status">Continue</span></span><h4>Screencast</h4><small>Released recordings</small><span class="workflow-grade"><span>Watch &amp; check</span><b>—</b></span></button></div>
     <div class="workflow-node"><button type="button" class="workflow-click" onclick="goTab('practice')"><span class="workflow-node-top"><span class="workflow-number">03</span><span class="workflow-node-status">Continue</span></span><h4>Practice</h4><small>0.7 × 4 days · 2.8 marks</small><span class="workflow-grade"><span>Practice files</span><b>—</b></span></button></div>
     <div class="workflow-node"><button type="button" class="workflow-click" onclick="goTab('assessment')"><span class="workflow-node-top"><span class="workflow-number">04</span><span class="workflow-node-status">Continue</span></span><h4>Assessment</h4><small>Read Me + Screencast checks</small><span class="workflow-grade"><span>Checks</span><b>—</b></span></button></div>
-    <div class="workflow-node"><button type="button" class="workflow-click" onclick="goTab('phase-assessment')"><span class="workflow-node-top"><span class="workflow-number">05</span><span class="workflow-node-status">Week 6</span></span><h4>Phase 1 Assessment</h4><small>15 questions · 20 marks</small><span class="workflow-grade"><span>Locked until Week 5</span><b>—</b></span></button></div>
+    <div class="workflow-node"><button type="button" class="workflow-click" onclick="goTab('phase-assessment')"><span class="workflow-node-top"><span class="workflow-number">05</span><span class="workflow-node-status">Week 6</span></span><h4>Phase 1 Assessment</h4><small>15 questions · 20 marks</small><span class="workflow-grade"><span>Locked until Week 6</span><b>—</b></span></button></div>
     <div class="workflow-node"><button type="button" class="workflow-click" onclick="goTab('projects')"><span class="workflow-node-top"><span class="workflow-number">06</span><span class="workflow-node-status">Continue</span></span><h4>Phase 1 Project</h4><small>Individual submission</small><span class="workflow-grade"><span>Project</span><b>0/15</b></span></button></div>
   </div></div>
   <div class="workflow-footer"><span class="workflow-next"><b>Start with Read Me</b> and work through the workflow in order.</span><button type="button" class="hbtn ghost" onclick="goTab('notes')">Start →</button></div>
@@ -1270,7 +1265,7 @@ try {
 <div class="week-card" id="week5">
 <h2 class="wk">Week 5 — Revision &amp; Skills Check</h2>
 <div class="day-grid">
-<div class="flip-card week5-orange" data-day="5-1"><div class="flip-card-inner">
+<div class="flip-card" data-day="5-1"><div class="flip-card-inner">
 <div class="flip-card-front"><h4>Day 1: Revision — Foundations &amp; Photo Editing</h4><p>Review Weeks 1–3: file handling, raster images, non-destructive editing, background removal, smudge cleanup, and depth with Gaussian Blur.</p><span class="flip-hint">Tap to flip</span></div>
 <div class="flip-card-back"><div class="vocab-title">Day 1 Revision Tasks</div>
 <p><strong>Goal:</strong> Revisit the core techniques and identify any skill that needs more practice.</p>
@@ -1283,10 +1278,10 @@ try {
 </ul>
 <div class="big-ideas"><strong>Self-check:</strong> Can you explain each step, undo safely, and keep the original image available? Revisit the Read Me or screencast for any step that feels uncertain.</div></div>
 </div></div>
-<div class="flip-card week5-orange practice-day" data-day="5-2"><div class="flip-card-inner">
-<div class="flip-card-front"><div class="practice-label">PRACTICE DAY</div><h4>Day 2: Practice — Transform, Puppet Warp &amp; Export</h4><p>Use the Week 4 skills in an independent practice task and check your file before submitting.</p><span class="flip-hint">Tap to flip</span></div>
-<div class="flip-card-back"><div class="vocab-title">Day 2 Practice Tasks</div>
-<p><strong>Goal:</strong> Practise the editing tools independently and produce a tidy, editable result.</p>
+<div class="flip-card" data-day="5-2"><div class="flip-card-inner">
+<div class="flip-card-front"><h4>Day 2: Revision — Transform, Puppet Warp &amp; Export</h4><p>Review Week 4 skills, then complete a short independent practice task and check your file before submitting.</p><span class="flip-hint">Tap to flip</span></div>
+<div class="flip-card-back"><div class="vocab-title">Day 2 Revision Tasks</div>
+<p><strong>Goal:</strong> Apply the editing tools independently and produce a tidy, editable result.</p>
 <ul>
 <li>Use Transform to resize, rotate, position, and proportionally scale a subject.</li>
 <li>Use Puppet Warp pins and control points to make a small, deliberate adjustment; avoid unnatural distortion.</li>
@@ -3630,21 +3625,6 @@ function askReportPermission(trigger){
 /* ---------- GRADING ---------- */
 function computeGrade(){
   if(!student) return { pct:0, letter:'—', detail:'Sign in to start tracking.' };
-  // Instructor grade from the Google Sheet is authoritative when present.
-  // The locally calculated grade remains the fallback when no teacher grade has been entered.
-  if(student.teacherGrade!==undefined && String(student.teacherGrade).trim()!==''){
-    const raw=String(student.teacherGrade).trim();
-    const n=parseFloat(raw.replace('%',''));
-    let pct=Number.isFinite(n) ? Math.max(0,Math.min(100,n)) : 0;
-    let letter=raw;
-    if(Number.isFinite(n)){
-      if(n>=97) letter='A+'; else if(n>=93) letter='A'; else if(n>=90) letter='A-';
-      else if(n>=87) letter='B+'; else if(n>=83) letter='B'; else if(n>=80) letter='B-';
-      else if(n>=77) letter='C+'; else if(n>=73) letter='C'; else if(n>=70) letter='C-';
-      else if(n>=67) letter='D+'; else if(n>=63) letter='D'; else if(n>=60) letter='D-'; else letter='Needs Improvement';
-    }
-    return {pct:Math.round(pct),letter:letter,detail:'Instructor grade · synced from Google Sheet'};
-  }
   const totalLessons = cards.length;
   const completionPct = totalLessons ? (student.completed.length/totalLessons)*100 : 0;
   const quizzesTaken = Object.keys(student.weekQuizzes).length;
@@ -5348,7 +5328,7 @@ const PHASE1_QUESTIONS = [
 ];
 function phaseAssessmentTotal(){return PHASE1_QUESTIONS.reduce((sum,q)=>sum+q.marks,0)}
 function shuffleArray(arr){ const a=[...arr]; for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; }
-function phaseAssessmentAvailable(){ return courseWeekNumber(new Date())>=5; }
+function phaseAssessmentAvailable(){ return courseWeekNumber(new Date())>=6; }
 function ensurePhaseModal(){
  if(document.getElementById('phaseAssessmentModal')) return;
  const wrap=document.createElement('div'); wrap.id='phaseAssessmentModal'; wrap.className='phase-modal-backdrop'; wrap.innerHTML=`<div class="phase-modal" role="dialog" aria-modal="true" aria-labelledby="phaseModalTitle"><div class="phase-modal-head"><div><div class="hero-eyebrow">PHASE 1 · WEEK 6</div><h3 id="phaseModalTitle">Phase Assessment</h3><p id="phaseModalIntro">15 shuffled questions · 20 marks</p></div><button class="phase-modal-close" type="button" aria-label="Close assessment">×</button></div><div class="phase-modal-body" id="phaseModalBody"></div><div class="phase-modal-foot"><span class="phase-modal-score" id="phaseModalProgress">0/15 answered</span><button class="hbtn primary" id="phaseModalSubmit" type="button">Submit Assessment</button></div></div>`;
@@ -5360,7 +5340,7 @@ function ensurePhaseModal(){
 function openPhaseAssessmentModal(){
  ensurePhaseModal();
  const modal=document.getElementById('phaseAssessmentModal'); const body=document.getElementById('phaseModalBody'); const submit=document.getElementById('phaseModalSubmit');
- if(!phaseAssessmentAvailable()){ body.innerHTML=`<div class="phase-lock-card"><div class="phase-lock-icon">🔒</div><h3>Available in Week 5</h3><p>The Phase 1 Assessment opens when Week 5 begins. Your workflow will unlock the clickable assessment automatically then.</p><div class="phase-launch-meta" style="justify-content:center;margin-top:16px"><span>15 questions</span><span>20 marks</span><span>Shuffled order</span></div></div>`; document.getElementById('phaseModalProgress').textContent='Locked until Week 5'; submit.style.display='none'; modal.classList.add('open'); return; }
+ if(!phaseAssessmentAvailable()){ body.innerHTML=`<div class="phase-lock-card"><div class="phase-lock-icon">🔒</div><h3>Available in Week 6</h3><p>The Phase 1 Assessment opens when Week 6 begins. Your workflow will unlock the clickable assessment automatically then.</p><div class="phase-launch-meta" style="justify-content:center;margin-top:16px"><span>15 questions</span><span>20 marks</span><span>Shuffled order</span></div></div>`; document.getElementById('phaseModalProgress').textContent='Locked until Week 6'; submit.style.display='none'; modal.classList.add('open'); return; }
  const saved=student?.phaseAssessments?.phase1;
  if(saved?.completedAt){ const pct=Math.round(saved.score/saved.total*100); body.innerHTML=`<div class="phase-complete-card"><div class="hero-eyebrow">PHASE 1 COMPLETE</div><div class="phase-score">${saved.score}/${saved.total}</div><p style="margin:7px 0;color:#667085">Submitted ${new Date(saved.completedAt).toLocaleString()}. This official phase result is locked.</p><div class="phase-progress"><i style="width:${pct}%"></i></div></div>`; document.getElementById('phaseModalProgress').textContent=`Saved score · ${saved.score}/${saved.total}`; submit.style.display='none'; modal.classList.add('open'); return; }
  submit.style.display='inline-flex';
@@ -5383,7 +5363,7 @@ function renderPhaseAssessment(){
  const body=document.getElementById('phaseAssessmentBody'); if(!body)return;
  if(!student){body.innerHTML='<div class="progress-signedout"><h3>Sign in to access the Phase 1 Assessment</h3><p>The assessment becomes available in Week 6 and opens as a focused pop-out quiz.</p></div>';return;}
  const saved=student.phaseAssessments?.phase1; const open=phaseAssessmentAvailable(); const pct=saved?.completedAt?Math.round(saved.score/saved.total*100):0;
- body.innerHTML=`<div class="phase-launch-card ${saved?.completedAt?'phase-completed':''}"><div><div class="hero-eyebrow">${open?'WEEK 5 · NOW AVAILABLE':'WEEK 5 · LOCKED'}</div><h3>Phase 1 Assessment</h3><p>15 shuffled questions covering Weeks 1–4. Complete it in the pop-out assessment window for one official 20-mark phase score.</p><div class="phase-launch-meta"><span>15 questions</span><span>20 marks</span><span>${saved?.completedAt?`Completed · ${saved.score}/${saved.total}`:'Single final attempt'}</span></div></div><button class="hbtn primary phase-launch-btn" type="button" onclick="openPhaseAssessmentModal()">${saved?.completedAt?'View Result':(open?'Start Assessment':'Locked · Week 5')}</button></div>`;
+ body.innerHTML=`<div class="phase-launch-card ${saved?.completedAt?'phase-completed':''}"><div><div class="hero-eyebrow">${open?'WEEK 6 · NOW AVAILABLE':'WEEK 6 · LOCKED'}</div><h3>Phase 1 Assessment</h3><p>15 shuffled questions covering Weeks 1–4. Complete it in the pop-out assessment window for one official 20-mark phase score.</p><div class="phase-launch-meta"><span>15 questions</span><span>20 marks</span><span>${saved?.completedAt?`Completed · ${saved.score}/${saved.total}`:'Single final attempt'}</span></div></div><button class="hbtn primary phase-launch-btn" type="button" onclick="openPhaseAssessmentModal()">${saved?.completedAt?'View Result':(open?'Start Assessment':'Locked · Week 6')}</button></div>`;
 }
 
 function showToast(msg){const e=document.getElementById('completionToast');if(!e)return;e.textContent=msg;e.classList.add('show');clearTimeout(window.__toastTimer);window.__toastTimer=setTimeout(()=>e.classList.remove('show'),2400);}
@@ -5830,47 +5810,6 @@ table{max-width:100%}
 
 
 <style id="hma-course-css">
-.hma-pg{margin:0 0 16px;padding:16px 18px;border-radius:16px;background:linear-gradient(135deg,#101522,#1a2236);color:#fff;border:1px solid rgba(255,255,255,.08);box-shadow:0 10px 26px rgba(7,12,25,.16)}
-.hma-pg-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:12px}
-.hma-pg-head span{font:800 12px 'Inter',sans-serif;letter-spacing:.1em;color:#aeb8cf}.hma-pg-head small{color:#8f9ab3;font-size:11.5px}
-.hma-pg-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
-.hma-pg-card{position:relative;overflow:hidden;padding:12px 14px 16px;border-radius:14px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1)}
-.hma-pg-card small{display:block;font:700 11px 'Inter',sans-serif;color:#aeb8cf;margin-bottom:4px}
-.hma-pg-card b{font:800 28px 'Poppins',sans-serif}
-.hma-pg-card em{position:absolute;top:12px;right:12px;font:800 15px 'Poppins',sans-serif;font-style:normal;padding:3px 10px;border-radius:999px;background:var(--c);color:#fff}
-.hma-pg-card span{display:block;font-size:11px;color:#aeb8cf;margin-top:2px}
-.hma-pg-card i{position:absolute;left:0;bottom:0;height:4px;background:var(--c)}
-.hma-pg-card.off{opacity:.6}.hma-pg-card.off b{color:#8f9ab3}
-#hmaChat{position:fixed;right:max(16px,env(safe-area-inset-right));bottom:max(16px,env(safe-area-inset-bottom));z-index:3200;font-family:'Inter',Arial,sans-serif}
-#hmaChat[hidden]{display:none}
-#hmaChatBtn{width:58px;height:58px;border-radius:50%;border:0;background:linear-gradient(135deg,#2f6fed,#8b5cf6);color:#fff;font-size:26px;cursor:pointer;box-shadow:0 10px 26px rgba(47,111,237,.45);position:relative}
-#hmaChatBadge{position:absolute;top:-4px;right:-4px;min-width:20px;height:20px;border-radius:10px;background:#ef4444;color:#fff;font:800 11px/20px Inter,sans-serif;padding:0 5px}
-#hmaChatBadge[hidden]{display:none}
-#hmaChatPanel{position:absolute;right:0;bottom:70px;width:min(370px,calc(100vw - 24px));height:min(540px,calc(100vh - 120px));background:#fff;border-radius:20px;box-shadow:0 24px 70px rgba(10,15,35,.38);display:flex;flex-direction:column;overflow:hidden;border:1px solid #e3e7ee}
-#hmaChatPanel[hidden]{display:none}
-.hma-ch-head{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:14px 16px;background:linear-gradient(135deg,#1c2030,#3b2a7a);color:#fff}
-.hma-ch-head b{display:block;font-size:15px}.hma-ch-head small{color:#c9d3f5;font-size:11px}
-.hma-ch-head button{background:rgba(255,255,255,.14);border:0;color:#fff;width:32px;height:32px;border-radius:10px;font-size:20px;cursor:pointer}
-.hma-ch-body{flex:1;overflow:auto;padding:14px;background:#f6f8fb;display:flex;flex-direction:column;gap:10px}
-.hma-b{max-width:88%;padding:10px 12px;border-radius:14px;font-size:13px;line-height:1.5;white-space:pre-wrap;word-wrap:break-word}
-.hma-b small{display:block;margin-top:5px;font-size:10.5px;opacity:.75}.hma-b em{display:block;font-style:normal;font-weight:800;font-size:10.5px;margin-bottom:3px;opacity:.85}
-.hma-b.me{align-self:flex-end;background:#2f6fed;color:#fff;border-bottom-right-radius:4px}.hma-b.ins{align-self:flex-start;background:#fff;border:1px solid #dfe5ee;color:#1f2937;border-bottom-left-radius:4px}
-.hma-ch-empty{margin:auto;text-align:center;color:#8a93a3;font-size:13px;padding:20px;line-height:1.6}
-.hma-ch-form{padding:10px 12px 12px;border-top:1px solid #e3e7ee;background:#fff}
-.hma-ch-form select,.hma-ch-form textarea{width:100%;box-sizing:border-box;border:1.5px solid #dfe5f0;border-radius:10px;padding:9px 10px;font:13px/1.45 Inter,Arial,sans-serif;margin-bottom:8px;background:#fff}
-.hma-ch-form textarea{resize:none}
-.hma-ch-row{display:flex;justify-content:space-between;align-items:center;gap:10px}.hma-ch-row span{font-size:11.5px;color:#15803d;font-weight:700}
-.hma-ch-row button{border:0;background:#2f6fed;color:#fff;border-radius:10px;padding:10px 18px;font:800 13px Inter,sans-serif;cursor:pointer;min-height:40px}.hma-ch-row button:disabled{opacity:.5}
-.hma-prof{position:fixed;top:0;right:0;bottom:0;left:0;z-index:4800;background:rgba(10,14,25,.78);display:none;align-items:center;justify-content:center;padding:16px;overflow:auto}
-.hma-prof.show{display:flex}
-.hma-prof-box{background:#fff;border-radius:22px;max-width:460px;width:100%;padding:26px;box-shadow:0 30px 90px rgba(0,0,0,.45)}
-.hma-prof-box h3{margin:0 0 6px;font:700 21px 'Poppins',sans-serif}.hma-prof-box p{margin:0 0 14px;color:#667085;font-size:13px;line-height:1.55}
-.hma-prof-box label{display:block;font:700 12.5px Inter,sans-serif;margin:12px 0 6px;color:#344054}
-.hma-prof-box input{width:100%;box-sizing:border-box;padding:12px;border:1.5px solid #dfe5f0;border-radius:12px;font:15px Inter,sans-serif}
-.hma-prof-box input[readonly]{background:#f2f4f7;color:#667085}
-.hma-prof-err{min-height:18px;margin-top:10px;color:#b42318;font:600 12.5px Inter,sans-serif}
-.hma-prof-box button{width:100%;margin-top:6px;padding:13px;border:0;border-radius:12px;background:linear-gradient(135deg,#2f6fed,#8b5cf6);color:#fff;font:800 14px Inter,sans-serif;cursor:pointer;min-height:46px}
-.hma-prof-note{margin-top:12px;font-size:11.5px;color:#7a8699;line-height:1.5}
 .study-banner{top:calc(var(--bar-h,64px) + 10px)!important;bottom:auto!important;transform:translate(-50%,-26px)!important;z-index:3500;overflow:hidden;padding:12px 18px 16px!important;box-shadow:0 14px 40px rgba(0,0,0,.35)}
 .study-banner.show{transform:translate(-50%,0)!important}
 .study-banner .sb-bar{position:absolute;left:0;right:0;bottom:0;height:5px;background:rgba(255,255,255,.18)}
@@ -5913,41 +5852,19 @@ html.hma-hide .app,html.hma-hide .wq-modal,html.hma-hide .phase-modal-backdrop,h
   /* ====== 2) Practice marks: everyone has 2.8 / 2.8 by default ====== */
   window.practiceCreditSummary=function(){ return {earned:2.8,total:2.8}; };
 
-  /* ====== 3) Week 5 = Phase 1 Assessment + Practice; Week 6 = Project Week ====== */
+  /* ====== 3) Week 6 = Project Week + Phase 1 Assessment ====== */
   try{
-    /* Week 5 Day 1: official Phase 1 Assessment */
-    var w5c1=document.querySelector('#week5 .flip-card[data-day="5-1"]'), w5c2=document.querySelector('#week5 .flip-card[data-day="5-2"]');
-    if(w5c1){
-      w5c1.classList.remove('practice-day','project-day');
-      w5c1.classList.add('week5-orange');
-      w5c1.querySelector('.flip-card-front').innerHTML='<div class="project-label">PHASE 1 ASSESSMENT</div><h4>Day 1: Phase 1 Assessment</h4><p>Show what you learned in Weeks 1–4 with your personal 20-question assessment.</p><span class="flip-hint">Tap to flip</span>';
-      w5c1.querySelector('.flip-card-back').innerHTML='<p><strong>Objective:</strong> Prove your Phase One skills in one focused sitting.</p><ul><li>20 questions, 20 marks, one attempt.</li><li>Your questions are picked from a bank of 100 and shuffled differently for every student.</li><li>Covers Weeks 1–4: software, layers, background removal and portrait editing.</li><li>Stay on the page until you submit.</li></ul><div class="w6-actions"><button type="button" class="hbtn primary" onclick="event.stopPropagation();goTab(\'phase-assessment\')">Start Phase 1 Assessment</button></div>';
+    if(typeof weekMeta!=='undefined') weekMeta[6]='Project Week & Phase 1 Assessment';
+    var h=document.querySelector('#week6 h2.wk');
+    if(h&&h.firstChild&&h.firstChild.nodeType===3) h.firstChild.nodeValue='Week 6 — Project Week & Phase 1 Assessment';
+    var c1=document.querySelector('#week6 .flip-card[data-day="6-1"]'), c2=document.querySelector('#week6 .flip-card[data-day="6-2"]');
+    if(c1){
+      c1.querySelector('.flip-card-front').innerHTML='<div class="project-label">PHASE 1 ASSESSMENT</div><h4>Day 1: Phase 1 Assessment</h4><p>Show what you learned in Weeks 1–4 with your personal 20-question assessment.</p><span class="flip-hint">Tap to flip</span>';
+      c1.querySelector('.flip-card-back').innerHTML='<p><strong>Objective:</strong> Prove your Month 1 skills in one focused sitting.</p><ul><li>20 questions, 20 marks, one attempt.</li><li>Your questions are picked from a bank of 100 and shuffled differently for every student.</li><li>Covers Weeks 1–4: software, layers, background removal and portrait editing.</li><li>Stay on the page until you submit.</li></ul><div class="w6-actions"><button type="button" class="hbtn primary" onclick="event.stopPropagation();goTab(\'phase-assessment\')">Start Phase 1 Assessment</button></div>';
     }
-    /* Week 5 Day 2: practice day */
-    if(w5c2){
-      w5c2.classList.remove('project-day');
-      w5c2.classList.add('practice-day','week5-orange');
-      var p5front=w5c2.querySelector('.flip-card-front'), p5back=w5c2.querySelector('.flip-card-back');
-      if(p5front){
-        var lab=p5front.querySelector('.project-label'); if(lab) lab.textContent='PRACTICE DAY';
-      }
-      if(p5back){
-        var oldLabel=p5back.querySelector('.project-label'); if(oldLabel) oldLabel.textContent='PRACTICE DAY';
-      }
-    }
-    /* Week 6: both days are project days. */
-    if(typeof weekMeta!=='undefined') weekMeta[6]='Project Week';
-    var h6=document.querySelector('#week6 h2.wk');
-    if(h6&&h6.firstChild&&h6.firstChild.nodeType===3) h6.firstChild.nodeValue='Week 6 — Individual Project';
-    var c6a=document.querySelector('#week6 .flip-card[data-day="6-1"]'), c6b=document.querySelector('#week6 .flip-card[data-day="6-2"]');
-    [c6a,c6b].forEach(function(card){ if(card){ card.classList.remove('practice-day'); card.classList.add('project-day'); } });
-    if(c6a){
-      c6a.querySelector('.flip-card-front').innerHTML='<div class="project-label">PROJECT DAY</div><h4>Day 1: Individual Phase One Project</h4><p>Begin your individual Phase One project and apply the skills from Weeks 1–4.</p><span class="flip-hint">Tap to flip</span>';
-      c6a.querySelector('.flip-card-back').innerHTML='<p><strong>Objective:</strong> Apply everything from Weeks 1–4 in one finished project.</p><ul><li>Choose one of the 50 cities and replace your portrait background.</li><li>Refine the edges, retouch the face naturally and redesign the clothing pattern.</li><li>Work non-destructively and keep your editable PSD.</li><li>Continue your individual project work from the Projects tab.</li></ul><div class="w6-actions"><button type="button" class="hbtn primary" onclick="event.stopPropagation();goTab(\'projects\')">Open Phase One Project</button></div>';
-    }
-    if(c6b){
-      c6b.querySelector('.flip-card-front').innerHTML='<div class="project-label">PROJECT DAY</div><h4>Day 2: Individual Phase One Project</h4><p>Continue, refine and prepare your Phase One project for submission.</p><span class="flip-hint">Tap to flip</span>';
-      c6b.querySelector('.flip-card-back').innerHTML='<p><strong>Objective:</strong> Finish and polish your individual Phase One project.</p><ul><li>Complete the city composition and clean all cutout edges.</li><li>Check scale, lighting, colour, perspective and depth.</li><li>Save your final editable PSD and export a high-resolution JPG or PNG.</li><li>Submit your finished individual project from the Projects tab.</li></ul><div class="w6-actions"><button type="button" class="hbtn primary" onclick="event.stopPropagation();goTab(\'projects\')">Open Phase One Project</button></div>';
+    if(c2){
+      c2.querySelector('.flip-card-front').innerHTML='<div class="project-label">PROJECT WEEK</div><h4>Day 2: Project Week — Phase 1 Project</h4><p>Build your individual city composition and submit it.</p><span class="flip-hint">Tap to flip</span>';
+      c2.querySelector('.flip-card-back').innerHTML='<p><strong>Objective:</strong> Apply everything from Weeks 1–4 in one finished project.</p><ul><li>Choose one of the 50 cities and replace your portrait background.</li><li>Refine the edges, retouch the face naturally and redesign the clothing pattern.</li><li>Save your PSD and export a high-resolution JPG or PNG.</li><li>Submit it from the Projects tab.</li></ul><div class="w6-actions"><button type="button" class="hbtn primary" onclick="event.stopPropagation();goTab(\'projects\')">Open Phase 1 Project</button></div>';
     }
   }catch(e){ console.error(e); }
 
@@ -5958,8 +5875,7 @@ html.hma-hide .app,html.hma-hide .wq-modal,html.hma-hide .phase-modal-backdrop,h
   function shuf(arr,r){ var a=arr.slice(); for(var i=a.length-1;i>0;i--){ var j=Math.floor(r()*(i+1)); var x=a[i]; a[i]=a[j]; a[j]=x; } return a; }
   /* Same student => same paper every time (reload-proof). Different students => different questions, order and answer positions. */
   function buildPaper(email){
-    var rc=0; try{ (student.resets||[]).forEach(function(x){ if(x.k==='phase1'||x.k==='all') rc++; }); }catch(e){}
-    var r=rng(hash(String(email||'guest').toLowerCase()+'|phase1|v1'+(rc?'|r'+rc:''))), picked=[];
+    var r=rng(hash(String(email||'guest').toLowerCase()+'|phase1|v1')), picked=[];
     [1,2,3,4].forEach(function(w){
       var items=[]; BANK.forEach(function(b,i){ if(b[0]===w) items.push(i); });
       shuf(items,r).slice(0,5).forEach(function(i){ picked.push(i); });
@@ -5976,8 +5892,8 @@ html.hma-hide .app,html.hma-hide .wq-modal,html.hma-hide .phase-modal-backdrop,h
     var modal=document.getElementById('phaseAssessmentModal'), body=document.getElementById('phaseModalBody'), submit=document.getElementById('phaseModalSubmit');
     var intro=document.getElementById('phaseModalIntro'); if(intro) intro.textContent='20 questions · 20 marks · different for every student';
     if(!phaseAssessmentAvailable()){
-      body.innerHTML='<div class="phase-lock-card"><div class="phase-lock-icon">🔒</div><h3>Available in Week 5</h3><p>The Phase 1 Assessment opens when Week 5 begins.</p><div class="phase-launch-meta" style="justify-content:center;margin-top:16px"><span>20 questions</span><span>20 marks</span><span>Your own shuffled paper</span></div></div>';
-      document.getElementById('phaseModalProgress').textContent='Locked until Week 5'; submit.style.display='none'; modal.classList.add('open'); return;
+      body.innerHTML='<div class="phase-lock-card"><div class="phase-lock-icon">🔒</div><h3>Available in Week 6</h3><p>The Phase 1 Assessment opens when Week 6 begins.</p><div class="phase-launch-meta" style="justify-content:center;margin-top:16px"><span>20 questions</span><span>20 marks</span><span>Your own shuffled paper</span></div></div>';
+      document.getElementById('phaseModalProgress').textContent='Locked until Week 6'; submit.style.display='none'; modal.classList.add('open'); return;
     }
     var saved=student&&student.phaseAssessments&&student.phaseAssessments.phase1;
     if(saved&&saved.completedAt){
@@ -6005,13 +5921,13 @@ html.hma-hide .app,html.hma-hide .wq-modal,html.hma-hide .phase-modal-backdrop,h
   };
   window.renderPhaseAssessment=function(){
     var body=document.getElementById('phaseAssessmentBody'); if(!body) return;
-    if(!student){ body.innerHTML='<div class="progress-signedout"><h3>Sign in to access the Phase 1 Assessment</h3><p>The assessment becomes available in Week 5.</p></div>'; return; }
+    if(!student){ body.innerHTML='<div class="progress-signedout"><h3>Sign in to access the Phase 1 Assessment</h3><p>The assessment becomes available in Week 6.</p></div>'; return; }
     var saved=student.phaseAssessments&&student.phaseAssessments.phase1, open=phaseAssessmentAvailable();
-    body.innerHTML='<div class="phase-launch-card"><div><div class="hero-eyebrow">'+(open?'WEEK 5 · NOW AVAILABLE':'WEEK 5 · LOCKED')+'</div><h3>Phase 1 Assessment</h3><p>20 questions picked from a bank of 100 and shuffled just for you — every student gets a different paper covering Weeks 1–4.</p><div class="phase-launch-meta"><span>20 questions</span><span>20 marks</span><span>'+(saved&&saved.completedAt?'Completed · '+saved.score+'/'+saved.total:'Single attempt')+'</span></div></div><button class="hbtn primary phase-launch-btn" type="button" onclick="openPhaseAssessmentModal()">'+(saved&&saved.completedAt?'View Result':(open?'Start Assessment':'Locked · Week 5'))+'</button></div>';
+    body.innerHTML='<div class="phase-launch-card"><div><div class="hero-eyebrow">'+(open?'WEEK 6 · NOW AVAILABLE':'WEEK 6 · LOCKED')+'</div><h3>Phase 1 Assessment</h3><p>20 questions picked from a bank of 100 and shuffled just for you — every student gets a different paper covering Weeks 1–4.</p><div class="phase-launch-meta"><span>20 questions</span><span>20 marks</span><span>'+(saved&&saved.completedAt?'Completed · '+saved.score+'/'+saved.total:'Single attempt')+'</span></div></div><button class="hbtn primary phase-launch-btn" type="button" onclick="openPhaseAssessmentModal()">'+(saved&&saved.completedAt?'View Result':(open?'Start Assessment':'Locked · Week 6'))+'</button></div>';
   };
   try{
     var hc=document.querySelector('.home-card[onclick*="phase-assessment"] p'); if(hc) hc.textContent='20 questions picked from a 100-question bank, shuffled differently for every student. Opens in Week 6.';
-    var vp=document.querySelector('#phase-assessment .view-head p'); if(vp) vp.textContent='Opens in Week 5. Your personal 20-question paper is drawn from a bank of 100 and shuffled just for you. Complete it in one sitting.';
+    var vp=document.querySelector('#phase-assessment .view-head p'); if(vp) vp.textContent='Opens in Week 6. Your personal 20-question paper is drawn from a bank of 100 and shuffled just for you. Complete it in one sitting.';
   }catch(e){}
 
   /* ====== 5) Weekly progress submission ====== */
@@ -6102,12 +6018,7 @@ html.hma-hide .app,html.hma-hide .wq-modal,html.hma-hide .phase-modal-backdrop,h
     try{ saveStudentRecord(student); }catch(e){}
   }
   function quizOpen(){ return ['cqModal','wqModal','phaseAssessmentModal'].some(function(id){ var m=document.getElementById(id); return m&&m.classList.contains('open'); }); }
-  function attempt(type){
-    var inQuiz=quizOpen(); blackout();
-    var n=Date.now(); if(n-lastAt<1500) return; lastAt=n;
-    clearClip(); logShot(inQuiz?type+'-in-quiz':type);
-    if(inQuiz){ try{ invalidateActiveAssessment('screenshot attempt'); }catch(e){} }   /* the quiz is submitted automatically with a score of ZERO */
-  }
+  function attempt(type){ blackout(); var n=Date.now(); if(n-lastAt<1500) return; lastAt=n; clearClip(); logShot(quizOpen()?type+'-in-quiz':type); }
   /* Black out the moment the screenshot shortcut starts (Cmd/Win + Shift are pressed BEFORE the final key), and keep it black while it is held */
   var held=false;
   function hold(){ held=true; clearTimeout(boT); bo.classList.add('show'); }
@@ -6140,197 +6051,15 @@ html.hma-hide .app,html.hma-hide .wq-modal,html.hma-hide .phase-modal-backdrop,h
     el.classList.add('show');
   };
 
-  /* ====== 9) Each phase is graded out of 100% with its own letter (no course-wide grade) ====== */
-  function fm(n){ n=Number(n)||0; return Number.isInteger(n)?String(n):n.toFixed(1); }
-  function lt(p){ return p>=97?'A+':p>=93?'A':p>=90?'A-':p>=87?'B+':p>=83?'B':p>=80?'B-':p>=77?'C+':p>=73?'C':p>=70?'C-':p>=67?'D+':p>=63?'D':p>=60?'D-':'F'; }
-  var _pom=window.phaseOneMarks;
-  window.phaseOneMarks=function(){
-    var m=_pom?_pom():{items:[],earned:0,total:0}, q=student&&student.phaseAssessments&&student.phaseAssessments.phase1, done=!!(q&&q.completedAt), open=false;
-    try{ open=phaseAssessmentAvailable(); }catch(e){}
-    var items=m.items.concat([{label:'Phase Assessment',earned:done?(Number(q.score)||0):0,total:(done||open)?20:0}]);
-    return {items:items,earned:items.reduce(function(a,i){return a+i.earned;},0),total:items.reduce(function(a,i){return a+i.total;},0)};
-  };
-  function phaseGrades(){
-    var m=window.phaseOneMarks(), pct=m.total?Math.round(m.earned/m.total*1000)/10:0;
-    var out=[{n:1,name:'Phase 1',earned:m.earned,total:m.total,pct:pct,letter:lt(pct),has:m.total>0}];
-    for(var n=2;n<=4;n++) out.push({n:n,name:'Phase '+n,has:false});
-    return out;
-  }
-  window.hmaPhaseGrades=phaseGrades;
-  window.computeGrade=function(){
-    if(!student) return {pct:0,letter:'—',detail:'Sign in to start tracking.'};
-    var g=phaseGrades()[0];
-    return {pct:Math.round(g.pct),letter:g.letter,detail:'Phase 1 · '+fm(g.earned)+' / '+fm(g.total)+' marks'};
-  };
-  window.phaseOneTotalHTML=function(){
-    if(!student) return '';
-    var cards=phaseGrades().map(function(g){
-      if(!g.has) return '<div class="hma-pg-card off"><small>'+g.name+'</small><b>—</b><span>No graded marks yet</span></div>';
-      var c=g.pct>=80?'#16a34a':g.pct>=60?'#d97706':'#dc2626';
-      return '<div class="hma-pg-card" style="--c:'+c+'"><small>'+g.name+'</small><b>'+g.pct.toFixed(1).replace(/\.0$/,'')+'%</b><em>'+g.letter+'</em><span>'+fm(g.earned)+' / '+fm(g.total)+' marks</span><i style="width:'+Math.min(100,g.pct)+'%"></i></div>';
-    }).join('');
-    return '<section class="hma-pg" aria-label="Phase grades"><div class="hma-pg-head"><span>PHASE GRADES</span><small>Each phase is graded out of 100% with its own letter</small></div><div class="hma-pg-grid">'+cards+'</div></section>';
-  };
-  var _ug=window.updateGrade;
-  window.updateGrade=function(){
-    var r=_ug?_ug.apply(this,arguments):undefined;
-    try{ var sg=document.getElementById('sbGrade'); if(sg) sg.title='Phase 1 grade'; var lab=document.querySelector('.lp-grade > span:first-child'); if(lab) lab.textContent='Phase 1 grade'; }catch(e){}
-    return r;
-  };
-
-  /* ====== 10) Data repair, instructor resets, and merging between devices ====== */
-  /* An ended-early weekly quiz used to be saved as x/5 although every weekly quiz has 3 questions. Fixed here (and in the Sheet). */
-  function repairRecord(s){
-    if(!s) return false; var ch=false, wq=s.weekQuizzes||{};
-    Object.keys(wq).forEach(function(k){ var q=wq[k]; if(q&&q.invalidated&&q.total===5){ q.total=3; ch=true; } });
-    return ch;
-  }
-  if(typeof window.invalidateActiveAssessment==='function'){
-    var _inv=window.invalidateActiveAssessment;
-    window.invalidateActiveAssessment=function(reason){
-      var r=_inv.apply(this,arguments);
-      try{ if(repairRecord(student)) saveStudentRecord(student); }catch(e){}
-      return r;
-    };
-  }
-  /* A reset made by the instructor removes the old result on every device (anything completed before the reset). */
-  function applyResets(rec){
-    if(!rec||!rec.resets) return false; var ch=false;
-    function kill(o,key,at){ if(o&&o[key]&&String(o[key].completedAt||'')<=at){ delete o[key]; ch=true; } }
-    rec.resets.forEach(function(r){
-      var k=String(r.k||''), at=String(r.at||''), cq=rec.contentQuizzes||{};
-      if(k==='all'){
-        ['phase1','phase2','phase3','phase4'].forEach(function(p){ kill(rec.phaseAssessments,p,at); });
-        Object.keys(rec.weekQuizzes||{}).forEach(function(w){ kill(rec.weekQuizzes,w,at); });
-        Object.keys(cq.reading||{}).forEach(function(x){ kill(cq.reading,x,at); });
-        Object.keys(cq.screencasts||{}).forEach(function(x){ kill(cq.screencasts,x,at); });
-      }
-      else if(/^phase\d$/.test(k)) kill(rec.phaseAssessments,k,at);
-      else if(k.indexOf('week:')===0) kill(rec.weekQuizzes,k.slice(5),at);
-      else if(k.indexOf('reading:')===0) kill(cq.reading,k.slice(8),at);
-      else if(k.indexOf('screencast:')===0) kill(cq.screencasts,k.slice(11),at);
-    });
-    return ch;
-  }
-  function unionBy(a,b,keyf){ var seen={},out=[]; [].concat(a||[],b||[]).forEach(function(x){ var k=keyf(x); if(!seen[k]){ seen[k]=1; out.push(x); } }); return out; }
-  function byAt(a,b){ return String(a.at).localeCompare(String(b.at)); }
+  /* Keep local-only fields (feedback, weekly submissions) when records are merged across devices */
   var _merge=window.mergeStudentRecords;
   window.mergeStudentRecords=function(base,extra){
     var keep={}; ['revisionRead','weekSubmissions'].forEach(function(k){ keep[k]=Object.assign({},(extra&&extra[k])||{},(base&&base[k])||{}); });
-    var ev=unionBy(extra&&extra.securityEvents,base&&base.securityEvents,function(x){ return (x.at||'')+'|'+(x.type||''); }).sort(byAt).slice(-40);
-    var cm=unionBy(extra&&extra.complaints,base&&base.complaints,function(x){ return x.id; }).sort(byAt).slice(-100);
-    var rs=unionBy(extra&&extra.resets,base&&base.resets,function(x){ return (x.k||'')+'|'+(x.at||''); });
-    var bp=base&&base.profile, ep=extra&&extra.profile;
-    var prof=(bp&&bp.completedAt)?bp:((ep&&ep.completedAt)?ep:(bp||ep||null));
-    var out=_merge(base,extra);
-    Object.keys(keep).forEach(function(k){ out[k]=keep[k]; });
-    out.securityEvents=ev; out.complaints=cm; out.resets=rs; if(prof) out.profile=prof;
-    applyResets(out); repairRecord(out);
-    return out;
+    var ev=[].concat((extra&&extra.securityEvents)||[],(base&&base.securityEvents)||[]), seen={}, evs=[];
+    ev.forEach(function(x){ var k=(x.at||'')+'|'+(x.type||''); if(!seen[k]){ seen[k]=1; evs.push(x); } });
+    evs.sort(function(a,b){ return String(a.at).localeCompare(String(b.at)); });
+    var out=_merge(base,extra); Object.keys(keep).forEach(function(k){ out[k]=keep[k]; }); out.securityEvents=evs.slice(-40); return out;
   };
-  /* After the cloud copy arrives: refresh whatever the instructor changed (resets, replies, profile) */
-  window.hmaAfterRemote=function(){
-    if(!student) return;
-    try{
-      var cq=student.contentQuizzes||{}, rd=cq.reading||{}, sc=cq.screencasts||{}, wq=student.weekQuizzes||{};
-      document.querySelectorAll('.note-section[data-reading]').forEach(function(el){ if(!rd[el.dataset.reading]) el.classList.remove('reading-complete'); });
-      document.querySelectorAll('.theater-item[data-screencast-id],.media-card[data-screencast-id]').forEach(function(el){ if(!sc[el.dataset.screencastId]) el.classList.remove('learning-complete'); });
-      document.querySelectorAll('.week-card.quiz-completed').forEach(function(el){ if(!wq[el.id.replace('week','')]) el.classList.remove('quiz-completed'); });
-      if(typeof renderAssessmentView==='function') renderAssessmentView();
-      if(typeof renderPhaseAssessment==='function') renderPhaseAssessment();
-      if(typeof updateGrade==='function') updateGrade();
-      if(typeof renderHomeLearning==='function') renderHomeLearning();
-    }catch(e){}
-    try{ checkProfile(); }catch(e){}
-    try{ chatBadge(); }catch(e){}
-  };
-
-  /* ====== 11) Help & complaints chat (bottom-right corner, linked to the instructor's Sheet) ====== */
-  var TOPICS=['Technical problem','Quiz or marks','Lesson content','Project','Other'];
-  var chat=document.createElement('div'); chat.id='hmaChat'; chat.hidden=true;
-  chat.innerHTML='<button type="button" id="hmaChatBtn" aria-label="Help and complaints" aria-expanded="false">💬<span id="hmaChatBadge" hidden></span></button>'+
-    '<div id="hmaChatPanel" role="dialog" aria-label="Help and complaints" hidden><div class="hma-ch-head"><div><b>Help &amp; complaints</b><small>Your message goes straight to your instructor</small></div><button type="button" id="hmaChatClose" aria-label="Close">×</button></div>'+
-    '<div class="hma-ch-body" id="hmaChatBody"></div><div class="hma-ch-form"><select id="hmaChatTopic" aria-label="Topic">'+TOPICS.map(function(x){ return '<option>'+x+'</option>'; }).join('')+'</select>'+
-    '<textarea id="hmaChatText" rows="3" maxlength="1200" placeholder="Describe your problem or complaint…"></textarea><div class="hma-ch-row"><span id="hmaChatStatus"></span><button type="button" id="hmaChatSend">Send</button></div></div></div>';
-  document.body.appendChild(chat);
-  var cid=function(id){ return document.getElementById(id); }, replies={};
-  function esc2(x){ return String(x==null?'':x).replace(/[&<>"]/g,function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
-  function fmtT(iso){ try{ var d=new Date(iso); return isNaN(d)?'':d.toLocaleString(undefined,{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'}); }catch(e){ return ''; } }
-  function seenKey(){ return 'hm_chat_seen_'+((student&&student.email)||''); }
-  function getSeen(){ try{ return JSON.parse(localStorage.getItem(seenKey())||'{}'); }catch(e){ return {}; } }
-  function sig(r){ return r.repliedAt+'|'+String(r.reply||'').length; }
-  function unread(){ var s=getSeen(), n=0; Object.keys(replies).forEach(function(id){ var r=replies[id]; if(r.reply&&s[id]!==sig(r)) n++; }); return n; }
-  function chatBadge(){ var b=cid('hmaChatBadge'); if(!b) return; var n=unread(); b.hidden=!n; b.textContent=n; }
-  function markSeen(){ var s=getSeen(); Object.keys(replies).forEach(function(id){ var r=replies[id]; if(r.reply) s[id]=sig(r); }); try{ localStorage.setItem(seenKey(),JSON.stringify(s)); }catch(e){} chatBadge(); }
-  function renderChat(){
-    var body=cid('hmaChatBody'), list=((student&&student.complaints)||[]).slice().sort(byAt);
-    if(!list.length){ body.innerHTML='<div class="hma-ch-empty">💬<br>Have a problem or a complaint?<br>Write it below. Your instructor reads it and replies right here.</div>'; return; }
-    body.innerHTML=list.map(function(c){
-      var r=replies[c.id], st=r&&r.status==='Resolved'?'✓ Resolved':(r&&r.reply?'✓ Replied':'Sent ✓ · waiting for a reply');
-      var h='<div class="hma-b me"><em>'+esc2(c.topic)+'</em>'+esc2(c.text)+'<small>'+fmtT(c.at)+' · '+st+'</small></div>';
-      if(r&&r.reply) h+='<div class="hma-b ins"><em>Instructor</em>'+esc2(r.reply)+'<small>'+fmtT(r.repliedAt)+'</small></div>';
-      return h;
-    }).join('');
-    body.scrollTop=body.scrollHeight;
-  }
-  function fetchReplies(){
-    var c=window.hmaCloud; if(!c||!c.session) return; var s=c.session(); if(!s) return;
-    c.api('replies',{email:s.email,token:s.token},12000).then(function(res){
-      if(res&&res.ok){ replies={}; (res.replies||[]).forEach(function(r){ replies[r.id]=r; }); renderChat(); if(!cid('hmaChatPanel').hidden) markSeen(); else chatBadge(); }
-    }).catch(function(){});
-  }
-  function openChat(){ cid('hmaChatPanel').hidden=false; cid('hmaChatBtn').setAttribute('aria-expanded','true'); renderChat(); fetchReplies(); markSeen(); }
-  function closeChat(){ cid('hmaChatPanel').hidden=true; cid('hmaChatBtn').setAttribute('aria-expanded','false'); }
-  function sendChat(){
-    var text=cid('hmaChatText').value.trim(), st=cid('hmaChatStatus');
-    if(!student) return;
-    if(text.length<5){ st.style.color='#b42318'; st.textContent='Please write a little more.'; return; }
-    student.complaints=student.complaints||[];
-    student.complaints.push({id:'c'+Date.now().toString(36)+Math.random().toString(36).slice(2,6),at:new Date().toISOString(),topic:cid('hmaChatTopic').value,text:text});
-    if(student.complaints.length>100) student.complaints.shift();
-    saveStudentRecord(student); cid('hmaChatText').value=''; st.style.color='#15803d'; st.textContent='Sending…'; cid('hmaChatSend').disabled=true; renderChat();
-    var done=function(ok){ st.textContent=ok===false?'Saved. It will reach your instructor when you are online.':'Sent ✓ Your instructor will reply here.'; cid('hmaChatSend').disabled=false; };
-    if(typeof window.hmaPushNow==='function') window.hmaPushNow().then(done,function(){ done(false); }); else done(false);
-  }
-  cid('hmaChatBtn').addEventListener('click',function(){ if(cid('hmaChatPanel').hidden) openChat(); else closeChat(); });
-  cid('hmaChatClose').addEventListener('click',closeChat);
-  cid('hmaChatSend').addEventListener('click',sendChat);
-  document.addEventListener('keydown',function(e){ if(e.key==='Escape'&&!cid('hmaChatPanel').hidden) closeChat(); });
-  var chatWasHidden=true;
-  function chatVisibility(){
-    var show=!!(student&&student.email&&student.email!==GUESTID&&window.hmaCloud&&!quizOpen());
-    chat.hidden=!show; if(!show){ cid('hmaChatPanel').hidden=true; chatWasHidden=true; } else if(chatWasHidden){ chatWasHidden=false; fetchReplies(); }
-  }
-  setInterval(chatVisibility,1500);
-  setInterval(function(){ if(!chat.hidden) fetchReplies(); },60000);
-  window.hmaChatRefresh=chatVisibility;
-
-  /* ====== 12) Father's and grandfather's name: asked once from EVERY student (including ones who were already signed in) ====== */
-  var pm=document.createElement('div'); pm.className='hma-prof'; pm.id='hmaProfile'; pm.setAttribute('role','dialog'); pm.setAttribute('aria-modal','true');
-  pm.innerHTML='<div class="hma-prof-box"><h3>Complete your profile</h3><p>Your instructor needs your full name. Please write your father\'s name and your grandfather\'s name exactly as they appear on your ID. This is saved to your student account.</p>'+
-    '<label for="hmaPfFirst">Your first name</label><input id="hmaPfFirst" readonly>'+
-    '<label for="hmaPfFather">Father\'s name</label><input id="hmaPfFather" autocomplete="off" maxlength="40" placeholder="e.g. Tadesse">'+
-    '<label for="hmaPfGrand">Grandfather\'s name</label><input id="hmaPfGrand" autocomplete="off" maxlength="40" placeholder="If you do not have one, write a dash (-)">'+
-    '<div class="hma-prof-err" id="hmaPfErr" role="alert"></div><button type="button" id="hmaPfSave">Save and continue</button>'+
-    '<div class="hma-prof-note">For security, each sign-in records the time, the type of device you use and a device ID, and screenshot attempts are logged.</div></div>';
-  document.body.appendChild(pm);
-  var NAME_RE; try{ NAME_RE=new RegExp("^[\\p{L}\\p{M}' .-]{1,40}$","u"); }catch(e){ NAME_RE=/^[^0-9<>@#$%^&*()_+=\[\]{};:"\\|,\/?]{1,40}$/; }
-  function needProfile(){ return !!(student&&student.email&&student.email!==GUESTID&&!(student.profile&&student.profile.fatherName&&student.profile.grandfatherName)); }
-  function checkProfile(){
-    if(needProfile()&&!quizOpen()){ var f=cid('hmaPfFirst'); if(f&&student) f.value=student.name||''; pm.classList.add('show'); }
-    else pm.classList.remove('show');
-  }
-  cid('hmaPfSave').addEventListener('click',function(){
-    var f=cid('hmaPfFather').value.trim(), g=cid('hmaPfGrand').value.trim(), er=cid('hmaPfErr');
-    if(f.length<2||!NAME_RE.test(f)){ er.textContent="Please write your father's name (letters only)."; return; }
-    if(g.length<1||!NAME_RE.test(g)){ er.textContent="Please write your grandfather's name, or a dash (-) if you do not have one."; return; }
-    er.textContent='';
-    student.profile={fatherName:f,grandfatherName:g,fullName:[student.name||'',f,g==='-'?'':g].filter(Boolean).join(' '),completedAt:new Date().toISOString()};
-    saveStudentRecord(student); pm.classList.remove('show');
-    if(typeof window.hmaPushNow==='function') window.hmaPushNow();
-    try{ showToast('Thank you — your profile is saved.'); }catch(e){}
-  });
-  setInterval(checkProfile,2500);
 
   /* Re-render the weekly card and fix the home text whenever the Home workflow redraws */
   var _rhl=window.renderHomeLearning;
@@ -6338,13 +6067,11 @@ html.hma-hide .app,html.hma-hide .wq-modal,html.hma-hide .phase-modal-backdrop,h
     var r=_rhl.apply(this,arguments);
     try{ document.querySelectorAll('#homeLearningPanel small').forEach(function(el){ if(/15 questions/.test(el.textContent)) el.textContent=el.textContent.replace('15 questions','20 questions'); }); }catch(e){}
     try{ renderWeeklyCard(); }catch(e){}
-    try{ checkProfile(); }catch(e){}
     return r;
   };
   try{ window.renderHomeLearning(); }catch(e){}
 })();
 </script>
-
 
 
 
@@ -6436,42 +6163,14 @@ html.hma-hide .app,html.hma-hide .wq-modal,html.hma-hide .phase-modal-backdrop,h
         body:JSON.stringify({action:'push',email:s.email,token:s.token,record:student})}); }catch(e){}
   }
   setInterval(function(){ if(dirty && !pushing) pushNow(); },30000);
-  setInterval(function(){ if(!document.hidden) maybePull(); },3000);
   window.addEventListener('online',function(){ if(dirty) pushNow(); maybePull(true); });
   window.addEventListener('pagehide',flushOnLeave);
   document.addEventListener('visibilitychange',function(){ if(document.visibilityState==='hidden') flushOnLeave(); else maybePull(); });
-
-  /* ---------- instructor grade notifications ---------- */
-  var lastTeacherGrade='';
-  var gradeNoticeReady=false;
-  function requestGradeNotifications(){
-    try{
-      if('Notification' in window && Notification.permission==='default') Notification.requestPermission().catch(function(){});
-    }catch(e){}
-  }
-  function showGradeUpdateNotice(newGrade){
-    var text='Your instructor updated your grade to '+newGrade+'.';
-    try{ if(typeof showToast==='function') showToast('Grade updated ✓ '+newGrade); }catch(e){}
-    try{
-      if('Notification' in window && Notification.permission==='granted'){
-        new Notification('HMA Grade Updated',{body:text,tag:'hma-grade-update'});
-      }
-    }catch(e){}
-  }
-  function handleTeacherGrade(rec){
-    var g=rec&&rec.teacherGrade!==undefined ? String(rec.teacherGrade).trim() : '';
-    if(!gradeNoticeReady){ lastTeacherGrade=g; gradeNoticeReady=true; return; }
-    if(g!==lastTeacherGrade){
-      lastTeacherGrade=g;
-      if(g!=='') showGradeUpdateNotice(g);
-    }
-  }
 
   /* ---------- picking up progress made on another device ---------- */
   function applyRemote(rec){
     var m=mergeStudentRecords(normalizeStudentRecord(rec,student.email),student);
     m.name=student.name; m.email=student.email; student=m;
-    handleTeacherGrade(student);
     completed=Array.from(new Set(student.completed||[])); student.completed=completed.slice();
     cards.forEach(function(c){ c.classList.toggle('done',completed.indexOf(c.dataset.day)>-1); });
     readingSeen.clear(); (student.readingSeen||[]).forEach(function(k){ readingSeen.add(k); });
@@ -6479,11 +6178,10 @@ html.hma-hide .app,html.hma-hide .wq-modal,html.hma-hide .phase-modal-backdrop,h
       if(readingSeen.has(btn.dataset.readingKey)){ var l=btn.querySelector('.nm-label'); if(l) l.textContent='Read'; btn.classList.add('done'); btn.disabled=true; }
     });
     try{ updateProgress(); updateGrade(); theaterRenderSide(); refreshCompletionGrayStates(); renderWeekFinishButtons(); renderHomeLearning(); }catch(e){ console.error(e); }
-    try{ if(window.hmaAfterRemote) window.hmaAfterRemote(); }catch(e){}
   }
   function maybePull(force){
     var s=readSession(); if(!s||!student||student.email!==s.email||student.email===GUEST) return;
-    if(!force && Date.now()-lastPull<3000) return; lastPull=Date.now();
+    if(!force && Date.now()-lastPull<20000) return; lastPull=Date.now();
     api('pull',{email:s.email,token:s.token},15000).then(function(res){
       if(res&&res.ok&&res.updatedAt&&res.updatedAt!==lastCloudAt){ lastCloudAt=res.updatedAt; if(res.record) applyRemote(res.record); }
       else if(res&&res.error==='AUTH') needRelogin();
@@ -6563,7 +6261,6 @@ html.hma-hide .app,html.hma-hide .wq-modal,html.hma-hide .phase-modal-backdrop,h
     setCurrentStudent({name:merged.name,email:email});
     ['siPass','siPass2'].forEach(function(id){ if($(id)) $(id).value=''; });
     info(''); enterApp();
-    try{ if(window.hmaAfterRemote) window.hmaAfterRemote(); }catch(e){}
   }
   function probe(){
     fetch(HMA_CLOUD_URL,{method:'GET'}).then(function(r){return r.text();}).then(function(t){
@@ -6587,7 +6284,6 @@ html.hma-hide .app,html.hma-hide .wq-modal,html.hma-hide .phase-modal-backdrop,h
     return id;
   }
   window.attemptSignIn=function(){
-    requestGradeNotifications();
     if(!HMA_CLOUD_URL){ return window.__hmOrigAttempt && window.__hmOrigAttempt(); }
     siClearError(); info('');
     var name=$('siName').value.trim(), email=$('siEmail').value.trim().toLowerCase();
@@ -6603,13 +6299,6 @@ html.hma-hide .app,html.hma-hide .wq-modal,html.hma-hide .phase-modal-backdrop,h
       finishSignIn(res,name,email);
     }).catch(function(){ busy(false); siShowError('Could not reach the server. Check your internet connection and try again.'); probe(); });
   };
-
-  /* ---------- Google Sheet account persistence ----------
-     The course already uses the deployed Google Apps Script Web App as the
-     cloud source of truth. Local storage remains only as a fast offline cache;
-     signed-in records are pushed to the Sheet-backed backend and pulled again
-     on sign-in from another device/browser. ---------- */
-  window.__hmStorageModel='google-sheet-cloud';
 
   /* ---------- keep the page safe on shared computers ---------- */
   var _save=window.saveStudentRecord;
@@ -6646,7 +6335,6 @@ html.hma-hide .app,html.hma-hide .wq-modal,html.hma-hide .phase-modal-backdrop,h
   };
 
   window.hmaPushNow=pushNow;
-  window.hmaCloud={api:api,session:readSession,pushNow:pushNow};
 
   /* ---------- start-up ---------- */
   async function boot(){
@@ -6664,11 +6352,7 @@ html.hma-hide .app,html.hma-hide .wq-modal,html.hma-hide .phase-modal-backdrop,h
             lastCloudAt=res.updatedAt||''; var rec=res.record?normalizeStudentRecord(res.record,s.email):null;
             student=rec?mergeStudentRecords(rec,local):local; student.name=res.name||s.name; student.email=s.email;
             window.__guestPreview=false; setCurrentStudent({name:student.name,email:s.email});
-            saveStudentRecord(student); enterApp();
-            try{ if(window.hmaAfterRemote) window.hmaAfterRemote(); }catch(e){}
-            /* students who stay signed in are recorded too (device type + ID), after the update */
-            api('device',{email:s.email,token:s.token,device:dev(),deviceId:devId()},15000).catch(function(){});
-            return;
+            saveStudentRecord(student); enterApp(); return;
           }
           if(res&&res.error==='AUTH'){ clearSession(); setMode('login'); showGate('Please sign in again.',s); return; }
         }catch(e){ /* offline: continue with the copy saved on this device */ }
@@ -6683,7 +6367,6 @@ html.hma-hide .app,html.hma-hide .wq-modal,html.hma-hide .phase-modal-backdrop,h
   boot();
 })();
 </script>
-
 
 
 
