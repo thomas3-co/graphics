@@ -970,6 +970,34 @@ try {
 }
 </script>
 
+
+<style id="hma-sheet-connection-polish">
+/* Week 5 cards: preserve the existing card design; make only the edge orange. */
+#week5 .week5-orange .flip-card-front,
+#week5 .week5-orange .flip-card-back{
+  background:#fff !important;
+  color:var(--ink) !important;
+  border:2px solid #ff8a00 !important;
+  border-left:5px solid #ff8a00 !important;
+}
+#week5 .week5-orange .flip-card-front p,
+#week5 .week5-orange .flip-card-back p,
+#week5 .week5-orange .flip-card-back li{color:var(--ink) !important;}
+#week5 .week5-orange .flip-hint{color:#9a5200 !important;}
+#week5 .week5-orange .project-label,
+#week5 .week5-orange .practice-label{
+  background:#fff4e8 !important;color:#a64b00 !important;
+  border:1px solid #ff8a00 !important;
+}
+.hn-attachment{
+  display:inline-flex;align-items:center;gap:6px;margin-top:7px;
+  padding:5px 9px;border-radius:8px;border:1px solid #ffb36b;
+  background:#fff7ed;color:#9a4d00;font-size:11px;font-weight:800;
+  cursor:pointer;max-width:100%;
+}
+.hn-attachment:hover{background:#ffedd5;}
+</style>
+
 </head>
 <body><div aria-live="polite" class="offline-banner" id="offlineBanner" role="status">You are offline. Your local progress can still be saved on this device.</div><button aria-label="Accessibility and learning preferences" class="a11y-float" id="a11yBtn" type="button">Aa</button>
 <a class="skip-link" href="#mainContent">Skip to content</a>
@@ -6812,7 +6840,7 @@ html.hma-hide .app,html.hma-hide .wq-modal,html.hma-hide .phase-modal-backdrop,h
     var items=list.filter(function(n){return filter==='all'||!n.read;}).sort(function(a,b){ return ((b.priority==='urgent'&&!b.read)?1:0)-((a.priority==='urgent'&&!a.read)?1:0); });
     $('hnList').innerHTML=items.length?items.map(function(n){
       return '<button class="hn-item'+(n.read?'':' unread')+(n.priority==='urgent'?' urgent':'')+'" data-id="'+esc(n.id)+'" type="button"><span class="hn-ico '+esc(n.kind)+'" aria-hidden="true">'+icon(n)+'</span>'+
-        '<span class="hn-body"><span class="hn-t">'+esc(n.title)+'</span><span class="hn-m">'+esc(n.message)+'</span><span class="hn-time">'+esc(ago(n.created))+(n.kind==='announcement'?' · Announcement':'')+(n.priority==='urgent'?' · Urgent':'')+'</span></span>'+(n.read?'':'<i class="hn-dot" aria-label="Unread"></i>')+'</button>';
+        '<span class="hn-body"><span class="hn-t">'+esc(n.title)+'</span><span class="hn-m">'+esc(String(n.message||'').replace(/\n\nAttachment:\s*https?:\/\/\S+/i,''))+'</span>'+(n.attachmentUrl&&/^https?:\/\//i.test(n.attachmentUrl)?'<span class="hn-attachment" role="link" tabindex="0" data-attachment="'+esc(n.attachmentUrl)+'">📎 Open announcement attachment</span>':'')+'<span class="hn-time">'+esc(ago(n.created))+(n.kind==='announcement'?' · Announcement':'')+(n.priority==='urgent'?' · Urgent':'')+'</span></span>'+(n.read?'':'<i class="hn-dot" aria-label="Unread"></i>')+'</button>';
     }).join(''):'<div class="hn-empty"><span>'+(filter==='all'?'🔔':'✅')+'</span>'+(filter==='all'?'No notifications yet. Announcements and updates from your instructor will appear here.':'No unread notifications.')+'</div>';
   }
   function place(){
@@ -6858,10 +6886,25 @@ html.hma-hide .app,html.hma-hide .wq-modal,html.hma-hide .phase-modal-backdrop,h
     panel.querySelectorAll('.hn-tabs button').forEach(function(x){ x.classList.toggle('on',x===b); }); render();
   });
   $('hnList').addEventListener('click',function(e){
+    var attachment=e.target.closest('.hn-attachment');
+    if(attachment){
+      e.preventDefault(); e.stopPropagation();
+      var url=attachment.getAttribute('data-attachment')||'';
+      if(/^https?:\/\//i.test(url)) window.open(url,'_blank','noopener,noreferrer');
+      return;
+    }
     var it=e.target.closest('.hn-item'); if(!it) return;
     it.classList.toggle('open');
     var id=it.dataset.id, n=list.filter(function(x){return x.id===id;})[0];
     if(n&&!n.read){ markRead([id],false); }
+  });
+  $('hnList').addEventListener('keydown',function(e){
+    var attachment=e.target.closest('.hn-attachment');
+    if(attachment&&(e.key==='Enter'||e.key===' ')){
+      e.preventDefault();
+      var url=attachment.getAttribute('data-attachment')||'';
+      if(/^https?:\/\//i.test(url)) window.open(url,'_blank','noopener,noreferrer');
+    }
   });
   document.addEventListener('click',function(e){ if(openNow&&!panel.contains(e.target)&&!wrap.contains(e.target)) setOpen(false); });
   document.addEventListener('keydown',function(e){ if(e.key==='Escape'&&openNow){ setOpen(false); bell.focus(); } });
