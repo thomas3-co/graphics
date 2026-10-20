@@ -1096,7 +1096,7 @@ try {
     <div class="workflow-node"><button type="button" class="workflow-click" onclick="goTab('screencasts')"><span class="workflow-node-top"><span class="workflow-number">02</span><span class="workflow-node-status">Continue</span></span><h4>Screencast</h4><small>Released recordings</small><span class="workflow-grade"><span>Watch &amp; check</span><b>—</b></span></button></div>
     <div class="workflow-node"><button type="button" class="workflow-click" onclick="goTab('practice')"><span class="workflow-node-top"><span class="workflow-number">03</span><span class="workflow-node-status">Continue</span></span><h4>Practice</h4><small>0.7 × 4 days · 2.8 marks</small><span class="workflow-grade"><span>Practice files</span><b>—</b></span></button></div>
     <div class="workflow-node"><button type="button" class="workflow-click" onclick="goTab('assessment')"><span class="workflow-node-top"><span class="workflow-number">04</span><span class="workflow-node-status">Continue</span></span><h4>Assessment</h4><small>Read Me + Screencast checks</small><span class="workflow-grade"><span>Checks</span><b>—</b></span></button></div>
-    <div class="workflow-node"><button type="button" class="workflow-click" onclick="goTab('phase-assessment')"><span class="workflow-node-top"><span class="workflow-number">05</span><span class="workflow-node-status">Week 6</span></span><h4>Phase 1 Assessment</h4><small>15 questions · 20 marks</small><span class="workflow-grade"><span>Locked until Week 6</span><b>—</b></span></button></div>
+    <div class="workflow-node"><button type="button" class="workflow-click" onclick="goTab('phase-assessment')"><span class="workflow-node-top"><span class="workflow-number">05</span><span class="workflow-node-status">Week 6</span></span><h4>Phase 1 Assessment</h4><small>15 questions · 20 marks</small><span class="workflow-grade"><span>Locked until Week 5</span><b>—</b></span></button></div>
     <div class="workflow-node"><button type="button" class="workflow-click" onclick="goTab('projects')"><span class="workflow-node-top"><span class="workflow-number">06</span><span class="workflow-node-status">Continue</span></span><h4>Phase 1 Project</h4><small>Individual submission</small><span class="workflow-grade"><span>Project</span><b>0/15</b></span></button></div>
   </div></div>
   <div class="workflow-footer"><span class="workflow-next"><b>Start with Read Me</b> and work through the workflow in order.</span><button type="button" class="hbtn ghost" onclick="goTab('notes')">Start →</button></div>
@@ -5328,7 +5328,7 @@ const PHASE1_QUESTIONS = [
 ];
 function phaseAssessmentTotal(){return PHASE1_QUESTIONS.reduce((sum,q)=>sum+q.marks,0)}
 function shuffleArray(arr){ const a=[...arr]; for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; }
-function phaseAssessmentAvailable(){ return courseWeekNumber(new Date())>=6; }
+function phaseAssessmentAvailable(){ return courseWeekNumber(new Date())>=5; }
 function ensurePhaseModal(){
  if(document.getElementById('phaseAssessmentModal')) return;
  const wrap=document.createElement('div'); wrap.id='phaseAssessmentModal'; wrap.className='phase-modal-backdrop'; wrap.innerHTML=`<div class="phase-modal" role="dialog" aria-modal="true" aria-labelledby="phaseModalTitle"><div class="phase-modal-head"><div><div class="hero-eyebrow">PHASE 1 · WEEK 6</div><h3 id="phaseModalTitle">Phase Assessment</h3><p id="phaseModalIntro">15 shuffled questions · 20 marks</p></div><button class="phase-modal-close" type="button" aria-label="Close assessment">×</button></div><div class="phase-modal-body" id="phaseModalBody"></div><div class="phase-modal-foot"><span class="phase-modal-score" id="phaseModalProgress">0/15 answered</span><button class="hbtn primary" id="phaseModalSubmit" type="button">Submit Assessment</button></div></div>`;
@@ -5340,7 +5340,7 @@ function ensurePhaseModal(){
 function openPhaseAssessmentModal(){
  ensurePhaseModal();
  const modal=document.getElementById('phaseAssessmentModal'); const body=document.getElementById('phaseModalBody'); const submit=document.getElementById('phaseModalSubmit');
- if(!phaseAssessmentAvailable()){ body.innerHTML=`<div class="phase-lock-card"><div class="phase-lock-icon">🔒</div><h3>Available in Week 6</h3><p>The Phase 1 Assessment opens when Week 6 begins. Your workflow will unlock the clickable assessment automatically then.</p><div class="phase-launch-meta" style="justify-content:center;margin-top:16px"><span>15 questions</span><span>20 marks</span><span>Shuffled order</span></div></div>`; document.getElementById('phaseModalProgress').textContent='Locked until Week 6'; submit.style.display='none'; modal.classList.add('open'); return; }
+ if(!phaseAssessmentAvailable()){ body.innerHTML=`<div class="phase-lock-card"><div class="phase-lock-icon">🔒</div><h3>Available in Week 5</h3><p>The Phase 1 Assessment opens when Week 5 begins. Your workflow will unlock the clickable assessment automatically then.</p><div class="phase-launch-meta" style="justify-content:center;margin-top:16px"><span>15 questions</span><span>20 marks</span><span>Shuffled order</span></div></div>`; document.getElementById('phaseModalProgress').textContent='Locked until Week 5'; submit.style.display='none'; modal.classList.add('open'); return; }
  const saved=student?.phaseAssessments?.phase1;
  if(saved?.completedAt){ const pct=Math.round(saved.score/saved.total*100); body.innerHTML=`<div class="phase-complete-card"><div class="hero-eyebrow">PHASE 1 COMPLETE</div><div class="phase-score">${saved.score}/${saved.total}</div><p style="margin:7px 0;color:#667085">Submitted ${new Date(saved.completedAt).toLocaleString()}. This official phase result is locked.</p><div class="phase-progress"><i style="width:${pct}%"></i></div></div>`; document.getElementById('phaseModalProgress').textContent=`Saved score · ${saved.score}/${saved.total}`; submit.style.display='none'; modal.classList.add('open'); return; }
  submit.style.display='inline-flex';
@@ -5363,7 +5363,7 @@ function renderPhaseAssessment(){
  const body=document.getElementById('phaseAssessmentBody'); if(!body)return;
  if(!student){body.innerHTML='<div class="progress-signedout"><h3>Sign in to access the Phase 1 Assessment</h3><p>The assessment becomes available in Week 6 and opens as a focused pop-out quiz.</p></div>';return;}
  const saved=student.phaseAssessments?.phase1; const open=phaseAssessmentAvailable(); const pct=saved?.completedAt?Math.round(saved.score/saved.total*100):0;
- body.innerHTML=`<div class="phase-launch-card ${saved?.completedAt?'phase-completed':''}"><div><div class="hero-eyebrow">${open?'WEEK 6 · NOW AVAILABLE':'WEEK 6 · LOCKED'}</div><h3>Phase 1 Assessment</h3><p>15 shuffled questions covering Weeks 1–4. Complete it in the pop-out assessment window for one official 20-mark phase score.</p><div class="phase-launch-meta"><span>15 questions</span><span>20 marks</span><span>${saved?.completedAt?`Completed · ${saved.score}/${saved.total}`:'Single final attempt'}</span></div></div><button class="hbtn primary phase-launch-btn" type="button" onclick="openPhaseAssessmentModal()">${saved?.completedAt?'View Result':(open?'Start Assessment':'Locked · Week 6')}</button></div>`;
+ body.innerHTML=`<div class="phase-launch-card ${saved?.completedAt?'phase-completed':''}"><div><div class="hero-eyebrow">${open?'WEEK 5 · NOW AVAILABLE':'WEEK 5 · LOCKED'}</div><h3>Phase 1 Assessment</h3><p>15 shuffled questions covering Weeks 1–4. Complete it in the pop-out assessment window for one official 20-mark phase score.</p><div class="phase-launch-meta"><span>15 questions</span><span>20 marks</span><span>${saved?.completedAt?`Completed · ${saved.score}/${saved.total}`:'Single final attempt'}</span></div></div><button class="hbtn primary phase-launch-btn" type="button" onclick="openPhaseAssessmentModal()">${saved?.completedAt?'View Result':(open?'Start Assessment':'Locked · Week 5')}</button></div>`;
 }
 
 function showToast(msg){const e=document.getElementById('completionToast');if(!e)return;e.textContent=msg;e.classList.add('show');clearTimeout(window.__toastTimer);window.__toastTimer=setTimeout(()=>e.classList.remove('show'),2400);}
@@ -5893,19 +5893,40 @@ html.hma-hide .app,html.hma-hide .wq-modal,html.hma-hide .phase-modal-backdrop,h
   /* ====== 2) Practice marks: everyone has 2.8 / 2.8 by default ====== */
   window.practiceCreditSummary=function(){ return {earned:2.8,total:2.8}; };
 
-  /* ====== 3) Week 6 = Project Week + Phase 1 Assessment ====== */
+  /* ====== 3) Week 5 = Phase 1 Assessment + Practice; Week 6 = Project Week ====== */
   try{
-    if(typeof weekMeta!=='undefined') weekMeta[6]='Project Week & Phase 1 Assessment';
-    var h=document.querySelector('#week6 h2.wk');
-    if(h&&h.firstChild&&h.firstChild.nodeType===3) h.firstChild.nodeValue='Week 6 — Project Week & Phase 1 Assessment';
-    var c1=document.querySelector('#week6 .flip-card[data-day="6-1"]'), c2=document.querySelector('#week6 .flip-card[data-day="6-2"]');
-    if(c1){
-      c1.querySelector('.flip-card-front').innerHTML='<div class="project-label">PHASE 1 ASSESSMENT</div><h4>Day 1: Phase 1 Assessment</h4><p>Show what you learned in Weeks 1–4 with your personal 20-question assessment.</p><span class="flip-hint">Tap to flip</span>';
-      c1.querySelector('.flip-card-back').innerHTML='<p><strong>Objective:</strong> Prove your Month 1 skills in one focused sitting.</p><ul><li>20 questions, 20 marks, one attempt.</li><li>Your questions are picked from a bank of 100 and shuffled differently for every student.</li><li>Covers Weeks 1–4: software, layers, background removal and portrait editing.</li><li>Stay on the page until you submit.</li></ul><div class="w6-actions"><button type="button" class="hbtn primary" onclick="event.stopPropagation();goTab(\'phase-assessment\')">Start Phase 1 Assessment</button></div>';
+    /* Week 5 Day 1: official Phase 1 Assessment */
+    var w5c1=document.querySelector('#week5 .flip-card[data-day="5-1"]'), w5c2=document.querySelector('#week5 .flip-card[data-day="5-2"]');
+    if(w5c1){
+      w5c1.classList.remove('practice-day','project-day');
+      w5c1.querySelector('.flip-card-front').innerHTML='<div class="project-label">PHASE 1 ASSESSMENT</div><h4>Day 1: Phase 1 Assessment</h4><p>Show what you learned in Weeks 1–4 with your personal 20-question assessment.</p><span class="flip-hint">Tap to flip</span>';
+      w5c1.querySelector('.flip-card-back').innerHTML='<p><strong>Objective:</strong> Prove your Phase One skills in one focused sitting.</p><ul><li>20 questions, 20 marks, one attempt.</li><li>Your questions are picked from a bank of 100 and shuffled differently for every student.</li><li>Covers Weeks 1–4: software, layers, background removal and portrait editing.</li><li>Stay on the page until you submit.</li></ul><div class="w6-actions"><button type="button" class="hbtn primary" onclick="event.stopPropagation();goTab(\'phase-assessment\')">Start Phase 1 Assessment</button></div>';
     }
-    if(c2){
-      c2.querySelector('.flip-card-front').innerHTML='<div class="project-label">PROJECT WEEK</div><h4>Day 2: Project Week — Phase 1 Project</h4><p>Build your individual city composition and submit it.</p><span class="flip-hint">Tap to flip</span>';
-      c2.querySelector('.flip-card-back').innerHTML='<p><strong>Objective:</strong> Apply everything from Weeks 1–4 in one finished project.</p><ul><li>Choose one of the 50 cities and replace your portrait background.</li><li>Refine the edges, retouch the face naturally and redesign the clothing pattern.</li><li>Save your PSD and export a high-resolution JPG or PNG.</li><li>Submit it from the Projects tab.</li></ul><div class="w6-actions"><button type="button" class="hbtn primary" onclick="event.stopPropagation();goTab(\'projects\')">Open Phase 1 Project</button></div>';
+    /* Week 5 Day 2: practice day */
+    if(w5c2){
+      w5c2.classList.remove('project-day');
+      w5c2.classList.add('practice-day');
+      var p5front=w5c2.querySelector('.flip-card-front'), p5back=w5c2.querySelector('.flip-card-back');
+      if(p5front){
+        var lab=p5front.querySelector('.project-label'); if(lab) lab.textContent='PRACTICE DAY';
+      }
+      if(p5back){
+        var oldLabel=p5back.querySelector('.project-label'); if(oldLabel) oldLabel.textContent='PRACTICE DAY';
+      }
+    }
+    /* Week 6: both days are project days. */
+    if(typeof weekMeta!=='undefined') weekMeta[6]='Project Week';
+    var h6=document.querySelector('#week6 h2.wk');
+    if(h6&&h6.firstChild&&h6.firstChild.nodeType===3) h6.firstChild.nodeValue='Week 6 — Project Week';
+    var c6a=document.querySelector('#week6 .flip-card[data-day="6-1"]'), c6b=document.querySelector('#week6 .flip-card[data-day="6-2"]');
+    [c6a,c6b].forEach(function(card){ if(card){ card.classList.remove('practice-day'); card.classList.add('project-day'); } });
+    if(c6a){
+      c6a.querySelector('.flip-card-front').innerHTML='<div class="project-label">PROJECT DAY</div><h4>Day 1: Phase One Project</h4><p>Begin your individual Phase One project and apply the skills from Weeks 1–4.</p><span class="flip-hint">Tap to flip</span>';
+      c6a.querySelector('.flip-card-back').innerHTML='<p><strong>Objective:</strong> Apply everything from Weeks 1–4 in one finished project.</p><ul><li>Choose one of the 50 cities and replace your portrait background.</li><li>Refine the edges, retouch the face naturally and redesign the clothing pattern.</li><li>Work non-destructively and keep your editable PSD.</li><li>Continue your project work from the Projects tab.</li></ul><div class="w6-actions"><button type="button" class="hbtn primary" onclick="event.stopPropagation();goTab(\'projects\')">Open Phase One Project</button></div>';
+    }
+    if(c6b){
+      c6b.querySelector('.flip-card-front').innerHTML='<div class="project-label">PROJECT DAY</div><h4>Day 2: Phase One Project</h4><p>Continue, refine and prepare your Phase One project for submission.</p><span class="flip-hint">Tap to flip</span>';
+      c6b.querySelector('.flip-card-back').innerHTML='<p><strong>Objective:</strong> Finish and polish your individual Phase One project.</p><ul><li>Complete the city composition and clean all cutout edges.</li><li>Check scale, lighting, colour, perspective and depth.</li><li>Save your final editable PSD and export a high-resolution JPG or PNG.</li><li>Submit the finished project from the Projects tab.</li></ul><div class="w6-actions"><button type="button" class="hbtn primary" onclick="event.stopPropagation();goTab(\'projects\')">Open Phase One Project</button></div>';
     }
   }catch(e){ console.error(e); }
 
@@ -5934,8 +5955,8 @@ html.hma-hide .app,html.hma-hide .wq-modal,html.hma-hide .phase-modal-backdrop,h
     var modal=document.getElementById('phaseAssessmentModal'), body=document.getElementById('phaseModalBody'), submit=document.getElementById('phaseModalSubmit');
     var intro=document.getElementById('phaseModalIntro'); if(intro) intro.textContent='20 questions · 20 marks · different for every student';
     if(!phaseAssessmentAvailable()){
-      body.innerHTML='<div class="phase-lock-card"><div class="phase-lock-icon">🔒</div><h3>Available in Week 6</h3><p>The Phase 1 Assessment opens when Week 6 begins.</p><div class="phase-launch-meta" style="justify-content:center;margin-top:16px"><span>20 questions</span><span>20 marks</span><span>Your own shuffled paper</span></div></div>';
-      document.getElementById('phaseModalProgress').textContent='Locked until Week 6'; submit.style.display='none'; modal.classList.add('open'); return;
+      body.innerHTML='<div class="phase-lock-card"><div class="phase-lock-icon">🔒</div><h3>Available in Week 5</h3><p>The Phase 1 Assessment opens when Week 5 begins.</p><div class="phase-launch-meta" style="justify-content:center;margin-top:16px"><span>20 questions</span><span>20 marks</span><span>Your own shuffled paper</span></div></div>';
+      document.getElementById('phaseModalProgress').textContent='Locked until Week 5'; submit.style.display='none'; modal.classList.add('open'); return;
     }
     var saved=student&&student.phaseAssessments&&student.phaseAssessments.phase1;
     if(saved&&saved.completedAt){
@@ -5963,13 +5984,13 @@ html.hma-hide .app,html.hma-hide .wq-modal,html.hma-hide .phase-modal-backdrop,h
   };
   window.renderPhaseAssessment=function(){
     var body=document.getElementById('phaseAssessmentBody'); if(!body) return;
-    if(!student){ body.innerHTML='<div class="progress-signedout"><h3>Sign in to access the Phase 1 Assessment</h3><p>The assessment becomes available in Week 6.</p></div>'; return; }
+    if(!student){ body.innerHTML='<div class="progress-signedout"><h3>Sign in to access the Phase 1 Assessment</h3><p>The assessment becomes available in Week 5.</p></div>'; return; }
     var saved=student.phaseAssessments&&student.phaseAssessments.phase1, open=phaseAssessmentAvailable();
-    body.innerHTML='<div class="phase-launch-card"><div><div class="hero-eyebrow">'+(open?'WEEK 6 · NOW AVAILABLE':'WEEK 6 · LOCKED')+'</div><h3>Phase 1 Assessment</h3><p>20 questions picked from a bank of 100 and shuffled just for you — every student gets a different paper covering Weeks 1–4.</p><div class="phase-launch-meta"><span>20 questions</span><span>20 marks</span><span>'+(saved&&saved.completedAt?'Completed · '+saved.score+'/'+saved.total:'Single attempt')+'</span></div></div><button class="hbtn primary phase-launch-btn" type="button" onclick="openPhaseAssessmentModal()">'+(saved&&saved.completedAt?'View Result':(open?'Start Assessment':'Locked · Week 6'))+'</button></div>';
+    body.innerHTML='<div class="phase-launch-card"><div><div class="hero-eyebrow">'+(open?'WEEK 5 · NOW AVAILABLE':'WEEK 5 · LOCKED')+'</div><h3>Phase 1 Assessment</h3><p>20 questions picked from a bank of 100 and shuffled just for you — every student gets a different paper covering Weeks 1–4.</p><div class="phase-launch-meta"><span>20 questions</span><span>20 marks</span><span>'+(saved&&saved.completedAt?'Completed · '+saved.score+'/'+saved.total:'Single attempt')+'</span></div></div><button class="hbtn primary phase-launch-btn" type="button" onclick="openPhaseAssessmentModal()">'+(saved&&saved.completedAt?'View Result':(open?'Start Assessment':'Locked · Week 5'))+'</button></div>';
   };
   try{
     var hc=document.querySelector('.home-card[onclick*="phase-assessment"] p'); if(hc) hc.textContent='20 questions picked from a 100-question bank, shuffled differently for every student. Opens in Week 6.';
-    var vp=document.querySelector('#phase-assessment .view-head p'); if(vp) vp.textContent='Opens in Week 6. Your personal 20-question paper is drawn from a bank of 100 and shuffled just for you. Complete it in one sitting.';
+    var vp=document.querySelector('#phase-assessment .view-head p'); if(vp) vp.textContent='Opens in Week 5. Your personal 20-question paper is drawn from a bank of 100 and shuffled just for you. Complete it in one sitting.';
   }catch(e){}
 
   /* ====== 5) Weekly progress submission ====== */
@@ -6533,6 +6554,13 @@ html.hma-hide .app,html.hma-hide .wq-modal,html.hma-hide .phase-modal-backdrop,h
       finishSignIn(res,name,email);
     }).catch(function(){ busy(false); siShowError('Could not reach the server. Check your internet connection and try again.'); probe(); });
   };
+
+  /* ---------- Google Sheet account persistence ----------
+     The course already uses the deployed Google Apps Script Web App as the
+     cloud source of truth. Local storage remains only as a fast offline cache;
+     signed-in records are pushed to the Sheet-backed backend and pulled again
+     on sign-in from another device/browser. ---------- */
+  window.__hmStorageModel='google-sheet-cloud';
 
   /* ---------- keep the page safe on shared computers ---------- */
   var _save=window.saveStudentRecord;
