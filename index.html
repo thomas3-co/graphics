@@ -541,6 +541,11 @@ footer.appfoot .foot-classroom a:hover{text-decoration:underline;}
 }
 .practice-day .project-label{background:linear-gradient(135deg,#7c3aed,#4f46e5);}
 .practice-day .flip-card-front{background:linear-gradient(145deg,#4f46e5,#7c3aed);}
+/* Week 5 cards: orange assessment/practice treatment */
+#week5 .week5-orange .flip-card-front{background:linear-gradient(145deg,#ff9800,#ff6a2c);border-left:5px solid #ff9800;color:#fff;}
+#week5 .week5-orange .flip-card-back{border:3px solid #ff9800;background:#fffaf3;}
+#week5 .week5-orange .project-label,#week5 .week5-orange .practice-label{background:linear-gradient(135deg,#ff9800,#ff6a2c);color:#fff;}
+#week5 .week5-orange .flip-hint{color:rgba(255,255,255,.88);}
 .theater-stage{background:radial-gradient(circle at 50% 42%,rgba(70,78,105,.32),rgba(8,10,18,.96) 72%);padding:10px;box-sizing:border-box;border-radius:16px;box-shadow:0 18px 50px rgba(13,18,35,.18);}
 .theater-stage.is-playing{box-shadow:0 22px 65px rgba(13,18,35,.24);}
 .theater-player{border-radius:10px;box-shadow:0 12px 34px rgba(0,0,0,.28);}
@@ -1265,7 +1270,7 @@ try {
 <div class="week-card" id="week5">
 <h2 class="wk">Week 5 — Revision &amp; Skills Check</h2>
 <div class="day-grid">
-<div class="flip-card" data-day="5-1"><div class="flip-card-inner">
+<div class="flip-card week5-orange" data-day="5-1"><div class="flip-card-inner">
 <div class="flip-card-front"><h4>Day 1: Revision — Foundations &amp; Photo Editing</h4><p>Review Weeks 1–3: file handling, raster images, non-destructive editing, background removal, smudge cleanup, and depth with Gaussian Blur.</p><span class="flip-hint">Tap to flip</span></div>
 <div class="flip-card-back"><div class="vocab-title">Day 1 Revision Tasks</div>
 <p><strong>Goal:</strong> Revisit the core techniques and identify any skill that needs more practice.</p>
@@ -1278,10 +1283,10 @@ try {
 </ul>
 <div class="big-ideas"><strong>Self-check:</strong> Can you explain each step, undo safely, and keep the original image available? Revisit the Read Me or screencast for any step that feels uncertain.</div></div>
 </div></div>
-<div class="flip-card" data-day="5-2"><div class="flip-card-inner">
-<div class="flip-card-front"><h4>Day 2: Revision — Transform, Puppet Warp &amp; Export</h4><p>Review Week 4 skills, then complete a short independent practice task and check your file before submitting.</p><span class="flip-hint">Tap to flip</span></div>
-<div class="flip-card-back"><div class="vocab-title">Day 2 Revision Tasks</div>
-<p><strong>Goal:</strong> Apply the editing tools independently and produce a tidy, editable result.</p>
+<div class="flip-card week5-orange practice-day" data-day="5-2"><div class="flip-card-inner">
+<div class="flip-card-front"><div class="practice-label">PRACTICE DAY</div><h4>Day 2: Practice — Transform, Puppet Warp &amp; Export</h4><p>Use the Week 4 skills in an independent practice task and check your file before submitting.</p><span class="flip-hint">Tap to flip</span></div>
+<div class="flip-card-back"><div class="vocab-title">Day 2 Practice Tasks</div>
+<p><strong>Goal:</strong> Practise the editing tools independently and produce a tidy, editable result.</p>
 <ul>
 <li>Use Transform to resize, rotate, position, and proportionally scale a subject.</li>
 <li>Use Puppet Warp pins and control points to make a small, deliberate adjustment; avoid unnatural distortion.</li>
@@ -5899,13 +5904,14 @@ html.hma-hide .app,html.hma-hide .wq-modal,html.hma-hide .phase-modal-backdrop,h
     var w5c1=document.querySelector('#week5 .flip-card[data-day="5-1"]'), w5c2=document.querySelector('#week5 .flip-card[data-day="5-2"]');
     if(w5c1){
       w5c1.classList.remove('practice-day','project-day');
+      w5c1.classList.add('week5-orange');
       w5c1.querySelector('.flip-card-front').innerHTML='<div class="project-label">PHASE 1 ASSESSMENT</div><h4>Day 1: Phase 1 Assessment</h4><p>Show what you learned in Weeks 1–4 with your personal 20-question assessment.</p><span class="flip-hint">Tap to flip</span>';
       w5c1.querySelector('.flip-card-back').innerHTML='<p><strong>Objective:</strong> Prove your Phase One skills in one focused sitting.</p><ul><li>20 questions, 20 marks, one attempt.</li><li>Your questions are picked from a bank of 100 and shuffled differently for every student.</li><li>Covers Weeks 1–4: software, layers, background removal and portrait editing.</li><li>Stay on the page until you submit.</li></ul><div class="w6-actions"><button type="button" class="hbtn primary" onclick="event.stopPropagation();goTab(\'phase-assessment\')">Start Phase 1 Assessment</button></div>';
     }
     /* Week 5 Day 2: practice day */
     if(w5c2){
       w5c2.classList.remove('project-day');
-      w5c2.classList.add('practice-day');
+      w5c2.classList.add('practice-day','week5-orange');
       var p5front=w5c2.querySelector('.flip-card-front'), p5back=w5c2.querySelector('.flip-card-back');
       if(p5front){
         var lab=p5front.querySelector('.project-label'); if(lab) lab.textContent='PRACTICE DAY';
@@ -5917,16 +5923,16 @@ html.hma-hide .app,html.hma-hide .wq-modal,html.hma-hide .phase-modal-backdrop,h
     /* Week 6: both days are project days. */
     if(typeof weekMeta!=='undefined') weekMeta[6]='Project Week';
     var h6=document.querySelector('#week6 h2.wk');
-    if(h6&&h6.firstChild&&h6.firstChild.nodeType===3) h6.firstChild.nodeValue='Week 6 — Project Week';
+    if(h6&&h6.firstChild&&h6.firstChild.nodeType===3) h6.firstChild.nodeValue='Week 6 — Individual Project';
     var c6a=document.querySelector('#week6 .flip-card[data-day="6-1"]'), c6b=document.querySelector('#week6 .flip-card[data-day="6-2"]');
     [c6a,c6b].forEach(function(card){ if(card){ card.classList.remove('practice-day'); card.classList.add('project-day'); } });
     if(c6a){
-      c6a.querySelector('.flip-card-front').innerHTML='<div class="project-label">PROJECT DAY</div><h4>Day 1: Phase One Project</h4><p>Begin your individual Phase One project and apply the skills from Weeks 1–4.</p><span class="flip-hint">Tap to flip</span>';
-      c6a.querySelector('.flip-card-back').innerHTML='<p><strong>Objective:</strong> Apply everything from Weeks 1–4 in one finished project.</p><ul><li>Choose one of the 50 cities and replace your portrait background.</li><li>Refine the edges, retouch the face naturally and redesign the clothing pattern.</li><li>Work non-destructively and keep your editable PSD.</li><li>Continue your project work from the Projects tab.</li></ul><div class="w6-actions"><button type="button" class="hbtn primary" onclick="event.stopPropagation();goTab(\'projects\')">Open Phase One Project</button></div>';
+      c6a.querySelector('.flip-card-front').innerHTML='<div class="project-label">PROJECT DAY</div><h4>Day 1: Individual Phase One Project</h4><p>Begin your individual Phase One project and apply the skills from Weeks 1–4.</p><span class="flip-hint">Tap to flip</span>';
+      c6a.querySelector('.flip-card-back').innerHTML='<p><strong>Objective:</strong> Apply everything from Weeks 1–4 in one finished project.</p><ul><li>Choose one of the 50 cities and replace your portrait background.</li><li>Refine the edges, retouch the face naturally and redesign the clothing pattern.</li><li>Work non-destructively and keep your editable PSD.</li><li>Continue your individual project work from the Projects tab.</li></ul><div class="w6-actions"><button type="button" class="hbtn primary" onclick="event.stopPropagation();goTab(\'projects\')">Open Phase One Project</button></div>';
     }
     if(c6b){
-      c6b.querySelector('.flip-card-front').innerHTML='<div class="project-label">PROJECT DAY</div><h4>Day 2: Phase One Project</h4><p>Continue, refine and prepare your Phase One project for submission.</p><span class="flip-hint">Tap to flip</span>';
-      c6b.querySelector('.flip-card-back').innerHTML='<p><strong>Objective:</strong> Finish and polish your individual Phase One project.</p><ul><li>Complete the city composition and clean all cutout edges.</li><li>Check scale, lighting, colour, perspective and depth.</li><li>Save your final editable PSD and export a high-resolution JPG or PNG.</li><li>Submit the finished project from the Projects tab.</li></ul><div class="w6-actions"><button type="button" class="hbtn primary" onclick="event.stopPropagation();goTab(\'projects\')">Open Phase One Project</button></div>';
+      c6b.querySelector('.flip-card-front').innerHTML='<div class="project-label">PROJECT DAY</div><h4>Day 2: Individual Phase One Project</h4><p>Continue, refine and prepare your Phase One project for submission.</p><span class="flip-hint">Tap to flip</span>';
+      c6b.querySelector('.flip-card-back').innerHTML='<p><strong>Objective:</strong> Finish and polish your individual Phase One project.</p><ul><li>Complete the city composition and clean all cutout edges.</li><li>Check scale, lighting, colour, perspective and depth.</li><li>Save your final editable PSD and export a high-resolution JPG or PNG.</li><li>Submit your finished individual project from the Projects tab.</li></ul><div class="w6-actions"><button type="button" class="hbtn primary" onclick="event.stopPropagation();goTab(\'projects\')">Open Phase One Project</button></div>';
     }
   }catch(e){ console.error(e); }
 
