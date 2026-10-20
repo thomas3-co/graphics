@@ -6822,6 +6822,39 @@ html.hma-hide .app,html.hma-hide .wq-modal,html.hma-hide .phase-modal-backdrop,h
   var list=[], known=null, knownFor='', filter='all', busy=false, openNow=false, apiError='';
   function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
   function sess(){ try{ return window.hmaCloud&&window.hmaCloud.session&&window.hmaCloud.session(); }catch(e){ return null; } }
+  /*
+   * Google Apps Script ContentService can return a cross-origin response that
+   * fetch() cannot read on some hosting/browser combinations. Fall back to JSONP
+   * for these two read/receipt actions only; all existing site APIs remain unchanged.
+   */
+  function notificationJsonp(action,payload,timeoutMs){
+    return new Promise(function(resolve,reject){
+      var cloudScript=document.querySelector('script#hma-cloud-js');
+      var match=cloudScript&&cloudScript.textContent.match(/var HMA_CLOUD_URL\s*=\s*['\"]([^'\"]+)['\"]/);
+      var base=match&&match[1];
+      if(!base){reject(new Error('Apps Script URL is missing from the website.'));return;}
+      var cb='__hmaNoticeCb'+Date.now()+Math.floor(Math.random()*1000000);
+      var script=document.createElement('script'), timer;
+      var params=Object.assign({action:action,callback:cb},payload||{});
+      var qs=Object.keys(params).map(function(k){
+        var v=params[k];
+        if(v===undefined||v===null)return '';
+        if(typeof v==='object')v=JSON.stringify(v);
+        return encodeURIComponent(k)+'='+encodeURIComponent(String(v));
+      }).filter(Boolean).join('&');
+      function cleanup(){if(timer)clearTimeout(timer);try{delete window[cb];}catch(e){window[cb]=undefined;}if(script.parentNode)script.parentNode.removeChild(script);}
+      window[cb]=function(data){cleanup();resolve(data);};
+      script.onerror=function(){cleanup();reject(new Error('Apps Script JSONP request failed. Verify the deployed /exec URL and Web App access.'));};
+      timer=setTimeout(function(){cleanup();reject(new Error('Apps Script JSONP request timed out.'));},timeoutMs||15000);
+      script.src=base+(base.indexOf('?')>=0?'&':'?')+qs;
+      document.head.appendChild(script);
+    });
+  }
+  function notificationApi(action,payload,timeoutMs){
+    return window.hmaCloud.api(action,payload,timeoutMs).catch(function(){
+      return notificationJsonp(action,payload,timeoutMs);
+    });
+  }
   function ago(iso){
     var t=new Date(iso).getTime(); if(isNaN(t)) return '';
     var s=Math.max(0,(Date.now()-t)/1000);
@@ -6860,12 +6893,12 @@ html.hma-hide .app,html.hma-hide .wq-modal,html.hma-hide .phase-modal-backdrop,h
     var s=sess(); if(!s) return;
     list.forEach(function(n){ if(all||ids.indexOf(n.id)>-1) n.read=true; });
     render();
-    window.hmaCloud.api('studentNotificationsRead',{email:s.email,token:s.token,ids:ids,all:!!all},15000).catch(function(){});
+    notificationApi('studentNotificationsRead',{email:s.email,token:s.token,ids:ids,all:!!all},15000).catch(function(){});
   }
   function fetchN(){
     var s=sess(); if(!s||!window.hmaCloud){ show(false); return; }
     show(true); if(busy) return; busy=true;
-    window.hmaCloud.api('studentNotifications',{email:s.email,token:s.token},15000).then(function(res){
+    notificationApi('studentNotifications',{email:s.email,token:s.token},15000).then(function(res){
       busy=false;
       if(!res||!res.ok){
         apiError=(res&&res.error==='AUTH')?'Your session expired. Refresh this page and sign in again.':'Notification service returned an error. Check the Apps Script deployment and sheet headers.';
@@ -6882,7 +6915,7 @@ html.hma-hide .app,html.hma-hide .wq-modal,html.hma-hide .phase-modal-backdrop,h
         try{ if(typeof showToast==='function') showToast('🔔 '+fresh[0].title+(fresh.length>1?' (+'+(fresh.length-1)+' more)':'')); }catch(e){}
         try{ if(window.hmaCloud.pull) window.hmaCloud.pull(true); }catch(e){}   /* pick up the instructor's progress changes right away */
       }
-    }).catch(function(){ busy=false; apiError='Could not connect to the notification service. Check the Apps Script URL and deployment access.'; render(); });
+    }).catch(function(err){ busy=false; apiError=(err&&err.message)?err.message:'Could not connect to the notification service. Verify the Apps Script /exec URL and Web App access.'; render(); });
   }
   bell.addEventListener('click',function(e){ e.stopPropagation(); setOpen(!openNow); });
   $('hnAll').addEventListener('click',function(){ markRead([],true); });
