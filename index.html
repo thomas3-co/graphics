@@ -6816,7 +6816,7 @@ html.hma-hide .app,html.hma-hide .wq-modal,html.hma-hide .phase-modal-backdrop,h
   var panel=document.createElement('div');
   panel.id='hnPanel'; panel.hidden=true; panel.setAttribute('role','dialog'); panel.setAttribute('aria-label','Notifications');
   panel.innerHTML='<div class="hn-head"><div><b>Notifications</b><small id="hnSub">Loading…</small></div><button class="hn-link" id="hnAll" type="button">Mark all read</button></div>'+
-    '<div class="hn-tabs"><button class="on" data-f="all" type="button">All</button><button data-f="unread" type="button">Unread</button></div><div class="hn-list" id="hnList" aria-live="polite"></div>';
+    '<div class="hn-tabs"><button class="on" data-f="all" type="button">All</button><button data-f="unread" type="button">Unread</button></div><div class="hn-list" id="hnList" aria-live="polite"></div><div id="hnInfo" style="padding:8px 14px;font-size:11px;color:#98a2b3;border-top:1px solid rgba(128,128,128,.2)">Checking…</div>';
   document.body.appendChild(panel);   /* on <body>, not inside the top bar, so it can never be clipped or overlap the menu */
 
 
@@ -6851,6 +6851,7 @@ html.hma-hide .app,html.hma-hide .wq-modal,html.hma-hide .phase-modal-backdrop,h
     });
   }
   var list=[], known=null, knownFor='', filter='all', busy=false, openNow=false;
+  function info(t){ try{ $('hnInfo').textContent=t; }catch(e){} }
   function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
   function sess(){ try{ return window.hmaCloud&&window.hmaCloud.session&&window.hmaCloud.session(); }catch(e){ return null; } }
   function ago(iso){
@@ -6900,10 +6901,12 @@ html.hma-hide .app,html.hma-hide .wq-modal,html.hma-hide .phase-modal-backdrop,h
       busy=false;
       if(!res||!res.ok){
         var er=res&&res.error;
+        info('Status: '+(er==='AUTH'?'session expired — sign in again':er==='OLD_BACKEND'?'the live backend is still the OLD version (deploy a New version, or the site points to a different /exec URL)':'server error '+(er||'no reply')));
         $('hnSub').textContent= er==='AUTH' ? 'Session expired — please sign in again' : er==='OLD_BACKEND' ? 'Backend not updated — deploy the new version' : 'Server problem ('+(er||'no reply')+')';
         return;
       }
       window.__hnDebug=res.debug||null;
+      info('Backend '+(res.notifVersion||'?')+' · '+(res.debug?(res.debug.forYou+' of '+res.debug.announcements+' announcements apply to you'):'ok')+' · checked '+new Date().toLocaleTimeString());
       var items=res.notifications||[], fresh=[], first=(known===null||knownFor!==s.email);
       if(first){ known={}; knownFor=s.email; items.forEach(function(n){known[n.id]=1;}); }
       else items.forEach(function(n){ if(!known[n.id]){ known[n.id]=1; if(!n.read) fresh.push(n); } });
@@ -6914,7 +6917,7 @@ html.hma-hide .app,html.hma-hide .wq-modal,html.hma-hide .phase-modal-backdrop,h
         try{ if(typeof showToast==='function') showToast('🔔 '+fresh[0].title+(fresh.length>1?' (+'+(fresh.length-1)+' more)':'')); }catch(e){}
         try{ if(window.hmaCloud.pull) window.hmaCloud.pull(true); }catch(e){}   /* pick up the instructor's progress changes right away */
       }
-    }).catch(function(){ busy=false; try{ $('hnSub').textContent='Cannot reach the server — check the deployment'; }catch(e){} });
+    }).catch(function(){ busy=false; info('Status: cannot reach the server (check internet / deployment access = Anyone)'); });
   }
   bell.addEventListener('click',function(e){ e.stopPropagation(); setOpen(!openNow); });
   $('hnAll').addEventListener('click',function(){ markRead([],true); });
