@@ -6841,8 +6841,14 @@ html.hma-hide .app,html.hma-hide .wq-modal,html.hma-hide .phase-modal-backdrop,h
       document.head.appendChild(el);
     });
   }
+  /* Same route the chat uses ('replies'): it now also carries the notifications and read receipts. */
   function nApi(action,payload,timeoutMs){
-    return jsonp(action,payload,timeoutMs).catch(function(){ return window.hmaCloud.api(action,payload,timeoutMs); });
+    var p=Object.assign({notif:1},payload||{});
+    if(action==='studentNotificationsRead'){ p.readIds=payload.ids||[]; p.readAll=!!payload.all; }
+    return window.hmaCloud.api('replies',p,timeoutMs).then(function(res){
+      if(res&&res.ok&&!Array.isArray(res.notifications)) return {ok:false,error:'OLD_BACKEND'};
+      return res;
+    });
   }
   var list=[], known=null, knownFor='', filter='all', busy=false, openNow=false;
   function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
@@ -6866,7 +6872,7 @@ html.hma-hide .app,html.hma-hide .wq-modal,html.hma-hide .phase-modal-backdrop,h
     $('hnList').innerHTML=items.length?items.map(function(n){
       return '<button class="hn-item'+(n.read?'':' unread')+(n.priority==='urgent'?' urgent':'')+'" data-id="'+esc(n.id)+'" type="button"><span class="hn-ico '+esc(n.kind)+'" aria-hidden="true">'+icon(n)+'</span>'+
         '<span class="hn-body"><span class="hn-t">'+esc(n.title)+'</span><span class="hn-m">'+esc(String(n.message||'').replace(/\n\nAttachment:\s*https?:\/\/\S+/i,''))+'</span>'+(n.attachmentUrl&&/^https?:\/\//i.test(n.attachmentUrl)?'<span class="hn-attachment" role="link" tabindex="0" data-attachment="'+esc(n.attachmentUrl)+'">📎 Open announcement attachment</span>':'')+'<span class="hn-time">'+esc(ago(n.created))+(n.kind==='announcement'?' · Announcement':'')+(n.priority==='urgent'?' · Urgent':'')+'</span></span>'+(n.read?'':'<i class="hn-dot" aria-label="Unread"></i>')+'</button>';
-    }).join(''):'<div class="hn-empty"><span>'+(filter==='all'?'🔔':'✅')+'</span>'+(filter==='all'?'No notifications yet. Announcements and updates from your instructor will appear here.':'No unread notifications.')+'</div>';
+    }).join(''):'<div class="hn-empty"><span>'+(filter==='all'?'🔔':'✅')+'</span>'+(filter==='all'?'No notifications yet. Announcements and updates from your instructor will appear here.':'No unread notifications.')+(filter==='all'&&window.__hnDebug?'<small style="display:block;margin-top:10px;font-size:11px;color:#98a2b3">Server check: '+window.__hnDebug.forYou+' of '+window.__hnDebug.announcements+' announcements apply to you'+(window.__hnDebug.hidden&&window.__hnDebug.hidden.length?' · hidden: '+esc(window.__hnDebug.hidden.join('; ')):'')+'</small>':'')+'</div>';
   }
   function place(){
     var r=bell.getBoundingClientRect(), vw=document.documentElement.clientWidth, w=Math.min(380,vw-16);
@@ -6894,9 +6900,10 @@ html.hma-hide .app,html.hma-hide .wq-modal,html.hma-hide .phase-modal-backdrop,h
       busy=false;
       if(!res||!res.ok){
         var er=res&&res.error;
-        $('hnSub').textContent= er==='AUTH' ? 'Session expired — please sign in again' : 'Server problem ('+(er||'no reply')+')';
+        $('hnSub').textContent= er==='AUTH' ? 'Session expired — please sign in again' : er==='OLD_BACKEND' ? 'Backend not updated — deploy the new version' : 'Server problem ('+(er||'no reply')+')';
         return;
       }
+      window.__hnDebug=res.debug||null;
       var items=res.notifications||[], fresh=[], first=(known===null||knownFor!==s.email);
       if(first){ known={}; knownFor=s.email; items.forEach(function(n){known[n.id]=1;}); }
       else items.forEach(function(n){ if(!known[n.id]){ known[n.id]=1; if(!n.read) fresh.push(n); } });
@@ -6942,7 +6949,7 @@ html.hma-hide .app,html.hma-hide .wq-modal,html.hma-hide .phase-modal-backdrop,h
   window.addEventListener('scroll',function(){ if(openNow) place(); },true);
   window.addEventListener('online',fetchN);
   document.addEventListener('visibilitychange',function(){ if(!document.hidden) fetchN(); });
-  setInterval(function(){ if(!document.hidden) fetchN(); },45000);
+  setInterval(function(){ if(!document.hidden) fetchN(); },20000);
   setInterval(function(){ if(!sess()) show(false); },5000);
 
   /* ===== C) After the site receives instructor changes, refresh the screens ===== */
