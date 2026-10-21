@@ -6819,6 +6819,31 @@ html.hma-hide .app,html.hma-hide .wq-modal,html.hma-hide .phase-modal-backdrop,h
     '<div class="hn-tabs"><button class="on" data-f="all" type="button">All</button><button data-f="unread" type="button">Unread</button></div><div class="hn-list" id="hnList" aria-live="polite"></div>';
   document.body.appendChild(panel);   /* on <body>, not inside the top bar, so it can never be clipped or overlap the menu */
 
+
+  /* ===== JSONP transport for notifications (browsers block fetch() reads from the Apps Script URL) ===== */
+  var HN_URL=(function(){ try{ var m=document.getElementById('hma-cloud-js').textContent.match(/HMA_CLOUD_URL\s*=\s*"([^"]+)"/); return m?m[1]:''; }catch(e){ return ''; } })();
+  var hnSeq=0;
+  function jsonp(action,payload,timeoutMs){
+    return new Promise(function(resolve,reject){
+      if(!HN_URL){ reject(new Error('no url')); return; }
+      var cb='hnCb'+Date.now().toString(36)+(++hnSeq), el=document.createElement('script'), done=false, timer;
+      function cleanup(){ done=true; clearTimeout(timer); try{ delete window[cb]; }catch(e){ window[cb]=undefined; } if(el.parentNode) el.parentNode.removeChild(el); }
+      window[cb]=function(data){ if(done) return; cleanup(); resolve(data); };
+      timer=setTimeout(function(){ if(done) return; cleanup(); reject(new Error('timeout')); },timeoutMs||15000);
+      el.onerror=function(){ if(done) return; cleanup(); reject(new Error('network')); };
+      var q=['action='+encodeURIComponent(action),'callback='+encodeURIComponent(cb),'_='+Date.now()];
+      Object.keys(payload||{}).forEach(function(k){
+        var v=payload[k]; if(v===undefined||v===null) return;
+        if(typeof v==='object') v=JSON.stringify(v);
+        q.push(encodeURIComponent(k)+'='+encodeURIComponent(String(v)));
+      });
+      el.async=true; el.src=HN_URL+(HN_URL.indexOf('?')>-1?'&':'?')+q.join('&');
+      document.head.appendChild(el);
+    });
+  }
+  function nApi(action,payload,timeoutMs){
+    return jsonp(action,payload,timeoutMs).catch(function(){ return window.hmaCloud.api(action,payload,timeoutMs); });
+  }
   var list=[], known=null, knownFor='', filter='all', busy=false, openNow=false;
   function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
   function sess(){ try{ return window.hmaCloud&&window.hmaCloud.session&&window.hmaCloud.session(); }catch(e){ return null; } }
@@ -6860,12 +6885,12 @@ html.hma-hide .app,html.hma-hide .wq-modal,html.hma-hide .phase-modal-backdrop,h
     var s=sess(); if(!s) return;
     list.forEach(function(n){ if(all||ids.indexOf(n.id)>-1) n.read=true; });
     render();
-    window.hmaCloud.api('studentNotificationsRead',{email:s.email,token:s.token,ids:ids,all:!!all},15000).catch(function(){});
+    nApi('studentNotificationsRead',{email:s.email,token:s.token,ids:ids,all:!!all},15000).catch(function(){});
   }
   function fetchN(){
     var s=sess(); if(!s||!window.hmaCloud){ show(false); return; }
     show(true); if(busy) return; busy=true;
-    window.hmaCloud.api('studentNotifications',{email:s.email,token:s.token},15000).then(function(res){
+    nApi('studentNotifications',{email:s.email,token:s.token},15000).then(function(res){
       busy=false; if(!res||!res.ok) return;
       var items=res.notifications||[], fresh=[], first=(known===null||knownFor!==s.email);
       if(first){ known={}; knownFor=s.email; items.forEach(function(n){known[n.id]=1;}); }
