@@ -5855,12 +5855,13 @@ table{max-width:100%}
 .hma-pg-card span{display:block;font-size:11px;color:#aeb8cf;margin-top:2px}
 .hma-pg-card i{position:absolute;left:0;bottom:0;height:4px;background:var(--c)}
 .hma-pg-card.off{opacity:.6}.hma-pg-card.off b{color:#8f9ab3}
-#hmaChat{position:fixed;right:max(16px,env(safe-area-inset-right));bottom:max(16px,env(safe-area-inset-bottom));z-index:3200;font-family:'Inter',Arial,sans-serif}
+#hmaChat{position:fixed;right:0;top:calc(50% - 27px);z-index:3200;font-family:'Inter',Arial,sans-serif}
 #hmaChat[hidden]{display:none}
-#hmaChatBtn{width:58px;height:58px;border-radius:50%;border:0;background:linear-gradient(135deg,#2f6fed,#8b5cf6);color:#fff;font-size:26px;cursor:pointer;box-shadow:0 10px 26px rgba(47,111,237,.45);position:relative}
-#hmaChatBadge{position:absolute;top:-4px;right:-4px;min-width:20px;height:20px;border-radius:10px;background:#ef4444;color:#fff;font:800 11px/20px Inter,sans-serif;padding:0 5px}
+#hmaChatBtn{width:44px;height:54px;border-radius:27px 0 0 27px;border:1px solid rgba(255,255,255,.35);border-right:0;background:rgba(47,111,237,.22);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);color:#fff;font-size:22px;cursor:pointer;box-shadow:none;opacity:.55;transition:opacity .2s,background .2s;position:relative;padding:0 0 0 4px}
+#hmaChatBtn:hover,#hmaChatBtn:focus-visible,#hmaChatBtn[aria-expanded="true"]{opacity:1;background:rgba(47,111,237,.55)}
+#hmaChatBadge{position:absolute;top:-4px;left:-4px;right:auto;min-width:20px;height:20px;border-radius:10px;background:#ef4444;color:#fff;font:800 11px/20px Inter,sans-serif;padding:0 5px}
 #hmaChatBadge[hidden]{display:none}
-#hmaChatPanel{position:absolute;right:0;bottom:70px;width:min(370px,calc(100vw - 24px));height:min(540px,calc(100vh - 120px));background:#fff;border-radius:20px;box-shadow:0 24px 70px rgba(10,15,35,.38);display:flex;flex-direction:column;overflow:hidden;border:1px solid #e3e7ee}
+#hmaChatPanel{position:fixed;right:max(12px,env(safe-area-inset-right));bottom:max(16px,env(safe-area-inset-bottom));width:min(370px,calc(100vw - 24px));height:min(540px,calc(100vh - 100px));background:#fff;border-radius:20px;box-shadow:0 24px 70px rgba(10,15,35,.38);display:flex;flex-direction:column;overflow:hidden;border:1px solid #e3e7ee}
 #hmaChatPanel[hidden]{display:none}
 .hma-ch-head{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:14px 16px;background:linear-gradient(135deg,#1c2030,#3b2a7a);color:#fff}
 .hma-ch-head b{display:block;font-size:15px}.hma-ch-head small{color:#c9d3f5;font-size:11px}
