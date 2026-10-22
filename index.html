@@ -2,6 +2,49 @@
 
 <html lang="en">
 <head>
+<meta name="hm-build" content="2026-10-22-v10">
+<meta http-equiv="Cache-Control" content="no-cache, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0">
+<script id="hm-autoupdate">
+/* Always load the newest version of the site. Student data lives in the browser's localStorage and in the cloud backup,
+   neither of which is touched here: we only reload the page itself (after pushing the latest progress to the cloud). */
+(function(){
+  var BUILD=(document.querySelector('meta[name="hm-build"]')||{}).content||'';
+  if(!BUILD||location.protocol==='file:') return;
+  var KEY='hm_build_reloaded', last=0, busy=false;
+  function base(){ return location.href.split('#')[0].split('?')[0]; }
+  function remote(){
+    return fetch(base()+'?_hm='+Date.now(),{cache:'no-store',credentials:'same-origin'})
+      .then(function(r){ return r.ok?r.text():''; })
+      .then(function(t){ var m=t.match(/<meta name="hm-build" content="([^"]+)"/); return m?m[1]:''; });
+  }
+  function note(t){ try{ var d=document.createElement('div'); d.textContent=t; d.style.cssText='position:fixed;left:50%;bottom:max(18px,env(safe-area-inset-bottom));transform:translateX(-50%);z-index:999999;background:#101828;color:#fff;padding:11px 18px;border-radius:999px;font:600 14px Inter,Arial,sans-serif;box-shadow:0 10px 30px rgba(0,0,0,.35)'; document.body.appendChild(d); }catch(e){} }
+  function go(b){ location.replace(base()+'?v='+encodeURIComponent(b)+location.hash); }
+  function update(b){
+    busy=true; try{ sessionStorage.setItem(KEY,b); }catch(e){}
+    note('Updating to the newest version… your progress is safe');
+    var done=false, fin=function(){ if(done) return; done=true; go(b); };
+    setTimeout(fin,4500);
+    try{ var p=window.hmaPushNow&&window.hmaPushNow(); if(p&&p.then){ p.then(fin,fin); return; } }catch(e){}
+    setTimeout(fin,400);
+  }
+  function check(force){
+    if(busy) return; var n=Date.now(); if(!force&&n-last<60000) return; last=n;
+    remote().then(function(b){
+      if(!b||b===BUILD) return;
+      var seen=''; try{ seen=sessionStorage.getItem(KEY)||''; }catch(e){}
+      if(seen===b) return;          /* already tried this build once: never loop */
+      update(b);
+    }).catch(function(){});
+  }
+  check(true);
+  document.addEventListener('visibilitychange',function(){ if(!document.hidden) check(false); });
+  window.addEventListener('focus',function(){ check(false); });
+  window.addEventListener('online',function(){ check(true); });
+  setInterval(function(){ check(false); },300000);
+  window.hmCheckForUpdate=function(){ check(true); };
+})();
+</script>
+
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
 <script id="hma-compat-storage-shim">
@@ -1272,7 +1315,7 @@ img,video,canvas,svg,iframe{max-width:100%}
 </div></div></div>
 </div></div>
 <div class="week-card" id="week3">
-<h2 class="wk">Week 3 — Around the World with a Twist (Project Week)</h2>
+<h2 class="wk">Week 3 — Background Removal &amp; Compositing (prepares the Week 7 project)</h2>
 <div class="day-grid">
 <div class="flip-card" data-day="3-1"><div class="flip-card-inner">
 <div class="flip-card-front"><h4>Day 5: Removing Backgrounds</h4><p>Remove the original background and prepare a clean subject edge for the new composition.</p><span class="flip-hint">Tap to flip</span></div>
@@ -1293,7 +1336,7 @@ img,video,canvas,svg,iframe{max-width:100%}
         <span class="vocab" data-def="The visual relationship between foreground, subject and background elements in a composite." tabindex="0">Depth of Field</span><span class="vocab-def"> — The visual relationship between foreground, subject and background elements in a composite.</span>,
         <span class="vocab" data-def="Adjusts the edges and mask of a cut-out so the subject blends naturally into its new environment." tabindex="0">Layer Mask</span><span class="vocab-def"> — Adjusts the edges and mask of a cut-out so the subject blends naturally into its new environment.</span></p>
 <div class="big-ideas">A convincing composite depends on more than a clean cut-out. Match scale, lighting, color and sharpness, then apply Gaussian Blur selectively so distant parts of the scene feel farther away and the subject belongs in the new world.</div>
-<div class="summary-text">Week 3 project work: remove the background, place the subject into the Around the World scene, and use Gaussian Blur where needed to create realistic depth.</div>
+<div class="summary-text">Week 3 skills: remove the background, place the subject into a new scene, and use Gaussian Blur where needed to create realistic depth. You will use these skills in the Week 7 “Around the World with a Twist” project.</div>
 </div></div></div>
 </div></div>
 <div class="week-card" id="week4">
@@ -1357,46 +1400,38 @@ img,video,canvas,svg,iframe{max-width:100%}
 </div>
 </div>
 <div class="week-card" id="week6">
-<h2 class="wk">Week 6 — Phone / iPad Mockup (Project Week)</h2>
+<h2 class="wk">Week 6 — Face Retouch, Lip Retouch &amp; Dress Change</h2>
 <div class="day-grid">
 <div class="flip-card project-day" data-day="6-1"><div class="flip-card-inner">
-<div class="flip-card-front"><div class="project-label">PROJECT DAY</div><h4>Day 1: Mockup Project</h4><p>Create a mobile or poster mockup using smart objects.</p><span class="flip-hint">Tap to flip</span></div>
-<div class="flip-card-back"><p><strong>Objective:</strong> Build a professional presentation mockup using smart objects.</p>
-<ul><li>Import your design into a pre-made PSD mockup file.</li>
-<li>Use <strong>Smart Object</strong> layers to replace the placeholder.</li>
-<li>Adjust lighting and shadows using <strong>Levels</strong> and <strong>Drop Shadow</strong>.</li>
-<li>Save as high-quality JPEG for presentation.</li></ul>
-<div class="summary-text">Full brief: Group Projects tab → "Week 6 · Phone / iPad Mockup".</div></div>
-</div></div>
+<div class="flip-card-front"><div class="project-label">WEEK 6 · DAY 1</div><h4>Day 1: Face &amp; Lip Retouching</h4><p>Clean, natural skin and lips using Healing Brush, Dodge &amp; Burn and Frequency Separation.</p><span class="flip-hint">Tap to flip</span></div>
+<div class="flip-card-back"><p><strong>Objective:</strong> Retouch a portrait so it looks polished but still natural.</p>
+<ul><li><strong>Face:</strong> remove blemishes with the <strong>Healing Brush</strong>, then even out tone with <strong>Frequency Separation</strong>.</li>
+<li><strong>Dodge &amp; Burn:</strong> add gentle light and shadow to shape the face.</li>
+<li><strong>Lips:</strong> smooth texture, balance colour and add a soft highlight.</li>
+<li>Keep every edit on its own layer so you can undo it.</li></ul>
+<div class="wk-title">Open this lesson</div>
+<div class="wk-act"><button type="button" class="wk-btn p" onclick="event.stopPropagation();hmOpenScreencast('1MuJkKq7MsJtB-WRZ_8oHmi5X-f0up7h5')">▶ Screencast: Lip &amp; Face Retouching</button><button type="button" class="wk-btn q" onclick="event.stopPropagation();hmQuiz('video','1MuJkKq7MsJtB-WRZ_8oHmi5X-f0up7h5')">🧠 Quiz</button></div><div class="wk-act"><button type="button" class="wk-btn s" onclick="event.stopPropagation();hmOpenReadMe('readme-week6')">📖 Read Me: Face &amp; Lip</button><button type="button" class="wk-btn q" onclick="event.stopPropagation();hmQuiz('reading','readme-week6')">🧠 Quiz</button></div>
+</div></div></div>
 <div class="flip-card project-day" data-day="6-2"><div class="flip-card-inner">
-<div class="flip-card-front"><div class="project-label">PROJECT DAY</div><h4>Day 2: Practice Variations &amp; Mockup Submission</h4><p>Practice extra mockup types, then finalize and submit your mockup.</p><span class="flip-hint">Tap to flip</span></div>
-<div class="flip-card-back"><p><strong>Objective:</strong> Strengthen mockup editing skills, then craft glowing, metallic, or embossed text effects using blending and texture overlays.</p>
-<ul><li>Try 2–3 different mockup templates; refine placement and lighting.</li>
-<li>Apply <strong>Bevel &amp; Emboss</strong>, <strong>Drop Shadow</strong>, and <strong>Gradient Overlay</strong>.</li>
-<li>Submit via Group Projects tab → "Week 6 · Phone / iPad Mockup".</li></ul></div>
-</div></div>
+<div class="flip-card-front"><div class="project-label">WEEK 6 · DAY 2</div><h4>Day 2: Dress Change</h4><p>Add a design onto a dress and change the colour of clothing realistically.</p><span class="flip-hint">Tap to flip</span></div>
+<div class="flip-card-back"><p><strong>Objective:</strong> Change what a person is wearing so it looks real, not pasted on.</p>
+<ul><li><strong>Add a design:</strong> place artwork on the dress and let it follow the folds with a displacement map.</li>
+<li><strong>Match the light:</strong> copy the shadows and fabric texture over the design.</li>
+<li><strong>Change the colour:</strong> select the clothing with Select Subject / Color Range, then shift it with Hue/Saturation.</li></ul>
+<div class="wk-title">Open these lessons</div>
+<div class="wk-act"><button type="button" class="wk-btn p" onclick="event.stopPropagation();hmOpenScreencast('1u3xzfCcBGat9p5z7Vk08Pye5pVdoXowM')">▶ Add Design on Dress — Part 1</button><button type="button" class="wk-btn q" onclick="event.stopPropagation();hmQuiz('video','1u3xzfCcBGat9p5z7Vk08Pye5pVdoXowM')">🧠 Quiz</button></div><div class="wk-act"><button type="button" class="wk-btn p" onclick="event.stopPropagation();hmOpenScreencast('1EsXq8eZ_IXs79tvvjKxfozooqOwCUQeT')">▶ Add Design on Dress — Part 2</button><button type="button" class="wk-btn q" onclick="event.stopPropagation();hmQuiz('video','1EsXq8eZ_IXs79tvvjKxfozooqOwCUQeT')">🧠 Quiz</button></div><div class="wk-act"><button type="button" class="wk-btn p" onclick="event.stopPropagation();hmOpenScreencast('1bTuJ8yUYKXAOakIObT6kz_vh8NehMEiD')">▶ Change Clothing Colour — Part 1</button><button type="button" class="wk-btn q" onclick="event.stopPropagation();hmQuiz('video','1bTuJ8yUYKXAOakIObT6kz_vh8NehMEiD')">🧠 Quiz</button></div><div class="wk-act"><button type="button" class="wk-btn p" onclick="event.stopPropagation();hmOpenScreencast('1T5-Q5M56LtTljcvAnAjURpwmWguRN80o')">▶ Change Clothing Colour — Part 2</button><button type="button" class="wk-btn q" onclick="event.stopPropagation();hmQuiz('video','1T5-Q5M56LtTljcvAnAjURpwmWguRN80o')">🧠 Quiz</button></div><div class="wk-act"><button type="button" class="wk-btn s" onclick="event.stopPropagation();hmOpenReadMe('readme-week6')">📖 Read Me: Dress Change</button><button type="button" class="wk-btn q" onclick="event.stopPropagation();hmQuiz('reading','readme-week6')">🧠 Quiz</button></div>
+</div></div></div>
 </div>
 </div>
 <div class="week-card" id="week7">
-<h2 class="wk">Week 7 — Text on Any Surface with Vanishing Point</h2>
+<h2 class="wk">Week 7 — Around the World with a Twist (Project Week)</h2>
 <div class="day-grid">
-<div class="flip-card blue-border" data-day="7-1"><div class="flip-card-inner">
-<div class="flip-card-front"><h4>Day 1: Text on Any Surface (Vanishing Point)</h4><p>Apply realistic text on walls, floors, or objects using the Vanishing Point filter.</p><span class="flip-hint">Tap to flip</span></div>
-<div class="flip-card-back"><p><strong>Objective:</strong> Learn to map and blend text realistically to perspective planes.</p>
-<ul><li>Open your background image and create a new layer for text.</li>
-<li>Go to <strong>Filter → Vanishing Point</strong> and define perspective grids.</li>
-<li>Paste or drag your text layer into the vanishing point plane.</li>
-<li>Adjust lighting, opacity, and blending mode (<strong>Multiply</strong> or <strong>Overlay</strong>).</li></ul></div>
-</div></div>
+<div class="flip-card project-day" data-day="7-1"><div class="flip-card-inner">
+<div class="flip-card-front"><div class="project-label">PROJECT DAY</div><h4>Day 1: Choose Your City &amp; Remove the Background</h4><p>Pick your city and cut your subject out cleanly.</p><span class="flip-hint">Tap to flip</span></div>
+<div class="flip-card-back"><p><strong>Objective:</strong> Prepare a clean cut-out of yourself for the city scene.</p><ul><li>Choose one of the city options on the Group Projects page.</li><li>Remove the background and clean the white fringe (Smudge Tool, Filter → Other → Minimum).</li><li>Keep a layer mask so the cut-out stays reversible.</li></ul><div class="wk-act"><button type="button" class="wk-btn p" onclick="event.stopPropagation();hmOpenScreencast('1khSdxt8enMJ7NW60dp-gLxFGEKmbOzOJ')">▶ Screencast: Change Background &amp; Smudge Tool</button><button type="button" class="wk-btn q" onclick="event.stopPropagation();hmQuiz('video','1khSdxt8enMJ7NW60dp-gLxFGEKmbOzOJ')">🧠 Quiz</button></div><div class="wk-act"><button type="button" class="wk-btn p" onclick="event.stopPropagation();hmOpenProject('world')">📁 Open the project page</button></div></div></div></div>
 <div class="flip-card project-day" data-day="7-2"><div class="flip-card-inner">
-<div class="flip-card-front"><div class="project-label">PROJECT DAY</div><h4>Day 2: Refine Vanishing Point Text &amp; 3D Pop-Out Effect</h4><p>Refine lighting and texture, then create an illusion of objects or text popping out of the frame.</p><span class="flip-hint">Tap to flip</span></div>
-<div class="flip-card-back"><p><strong>Objective:</strong> Refine realism from Day 1, then combine layer masking and 3D perspective to make subjects break out of the photo boundaries.</p>
-<ul><li>Use <strong>Clone Stamp Tool</strong> or <strong>Healing Brush</strong> to merge edges; match lighting with <strong>Curves</strong> and <strong>Hue/Saturation</strong>.</li>
-<li>Import an image and add a white frame around it using <strong>Rectangle Tool</strong>.</li>
-<li>Duplicate the image layer and mask parts that should appear outside the frame; add <strong>Drop Shadows</strong> for depth.</li>
-<li>Use <strong>3D Text</strong> with <strong>Bevel &amp; Emboss</strong> to complement the effect.</li></ul>
-<p class="summary-text">Final look: your subject or text appears to pop out from the image into real space.</p></div>
-</div></div>
+<div class="flip-card-front"><div class="project-label">PROJECT DAY</div><h4>Day 2: Composite, Add Depth &amp; Submit</h4><p>Place the subject in the city, blend it and submit.</p><span class="flip-hint">Tap to flip</span></div>
+<div class="flip-card-back"><p><strong>Objective:</strong> Make the subject look like it belongs in the city.</p><ul><li>Match scale, light and colour with the background.</li><li>Use <strong>Gaussian Blur</strong> on the far background for depth.</li><li>Submit via Group Projects tab → “Week 7 · Around the World with a Twist”.</li></ul><div class="wk-act"><button type="button" class="wk-btn p" onclick="event.stopPropagation();hmOpenProject('world')">📁 Open the project page</button></div></div></div></div>
 </div>
 </div>
 <div class="week-card" id="week8">
@@ -1425,55 +1460,80 @@ img,video,canvas,svg,iframe{max-width:100%}
 <!-- ===== MONTH THREE ===== -->
 <div class="month-block" data-month="m3">
 <div class="week-card" id="week9">
-<h2 class="wk">Week 9 — Gojo Pop-Out Project</h2>
+<h2 class="wk">Week 9 — Phone / iPad Mockup (Project Week)</h2>
 <div class="day-grid">
+
 <div class="flip-card project-day" data-day="9-1"><div class="flip-card-inner">
-<div class="flip-card-front"><div class="project-label">PROJECT DAY</div><h4>Day 1: Neon Text Effect</h4><p>Create glowing neon text with light blending.</p><span class="flip-hint">Tap to flip</span></div>
-<div class="flip-card-back"><p><strong>Objective:</strong> Glow, contrast, color blending.</p></div>
+<div class="flip-card-front"><div class="project-label">PROJECT DAY</div><h4>Day 1: Mockup Project</h4><p>Create a mobile or poster mockup using smart objects.</p><span class="flip-hint">Tap to flip</span></div>
+<div class="flip-card-back"><p><strong>Objective:</strong> Build a professional presentation mockup using smart objects.</p>
+<ul><li>Import your design into a pre-made PSD mockup file.</li>
+<li>Use <strong>Smart Object</strong> layers to replace the placeholder.</li>
+<li>Adjust lighting and shadows using <strong>Levels</strong> and <strong>Drop Shadow</strong>.</li>
+<li>Save as high-quality JPEG for presentation.</li></ul>
+<div class="summary-text">Full brief: Group Projects tab → "Week 9 · Phone / iPad Mockup".</div></div>
 </div></div>
 <div class="flip-card project-day" data-day="9-2"><div class="flip-card-inner">
-<div class="flip-card-front"><div class="project-label">PROJECT DAY</div><h4>Day 2: Neon Sign + Wall Effect &amp; Submission</h4><p>Make a realistic glowing wall-mounted neon sign, then finalize and submit your Gojo pop-out project.</p><span class="flip-hint">Tap to flip</span></div>
-<div class="flip-card-back"><ul><li>Create metal frame; add realistic wall texture; use glow layers.</li><li>Brush glow edges; blend mode lighten; color dodge for highlights.</li><li>Submit via Group Projects tab → "Week 9 · Gojo Pop-Out Project".</li></ul></div>
+<div class="flip-card-front"><div class="project-label">PROJECT DAY</div><h4>Day 2: Practice Variations &amp; Mockup Submission</h4><p>Practice extra mockup types, then finalize and submit your mockup.</p><span class="flip-hint">Tap to flip</span></div>
+<div class="flip-card-back"><p><strong>Objective:</strong> Strengthen mockup editing skills, then craft glowing, metallic, or embossed text effects using blending and texture overlays.</p>
+<ul><li>Try 2–3 different mockup templates; refine placement and lighting.</li>
+<li>Apply <strong>Bevel &amp; Emboss</strong>, <strong>Drop Shadow</strong>, and <strong>Gradient Overlay</strong>.</li>
+<li>Submit via Group Projects tab → "Week 9 · Phone / iPad Mockup".</li></ul></div>
 </div></div>
+
 </div>
 </div>
 <div class="week-card" id="week10">
-<h2 class="wk">Week 10 — Double Exposure &amp; Poster Design</h2>
+<h2 class="wk">Week 10 — Gojo Pop-Out Project</h2>
 <div class="day-grid">
+
 <div class="flip-card project-day" data-day="10-1"><div class="flip-card-inner">
-<div class="flip-card-front"><div class="project-label">PROJECT DAY</div><h4>Day 1: Double Exposure – Basics</h4><p>Learn how to merge two images creatively.</p><span class="flip-hint">Tap to flip</span></div>
-<div class="flip-card-back"><ul><li>Use layer masks</li><li>Soft brushes</li><li>Black/white balance</li></ul></div>
+<div class="flip-card-front"><div class="project-label">PROJECT DAY</div><h4>Day 1: Neon Text Effect</h4><p>Create glowing neon text with light blending.</p><span class="flip-hint">Tap to flip</span></div>
+<div class="flip-card-back"><p><strong>Objective:</strong> Glow, contrast, color blending.</p></div>
 </div></div>
 <div class="flip-card project-day" data-day="10-2"><div class="flip-card-inner">
-<div class="flip-card-front"><div class="project-label">PROJECT DAY</div><h4>Day 2: Advanced Double Exposure &amp; Poster Design</h4><p>Combine shapes, forests, cities, portraits, then build a full poster blending photography + typography.</p><span class="flip-hint">Tap to flip</span></div>
-<div class="flip-card-back"><ul><li>Gradient mask control; blend multiple textures; color grading.</li><li>Cinematic color grading; strong layout; title placement rules.</li></ul></div>
+<div class="flip-card-front"><div class="project-label">PROJECT DAY</div><h4>Day 2: Neon Sign + Wall Effect &amp; Submission</h4><p>Make a realistic glowing wall-mounted neon sign, then finalize and submit your Gojo pop-out project.</p><span class="flip-hint">Tap to flip</span></div>
+<div class="flip-card-back"><ul><li>Create metal frame; add realistic wall texture; use glow layers.</li><li>Brush glow edges; blend mode lighten; color dodge for highlights.</li><li>Submit via Group Projects tab → "Week 10 · Gojo Pop-Out Project".</li></ul></div>
 </div></div>
+
 </div>
 </div>
 <div class="week-card" id="week11">
-<h2 class="wk">Week 11 — Coming Soon</h2>
+<h2 class="wk">Week 11 — Text on Any Surface with Vanishing Point</h2>
 <div class="day-grid">
-<div class="flip-card" data-day="11-1"><div class="flip-card-inner">
-<div class="flip-card-front"><h4>Day 1: To be added</h4><p>Lesson content for this day hasn't been added yet.</p><span class="flip-hint">Tap to flip</span></div>
-<div class="flip-card-back"><p class="summary-text">Placeholder — check back once this week's lesson is published.</p></div>
+
+<div class="flip-card blue-border" data-day="11-1"><div class="flip-card-inner">
+<div class="flip-card-front"><h4>Day 1: Text on Any Surface (Vanishing Point)</h4><p>Apply realistic text on walls, floors, or objects using the Vanishing Point filter.</p><span class="flip-hint">Tap to flip</span></div>
+<div class="flip-card-back"><p><strong>Objective:</strong> Learn to map and blend text realistically to perspective planes.</p>
+<ul><li>Open your background image and create a new layer for text.</li>
+<li>Go to <strong>Filter → Vanishing Point</strong> and define perspective grids.</li>
+<li>Paste or drag your text layer into the vanishing point plane.</li>
+<li>Adjust lighting, opacity, and blending mode (<strong>Multiply</strong> or <strong>Overlay</strong>).</li></ul></div>
 </div></div>
-<div class="flip-card" data-day="11-2"><div class="flip-card-inner">
-<div class="flip-card-front"><h4>Day 2: To be added</h4><p>Lesson content for this day hasn't been added yet.</p><span class="flip-hint">Tap to flip</span></div>
-<div class="flip-card-back"><p class="summary-text">Placeholder — check back once this week's lesson is published.</p></div>
+<div class="flip-card project-day" data-day="11-2"><div class="flip-card-inner">
+<div class="flip-card-front"><div class="project-label">PROJECT DAY</div><h4>Day 2: Refine Vanishing Point Text &amp; 3D Pop-Out Effect</h4><p>Refine lighting and texture, then create an illusion of objects or text popping out of the frame.</p><span class="flip-hint">Tap to flip</span></div>
+<div class="flip-card-back"><p><strong>Objective:</strong> Refine realism from Day 1, then combine layer masking and 3D perspective to make subjects break out of the photo boundaries.</p>
+<ul><li>Use <strong>Clone Stamp Tool</strong> or <strong>Healing Brush</strong> to merge edges; match lighting with <strong>Curves</strong> and <strong>Hue/Saturation</strong>.</li>
+<li>Import an image and add a white frame around it using <strong>Rectangle Tool</strong>.</li>
+<li>Duplicate the image layer and mask parts that should appear outside the frame; add <strong>Drop Shadows</strong> for depth.</li>
+<li>Use <strong>3D Text</strong> with <strong>Bevel &amp; Emboss</strong> to complement the effect.</li></ul>
+<p class="summary-text">Final look: your subject or text appears to pop out from the image into real space.</p></div>
 </div></div>
+
 </div>
 </div>
 <div class="week-card" id="week12">
-<h2 class="wk">Week 12 — Coming Soon</h2>
+<h2 class="wk">Week 12 — Double Exposure &amp; Poster Design</h2>
 <div class="day-grid">
-<div class="flip-card" data-day="12-1"><div class="flip-card-inner">
-<div class="flip-card-front"><h4>Day 1: To be added</h4><p>Lesson content for this day hasn't been added yet.</p><span class="flip-hint">Tap to flip</span></div>
-<div class="flip-card-back"><p class="summary-text">Placeholder — check back once this week's lesson is published.</p></div>
+
+<div class="flip-card project-day" data-day="12-1"><div class="flip-card-inner">
+<div class="flip-card-front"><div class="project-label">PROJECT DAY</div><h4>Day 1: Double Exposure – Basics</h4><p>Learn how to merge two images creatively.</p><span class="flip-hint">Tap to flip</span></div>
+<div class="flip-card-back"><ul><li>Use layer masks</li><li>Soft brushes</li><li>Black/white balance</li></ul></div>
 </div></div>
-<div class="flip-card" data-day="12-2"><div class="flip-card-inner">
-<div class="flip-card-front"><h4>Day 2: To be added</h4><p>Lesson content for this day hasn't been added yet.</p><span class="flip-hint">Tap to flip</span></div>
-<div class="flip-card-back"><p class="summary-text">Placeholder — check back once this week's lesson is published.</p></div>
+<div class="flip-card project-day" data-day="12-2"><div class="flip-card-inner">
+<div class="flip-card-front"><div class="project-label">PROJECT DAY</div><h4>Day 2: Advanced Double Exposure &amp; Poster Design</h4><p>Combine shapes, forests, cities, portraits, then build a full poster blending photography + typography.</p><span class="flip-hint">Tap to flip</span></div>
+<div class="flip-card-back"><ul><li>Gradient mask control; blend multiple textures; color grading.</li><li>Cinematic color grading; strong layout; title placement rules.</li></ul></div>
 </div></div>
+
 </div>
 </div>
 </div><!-- /month-block m3 -->
@@ -1519,16 +1579,14 @@ img,video,canvas,svg,iframe{max-width:100%}
 </div>
 </div>
 <div class="week-card" id="week16">
-<h2 class="wk">Week 16 — Coming Soon</h2>
+<h2 class="wk">Week 16 — Elemental Portraits (Final Project)</h2>
 <div class="day-grid">
-<div class="flip-card" data-day="16-1"><div class="flip-card-inner">
-<div class="flip-card-front"><h4>Day 1: To be added</h4><p>Lesson content for this day hasn't been added yet.</p><span class="flip-hint">Tap to flip</span></div>
-<div class="flip-card-back"><p class="summary-text">Placeholder — check back once this week's lesson is published.</p></div>
-</div></div>
-<div class="flip-card" data-day="16-2"><div class="flip-card-inner">
-<div class="flip-card-front"><h4>Day 2: To be added — Final Project</h4><p>Lesson content for this day hasn't been added yet.</p><span class="flip-hint">Tap to flip</span></div>
-<div class="flip-card-back"><p class="summary-text">Placeholder — check back once this week's lesson is published.</p></div>
-</div></div>
+<div class="flip-card project-day" data-day="16-1"><div class="flip-card-inner">
+<div class="flip-card-front"><div class="project-label">FINAL PROJECT · DAY 1</div><h4>Day 1: Concept &amp; Base Portrait</h4><p>Choose your element and prepare your portrait.</p><span class="flip-hint">Tap to flip</span></div>
+<div class="flip-card-back"><p><strong>Objective:</strong> Plan a surreal Elemental Being and prepare the portrait you will fuse with it.</p><ul><li>Pick one elemental force (fire, water, air, earth…).</li><li>Prepare a clean, well-lit portrait and collect reference images.</li></ul><div class="wk-act"><button type="button" class="wk-btn p" onclick="event.stopPropagation();hmOpenProject('elemental')">📁 Open the project page</button></div></div></div></div>
+<div class="flip-card project-day" data-day="16-2"><div class="flip-card-inner">
+<div class="flip-card-front"><div class="project-label">FINAL PROJECT · DAY 2</div><h4>Day 2: Fusion, Finish &amp; Submit</h4><p>Blend the portrait with the element so it feels real.</p><span class="flip-hint">Tap to flip</span></div>
+<div class="flip-card-back"><p><strong>Objective:</strong> Finish the capstone project of Class of 2028.</p><ul><li>Fuse the element with the portrait using masks and blend modes.</li><li>Add your character name and a short origin story.</li><li>Submit via Group Projects tab → “Week 16 · Elemental Portraits”.</li></ul><div class="wk-act"><button type="button" class="wk-btn p" onclick="event.stopPropagation();hmOpenProject('elemental')">📁 Open the project page</button></div></div></div></div>
 </div>
 </div>
 </div><!-- /month-block m4 -->
@@ -1543,9 +1601,9 @@ img,video,canvas,svg,iframe{max-width:100%}
 </div>
 <div class="project-board-wrap"><div class="project-board-title"><strong>Phase 1 Project Submission</strong><span>Individual · 15 marks</span></div><div class="assignment-board" id="assignmentBoard"></div></div>
 <div class="subnav" id="projSubnav">
-<button class="active" data-proj="world">Week 6 · Around the World with a Twist</button>
-<button data-proj="mockup">Week 6 · Phone / iPad Mockup</button>
-<button data-proj="gojo">Week 9 · Gojo Pop-Out Project</button>
+<button class="active" data-proj="world">Week 7 · Around the World with a Twist</button>
+<button data-proj="mockup">Week 9 · Phone / iPad Mockup</button>
+<button data-proj="gojo">Week 10 · Gojo Pop-Out Project</button>
 <button data-proj="elemental">Week 16 · Elemental Portraits (Final Project)</button>
 </div>
 <!-- ---- PROJECT 1: WEEK 6 INDIVIDUAL CITY COMPOSITION ---- -->
@@ -1585,7 +1643,7 @@ img,video,canvas,svg,iframe{max-width:100%}
 <div class="atw-container">
 <header>
 <div>
-<h1>Week 6 — Around the World with a Twist · Individual Project</h1>
+<h1>Week 7 — Around the World with a Twist · Individual Project</h1>
 <p class="lead">Individual project instructions, 15-mark rubric, 50 city choices, and submission checklist for Class of 2028.</p>
 </div>
 </header>
@@ -1640,7 +1698,7 @@ img,video,canvas,svg,iframe{max-width:100%}
 </div>
 </div>
 </div>
-<!-- ---- PROJECT 2: PHONE/IPAD MOCKUP (Week 6) ---- -->
+<!-- ---- PROJECT 2: PHONE/IPAD MOCKUP (Week 9) ---- -->
 <div class="proj-view" id="proj-mockup">
 <style>
         .sp-scope{ --sp-accent:#ff7a2d; --sp-accent2:#ff9b57; font-family:'Inter',sans-serif; }
@@ -1684,7 +1742,7 @@ img,video,canvas,svg,iframe{max-width:100%}
 <div class="header">
 <div class="title">
 <div aria-hidden="true" class="logo-badge">PM</div>
-<div><h1>Week 6 — Phone / iPad Mockup Student Project</h1>
+<div><h1>Week 9 — Phone / iPad Mockup Student Project</h1>
 <p class="lead">Design your own mockup inspired by the images below. Let the visuals guide your creativity — focus on composition, lighting, and mood.</p></div>
 </div>
 <div style="text-align:right">
@@ -1762,7 +1820,7 @@ img,video,canvas,svg,iframe{max-width:100%}
 </div>
 </div>
 </div>
-<!-- ---- PROJECT 1: GOJO (Week 9) ---- -->
+<!-- ---- PROJECT 1: GOJO (Week 10) ---- -->
 <div class="proj-view" id="proj-gojo">
 <style>
         .gj-scope{font-family:'Poppins',sans-serif;color:#081726;}
@@ -1800,7 +1858,7 @@ img,video,canvas,svg,iframe{max-width:100%}
 <header>
 <div aria-hidden="true" class="logo">GJ</div>
 <div>
-<h1>Week 9 — Gojo Pop-Out Project (Group Project)</h1>
+<h1>Week 10 — Gojo Pop-Out Project (Group Project)</h1>
 <p class="lead">Propose 3 design ideas and attach draft images. Submit your files directly to the class Google Drive folder to get the rubric.</p>
 </div>
 </header>
@@ -2140,6 +2198,33 @@ img,video,canvas,svg,iframe{max-width:100%}
 <div class="readme-vocab"><h4>Revision Vocabulary</h4><p><span class="vocab">PSD</span><span class="vocab-def"> — Editable Photoshop master file that keeps layers.</span></p><p><span class="vocab">Export</span><span class="vocab-def"> — A final-use copy (JPG, PNG) made for delivery.</span></p><p><span class="vocab">Non-Destructive Editing</span><span class="vocab-def"> — Editing that keeps original information available.</span></p><p><span class="vocab">Raster Image / Pixel</span><span class="vocab-def"> — An image built from a grid of colored pixels.</span></p><p><span class="vocab">White Fringe</span><span class="vocab-def"> — Light outline left after background removal; fix with Filter → Other → Minimum.</span></p><p><span class="vocab">Gaussian Blur</span><span class="vocab-def"> — Blur filter used to soften detail and create depth.</span></p><p><span class="vocab">Transform</span><span class="vocab-def"> — Changes size, position, rotation or perspective.</span></p><p><span class="vocab">Puppet Warp</span><span class="vocab-def"> — Pin-based tool for flexible reshaping.</span></p></div>
 <div class="note-tip"><strong>Revision checklist:</strong> Can you save a PSD and export a JPG? Can you explain destructive vs. non-destructive? Can you remove a background, clean the white fringe and add depth with Gaussian Blur? Can you use Transform and Puppet Warp without damaging the original? Note anything unsure in your feedback to the instructor.</div>
 </div>
+<div class="note-section collapsed" data-reading="readme-week6" data-week="6" id="readme-week6">
+<div class="note-actions">
+<button class="note-dl" onclick="downloadSectionPDF('readme-week6','Week 6 — Face Retouch, Lip Retouch &amp; Dress Change')">Download PDF</button>
+<button class="note-mark" data-reading-key="readme-week6" onclick="markReadingRead('readme-week6', this)"><span aria-hidden="true" class="nm-circle"></span><span class="nm-label">Mark as Read</span></button>
+</div>
+<h3><span class="week-badge">WEEK 6</span> Face Retouch, Lip Retouch &amp; Dress Change</h3>
+<p>Week 6 teaches portrait retouching and clothing edits. Day 1 is face and lip retouching; Day 2 is changing a dress by adding a design and changing its colour. Work on separate layers so every edit can be undone.</p>
+<div class="readme-grid">
+<article class="readme-lesson-card"><div class="readme-card-icon">01</div><div><h4>Face Retouching</h4><p>Remove blemishes with the <strong>Healing Brush</strong>, then use <strong>Frequency Separation</strong> to even out skin tone on the colour layer without losing skin texture on the texture layer. Finish with <strong>Dodge &amp; Burn</strong> to add soft light and shadow.</p><ol class="note-steps"><li>Duplicate the photo and keep the original safe.</li><li>Heal blemishes on their own layer.</li><li>Use Frequency Separation to smooth tone, not texture.</li><li>Add gentle Dodge &amp; Burn on separate layers.</li></ol><div class="wk-act"><button type="button" class="wk-btn p" onclick="hmOpenScreencast('1MuJkKq7MsJtB-WRZ_8oHmi5X-f0up7h5')">▶ Open screencast</button></div></div></article>
+<article class="readme-lesson-card"><div class="readme-card-icon">02</div><div><h4>Lip Retouching</h4><p>Smooth the lip texture, balance the colour and add a soft highlight so the lips look natural, not painted. Keep the changes small and check the result at 100% zoom.</p></div></article>
+<article class="readme-lesson-card"><div class="readme-card-icon">03</div><div><h4>Dress Change — Add a Design</h4><p>Place your artwork on the dress and use a <strong>displacement map</strong> so it follows the folds. Match the shadows, highlights and fabric texture with <strong>blend modes</strong> and a <strong>layer mask</strong> so the design looks printed on the cloth.</p><div class="wk-act"><button type="button" class="wk-btn p" onclick="hmOpenScreencast('1u3xzfCcBGat9p5z7Vk08Pye5pVdoXowM')">▶ Part 1</button><button type="button" class="wk-btn p" onclick="hmOpenScreencast('1EsXq8eZ_IXs79tvvjKxfozooqOwCUQeT')">▶ Part 2</button></div></div></article>
+<article class="readme-lesson-card"><div class="readme-card-icon">04</div><div><h4>Dress Change — Change the Colour</h4><p>Select the clothing with <strong>Select Subject</strong> or <strong>Color Range</strong>, then change its colour with a <strong>Hue/Saturation adjustment layer</strong>. Clean the selection edge to avoid colour spill, and keep the folds and texture visible.</p><div class="wk-act"><button type="button" class="wk-btn p" onclick="hmOpenScreencast('1bTuJ8yUYKXAOakIObT6kz_vh8NehMEiD')">▶ Part 1</button><button type="button" class="wk-btn p" onclick="hmOpenScreencast('1T5-Q5M56LtTljcvAnAjURpwmWguRN80o')">▶ Part 2</button></div></div></article>
+</div>
+<div class="readme-vocab"><div class="vocab-title">Week 6 Vocabulary</div><p>
+<span class="vocab" data-def="A tool that samples nearby pixels and blends them in to remove blemishes." tabindex="0">Healing Brush</span><span class="vocab-def"> — A tool that samples nearby pixels and blends them in to remove blemishes.</span><br/>
+<span class="vocab" data-def="Splitting a photo into a colour/tone layer and a texture layer so each can be retouched separately." tabindex="0">Frequency Separation</span><span class="vocab-def"> — Splitting a photo into a colour/tone layer and a texture layer so each can be retouched separately.</span><br/>
+<span class="vocab" data-def="Lightening (dodge) and darkening (burn) small areas to shape light and shadow." tabindex="0">Dodge & Burn</span><span class="vocab-def"> — Lightening (dodge) and darkening (burn) small areas to shape light and shadow.</span><br/>
+<span class="vocab" data-def="Smoothing lip texture and balancing colour and highlights for a natural finish." tabindex="0">Lip Retouching</span><span class="vocab-def"> — Smoothing lip texture and balancing colour and highlights for a natural finish.</span><br/>
+<span class="vocab" data-def="A greyscale image that makes a design bend with the folds of the fabric." tabindex="0">Displacement Map</span><span class="vocab-def"> — A greyscale image that makes a design bend with the folds of the fabric.</span><br/>
+<span class="vocab" data-def="A tool that automatically selects the main person or object." tabindex="0">Select Subject</span><span class="vocab-def"> — A tool that automatically selects the main person or object.</span><br/>
+<span class="vocab" data-def="A selection method that picks pixels by colour." tabindex="0">Color Range</span><span class="vocab-def"> — A selection method that picks pixels by colour.</span><br/>
+<span class="vocab" data-def="An adjustment that changes colour (hue) and colour strength (saturation)." tabindex="0">Hue/Saturation</span><span class="vocab-def"> — An adjustment that changes colour (hue) and colour strength (saturation).</span><br/>
+<span class="vocab" data-def="A non-destructive layer that changes the look of the layers beneath it." tabindex="0">Adjustment Layer</span><span class="vocab-def"> — A non-destructive layer that changes the look of the layers beneath it.</span>
+</p></div>
+<div class="note-tip"><strong>Week 6 focus:</strong> good retouching is invisible. Make small changes on separate layers, zoom in to check, then zoom out to see whether the result still looks natural.</div>
+</div>
+
 </section>
 <!-- ========== SCREENCASTS (CINEMATIC THEATER PLAYER) ========== -->
 <section class="view" id="screencasts">
@@ -2309,11 +2394,11 @@ document.getElementById('projSubnav').addEventListener('click', e=>{
 });
 /* ================= PROGRESS / FLIP CARDS / LAYERS PANEL ================= */
 const weekMeta = {
-  1:'Graphic Design Software & Foundations', 2:'Photopea, Pixels & Layers', 3:'Around the World with a Twist',
-  4:'Advanced Portrait Editing', 5:'Check-In & Check-Out', 6:'Phone / iPad Mockup',
-  7:'Vanishing Point Text', 8:'Independent Study', 9:'Gojo Pop-Out Project',
-  10:'Double Exposure & Poster Design', 11:'Coming Soon', 12:'Coming Soon',
-  13:'Coming Soon', 14:'Coming Soon', 15:'Coming Soon', 16:'Coming Soon'
+  1:'Graphic Design Software & Foundations', 2:'Photopea, Pixels & Layers', 3:'Background Removal & Compositing',
+  4:'Advanced Portrait Editing', 5:'Check-In & Check-Out', 6:'Face Retouch, Lip Retouch & Dress Change',
+  7:'Around the World with a Twist (Project)', 8:'Independent Study', 9:'Phone / iPad Mockup (Project)',
+  10:'Gojo Pop-Out Project', 11:'Text on Any Surface (Vanishing Point)', 12:'Double Exposure & Poster Design',
+  13:'Coming Soon', 14:'Coming Soon', 15:'Coming Soon', 16:'Elemental Portraits (Final Project)'
 };
 const TOTAL_WEEKS = 16;
 const COURSE_START_DATE = new Date('2026-09-14T00:00:00'); // Monday, Sept 14, 2026 = Week 1
@@ -4632,7 +4717,7 @@ const screencastPlaylist = [
   { id:'1y13t7n5nTN_3oppd_Nx7AJ1Yfd7nSwdE', label:'How to Create Realistic T-Shirt Mockups', desc:'Build custom, fully editable apparel mockups using Smart Objects and Displacement Maps. Learn how to set up reusable template files where graphics instantly conform to garment folds, highlights, and shadow layers with a single click.' }
 ];
 const allScreencasts = screencastPlaylist;
-const RELEASED_SCREENCAST_IDS = new Set([allScreencasts[0]?.id, allScreencasts[1]?.id, '1GPnPtOIV2Sgb3uyPIpb2wnTt8riCEXTo']);
+const RELEASED_SCREENCAST_IDS = new Set([allScreencasts[0]?.id, allScreencasts[1]?.id, '1GPnPtOIV2Sgb3uyPIpb2wnTt8riCEXTo', '1MuJkKq7MsJtB-WRZ_8oHmi5X-f0up7h5','1u3xzfCcBGat9p5z7Vk08Pye5pVdoXowM','1EsXq8eZ_IXs79tvvjKxfozooqOwCUQeT','1bTuJ8yUYKXAOakIObT6kz_vh8NehMEiD','1T5-Q5M56LtTljcvAnAjURpwmWguRN80o']);
 function getReleasedScreencasts(){ return allScreencasts.filter(v=>RELEASED_SCREENCAST_IDS.has(v.id)); }
 window.screencastQuizVocabulary = {
   '1khSdxt8enMJ7NW60dp-gLxFGEKmbOzOJ': [
@@ -4652,6 +4737,51 @@ window.screencastQuizVocabulary = {
     {term:'Print Layout',def:'The arrangement of the finished photo for the required physical print.'},
     {term:'Exact Dimensions',def:'The required width and height that the final passport image must meet.'},
     {term:'Alignment',def:'Positioning the image elements consistently within the required format.'}
+  ],
+  '1MuJkKq7MsJtB-WRZ_8oHmi5X-f0up7h5': [
+    {term:"Healing Brush",def:"A tool that samples nearby pixels and blends them in to remove blemishes."},
+    {term:"Frequency Separation",def:"Splitting an image into a colour/tone layer and a texture layer so each can be retouched separately."},
+    {term:"Dodge & Burn",def:"Lightening (dodge) and darkening (burn) small areas to shape light and shadow."},
+    {term:"Texture Layer",def:"The layer that holds fine skin detail such as pores."},
+    {term:"Colour Layer",def:"The layer that holds colour and tone with the fine detail removed."},
+    {term:"Lip Retouching",def:"Smoothing lip texture and balancing colour and highlights for a natural finish."},
+    {term:"Non-Destructive Retouching",def:"Editing on separate layers so the original photo is never damaged."}
+  ],
+  '1u3xzfCcBGat9p5z7Vk08Pye5pVdoXowM': [
+    {term:"Displacement Map",def:"A greyscale image that makes a design bend and wrap around the folds of the fabric."},
+    {term:"Clothing Fabric",def:"The surface the design is applied to, which has its own folds, shadows and texture."},
+    {term:"Pattern / Logo",def:"The graphic artwork placed onto the clothing."},
+    {term:"Warp",def:"A transform that bends artwork to follow the shape of the dress."},
+    {term:"Layer Mask",def:"Hides parts of the design so it stays inside the dress edges."},
+    {term:"Smart Object",def:"A layer that keeps the original artwork editable after scaling or warping."},
+    {term:"Realistic Placement",def:"Making the artwork follow the fabric so it does not look pasted on."}
+  ],
+  '1EsXq8eZ_IXs79tvvjKxfozooqOwCUQeT': [
+    {term:"Ambient Lighting",def:"The overall light in the scene that the design must match."},
+    {term:"Shadow Folds",def:"The dark creases in the fabric that must show through the design."},
+    {term:"Micro-Texture",def:"Fine fabric detail that makes the design feel printed on the cloth."},
+    {term:"Blend Mode",def:"A setting that controls how the design layer mixes with the layers below."},
+    {term:"Multiply",def:"A blend mode that darkens and lets shadows show through."},
+    {term:"Overlay",def:"A blend mode that adds contrast while keeping texture."},
+    {term:"Highlights",def:"The bright areas of the fabric that should stay visible over the design."}
+  ],
+  '1bTuJ8yUYKXAOakIObT6kz_vh8NehMEiD': [
+    {term:"Select Subject",def:"A tool that automatically selects the main person or object."},
+    {term:"Color Range",def:"A selection method that picks pixels by colour."},
+    {term:"Hue/Saturation",def:"An adjustment that changes colour (hue) and colour strength (saturation)."},
+    {term:"Adjustment Layer",def:"A non-destructive layer that changes the colour of what is beneath it."},
+    {term:"Layer Mask",def:"Limits the colour change to the clothing only."},
+    {term:"Selection Edge",def:"The boundary of the selection, which must be clean to avoid colour spill."},
+    {term:"Hue Shift",def:"Moving the colour around the colour wheel, for example red to blue."}
+  ],
+  '1T5-Q5M56LtTljcvAnAjURpwmWguRN80o': [
+    {term:"Dark to Bright Colours",def:"A harder change that needs extra steps because dark fabric has little colour information."},
+    {term:"Luminosity",def:"The brightness of a colour."},
+    {term:"Colorize",def:"A Hue/Saturation option that tints an area with one chosen colour."},
+    {term:"Selective Colour",def:"An adjustment that changes specific colour ranges."},
+    {term:"Colour Fringing",def:"Unwanted coloured edges left around a selection."},
+    {term:"Refine Edge / Mask",def:"Tools that clean the selection edge for a natural result."},
+    {term:"Fabric Detail",def:"Folds and texture that must stay visible after the colour change."}
   ]
 };
 const screencastQuizPool = allScreencasts.map(v=>({ key:v.id, title:v.label, desc:v.desc }));
@@ -5065,9 +5195,9 @@ const SECTION_B_CLASSROOM_URL = 'https://classroom.google.com/c/ODg5MDAyNjgwNDU5
 const SECTION_C_CLASSROOM_URL = 'https://classroom.google.com/c/ODg5MDA0NTM0Mjc5?cjc=547gadfs';
 const SECTION_D_CLASSROOM_URL = 'https://classroom.google.com/c/ODg5MDAzNjk4NTky?cjc=f7ese2pk';
 const HM_ASSIGNMENTS = [
- {id:'w6-individual-city-composition',week:6,title:'Phase 1 — Week 6 Individual City Composition',desc:'Create an individual portrait composition using one of 50 city choices. Remove the background, integrate the subject into the city scene, refine the edge, redesign clothing patterns, and use realistic depth.',skills:['Background Removal','Smudge Tool','Minimum','Gaussian Blur','Portrait Retouching'],checks:['Subject isolated','City background integrated','Clothing pattern redesigned','Final PSD + JPG/PNG ready'],submissionUrl:SECTION_B_CLASSROOM_URL,section:'Section B',marks:15,individual:true},
- {id:'w6-phone-mockup',week:6,title:'Phase 2 — Phone / iPad Mockup Studio',desc:'Create a polished device mockup using the techniques taught in the released lessons and practice files.',skills:['Layers','Masks','Composition','Export'],checks:['Mockup built','Layers organized','Final export ready'],submissionUrl:SECTION_C_CLASSROOM_URL,section:'Section C',marks:15},
- {id:'w9-gojo-popout',week:9,title:'Phase 3 — Gojo Pop-Out Project',desc:'Build the assigned pop-out composition with clean masking, depth, and a presentation-ready final export.',skills:['Selection','Masking','Depth','Export'],checks:['Subject isolated','Depth created','Final export ready'],submissionUrl:SECTION_D_CLASSROOM_URL,section:'Section D',marks:15}
+ {id:'w6-individual-city-composition',week:7,title:'Phase 1 — Week 7 Around the World (Individual City Composition)',desc:'Create an individual portrait composition using one of 50 city choices. Remove the background, integrate the subject into the city scene, refine the edge, redesign clothing patterns, and use realistic depth.',skills:['Background Removal','Smudge Tool','Minimum','Gaussian Blur','Portrait Retouching'],checks:['Subject isolated','City background integrated','Clothing pattern redesigned','Final PSD + JPG/PNG ready'],submissionUrl:SECTION_B_CLASSROOM_URL,section:'Section B',marks:15,individual:true},
+ {id:'w6-phone-mockup',week:9,title:'Phase 2 — Week 9 Phone / iPad Mockup Studio',desc:'Create a polished device mockup using the techniques taught in the released lessons and practice files.',skills:['Layers','Masks','Composition','Export'],checks:['Mockup built','Layers organized','Final export ready'],submissionUrl:SECTION_C_CLASSROOM_URL,section:'Section C',marks:15},
+ {id:'w9-gojo-popout',week:10,title:'Phase 3 — Week 10 Gojo Pop-Out Project',desc:'Build the assigned pop-out composition with clean masking, depth, and a presentation-ready final export.',skills:['Selection','Masking','Depth','Export'],checks:['Subject isolated','Depth created','Final export ready'],submissionUrl:SECTION_D_CLASSROOM_URL,section:'Section D',marks:15}
 ];
 const HM_PROJECTS = HM_ASSIGNMENTS;
 function hmOpenWeek(w){ return typeof isCourseWeekOpen==='function' ? isCourseWeekOpen(w) : w<=1; }
@@ -5979,24 +6109,24 @@ html.hma-hide .app,html.hma-hide .wq-modal,html.hma-hide .phase-modal-backdrop,h
         var oldLabel=p5back.querySelector('.project-label'); if(oldLabel) oldLabel.textContent='PRACTICE DAY';
       }
     }
-    /* Week 6: both days are project days. */
-    if(typeof weekMeta!=='undefined') weekMeta[6]='Project Week';
-    var h6=document.querySelector('#week6 h2.wk');
-    if(h6&&h6.firstChild&&h6.firstChild.nodeType===3) h6.firstChild.nodeValue='Week 6 — Individual Project';
-    var c6a=document.querySelector('#week6 .flip-card[data-day="6-1"]'), c6b=document.querySelector('#week6 .flip-card[data-day="6-2"]');
-    [c6a,c6b].forEach(function(card){ if(card){ card.classList.remove('practice-day'); card.classList.add('project-day'); } });
-    if(c6a){
-      c6a.querySelector('.flip-card-front').innerHTML='<div class="project-label">PROJECT DAY</div><h4>Day 1: Individual Phase One Project</h4><p>Begin your individual Phase One project and apply the skills from Weeks 1–4.</p><span class="flip-hint">Tap to flip</span>';
-      c6a.querySelector('.flip-card-back').innerHTML='<p><strong>Objective:</strong> Apply everything from Weeks 1–4 in one finished project.</p><ul><li>Choose one of the 50 cities and replace your portrait background.</li><li>Refine the edges, retouch the face naturally and redesign the clothing pattern.</li><li>Work non-destructively and keep your editable PSD.</li><li>Continue your individual project work from the Projects tab.</li></ul><div class="w6-actions"><button type="button" class="hbtn primary" onclick="event.stopPropagation();goTab(\'projects\')">Open Phase One Project</button></div>';
+    /* Week 7 (Around the World with a Twist): both days are project days. (Week 6 is now Face / Lip Retouch & Dress Change.) */
+    if(typeof weekMeta!=='undefined') weekMeta[7]='Around the World with a Twist (Project Week)';
+    var c7a=document.querySelector('#week7 .flip-card[data-day="7-1"]'), c7b=document.querySelector('#week7 .flip-card[data-day="7-2"]');
+    [c7a,c7b].forEach(function(card){ if(card){ card.classList.remove('practice-day'); card.classList.add('project-day'); } });
+    var BTN_SC='<div class="wk-title">Open this lesson</div><div class="wk-act"><button type="button" class="wk-btn p" onclick="event.stopPropagation();hmOpenScreencast(\'1khSdxt8enMJ7NW60dp-gLxFGEKmbOzOJ\')">▶ Screencast: Change Background &amp; Smudge Tool</button><button type="button" class="wk-btn q" onclick="event.stopPropagation();hmQuiz(\'video\',\'1khSdxt8enMJ7NW60dp-gLxFGEKmbOzOJ\')">🧠 Quiz</button></div>';
+    var BTN_PJ='<div class="wk-act"><button type="button" class="wk-btn p" onclick="event.stopPropagation();hmOpenProject(\'world\')">📁 Open the project page</button></div>';
+    if(c7a){
+      c7a.querySelector('.flip-card-front').innerHTML='<div class="project-label">PROJECT DAY</div><h4>Day 1: Around the World — Individual Project</h4><p>Choose one of the 50 cities and replace your portrait background.</p><span class="flip-hint">Tap to flip</span>';
+      c7a.querySelector('.flip-card-back').innerHTML='<p><strong>Objective:</strong> Apply everything from Weeks 1–6 in one finished project.</p><ul><li>Choose one of the 50 cities and cut out your portrait cleanly.</li><li>Clean the white fringe (Smudge Tool, Filter → Other → Minimum).</li><li>Use your Week 6 retouching skills to finish the face naturally.</li><li>Work non-destructively and keep your editable PSD.</li></ul>'+BTN_SC+BTN_PJ;
     }
-    if(c6b){
-      c6b.querySelector('.flip-card-front').innerHTML='<div class="project-label">PROJECT DAY</div><h4>Day 2: Individual Phase One Project</h4><p>Continue, refine and prepare your Phase One project for submission.</p><span class="flip-hint">Tap to flip</span>';
-      c6b.querySelector('.flip-card-back').innerHTML='<p><strong>Objective:</strong> Finish and polish your individual Phase One project.</p><ul><li>Complete the city composition and clean all cutout edges.</li><li>Check scale, lighting, colour, perspective and depth.</li><li>Save your final editable PSD and export a high-resolution JPG or PNG.</li><li>Submit your finished individual project from the Projects tab.</li></ul><div class="w6-actions"><button type="button" class="hbtn primary" onclick="event.stopPropagation();goTab(\'projects\')">Open Phase One Project</button></div>';
+    if(c7b){
+      c7b.querySelector('.flip-card-front').innerHTML='<div class="project-label">PROJECT DAY</div><h4>Day 2: Blend, Add Depth &amp; Submit</h4><p>Continue, refine and submit your Around the World project.</p><span class="flip-hint">Tap to flip</span>';
+      c7b.querySelector('.flip-card-back').innerHTML='<p><strong>Objective:</strong> Finish and polish your individual project.</p><ul><li>Check scale, lighting, colour, perspective and depth.</li><li>Use Gaussian Blur on the far background.</li><li>Redesign the clothing pattern if your project asks for it.</li><li>Save your editable PSD and export a high-resolution JPG or PNG, then submit it from the Projects tab (Week 7 · Around the World with a Twist).</li></ul>'+BTN_PJ;
     }
   }catch(e){ console.error(e); }
 
   /* ====== 4) Phase 1 assessment: 20 questions drawn from a bank of 100, different for every student ====== */
-  var BANK=[[1, "Which program is Adobe's industry-standard raster photo-editing software?", "Photoshop", "Illustrator", "InDesign", "Photopea"], [1, "Which program is Adobe's vector-based illustration software?", "Illustrator", "Photoshop", "InDesign", "Canva"], [1, "Which free, browser-based editor can open Photoshop (PSD) files without installing anything?", "Photopea", "Illustrator", "InDesign", "Premiere Pro"], [1, "Which Adobe program is built for multi-page documents such as magazines and books?", "InDesign", "Photoshop", "Illustrator", "Photopea"], [1, "Which tool is a beginner-friendly, drag-and-drop design app for quick social-media graphics?", "Canva", "InDesign", "Illustrator", "Photoshop"], [1, "Which Photoshop alternative do we use in this class?", "Photopea", "Canva", "InDesign", "Illustrator"], [1, "Graphic design is best described as…", "visual communication using images, typography and layout to convey a message", "only decorating a page so it looks pretty", "typing documents in a word processor", "editing video with sound effects"], [1, "Typography is…", "the art of arranging type so it is readable and visually appealing", "the process of removing backgrounds", "a type of photo filter", "the file format of a Photoshop document"], [1, "In design, “layout” means…", "how elements are arranged and positioned on a page or screen", "the colour of the canvas only", "the size of the saved file", "a type of blur filter"], [1, "“Balance” in design refers to…", "how visual weight is distributed across a design", "how fast a file loads", "how many layers a file has", "the brightness of a photo only"], [1, "Contrast is used to…", "make one element stand out by making it different from the rest", "make every element look identical", "reduce the file size", "merge layers together"], [1, "Good graphic design is mainly about…", "communicating a message clearly", "using as many fonts as possible", "filling every empty space", "using only the brightest colours"], [1, "Which kind of software suits a logo that must scale to any size without blurring?", "a vector tool", "a raster photo editor", "a spreadsheet", "a video player"], [1, "Which kind of software suits editing and retouching photographs?", "a raster editor", "a vector-only tool", "a text editor", "a spreadsheet"], [1, "What is a PSD file?", "an editable Photoshop document that keeps layers", "a flattened image for the web", "a video file", "a font file"], [1, "Which menu path opens an existing image?", "File → Open", "Filter → Open", "Edit → Export", "Layer → Open"], [1, "What does “Save” do?", "writes the working document to a file so your editable work is preserved", "creates a flattened web copy only", "deletes hidden layers", "changes the image resolution"], [1, "What does “Export” do?", "creates a delivery copy in a format such as JPG or PNG", "permanently deletes the PSD", "opens a new blank canvas", "merges all layers in the PSD"], [1, "Which file should you keep as your editable master?", "the PSD", "the exported JPG", "a screenshot of the design", "the flattened PNG"], [1, "Which format is most common for sharing a photograph online with a small file size?", "JPG", "PSD", "AI", "INDD"], [1, "Which export format supports transparent backgrounds?", "PNG", "JPG", "DOCX", "MP3"], [1, "Which path creates a JPG or PNG copy of your design?", "File → Export → Export As", "File → Close", "Edit → Undo", "Select → Inverse"], [1, "Before confirming an export you should check…", "dimensions, transparency, quality and filename", "only the brightness of your monitor", "nothing — export settings never matter", "only the number of layers"], [1, "Why should you not replace your editable master with a flattened export?", "you would lose layers and editability", "flattened files cannot be opened", "it makes the computer slower", "it deletes your fonts permanently"], [1, "Why choose a clear filename and a folder you can find again when saving?", "so you can find and reopen the file later", "because Photopea requires emojis in names", "to make the image sharper", "to increase the resolution"], [2, "The arrangement of menus, panels and tools you work in is called the…", "workspace", "canvas size", "layer style", "histogram"], [2, "What are “panels” in Photopea?", "dockable windows such as Layers, History and Properties", "the files saved in your folder", "the pixels in a photo", "brush bristles"], [2, "A pixel is…", "the smallest square of coloured light that makes up a raster image", "a mathematical path", "a type of font", "a Photoshop plug-in"], [2, "A raster image is…", "an image made from a grid of pixels", "an image made only of mathematical paths", "a text document", "a 3D model"], [2, "Vector graphics are…", "built from math-based paths that scale to any size without blurring", "made of a fixed grid of pixels", "only used for photographs", "always blurry when enlarged"], [2, "What happens when you enlarge a raster image too much?", "the pixels become visible and the image loses sharpness", "it becomes sharper", "it automatically turns into a vector", "nothing changes"], [2, "Why does learning Photopea help you with Photoshop?", "its layout mirrors Photoshop, so skills transfer directly", "it uses a completely different tool set", "it can only draw vectors", "it replaces the need for layers"], [2, "A layer is…", "a stacked, independent piece of an image", "the final flattened picture", "a type of brush", "a saved folder on your computer"], [2, "Destructive editing is…", "editing that permanently changes the original pixels", "editing that always uses adjustment layers", "editing done only on a duplicate", "editing that never changes pixels"], [2, "Non-destructive editing…", "preserves the original so changes can be undone or adjusted later", "permanently changes pixels", "flattens the file first", "can only be done in Illustrator"], [2, "A Group in the Layers panel is used to…", "organise several layers into one folder", "delete layers", "blur layers", "export layers as video"], [2, "Opacity controls…", "how visible a layer is, from hidden to fully shown", "the size of the canvas", "the file type", "the DPI of the image"], [2, "Which is a non-destructive method?", "using an adjustment layer or a layer mask", "painting directly on the only copy of a layer", "flattening before editing", "saving over the original JPG"], [2, "Which is an example of a destructive edit?", "painting directly on the only copy of a raster layer and saving over it", "using a layer mask to hide an area", "adding an adjustment layer", "editing a smart object"], [2, "Why do layers let you work more freely?", "you can edit non-linearly because nothing is permanent until you flatten", "they make the file smaller", "they stop you making mistakes", "they remove the need to save"], [2, "What does flattening an image do?", "merges all layers into one, so they can no longer be edited separately", "creates extra layers", "increases the resolution", "restores the original photo"], [2, "Which panel shows the stack of layers in your document?", "the Layers panel", "the Swatches panel", "the Character panel", "the Info panel"], [2, "Setting a layer's opacity to 0% will…", "make it fully transparent (hidden) without deleting it", "delete the layer", "double its size", "flatten the image"], [2, "Why is it good practice to name your layers clearly?", "it keeps files organised and easier to edit", "it increases image resolution", "it is required to export", "it makes brushes smoother"], [2, "A photograph taken with a camera is made of…", "pixels", "mathematical paths only", "vectors only", "text characters"], [2, "Which feature hides part of a layer without erasing its pixels?", "a layer mask", "the Eraser tool", "flattening", "Save As"], [2, "If you may want to change your mind later, you should…", "prefer non-destructive techniques", "flatten first", "work on your only copy", "delete the original"], [2, "Clicking the eye icon beside a layer…", "hides or shows the layer without deleting it", "deletes the layer", "merges it down", "locks it forever"], [2, "The History panel is mainly used to…", "step back through your recent edits", "change the canvas colour", "export the final image", "install fonts"], [2, "When is a vector graphic a better choice than a raster image?", "when it must scale to any size without losing quality", "when you are editing a portrait photo", "when you need millions of camera colour details", "when you want pixels to be visible"], [3, "Background removal means…", "isolating the subject from its original background so it can be placed into another scene", "making the whole image blurry", "changing the file format", "flattening all layers"], [3, "The Smudge Tool…", "pushes and blends pixels like wet paint", "creates new vector shapes", "exports the image", "crops the canvas"], [3, "A “white fringe” is…", "a thin light outline left around a cutout after the old background is removed", "a type of font", "a border added on purpose", "a blur setting"], [3, "What does Filter → Other → Minimum do to a mask edge?", "it contracts the edge inward slightly to remove leftover background pixels", "it enlarges the subject", "it adds a drop shadow", "it sharpens the whole image"], [3, "Why use a layer mask for a cutout instead of the Eraser?", "the cutout stays reversible", "masks make files smaller", "erasing is not possible in Photopea", "masks change the colours"], [3, "Gaussian Blur is…", "a soft blur that reduces detail and simulates depth", "a sharpening filter", "a way to rotate a layer", "a file export format"], [3, "Depth of field describes…", "the relationship between foreground, subject and background and how sharp each appears", "the number of layers", "the file size", "brightness only"], [3, "Compositing means…", "moving a cut-out subject into a new scene and blending it in", "changing the file name", "compressing a JPG", "printing a document"], [3, "When checking cutout edges you should zoom in to about…", "200% or more", "10%", "the smallest size possible", "exactly 50%"], [3, "Why clean the edge before adding blur?", "blur should create depth, not hide a poorly removed background", "blur removes the need for masks", "edges never matter", "blur always fixes fringes"], [3, "To suggest distance in a composite, which elements are blurred more?", "those that are farther from the camera", "those closest to the camera and in focus", "only the subject", "none of them"], [3, "To make a subject look like it belongs in a new scene you should match…", "scale, lighting, colour, perspective and sharpness", "only the file name", "only the canvas size", "nothing — placement is enough"], [3, "Which tool can blend delicate hair or fur edges after a cutout?", "the Smudge Tool with controlled brush settings", "the Crop Tool", "the Text Tool", "the Rectangle Tool"], [3, "What is a risk of using the Smudge Tool carelessly?", "smearing important details", "increasing resolution", "creating vector paths", "deleting the file"], [3, "What does a “Select Subject” feature do?", "automatically detects and separates the subject from the background", "changes the DPI", "adds text", "exports a PDF"], [3, "What does Defringe / Contract do to a selection?", "shrinks the edge inward to remove leftover background pixels", "expands the selection outward", "changes the colour mode", "duplicates the layer"], [3, "What is the Week 3 project called?", "Around the World with a Twist", "Passport Perfect", "Neon Nights", "Elemental Portraits"], [3, "A cutout looks “pasted on”. What is the most likely cause?", "mismatched scale, lighting or colour with the new background", "the file is saved as a PSD", "too many layers", "the canvas is too big"], [3, "Why is blurring the entire image equally a poor way to create depth?", "depth comes from selective blur — distant areas softer than the subject", "blur is not available in Photopea", "it only increases file size", "it removes all colours"], [3, "The screencast “Change Background & Smudge Tool Basics” teaches you to…", "extract subjects and restore fine hair or fur edges for seamless integration", "create passport layouts", "whiten teeth", "build neon text"], [3, "In a compositing workflow, what comes first?", "isolating the subject with a clean selection or mask", "adding Gaussian Blur", "exporting the final image", "adding text"], [3, "The white fringe is most noticeable when the subject is placed on a…", "darker or colourful background", "pure white background", "blank transparent canvas only", "printed page"], [3, "How should the Minimum filter normally be applied to a mask?", "with a small value so the subject is not eaten away", "with the largest value possible", "only on the background layer", "twice on every layer"], [3, "In the individual city project you replace the background with…", "a chosen city scene", "a plain white backdrop only", "a solid black fill", "nothing — the original stays"], [3, "Why zoom in when refining a cutout?", "to see and fix small leftover edge pixels", "to make the file smaller", "to change the canvas size", "to export faster"], [4, "The Crop Tool is used to…", "trim the canvas to an exact size and ratio", "blur the background", "add a drop shadow", "change layer opacity"], [4, "What is the standard passport size used in the lesson?", "2 × 2 inches", "1 × 1 inch", "8 × 10 inches", "A4 paper"], [4, "What resolution gives sharp, print-quality passport photos in the lesson?", "300 DPI", "72 DPI", "10 DPI", "1 DPI"], [4, "What background is normally required for a passport photo?", "a plain solid colour, usually white", "a colourful pattern", "a busy street scene", "a gradient with shadows"], [4, "Dodge & Burn is used to…", "lighten or darken areas to even out skin tone and lighting", "crop the canvas", "convert a photo to vector", "export a PDF"], [4, "Why does precision matter more than creativity in passport photos?", "they follow strict rules for size, background, lighting and expression", "they must be as colourful as possible", "there are no rules", "they are only viewed on social media"], [4, "Transform lets you change an object's…", "size, position, rotation or perspective", "file format", "DPI only", "colour profile only"], [4, "Puppet Warp is…", "a pin-based tool for flexible distortion", "a tool for exporting PDFs", "a text effect", "a cropping preset"], [4, "Control points in Puppet Warp are…", "mesh points (pins) used to control the warp", "saved export presets", "layer names", "brush shapes"], [4, "Transform controls are…", "the handles used to resize, rotate and reposition an object", "the folders of the file", "the export buttons", "the brush tips"], [4, "A non-destructive workflow in Week 4 means…", "the original information stays available for later changes", "all layers are flattened at once", "edits are applied to the only copy", "you cannot undo"], [4, "Which tool is best for bending a pose or reshaping clothing flexibly?", "Puppet Warp", "Crop Tool", "Eraser", "Paint Bucket"], [4, "Which is best for a simple, controlled change of size or rotation?", "Transform", "Gaussian Blur", "Dodge Tool", "Paint Bucket"], [4, "After using Puppet Warp you should…", "check nearby areas for unwanted distortion", "delete the original layer", "flatten immediately", "increase the blur"], [4, "Where should you place Puppet Warp pins first?", "at points you want to stay anchored", "randomly across the canvas", "only outside the subject", "on the file name"], [4, "Why use smart objects or layers when transforming?", "they keep the edit flexible so you can refine it later", "they reduce the DPI", "they stop you using Transform", "they delete the original"], [4, "Which qualities does a good passport photo need?", "even lighting and a natural expression", "heavy artistic filters and colour grading", "a decorative frame and text", "creative cropping that cuts off the face"], [4, "The passport-size screencast focuses on…", "exact crop ratios, grid guides and print layout", "building neon signs", "removing stains from teeth", "creating 3D text"], [4, "A passport photo saved at only 72 DPI would likely be…", "too low-resolution for sharp printing", "perfect for every printer", "automatically converted to 300 DPI", "a vector file"], [4, "A Solid Color Fill layer is used in a passport photo to…", "replace the background with a flat regulation colour", "add a pattern", "blur the face", "add a vignette"], [4, "DPI stands for…", "dots (pixels) per inch, which affects print sharpness", "digital photo index", "design project inspection", "depth of image"], [4, "Week 4 Day 2 focuses on…", "Transform and Puppet Warp", "Vanishing Point text", "Neon text effects", "Double exposure"], [4, "Working non-destructively with Transform means you can…", "adjust the result again later without starting over", "never change the layer again", "use only one transformation", "lose the original image"], [4, "To keep proportions while resizing with Transform you should…", "lock the aspect ratio (for example hold Shift while dragging a corner)", "drag only one side", "set opacity to 50%", "flatten the layer"], [4, "Moving too many Puppet Warp pins too far usually causes…", "unnatural distortion", "a sharper image", "a smaller file", "automatic colour correction"]];
+  var BANK=[[1, "Which program is Adobe's industry-standard raster photo-editing software?", "Photoshop", "Illustrator", "InDesign", "Photopea"], [1, "Which program is Adobe's vector-based illustration software?", "Illustrator", "Photoshop", "InDesign", "Canva"], [1, "Which free, browser-based editor can open Photoshop (PSD) files without installing anything?", "Photopea", "Illustrator", "InDesign", "Premiere Pro"], [1, "Which Adobe program is built for multi-page documents such as magazines and books?", "InDesign", "Photoshop", "Illustrator", "Photopea"], [1, "Which tool is a beginner-friendly, drag-and-drop design app for quick social-media graphics?", "Canva", "InDesign", "Illustrator", "Photoshop"], [1, "Which Photoshop alternative do we use in this class?", "Photopea", "Canva", "InDesign", "Illustrator"], [1, "Graphic design is best described as…", "visual communication using images, typography and layout to convey a message", "only decorating a page so it looks pretty", "typing documents in a word processor", "editing video with sound effects"], [1, "Typography is…", "the art of arranging type so it is readable and visually appealing", "the process of removing backgrounds", "a type of photo filter", "the file format of a Photoshop document"], [1, "In design, “layout” means…", "how elements are arranged and positioned on a page or screen", "the colour of the canvas only", "the size of the saved file", "a type of blur filter"], [1, "“Balance” in design refers to…", "how visual weight is distributed across a design", "how fast a file loads", "how many layers a file has", "the brightness of a photo only"], [1, "Contrast is used to…", "make one element stand out by making it different from the rest", "make every element look identical", "reduce the file size", "merge layers together"], [1, "Good graphic design is mainly about…", "communicating a message clearly", "using as many fonts as possible", "filling every empty space", "using only the brightest colours"], [1, "Which kind of software suits a logo that must scale to any size without blurring?", "a vector tool", "a raster photo editor", "a spreadsheet", "a video player"], [1, "Which kind of software suits editing and retouching photographs?", "a raster editor", "a vector-only tool", "a text editor", "a spreadsheet"], [1, "What is a PSD file?", "an editable Photoshop document that keeps layers", "a flattened image for the web", "a video file", "a font file"], [1, "Which menu path opens an existing image?", "File → Open", "Filter → Open", "Edit → Export", "Layer → Open"], [1, "What does “Save” do?", "writes the working document to a file so your editable work is preserved", "creates a flattened web copy only", "deletes hidden layers", "changes the image resolution"], [1, "What does “Export” do?", "creates a delivery copy in a format such as JPG or PNG", "permanently deletes the PSD", "opens a new blank canvas", "merges all layers in the PSD"], [1, "Which file should you keep as your editable master?", "the PSD", "the exported JPG", "a screenshot of the design", "the flattened PNG"], [1, "Which format is most common for sharing a photograph online with a small file size?", "JPG", "PSD", "AI", "INDD"], [1, "Which export format supports transparent backgrounds?", "PNG", "JPG", "DOCX", "MP3"], [1, "Which path creates a JPG or PNG copy of your design?", "File → Export → Export As", "File → Close", "Edit → Undo", "Select → Inverse"], [1, "Before confirming an export you should check…", "dimensions, transparency, quality and filename", "only the brightness of your monitor", "nothing — export settings never matter", "only the number of layers"], [1, "Why should you not replace your editable master with a flattened export?", "you would lose layers and editability", "flattened files cannot be opened", "it makes the computer slower", "it deletes your fonts permanently"], [1, "Why choose a clear filename and a folder you can find again when saving?", "so you can find and reopen the file later", "because Photopea requires emojis in names", "to make the image sharper", "to increase the resolution"], [2, "The arrangement of menus, panels and tools you work in is called the…", "workspace", "canvas size", "layer style", "histogram"], [2, "What are “panels” in Photopea?", "dockable windows such as Layers, History and Properties", "the files saved in your folder", "the pixels in a photo", "brush bristles"], [2, "A pixel is…", "the smallest square of coloured light that makes up a raster image", "a mathematical path", "a type of font", "a Photoshop plug-in"], [2, "A raster image is…", "an image made from a grid of pixels", "an image made only of mathematical paths", "a text document", "a 3D model"], [2, "Vector graphics are…", "built from math-based paths that scale to any size without blurring", "made of a fixed grid of pixels", "only used for photographs", "always blurry when enlarged"], [2, "What happens when you enlarge a raster image too much?", "the pixels become visible and the image loses sharpness", "it becomes sharper", "it automatically turns into a vector", "nothing changes"], [2, "Why does learning Photopea help you with Photoshop?", "its layout mirrors Photoshop, so skills transfer directly", "it uses a completely different tool set", "it can only draw vectors", "it replaces the need for layers"], [2, "A layer is…", "a stacked, independent piece of an image", "the final flattened picture", "a type of brush", "a saved folder on your computer"], [2, "Destructive editing is…", "editing that permanently changes the original pixels", "editing that always uses adjustment layers", "editing done only on a duplicate", "editing that never changes pixels"], [2, "Non-destructive editing…", "preserves the original so changes can be undone or adjusted later", "permanently changes pixels", "flattens the file first", "can only be done in Illustrator"], [2, "A Group in the Layers panel is used to…", "organise several layers into one folder", "delete layers", "blur layers", "export layers as video"], [2, "Opacity controls…", "how visible a layer is, from hidden to fully shown", "the size of the canvas", "the file type", "the DPI of the image"], [2, "Which is a non-destructive method?", "using an adjustment layer or a layer mask", "painting directly on the only copy of a layer", "flattening before editing", "saving over the original JPG"], [2, "Which is an example of a destructive edit?", "painting directly on the only copy of a raster layer and saving over it", "using a layer mask to hide an area", "adding an adjustment layer", "editing a smart object"], [2, "Why do layers let you work more freely?", "you can edit non-linearly because nothing is permanent until you flatten", "they make the file smaller", "they stop you making mistakes", "they remove the need to save"], [2, "What does flattening an image do?", "merges all layers into one, so they can no longer be edited separately", "creates extra layers", "increases the resolution", "restores the original photo"], [2, "Which panel shows the stack of layers in your document?", "the Layers panel", "the Swatches panel", "the Character panel", "the Info panel"], [2, "Setting a layer's opacity to 0% will…", "make it fully transparent (hidden) without deleting it", "delete the layer", "double its size", "flatten the image"], [2, "Why is it good practice to name your layers clearly?", "it keeps files organised and easier to edit", "it increases image resolution", "it is required to export", "it makes brushes smoother"], [2, "A photograph taken with a camera is made of…", "pixels", "mathematical paths only", "vectors only", "text characters"], [2, "Which feature hides part of a layer without erasing its pixels?", "a layer mask", "the Eraser tool", "flattening", "Save As"], [2, "If you may want to change your mind later, you should…", "prefer non-destructive techniques", "flatten first", "work on your only copy", "delete the original"], [2, "Clicking the eye icon beside a layer…", "hides or shows the layer without deleting it", "deletes the layer", "merges it down", "locks it forever"], [2, "The History panel is mainly used to…", "step back through your recent edits", "change the canvas colour", "export the final image", "install fonts"], [2, "When is a vector graphic a better choice than a raster image?", "when it must scale to any size without losing quality", "when you are editing a portrait photo", "when you need millions of camera colour details", "when you want pixels to be visible"], [3, "Background removal means…", "isolating the subject from its original background so it can be placed into another scene", "making the whole image blurry", "changing the file format", "flattening all layers"], [3, "The Smudge Tool…", "pushes and blends pixels like wet paint", "creates new vector shapes", "exports the image", "crops the canvas"], [3, "A “white fringe” is…", "a thin light outline left around a cutout after the old background is removed", "a type of font", "a border added on purpose", "a blur setting"], [3, "What does Filter → Other → Minimum do to a mask edge?", "it contracts the edge inward slightly to remove leftover background pixels", "it enlarges the subject", "it adds a drop shadow", "it sharpens the whole image"], [3, "Why use a layer mask for a cutout instead of the Eraser?", "the cutout stays reversible", "masks make files smaller", "erasing is not possible in Photopea", "masks change the colours"], [3, "Gaussian Blur is…", "a soft blur that reduces detail and simulates depth", "a sharpening filter", "a way to rotate a layer", "a file export format"], [3, "Depth of field describes…", "the relationship between foreground, subject and background and how sharp each appears", "the number of layers", "the file size", "brightness only"], [3, "Compositing means…", "moving a cut-out subject into a new scene and blending it in", "changing the file name", "compressing a JPG", "printing a document"], [3, "When checking cutout edges you should zoom in to about…", "200% or more", "10%", "the smallest size possible", "exactly 50%"], [3, "Why clean the edge before adding blur?", "blur should create depth, not hide a poorly removed background", "blur removes the need for masks", "edges never matter", "blur always fixes fringes"], [3, "To suggest distance in a composite, which elements are blurred more?", "those that are farther from the camera", "those closest to the camera and in focus", "only the subject", "none of them"], [3, "To make a subject look like it belongs in a new scene you should match…", "scale, lighting, colour, perspective and sharpness", "only the file name", "only the canvas size", "nothing — placement is enough"], [3, "Which tool can blend delicate hair or fur edges after a cutout?", "the Smudge Tool with controlled brush settings", "the Crop Tool", "the Text Tool", "the Rectangle Tool"], [3, "What is a risk of using the Smudge Tool carelessly?", "smearing important details", "increasing resolution", "creating vector paths", "deleting the file"], [3, "What does a “Select Subject” feature do?", "automatically detects and separates the subject from the background", "changes the DPI", "adds text", "exports a PDF"], [3, "What does Defringe / Contract do to a selection?", "shrinks the edge inward to remove leftover background pixels", "expands the selection outward", "changes the colour mode", "duplicates the layer"], [3, "What is the Week 7 project called?", "Around the World with a Twist", "Passport Perfect", "Neon Nights", "Elemental Portraits"], [3, "A cutout looks “pasted on”. What is the most likely cause?", "mismatched scale, lighting or colour with the new background", "the file is saved as a PSD", "too many layers", "the canvas is too big"], [3, "Why is blurring the entire image equally a poor way to create depth?", "depth comes from selective blur — distant areas softer than the subject", "blur is not available in Photopea", "it only increases file size", "it removes all colours"], [3, "The screencast “Change Background & Smudge Tool Basics” teaches you to…", "extract subjects and restore fine hair or fur edges for seamless integration", "create passport layouts", "whiten teeth", "build neon text"], [3, "In a compositing workflow, what comes first?", "isolating the subject with a clean selection or mask", "adding Gaussian Blur", "exporting the final image", "adding text"], [3, "The white fringe is most noticeable when the subject is placed on a…", "darker or colourful background", "pure white background", "blank transparent canvas only", "printed page"], [3, "How should the Minimum filter normally be applied to a mask?", "with a small value so the subject is not eaten away", "with the largest value possible", "only on the background layer", "twice on every layer"], [3, "In the individual city project you replace the background with…", "a chosen city scene", "a plain white backdrop only", "a solid black fill", "nothing — the original stays"], [3, "Why zoom in when refining a cutout?", "to see and fix small leftover edge pixels", "to make the file smaller", "to change the canvas size", "to export faster"], [4, "The Crop Tool is used to…", "trim the canvas to an exact size and ratio", "blur the background", "add a drop shadow", "change layer opacity"], [4, "What is the standard passport size used in the lesson?", "2 × 2 inches", "1 × 1 inch", "8 × 10 inches", "A4 paper"], [4, "What resolution gives sharp, print-quality passport photos in the lesson?", "300 DPI", "72 DPI", "10 DPI", "1 DPI"], [4, "What background is normally required for a passport photo?", "a plain solid colour, usually white", "a colourful pattern", "a busy street scene", "a gradient with shadows"], [4, "Dodge & Burn is used to…", "lighten or darken areas to even out skin tone and lighting", "crop the canvas", "convert a photo to vector", "export a PDF"], [4, "Why does precision matter more than creativity in passport photos?", "they follow strict rules for size, background, lighting and expression", "they must be as colourful as possible", "there are no rules", "they are only viewed on social media"], [4, "Transform lets you change an object's…", "size, position, rotation or perspective", "file format", "DPI only", "colour profile only"], [4, "Puppet Warp is…", "a pin-based tool for flexible distortion", "a tool for exporting PDFs", "a text effect", "a cropping preset"], [4, "Control points in Puppet Warp are…", "mesh points (pins) used to control the warp", "saved export presets", "layer names", "brush shapes"], [4, "Transform controls are…", "the handles used to resize, rotate and reposition an object", "the folders of the file", "the export buttons", "the brush tips"], [4, "A non-destructive workflow in Week 4 means…", "the original information stays available for later changes", "all layers are flattened at once", "edits are applied to the only copy", "you cannot undo"], [4, "Which tool is best for bending a pose or reshaping clothing flexibly?", "Puppet Warp", "Crop Tool", "Eraser", "Paint Bucket"], [4, "Which is best for a simple, controlled change of size or rotation?", "Transform", "Gaussian Blur", "Dodge Tool", "Paint Bucket"], [4, "After using Puppet Warp you should…", "check nearby areas for unwanted distortion", "delete the original layer", "flatten immediately", "increase the blur"], [4, "Where should you place Puppet Warp pins first?", "at points you want to stay anchored", "randomly across the canvas", "only outside the subject", "on the file name"], [4, "Why use smart objects or layers when transforming?", "they keep the edit flexible so you can refine it later", "they reduce the DPI", "they stop you using Transform", "they delete the original"], [4, "Which qualities does a good passport photo need?", "even lighting and a natural expression", "heavy artistic filters and colour grading", "a decorative frame and text", "creative cropping that cuts off the face"], [4, "The passport-size screencast focuses on…", "exact crop ratios, grid guides and print layout", "building neon signs", "removing stains from teeth", "creating 3D text"], [4, "A passport photo saved at only 72 DPI would likely be…", "too low-resolution for sharp printing", "perfect for every printer", "automatically converted to 300 DPI", "a vector file"], [4, "A Solid Color Fill layer is used in a passport photo to…", "replace the background with a flat regulation colour", "add a pattern", "blur the face", "add a vignette"], [4, "DPI stands for…", "dots (pixels) per inch, which affects print sharpness", "digital photo index", "design project inspection", "depth of image"], [4, "Week 4 Day 2 focuses on…", "Transform and Puppet Warp", "Vanishing Point text", "Neon text effects", "Double exposure"], [4, "Working non-destructively with Transform means you can…", "adjust the result again later without starting over", "never change the layer again", "use only one transformation", "lose the original image"], [4, "To keep proportions while resizing with Transform you should…", "lock the aspect ratio (for example hold Shift while dragging a corner)", "drag only one side", "set opacity to 50%", "flatten the layer"], [4, "Moving too many Puppet Warp pins too far usually causes…", "unnatural distortion", "a sharper image", "a smaller file", "automatic colour correction"]];
   function hash(str){ var h=2166136261; for(var i=0;i<str.length;i++){ h^=str.charCodeAt(i); h=Math.imul(h,16777619); } return h>>>0; }
   function rng(seed){ return function(){ seed|=0; seed=seed+0x6D2B79F5|0; var t=Math.imul(seed^seed>>>15,1|seed); t=t+Math.imul(t^t>>>7,61|t)^t; return ((t^t>>>14)>>>0)/4294967296; }; }
   function shuf(arr,r){ var a=arr.slice(); for(var i=a.length-1;i>0;i--){ var j=Math.floor(r()*(i+1)); var x=a[i]; a[i]=a[j]; a[j]=x; } return a; }
@@ -6291,63 +6421,108 @@ html.hma-hide .app,html.hma-hide .wq-modal,html.hma-hide .phase-modal-backdrop,h
 
   /* ====== 11) Help & complaints chat (bottom-right corner, linked to the instructor's Sheet) ====== */
   var TOPICS=['Technical problem','Quiz or marks','Lesson content','Project','Other'];
+  var STARTERS={'Technical problem':['A video will not play','The quiz will not open','I cannot sign in'],'Quiz or marks':['My mark looks wrong','My quiz did not save'],'Lesson content':['I do not understand this step','Please explain this tool again'],'Project':['I need help with my project','Where do I submit it?'],'Other':['I have a question']};
+  var FAQ=[['Is my progress safe?','Yes. Your progress is saved to your account. If you refresh the page or the site updates, nothing is lost.'],['A video will not play','Press Play again or reload the page. If it still does not work, write to your instructor here.'],['I was signed out','For safety you sign in again after a while. Your saved work comes back when you sign in.']];
+  var topic=TOPICS[0], sending=false;
   var chat=document.createElement('div'); chat.id='hmaChat'; chat.hidden=true;
-  chat.innerHTML='<button type="button" id="hmaChatBtn" aria-label="Help and complaints" aria-expanded="false">💬<span id="hmaChatBadge" hidden></span></button>'+
-    '<div id="hmaChatPanel" role="dialog" aria-label="Help and complaints" hidden><div class="hma-ch-head"><div><b>Help &amp; complaints</b><small>Your message goes straight to your instructor</small></div><button type="button" id="hmaChatClose" aria-label="Close">×</button></div>'+
-    '<div class="hma-ch-body" id="hmaChatBody"></div><div class="hma-ch-form"><select id="hmaChatTopic" aria-label="Topic">'+TOPICS.map(function(x){ return '<option>'+x+'</option>'; }).join('')+'</select>'+
-    '<textarea id="hmaChatText" rows="3" maxlength="1200" placeholder="Describe your problem or complaint…"></textarea><div class="hma-ch-row"><span id="hmaChatStatus"></span><button type="button" id="hmaChatSend">Send</button></div></div></div>';
+  chat.innerHTML='<button type="button" id="hmaChatBtn" aria-label="Chat with your instructor" aria-expanded="false"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/><path d="M9 11h6M9 14h4"/></svg><span id="hmaChatBadge" hidden></span></button>';
   document.body.appendChild(chat);
+  var ov=document.createElement('div'); ov.id='hmaChatOverlay'; ov.hidden=true;
+  ov.innerHTML='<div id="hmaChatModal" role="dialog" aria-modal="true" aria-labelledby="hcTitle">'+
+    '<div class="hc-head"><div class="hc-ava" aria-hidden="true">🎓</div><div class="hc-ttl"><b id="hcTitle">Chat with your instructor</b><small>Your message goes straight to your instructor · replies appear here</small></div>'+
+    '<button type="button" class="hc-send hc-top" id="hcSendTop">Send ➤</button><button type="button" class="hc-x" id="hmaChatClose" aria-label="Close chat">✕</button></div>'+
+    '<div class="hc-body" id="hmaChatBody"></div>'+
+    '<div class="hc-comp"><div class="hc-chips" id="hcChips" role="radiogroup" aria-label="Topic"></div><div class="hc-starters" id="hcStarters"></div>'+
+    '<textarea id="hmaChatText" rows="3" maxlength="1200" placeholder="Write your message…" aria-label="Your message"></textarea>'+
+    '<div class="hc-meta"><label class="hc-ctx"><input type="checkbox" id="hcCtx" checked> Tell my instructor which page I am on</label><span id="hcCount">0 / 1200</span></div>'+
+    '<div class="hc-foot"><span id="hmaChatStatus" role="status" aria-live="polite"></span><button type="button" class="hc-send" id="hmaChatSend">Send ➤</button></div></div></div>';
+  document.body.appendChild(ov);
   var cid=function(id){ return document.getElementById(id); }, replies={};
   function esc2(x){ return String(x==null?'':x).replace(/[&<>"]/g,function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
-  function fmtT(iso){ try{ var d=new Date(iso); return isNaN(d)?'':d.toLocaleString(undefined,{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'}); }catch(e){ return ''; } }
+  function fmtT(iso){ try{ var d=new Date(iso); return isNaN(d)?'':d.toLocaleTimeString(undefined,{hour:'2-digit',minute:'2-digit'}); }catch(e){ return ''; } }
+  function dayLabel(iso){ try{ var d=new Date(iso), n=new Date(), a=new Date(d.getFullYear(),d.getMonth(),d.getDate()), b=new Date(n.getFullYear(),n.getMonth(),n.getDate()), diff=Math.round((b-a)/86400000); if(diff===0) return 'Today'; if(diff===1) return 'Yesterday'; return d.toLocaleDateString(undefined,{weekday:'short',month:'short',day:'numeric'}); }catch(e){ return ''; } }
   function seenKey(){ return 'hm_chat_seen_'+((student&&student.email)||''); }
+  function draftKey(){ return 'hm_chat_draft_'+((student&&student.email)||''); }
   function getSeen(){ try{ return JSON.parse(localStorage.getItem(seenKey())||'{}'); }catch(e){ return {}; } }
   function sig(r){ return r.repliedAt+'|'+String(r.reply||'').length; }
   function unread(){ var s=getSeen(), n=0; Object.keys(replies).forEach(function(id){ var r=replies[id]; if(r.reply&&s[id]!==sig(r)) n++; }); return n; }
-  function chatBadge(){ var b=cid('hmaChatBadge'); if(!b) return; var n=unread(); b.hidden=!n; b.textContent=n; }
+  function chatBadge(){ var b=cid('hmaChatBadge'); if(!b) return; var n=unread(); b.hidden=!n; b.textContent=n; cid('hmaChatBtn').classList.toggle('has-unread',!!n); }
   function markSeen(){ var s=getSeen(); Object.keys(replies).forEach(function(id){ var r=replies[id]; if(r.reply) s[id]=sig(r); }); try{ localStorage.setItem(seenKey(),JSON.stringify(s)); }catch(e){} chatBadge(); }
-  function renderChat(){
+  function isOpen(){ return !cid('hmaChatOverlay').hidden; }
+  function renderChips(){
+    cid('hcChips').innerHTML=TOPICS.map(function(t){ return '<button type="button" role="radio" aria-checked="'+(t===topic)+'" class="hc-chip'+(t===topic?' on':'')+'" data-t="'+esc2(t)+'">'+esc2(t)+'</button>'; }).join('');
+    cid('hcStarters').innerHTML=(STARTERS[topic]||[]).map(function(t){ return '<button type="button" class="hc-st" data-s="'+esc2(t)+'">'+esc2(t)+'</button>'; }).join('');
+  }
+  function renderChat(newIds){
     var body=cid('hmaChatBody'), list=((student&&student.complaints)||[]).slice().sort(byAt);
-    if(!list.length){ body.innerHTML='<div class="hma-ch-empty">💬<br>Have a problem or a complaint?<br>Write it below. Your instructor reads it and replies right here.</div>'; return; }
-    body.innerHTML=list.map(function(c){
-      var r=replies[c.id], st=r&&r.status==='Resolved'?'✓ Resolved':(r&&r.reply?'✓ Replied':'Sent ✓ · waiting for a reply');
-      var h='<div class="hma-b me"><em>'+esc2(c.topic)+'</em>'+esc2(c.text)+'<small>'+fmtT(c.at)+' · '+st+'</small></div>';
-      if(r&&r.reply) h+='<div class="hma-b ins"><em>Instructor</em>'+esc2(r.reply)+'<small>'+fmtT(r.repliedAt)+'</small></div>';
-      return h;
-    }).join('');
-    body.scrollTop=body.scrollHeight;
+    if(!list.length){
+      body.innerHTML='<div class="hc-empty"><div class="hc-empty-ic">💬</div><b>How can your instructor help?</b><p>Choose a topic below, write your message and press Send. Replies appear right here.</p>'+
+        '<div class="hc-faq"><span>Quick answers</span>'+FAQ.map(function(f){ return '<details><summary>'+esc2(f[0])+'</summary><p>'+esc2(f[1])+'</p></details>'; }).join('')+'</div></div>'; return;
+    }
+    var last='', h='';
+    list.forEach(function(c){
+      var d=dayLabel(c.at); if(d!==last){ h+='<div class="hc-day"><span>'+esc2(d)+'</span></div>'; last=d; }
+      var r=replies[c.id], st=r&&r.status==='Resolved'?'<span class="hc-st-ok">✔ Resolved</span>':(r&&r.reply?'<span class="hc-st-ok">✓✓ Replied</span>':'<span>✓ Sent · waiting for a reply</span>');
+      h+='<div class="hc-b me"><em>'+esc2(c.topic)+'</em>'+esc2(c.text).replace(/\n/g,'<br>')+'<small>'+fmtT(c.at)+' · '+st+'</small></div>';
+      if(r&&r.reply){ var isNew=newIds&&newIds[c.id]; h+='<div class="hc-b ins'+(isNew?' new':'')+'"><em>Instructor'+(isNew?' · new':'')+'</em>'+esc2(r.reply).replace(/\n/g,'<br>')+'<small>'+dayLabel(r.repliedAt)+' '+fmtT(r.repliedAt)+'</small></div>'; }
+    });
+    body.innerHTML=h; body.scrollTop=body.scrollHeight;
   }
   function fetchReplies(){
     var c=window.hmaCloud; if(!c||!c.session) return; var s=c.session(); if(!s) return;
     c.api('replies',{email:s.email,token:s.token},12000).then(function(res){
-      if(res&&res.ok){ replies={}; (res.replies||[]).forEach(function(r){ replies[r.id]=r; }); renderChat(); if(!cid('hmaChatPanel').hidden) markSeen(); else chatBadge(); }
+      if(res&&res.ok){ var seen=getSeen(), fresh={}; replies={}; (res.replies||[]).forEach(function(r){ replies[r.id]=r; if(r.reply&&seen[r.id]!==sig(r)) fresh[r.id]=1; });
+        renderChat(isOpen()?fresh:null); if(isOpen()) markSeen(); else chatBadge(); }
     }).catch(function(){});
   }
-  function openChat(){ cid('hmaChatPanel').hidden=false; cid('hmaChatBtn').setAttribute('aria-expanded','true'); renderChat(); fetchReplies(); markSeen(); }
-  function closeChat(){ cid('hmaChatPanel').hidden=true; cid('hmaChatBtn').setAttribute('aria-expanded','false'); }
-  function sendChat(){
-    var text=cid('hmaChatText').value.trim(), st=cid('hmaChatStatus');
-    if(!student) return;
-    if(text.length<5){ st.style.color='#b42318'; st.textContent='Please write a little more.'; return; }
-    student.complaints=student.complaints||[];
-    student.complaints.push({id:'c'+Date.now().toString(36)+Math.random().toString(36).slice(2,6),at:new Date().toISOString(),topic:cid('hmaChatTopic').value,text:text});
-    if(student.complaints.length>100) student.complaints.shift();
-    saveStudentRecord(student); cid('hmaChatText').value=''; st.style.color='#15803d'; st.textContent='Sending…'; cid('hmaChatSend').disabled=true; renderChat();
-    var done=function(ok){ st.textContent=ok===false?'Saved. It will reach your instructor when you are online.':'Sent ✓ Your instructor will reply here.'; cid('hmaChatSend').disabled=false; };
-    if(typeof window.hmaPushNow==='function') window.hmaPushNow().then(done,function(){ done(false); }); else done(false);
+  function counter(){ var n=cid('hmaChatText').value.length; cid('hcCount').textContent=n+' / 1200'; try{ if(student&&student.email) localStorage.setItem(draftKey(),cid('hmaChatText').value); }catch(e){} }
+  var lastFocus=null;
+  function openChat(){
+    lastFocus=document.activeElement; var fresh={}, s=getSeen(); Object.keys(replies).forEach(function(id){ var r=replies[id]; if(r.reply&&s[id]!==sig(r)) fresh[id]=1; });
+    cid('hmaChatOverlay').hidden=false; cid('hmaChatBtn').setAttribute('aria-expanded','true'); document.documentElement.classList.add('hc-lock');
+    try{ cid('hmaChatText').value=localStorage.getItem(draftKey())||''; }catch(e){} counter(); renderChips(); renderChat(fresh); fetchReplies(); markSeen();
+    setTimeout(function(){ try{ cid('hmaChatText').focus({preventScroll:true}); }catch(e){} },120);
   }
-  cid('hmaChatBtn').addEventListener('click',function(){ if(cid('hmaChatPanel').hidden) openChat(); else closeChat(); });
+  function closeChat(){
+    cid('hmaChatOverlay').hidden=true; cid('hmaChatBtn').setAttribute('aria-expanded','false'); document.documentElement.classList.remove('hc-lock');
+    try{ if(lastFocus&&lastFocus.focus) lastFocus.focus({preventScroll:true}); }catch(e){}
+  }
+  function setSending(v){ sending=v; cid('hmaChatSend').disabled=v; cid('hcSendTop').disabled=v; }
+  function sendChat(){
+    if(sending||!student) return;
+    var text=cid('hmaChatText').value.trim(), st=cid('hmaChatStatus');
+    if(text.length<5){ st.className='err'; st.textContent='Please write a little more.'; cid('hmaChatText').focus(); return; }
+    if(cid('hcCtx').checked){ var pg=(document.querySelector('.tab[aria-selected="true"]')||{}).textContent; if(pg) text+='\n[Page: '+pg.trim()+']'; }
+    student.complaints=student.complaints||[];
+    student.complaints.push({id:'c'+Date.now().toString(36)+Math.random().toString(36).slice(2,6),at:new Date().toISOString(),topic:topic,text:text.slice(0,1500)});
+    if(student.complaints.length>100) student.complaints.shift();
+    saveStudentRecord(student); cid('hmaChatText').value=''; counter(); st.className=''; st.textContent='Sending…'; setSending(true); renderChat();
+    var done=function(ok){ st.className=ok===false?'':'ok'; st.textContent=ok===false?'Saved. It will reach your instructor when you are online.':'Sent ✓ Your instructor will reply here.'; setSending(false); };
+    if(typeof window.hmaPushNow==='function') window.hmaPushNow().then(function(){ done(true); },function(){ done(false); }); else done(false);
+  }
+  cid('hmaChatBtn').addEventListener('click',function(){ if(isOpen()) closeChat(); else openChat(); });
   cid('hmaChatClose').addEventListener('click',closeChat);
+  cid('hmaChatOverlay').addEventListener('mousedown',function(e){ if(e.target===cid('hmaChatOverlay')) closeChat(); });
   cid('hmaChatSend').addEventListener('click',sendChat);
-  document.addEventListener('keydown',function(e){ if(e.key==='Escape'&&!cid('hmaChatPanel').hidden) closeChat(); });
+  cid('hcSendTop').addEventListener('click',sendChat);
+  cid('hmaChatText').addEventListener('input',counter);
+  cid('hmaChatText').addEventListener('keydown',function(e){ if((e.ctrlKey||e.metaKey)&&e.key==='Enter'){ e.preventDefault(); sendChat(); } });
+  cid('hcChips').addEventListener('click',function(e){ var b=e.target.closest('[data-t]'); if(!b) return; topic=b.dataset.t; renderChips(); });
+  cid('hcStarters').addEventListener('click',function(e){ var b=e.target.closest('[data-s]'); if(!b) return; var t=cid('hmaChatText'); t.value=(t.value?t.value.replace(/\s+$/,'')+' ':'')+b.dataset.s+'. '; counter(); t.focus(); });
+  document.addEventListener('keydown',function(e){
+    if(!isOpen()) return;
+    if(e.key==='Escape'){ closeChat(); return; }
+    if(e.key==='Tab'){ var f=[].slice.call(cid('hmaChatModal').querySelectorAll('button,textarea,input,summary,[tabindex]:not([tabindex="-1"])')).filter(function(x){ return !x.disabled&&x.offsetParent!==null; }); if(!f.length) return;
+      var first=f[0], lastEl=f[f.length-1]; if(e.shiftKey&&document.activeElement===first){ e.preventDefault(); lastEl.focus(); } else if(!e.shiftKey&&document.activeElement===lastEl){ e.preventDefault(); first.focus(); } }
+  });
   var chatWasHidden=true;
   function chatVisibility(){
     var show=!!(student&&student.email&&student.email!==GUESTID&&window.hmaCloud&&!quizOpen());
-    chat.hidden=!show; if(!show){ cid('hmaChatPanel').hidden=true; chatWasHidden=true; } else if(chatWasHidden){ chatWasHidden=false; fetchReplies(); }
+    chat.hidden=!show; if(!show){ if(isOpen()) closeChat(); chatWasHidden=true; } else if(chatWasHidden){ chatWasHidden=false; fetchReplies(); }
   }
   setInterval(chatVisibility,1500);
-  setInterval(function(){ if(!chat.hidden) fetchReplies(); },60000);
-  window.hmaChatRefresh=chatVisibility;
+  setInterval(function(){ if(!chat.hidden) fetchReplies(); },30000);
+  window.hmaChatRefresh=chatVisibility; window.hmaChatOpen=openChat;
 
   /* ====== 12) Father's and grandfather's name: asked once from EVERY student (including ones who were already signed in) ====== */
   var pm=document.createElement('div'); pm.className='hma-prof'; pm.id='hmaProfile'; pm.setAttribute('role','dialog'); pm.setAttribute('aria-modal','true');
@@ -7009,5 +7184,87 @@ html.hma-hide .app,html.hma-hide .wq-modal,html.hma-hide .phase-modal-backdrop,h
 })();
 </script>
 
+
+<style id="wk6-css">
+.wk-title{font:800 11px 'Inter',sans-serif;letter-spacing:.08em;text-transform:uppercase;color:#667085;margin:12px 0 6px}
+.wk-act{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}
+.wk-btn{border:0;border-radius:10px;padding:8px 12px;font:700 12.5px 'Inter',Arial,sans-serif;cursor:pointer;min-height:36px;line-height:1.2;text-align:left}
+.wk-btn.p{background:#2f6fed;color:#fff}.wk-btn.s{background:#eef2ff;color:#2446a8}.wk-btn.q{background:#fff4e5;color:#b54708;border:1px solid #fedf89}
+.wk-btn:active{transform:scale(.97)}
+
+#week6 .flip-card{height:620px!important}
+#week7 .flip-card{height:560px!important}
+#week16 .flip-card{height:470px!important}
+@media (max-width:600px){#week6 .flip-card{height:660px!important}#week7 .flip-card{height:600px!important}}
+</style>
+<script id="wk6-js">
+function hmOpenScreencast(id){
+  try{ goTab('screencasts'); }catch(e){}
+  setTimeout(function(){ try{
+    var v=(typeof allScreencasts!=='undefined')&&allScreencasts.find(function(x){return x.id===id;});
+    if(v&&typeof theaterPlay==='function') theaterPlay(id,v.label);
+    var el=document.querySelector('.theater-item[data-screencast-id="'+id+'"]'); if(el&&el.scrollIntoView) el.scrollIntoView({block:'nearest'});
+    window.scrollTo({top:0,behavior:'smooth'});
+  }catch(e){} },200);
+}
+function hmOpenReadMe(key){
+  try{ goTab('notes'); }catch(e){}
+  setTimeout(function(){ var t=document.getElementById(key); if(!t) return; t.classList.remove('collapsed');
+    var tg=t.querySelector('.note-toggle'); if(tg){ tg.setAttribute('aria-expanded','true'); }
+    t.scrollIntoView({behavior:'smooth',block:'start'}); },200);
+}
+function hmQuiz(type,key){ if(typeof assessmentStart==='function') assessmentStart(type,key); }
+function hmOpenProject(key){
+  try{ goTab('projects'); }catch(e){}
+  setTimeout(function(){ var b=document.querySelector('#projSubnav button[data-proj="'+key+'"]'); if(b) b.click(); window.scrollTo({top:0,behavior:'smooth'}); },200);
+}
+</script>
+
+<style id="hma-chat2-css">
+#hmaChat{position:fixed;right:0;top:calc(50% - 27px);z-index:3200;font-family:'Inter',Arial,sans-serif;padding:0}
+#hmaChat[hidden]{display:none}
+#hmaChatBtn{width:46px;height:56px;border-radius:28px 0 0 28px;border:1px solid rgba(255,255,255,.45);border-right:0;background:rgba(47,111,237,.28);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);color:#fff;cursor:pointer;opacity:.6;transition:opacity .2s,background .2s,width .2s;position:relative;padding:0 0 0 6px;display:flex;align-items:center;justify-content:center;box-shadow:-2px 4px 14px rgba(16,24,40,.12)}
+#hmaChatBtn:hover,#hmaChatBtn:focus-visible,#hmaChatBtn[aria-expanded="true"],#hmaChatBtn.has-unread{opacity:1;background:rgba(47,111,237,.85);width:52px}
+#hmaChatBtn.has-unread{animation:hcPulse 1.8s ease-in-out infinite}
+@keyframes hcPulse{0%,100%{box-shadow:-2px 4px 14px rgba(16,24,40,.12),0 0 0 0 rgba(47,111,237,.5)}50%{box-shadow:-2px 4px 14px rgba(16,24,40,.12),0 0 0 10px rgba(47,111,237,0)}}
+#hmaChatBadge{position:absolute;top:-5px;left:-6px;right:auto;min-width:20px;height:20px;border-radius:10px;background:#f04438;color:#fff;font:800 11px/20px 'Inter',Arial,sans-serif;text-align:center;padding:0 5px;box-shadow:0 0 0 2px #fff}
+#hmaChatBadge[hidden]{display:none}
+html.hc-lock,html.hc-lock body{overflow:hidden!important}
+#hmaChatOverlay{position:fixed;inset:0;z-index:3300;background:rgba(10,15,35,.5);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;padding:max(12px,env(safe-area-inset-top)) max(12px,env(safe-area-inset-right)) max(12px,env(safe-area-inset-bottom)) max(12px,env(safe-area-inset-left));animation:hcFade .18s ease-out}
+#hmaChatOverlay[hidden]{display:none}
+@keyframes hcFade{from{opacity:0}to{opacity:1}}@keyframes hcPop{from{opacity:0;transform:translateY(10px) scale(.97)}to{opacity:1;transform:none}}
+#hmaChatModal{width:min(580px,100%);height:min(720px,100%);background:#fff;border-radius:24px;box-shadow:0 30px 80px rgba(10,15,35,.45);display:flex;flex-direction:column;overflow:hidden;font-family:'Inter',Arial,sans-serif;animation:hcPop .22s ease-out;color:#101828}
+.hc-head{display:flex;align-items:center;gap:10px;padding:14px 14px 14px 16px;background:linear-gradient(135deg,#2f6fed,#7c4dff);color:#fff}
+.hc-ava{width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:21px;flex:none}
+.hc-ttl{flex:1;min-width:0}.hc-ttl b{display:block;font-size:16px;line-height:1.2}.hc-ttl small{display:block;opacity:.85;font-size:11.5px;line-height:1.3;margin-top:2px}
+.hc-send{border:0;border-radius:999px;background:#2f6fed;color:#fff;font:800 14px 'Inter',Arial,sans-serif;padding:11px 22px;min-height:44px;cursor:pointer;transition:transform .1s,opacity .2s}
+.hc-send:active{transform:scale(.96)}.hc-send:disabled{opacity:.55;cursor:default}
+.hc-head .hc-send{background:#fff;color:#2446a8;padding:9px 16px;min-height:40px}
+.hc-x{width:40px;height:40px;border:0;border-radius:50%;background:rgba(255,255,255,.18);color:#fff;font-size:17px;cursor:pointer;flex:none}
+.hc-body{flex:1;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;background:#f4f6fb;padding:14px 14px 6px}
+.hc-day{text-align:center;margin:10px 0}.hc-day span{background:#e4e7ec;color:#475467;font:700 11px 'Inter',Arial,sans-serif;padding:3px 10px;border-radius:999px}
+.hc-b{max-width:84%;padding:10px 13px;border-radius:16px;margin:6px 0;font-size:14.5px;line-height:1.45;word-wrap:break-word;overflow-wrap:anywhere}
+.hc-b em{display:block;font:800 10.5px 'Inter',Arial,sans-serif;letter-spacing:.05em;text-transform:uppercase;opacity:.75;margin-bottom:3px;font-style:normal}
+.hc-b small{display:block;margin-top:5px;font-size:11px;opacity:.75}
+.hc-b.me{margin-left:auto;background:linear-gradient(135deg,#2f6fed,#5b8def);color:#fff;border-bottom-right-radius:5px}
+.hc-b.ins{margin-right:auto;background:#fff;border:1px solid #e4e7ec;border-bottom-left-radius:5px;box-shadow:0 2px 8px rgba(16,24,40,.05)}
+.hc-b.ins.new{border-color:#2f6fed;box-shadow:0 0 0 3px rgba(47,111,237,.15)}
+.hc-st-ok{font-weight:800}
+.hc-empty{text-align:center;padding:18px 10px;color:#475467}.hc-empty-ic{font-size:40px}.hc-empty b{display:block;color:#101828;font-size:17px;margin:6px 0}.hc-empty p{margin:0 auto 12px;max-width:340px;font-size:14px}
+.hc-faq{text-align:left;max-width:420px;margin:14px auto 0}.hc-faq>span{display:block;font:800 11px 'Inter',Arial,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:#667085;margin-bottom:6px}
+.hc-faq details{background:#fff;border:1px solid #e4e7ec;border-radius:12px;padding:10px 12px;margin-bottom:6px}.hc-faq summary{cursor:pointer;font-weight:700;font-size:14px;color:#101828}.hc-faq p{margin:8px 0 0;font-size:13.5px;color:#475467}
+.hc-comp{border-top:1px solid #e4e7ec;background:#fff;padding:10px 14px 12px}
+.hc-chips{display:flex;gap:6px;overflow-x:auto;padding-bottom:6px;-webkit-overflow-scrolling:touch;scrollbar-width:none}.hc-chips::-webkit-scrollbar{display:none}
+.hc-chip{flex:none;border:1px solid #d0d5dd;background:#fff;color:#344054;border-radius:999px;padding:7px 13px;font:700 12.5px 'Inter',Arial,sans-serif;cursor:pointer;min-height:34px}
+.hc-chip.on{background:#eef2ff;border-color:#2f6fed;color:#2446a8}
+.hc-starters{display:flex;gap:6px;flex-wrap:wrap;margin:2px 0 8px}.hc-st{border:1px dashed #b2ccff;background:#f5f8ff;color:#2446a8;border-radius:10px;padding:5px 10px;font:600 12px 'Inter',Arial,sans-serif;cursor:pointer}
+#hmaChatText{width:100%;border:1.5px solid #d0d5dd;border-radius:14px;padding:11px 13px;font:16px/1.4 'Inter',Arial,sans-serif;resize:none;min-height:76px;max-height:160px;color:#101828;background:#fff;display:block}
+#hmaChatText:focus{outline:none;border-color:#2f6fed;box-shadow:0 0 0 3px rgba(47,111,237,.15)}
+.hc-meta{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:7px 2px 0;font-size:12px;color:#667085}.hc-ctx{display:flex;align-items:center;gap:6px;cursor:pointer}.hc-ctx input{width:16px;height:16px}
+.hc-foot{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:8px}.hc-foot .hc-send{padding:12px 30px}
+#hmaChatStatus{font-size:12.5px;color:#667085;min-width:0}#hmaChatStatus.ok{color:#067647;font-weight:700}#hmaChatStatus.err{color:#b42318;font-weight:700}
+@media (max-width:520px){#hmaChatOverlay{padding:0}#hmaChatModal{width:100%;height:100%;border-radius:0}.hc-b{max-width:92%}}
+@media (orientation:landscape) and (max-height:600px){#hmaChatModal{height:100%}.hc-starters{display:none}#hmaChatText{min-height:52px}}
+</style>
 </body>
 </html>
