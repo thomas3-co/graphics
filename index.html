@@ -2,7 +2,7 @@
 
 <html lang="en">
 <head>
-<meta name="hm-build" content="2026-10-24-v12">
+<meta name="hm-build" content="2026-10-25-v13">
 <meta http-equiv="Cache-Control" content="no-cache, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0">
 <script id="hm-autoupdate">
 /* Always load the newest version of the site. Student data lives in the browser's localStorage and in the cloud backup,
@@ -2235,43 +2235,37 @@ img,video,canvas,svg,iframe{max-width:100%}
 </section>
 <!-- ========== SCREENCASTS (CINEMATIC THEATER PLAYER) ========== -->
 <section class="view" id="screencasts">
-<div class="theater" id="screencastTheater">
-<div class="theater-main">
-<div class="theater-stage" id="theaterStage">
-<div class="theater-player" id="theaterPlayerWrap"></div>
-</div>
-<div class="theater-nav">
-<button class="tn-btn tn-prev" id="theaterPrevBtn" type="button"><span class="tn-arrow" aria-hidden="true">‹</span><span>Previous</span></button>
-<span class="tn-index" id="theaterIndex">—</span>
-<button class="tn-btn tn-next" id="theaterNextBtn" type="button"><span>Next</span><span class="tn-arrow" aria-hidden="true">›</span></button>
-</div>
-<div class="theater-markrow"><button type="button" class="tn-mark" id="theaterWatchedBtn">✓ Mark as watched</button><span id="theaterWatchedNote"></span></div>
-<div class="theater-info">
-<div aria-hidden="true" class="ti-avatar">Ps</div>
-<div class="ti-meta">
-<b id="theaterTitle">Select a recording</b>
-<small>Graphic Design &amp; Photoshop · Screencast recordings</small>
-</div>
-</div>
-<div class="theater-about">
-<h4 id="theaterAboutTitle">Select a recording</h4>
-<p id="theaterDesc">Pick any recording from the list to see what it covers.</p>
-</div>
-</div>
-<div class="theater-side">
-<div class="theater-progress">
-<div class="tp-row"><span id="theaterProgressText">0 of 3 watched</span><span id="theaterProgressPct">0%</span></div>
-<div class="tp-bar"><i id="theaterProgressBar" style="width:0%"></i></div>
-</div>
-<div class="theater-search"><input aria-label="Search recordings" id="theaterSearchInput" placeholder="Search recordings..." type="text"/></div>
-<div class="theater-filters" id="theaterFilters">
-<button class="tf-chip active" data-filter="all" type="button">All</button>
-<button class="tf-chip" data-filter="watched" type="button">Watched</button>
-<button class="tf-chip" data-filter="unwatched" type="button">Not watched</button>
-</div>
-<div class="theater-side-head" id="theaterSideHead">Up next · 23 recordings</div>
-<div class="theater-list" id="theaterSide"></div>
-</div>
+<div class="scx" id="screencastTheater">
+ <div class="scx-main">
+  <div class="scx-stage" id="theaterStage"><div class="scx-player" id="theaterPlayerWrap"></div></div>
+  <div class="scx-now">
+   <div class="scx-now-top"><span class="scx-badge" id="scxBadge">Screencast</span><span class="scx-chip" id="scxDur" hidden></span><span class="scx-chip" id="scxState"></span></div>
+   <h2 id="theaterTitle">Select a recording</h2>
+   <h4 id="theaterAboutTitle" hidden>Select a recording</h4>
+   <p id="theaterDesc">Pick any recording from the list to see what it covers.</p>
+  </div>
+  <div class="scx-controls">
+   <div class="scx-nav">
+    <button class="tn-btn scx-prev" id="theaterPrevBtn" type="button"><span class="tn-arrow" aria-hidden="true">&#8249;</span><span>Previous</span></button>
+    <span class="scx-index" id="theaterIndex">&mdash;</span>
+    <button class="tn-btn scx-next" id="theaterNextBtn" type="button"><span>Next</span><span class="tn-arrow" aria-hidden="true">&#8250;</span></button>
+   </div>
+   <div class="scx-mark"><button type="button" class="tn-mark" id="theaterWatchedBtn">&#10003; Mark as watched</button><span id="theaterWatchedNote"></span></div>
+  </div>
+ </div>
+ <aside class="scx-side" aria-label="Recordings">
+  <div class="scx-progress">
+   <div class="scx-prog-title">Your progress</div>
+   <div class="scx-prog-row"><b id="theaterProgressText">0 of 0 watched</b><span id="theaterProgressPct">0%</span></div>
+   <div class="scx-prog-bar"><i id="theaterProgressBar" style="width:0%"></i></div>
+  </div>
+  <div class="scx-tools">
+   <input aria-label="Search recordings" id="theaterSearchInput" placeholder="Search recordings&hellip;" type="search"/>
+   <div class="scx-filters" id="theaterFilters"><button class="tf-chip active" data-filter="all" type="button">All</button><button class="tf-chip" data-filter="unwatched" type="button">To watch</button><button class="tf-chip" data-filter="watched" type="button">Watched</button></div>
+  </div>
+  <div class="scx-side-head" id="theaterSideHead"></div>
+  <div class="scx-list" id="theaterSide"></div>
+ </aside>
 </div>
 </section>
 <!-- ========== PRACTICE FILES ========== -->
@@ -3371,7 +3365,7 @@ function refreshCompletionGrayStates(){
   const weekQuizzes=student.weekQuizzes||{};
   Object.keys(reading).forEach(k=>document.querySelectorAll(`.note-section[data-reading="${k}"]`).forEach(el=>el.classList.add('reading-complete')));
   Object.keys(videos).forEach(k=>{
-    document.querySelectorAll(`.theater-item[data-screencast-id="${k}"]`).forEach(el=>el.classList.add('learning-complete'));
+    document.querySelectorAll(`.theater-item[data-screencast-id="${k}"],.scx-item[data-screencast-id="${k}"]`).forEach(el=>el.classList.add('learning-complete'));
     document.querySelectorAll(`.media-card[data-screencast-id="${k}"], .media-card[data-track-key="${k}"]`).forEach(el=>el.classList.add('learning-complete'));
   });
   Object.keys(weekQuizzes).forEach(w=>{
@@ -6431,7 +6425,7 @@ html.hma-hide .app,html.hma-hide .wq-modal,html.hma-hide .phase-modal-backdrop,h
     try{
       var cq=student.contentQuizzes||{}, rd=cq.reading||{}, sc=cq.screencasts||{}, wq=student.weekQuizzes||{};
       document.querySelectorAll('.note-section[data-reading]').forEach(function(el){ if(!rd[el.dataset.reading]) el.classList.remove('reading-complete'); });
-      document.querySelectorAll('.theater-item[data-screencast-id],.media-card[data-screencast-id]').forEach(function(el){ if(!sc[el.dataset.screencastId]) el.classList.remove('learning-complete'); });
+      document.querySelectorAll('.theater-item[data-screencast-id],.scx-item[data-screencast-id],.media-card[data-screencast-id]').forEach(function(el){ if(!sc[el.dataset.screencastId]) el.classList.remove('learning-complete'); });
       document.querySelectorAll('.week-card.quiz-completed').forEach(function(el){ if(!wq[el.id.replace('week','')]) el.classList.remove('quiz-completed'); });
       if(typeof renderAssessmentView==='function') renderAssessmentView();
       if(typeof renderPhaseAssessment==='function') renderPhaseAssessment();
@@ -7232,7 +7226,7 @@ function hmOpenScreencast(id){
   setTimeout(function(){ try{
     var v=(typeof allScreencasts!=='undefined')&&allScreencasts.find(function(x){return x.id===id;});
     if(v&&typeof theaterPlay==='function') theaterPlay(id,v.label);
-    var el=document.querySelector('.theater-item[data-screencast-id="'+id+'"]'); if(el&&el.scrollIntoView) el.scrollIntoView({block:'nearest'});
+    var el=document.querySelector('.scx-item[data-screencast-id="'+id+'"]'); if(el&&el.scrollIntoView) el.scrollIntoView({block:'nearest'});
     window.scrollTo({top:0,behavior:'smooth'});
   }catch(e){} },200);
 }
@@ -7295,5 +7289,180 @@ html.hc-lock,html.hc-lock body{overflow:hidden!important}
 @media (max-width:520px){#hmaChatOverlay{padding:0}#hmaChatModal{width:100%;height:100%;border-radius:0}.hc-b{max-width:92%}}
 @media (orientation:landscape) and (max-height:600px){#hmaChatModal{height:100%}.hc-starters{display:none}#hmaChatText{min-height:52px}}
 </style>
+
+<style id="scx-css">
+/* ===================== SCREENCASTS: clean player + week-grouped playlist ===================== */
+#screencasts .scx{display:grid;grid-template-columns:minmax(0,1fr);gap:22px;margin-top:18px;align-items:start;font-family:'Inter',Arial,sans-serif;color:#101828}
+@media (min-width:1060px){#screencasts .scx{grid-template-columns:minmax(0,1fr) 390px;gap:28px}}
+#screencasts .scx-main{min-width:0}
+#screencasts .scx-stage{background:#0b1020;border-radius:22px;padding:0;overflow:hidden;box-shadow:0 22px 60px rgba(11,16,32,.28);position:relative}
+#screencasts .scx-stage.is-playing{box-shadow:0 26px 70px rgba(11,16,32,.38)}
+#screencasts .scx-player{position:relative;width:100%;aspect-ratio:16/9;background:#0b1020;overflow:hidden}
+#screencasts .scx-player iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block}
+#screencasts .scx-player .thumb-poster{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;border:0!important;border-radius:0!important;background:linear-gradient(135deg,#111936,#24336b)!important;display:flex!important;align-items:center!important;justify-content:center!important;flex-direction:column!important;gap:14px;cursor:pointer;color:#fff!important;padding:0!important;overflow:hidden}
+#screencasts .scx-player .thumb-preview{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.92}
+#screencasts .scx-player .thumb-poster:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,12,28,.05),rgba(8,12,28,.55))}
+#screencasts .scx-player .play-badge{position:relative;z-index:2;width:84px!important;height:84px!important;border-radius:50%!important;background:rgba(255,255,255,.95)!important;color:#e8590c!important;display:flex!important;align-items:center;justify-content:center;font-size:32px!important;padding-left:6px;box-shadow:0 12px 36px rgba(0,0,0,.4);transition:transform .2s}
+#screencasts .scx-player .thumb-poster:hover .play-badge{transform:scale(1.08)}
+#screencasts .scx-player .thumb-poster .lbl{position:relative;z-index:2;background:rgba(10,14,30,.7)!important;color:#fff!important;border-radius:999px!important;padding:7px 16px!important;font:700 12.5px 'Inter',Arial,sans-serif!important;letter-spacing:.02em;backdrop-filter:blur(6px)}
+#screencasts .scx-now{margin-top:16px;padding:18px 20px;background:#fff;border:1px solid #e4e7ec;border-radius:18px;box-shadow:0 8px 26px rgba(16,24,40,.06)}
+#screencasts .scx-now-top{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:10px}
+#screencasts .scx-badge{background:linear-gradient(135deg,#ff6a2c,#ff9f43);color:#fff;border-radius:999px;padding:4px 12px;font:800 11px 'Inter',Arial,sans-serif;letter-spacing:.06em;text-transform:uppercase}
+#screencasts .scx-chip{background:#f2f4f7;color:#475467;border-radius:999px;padding:4px 11px;font:700 11.5px 'Inter',Arial,sans-serif}
+#screencasts .scx-chip.ok{background:#d1fadf;color:#05603a}
+#screencasts .scx-chip[hidden]{display:none}
+#screencasts .scx-now h2{margin:0 0 6px;font:700 22px/1.25 'Poppins','Inter',Arial,sans-serif;color:#101828}
+#screencasts .scx-now p{margin:0;font-size:14.5px;line-height:1.65;color:#475467}
+#screencasts .scx-controls{margin-top:14px;display:grid;gap:12px}
+#screencasts .scx-nav{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:10px;padding:10px;background:#fff;border:1px solid #e4e7ec;border-radius:18px;box-shadow:0 8px 26px rgba(16,24,40,.05)}
+#screencasts .scx-nav .tn-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 20px;border-radius:14px;font:700 14.5px 'Inter',Arial,sans-serif;cursor:pointer;border:1px solid #d0d5dd;background:#fff;color:#344054;transition:transform .15s,box-shadow .15s,background .15s}
+#screencasts .scx-nav .tn-btn .tn-arrow{font-size:24px;line-height:1;margin-top:-2px}
+#screencasts .scx-nav .scx-prev{justify-self:start}
+#screencasts .scx-nav .scx-next{justify-self:end;border-color:transparent;background:linear-gradient(135deg,#ff6a2c,#ff9f43);color:#fff;box-shadow:0 8px 20px rgba(255,106,44,.35)}
+#screencasts .scx-nav .scx-next.is-finish{background:linear-gradient(135deg,#1a8a52,#2bb673);box-shadow:0 8px 20px rgba(26,138,82,.35)}
+#screencasts .scx-nav .tn-btn:hover:not(:disabled){transform:translateY(-1px)}
+#screencasts .scx-nav .tn-btn:active:not(:disabled){transform:scale(.97)}
+#screencasts .scx-nav .tn-btn:disabled{opacity:.4;cursor:not-allowed;box-shadow:none}
+#screencasts .scx-index{padding:6px 14px;border-radius:999px;background:#f2f4f7;color:#475467;font:700 11.5px 'Inter',Arial,sans-serif;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap}
+#screencasts .scx-mark{display:flex;flex-wrap:wrap;gap:12px;align-items:center;padding:14px 16px;background:#f6fef9;border:1px solid #abefc6;border-radius:18px}
+#screencasts .scx-mark .tn-mark{min-height:48px;padding:0 24px;border-radius:14px;font:800 14.5px 'Inter',Arial,sans-serif}
+#screencasts .scx-mark #theaterWatchedNote{font-size:13px;color:#475467;flex:1;min-width:200px}
+/* ---- playlist ---- */
+#screencasts .scx-side{min-width:0;display:flex;flex-direction:column;gap:12px}
+@media (min-width:1060px){#screencasts .scx-side{position:sticky;top:calc(var(--bar-h,64px) + 16px);max-height:calc(100vh - var(--bar-h,64px) - 32px);max-height:calc(100dvh - var(--bar-h,64px) - 32px)}}
+#screencasts .scx-progress{background:linear-gradient(135deg,#131a33,#26356b);color:#fff;border-radius:18px;padding:16px 18px;box-shadow:0 14px 34px rgba(19,26,51,.25)}
+#screencasts .scx-prog-title{font:800 10.5px 'Inter',Arial,sans-serif;letter-spacing:.1em;text-transform:uppercase;opacity:.7;margin-bottom:6px}
+#screencasts .scx-prog-row{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+#screencasts .scx-prog-row b{font:700 17px 'Poppins','Inter',Arial,sans-serif}
+#screencasts .scx-prog-row span{font:800 13px 'Inter',Arial,sans-serif;color:#ffb347}
+#screencasts .scx-prog-bar{height:8px;border-radius:8px;background:rgba(255,255,255,.18);margin-top:10px;overflow:hidden}
+#screencasts .scx-prog-bar i{display:block;height:100%;background:linear-gradient(90deg,#ff6a2c,#ffb347);border-radius:8px;transition:width .4s}
+#screencasts .scx-tools{display:grid;gap:10px}
+#screencasts .scx-tools input{width:100%;box-sizing:border-box;padding:12px 14px;border-radius:14px;border:1.5px solid #d0d5dd;background:#fff;font:16px 'Inter',Arial,sans-serif;color:#101828}
+#screencasts .scx-tools input:focus{outline:none;border-color:#ff6a2c;box-shadow:0 0 0 3px rgba(255,106,44,.15)}
+#screencasts .scx-filters{display:flex;gap:4px;padding:4px;background:#eaecf0;border-radius:14px}
+#screencasts .scx-filters .tf-chip{flex:1;border:0;background:transparent;padding:9px 8px;border-radius:11px;font:700 12.5px 'Inter',Arial,sans-serif;color:#475467;cursor:pointer;min-height:38px}
+#screencasts .scx-filters .tf-chip.active{background:#fff;color:#c2410c;box-shadow:0 2px 8px rgba(16,24,40,.12)}
+#screencasts .scx-side-head{font:800 10.5px 'Inter',Arial,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#667085;padding:0 4px}
+#screencasts .scx-list{display:flex;flex-direction:column;gap:8px;overflow-y:auto;-webkit-overflow-scrolling:touch;min-height:0;padding:2px 2px 6px}
+#screencasts .scx-group{display:flex;flex-direction:column;gap:2px;margin:10px 4px 2px}
+#screencasts .scx-group:first-child{margin-top:2px}
+#screencasts .scx-group b{font:700 14px 'Poppins','Inter',Arial,sans-serif;color:#101828;display:flex;align-items:center;gap:8px}
+#screencasts .scx-group b i{width:10px;height:10px;border-radius:50%;display:inline-block}
+#screencasts .scx-group small{font-size:12px;color:#667085}
+#screencasts .scx-item{all:unset;box-sizing:border-box;display:flex;gap:12px;align-items:center;padding:10px;background:#fff;border:1.5px solid #e4e7ec;border-radius:16px;cursor:pointer;transition:border-color .15s,box-shadow .15s,transform .15s;width:100%}
+#screencasts .scx-item:hover{border-color:#ffb98f;box-shadow:0 8px 22px rgba(16,24,40,.08);transform:translateY(-1px)}
+#screencasts .scx-item:focus-visible{outline:3px solid #9db8ff;outline-offset:2px}
+#screencasts .scx-item.active{border-color:#ff6a2c;background:linear-gradient(135deg,#fff7f1,#fff);box-shadow:0 8px 24px rgba(255,106,44,.18)}
+#screencasts .scx-thumb{position:relative;flex:none;width:118px;aspect-ratio:16/9;border-radius:11px;overflow:hidden;background:linear-gradient(135deg,var(--gc,#ff6a2c),#1f2b5c);display:flex;align-items:center;justify-content:center}
+#screencasts .scx-thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+#screencasts .scx-thumb .scx-play{position:relative;z-index:2;width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.92);color:#e8590c;font-size:12px;display:flex;align-items:center;justify-content:center;padding-left:2px;box-shadow:0 4px 12px rgba(0,0,0,.3)}
+#screencasts .scx-thumb .scx-dur{position:absolute;z-index:2;right:5px;bottom:7px;background:rgba(10,14,30,.8);color:#fff;border-radius:6px;padding:1px 6px;font:700 10.5px 'Inter',Arial,sans-serif}
+#screencasts .scx-thumb .scx-nowp{position:absolute;z-index:3;left:5px;top:5px;background:#ff6a2c;color:#fff;border-radius:999px;padding:2px 8px;font:800 9.5px 'Inter',Arial,sans-serif;letter-spacing:.05em;text-transform:uppercase}
+#screencasts .scx-thumb .scx-tick{position:absolute;z-index:3;right:5px;top:5px;width:20px;height:20px;border-radius:50%;background:#12b76a;color:#fff;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 2px #fff}
+#screencasts .scx-thumb .scx-pb{position:absolute;z-index:3;left:0;right:0;bottom:0;height:4px;background:rgba(255,255,255,.35)}
+#screencasts .scx-thumb .scx-pb i{display:block;height:100%;background:#f04438;width:0}
+#screencasts .scx-body{flex:1;min-width:0;display:flex;flex-direction:column;gap:6px}
+#screencasts .scx-t{font:700 14px/1.35 'Inter',Arial,sans-serif;color:#101828;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+#screencasts .scx-m{display:flex;flex-wrap:wrap;gap:5px}
+#screencasts .scx-pill{border-radius:999px;padding:2px 9px;font:700 11px 'Inter',Arial,sans-serif;background:#f2f4f7;color:#475467}
+#screencasts .scx-pill.ok{background:#d1fadf;color:#05603a}
+#screencasts .scx-pill.new{background:#ffedd5;color:#c2410c}
+#screencasts .scx-pill.warn{background:#fef0c7;color:#93370d}
+#screencasts .scx-locked,#screencasts .scx-empty{grid-column:1/-1}
+#screencasts .scx-locked{margin:8px 2px 0;padding:14px 16px;border-radius:16px;border:1.5px dashed #cfd4df;background:#f9fafb;color:#667085;font-size:12.5px;line-height:1.5;text-align:center}
+#screencasts .scx-locked b{display:block;color:#344054;font-size:13px;margin-bottom:2px}
+#screencasts .scx-empty{padding:22px 10px;text-align:center;color:#667085;font-size:13.5px}
+/* tablets: playlist becomes a 2-column grid under the player */
+@media (min-width:640px) and (max-width:1059px){#screencasts .scx-list{display:grid;grid-template-columns:1fr 1fr;gap:10px;overflow:visible}#screencasts .scx-group{grid-column:1/-1}#screencasts .scx-item{align-items:flex-start;flex-direction:column;gap:10px}#screencasts .scx-thumb{width:100%}}
+@media (max-width:639px){#screencasts .scx-now h2{font-size:19px}#screencasts .scx-nav{grid-template-columns:1fr 1fr;grid-template-areas:"idx idx" "prev next"}#screencasts .scx-index{grid-area:idx;justify-self:center}#screencasts .scx-prev{grid-area:prev;justify-self:stretch!important}#screencasts .scx-next{grid-area:next;justify-self:stretch!important}#screencasts .scx-thumb{width:104px}#screencasts .scx-stage{border-radius:16px}#screencasts .scx-player .play-badge{width:64px!important;height:64px!important;font-size:24px!important}}
+</style>
+
+<script id="scx-js">
+(function(){
+  var GROUPS=[
+    {title:'Weeks 1\u20134 \u00B7 Foundations',sub:'Backgrounds, passport photos and Puppet Warp',color:'#2f6fed',badge:'Weeks 1\u20134'},
+    {title:'Week 6 \u00B7 Face, Lip & Dress',sub:'Retouching and clothing edits',color:'#f97316',badge:'Week 6'}
+  ];
+  function grp(id){ return (typeof PHASE1_SCREENCAST_IDS!=='undefined' && PHASE1_SCREENCAST_IDS.has(id))?0:1; }
+  function order(){ return getReleasedScreencasts().map(function(v,i){ return {v:v,i:i,g:grp(v.id)}; }).sort(function(a,b){ return a.g-b.g||a.i-b.i; }).map(function(x){ return x.v; }); }
+  window.scxOrder=order;
+  function esc(x){ return String(x==null?'':x).replace(/[&<>"]/g,function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+  function realDur(id){ try{ var d=(typeof screencastDurations!=='undefined')?screencastDurations[id]:0; if(!(d>0)) return ''; var m=Math.floor(d/60), s=Math.round(d%60); return m+':'+(s<10?'0':'')+s; }catch(e){ return ''; } }
+  function score(id){ try{ return student && student.contentQuizzes && student.contentQuizzes.screencasts && student.contentQuizzes.screencasts[id]; }catch(e){ return null; } }
+  function now(){
+    var id=theaterCurrentId, b=document.getElementById('scxBadge'), d=document.getElementById('scxDur'), st=document.getElementById('scxState');
+    if(!b) return;
+    if(!id){ b.textContent='Screencast'; d.hidden=true; st.textContent=getReleasedScreencasts().length+' recordings'; st.className='scx-chip'; return; }
+    b.textContent=GROUPS[grp(id)].badge;
+    var du=realDur(id); d.hidden=!du; d.textContent=du?('\u23F1 '+du):'';
+    var q=score(id), w=theaterIsWatched(id);
+    st.className='scx-chip'+((w||q)?' ok':'');
+    st.textContent=q?('\u2713 Checked '+q.score+'/'+q.total):(w?'\u2713 Watched':'Not watched yet');
+  }
+  window.scxNow=now;
+  window.theaterRenderSide=function(){
+    var side=document.getElementById('theaterSide'); if(!side) return;
+    theaterUpdateProgressSummary();
+    var all=order(), list=all.filter(function(v){
+      if(theaterSearchTerm && v.label.toLowerCase().indexOf(theaterSearchTerm)<0) return false;
+      if(theaterFilterMode==='watched' && !theaterIsWatched(v.id)) return false;
+      if(theaterFilterMode==='unwatched' && theaterIsWatched(v.id)) return false;
+      return true; });
+    var head=document.getElementById('theaterSideHead');
+    if(head) head.textContent=theaterFilterMode==='all'&&!theaterSearchTerm ? ('Available now \u00B7 '+all.length+' recordings') : (list.length+' recording'+(list.length===1?'':'s')+' found');
+    var html='', lastG=-1;
+    list.forEach(function(v){
+      var g=grp(v.id);
+      if(g!==lastG){
+        lastG=g; var inG=all.filter(function(x){ return grp(x.id)===g; }), done=inG.filter(function(x){ return theaterIsWatched(x.id); }).length;
+        html+='<div class="scx-group"><b><i style="background:'+GROUPS[g].color+'"></i>'+esc(GROUPS[g].title)+'</b><small>'+esc(GROUPS[g].sub)+' \u00B7 '+done+'/'+inG.length+' watched</small></div>';
+      }
+      var w=theaterIsWatched(v.id), q=score(v.id), act=theaterCurrentId===v.id, du=realDur(v.id);
+      html+='<button type="button" class="scx-item'+(act?' active':'')+((w||q)?' learning-complete':'')+'" data-screencast-id="'+esc(v.id)+'" aria-label="Play '+esc(v.label)+'">'+
+        '<span class="scx-thumb" style="--gc:'+GROUPS[g].color+'"><img src="'+driveThumbUrl(v.id)+'" alt="" loading="lazy" onerror="this.style.display=\'none\'"><span class="scx-play" aria-hidden="true">\u25B6</span>'+
+        (du?'<span class="scx-dur">'+du+'</span>':'')+(act?'<span class="scx-nowp">Now playing</span>':'')+(w||q?'<span class="scx-tick" aria-hidden="true">\u2713</span>':'')+
+        '<span class="scx-pb"><i style="width:'+(w||q?100:0)+'%"></i></span></span>'+
+        '<span class="scx-body"><span class="scx-t">'+esc(v.label)+'</span><span class="scx-m">'+
+        (q?'<span class="scx-pill ok">\u2713 '+q.score+'/'+q.total+'</span>':(w?'<span class="scx-pill warn">Take the check</span>':'<span class="scx-pill">Not watched</span>'))+
+        (g===1&&!w&&!q?'<span class="scx-pill new">NEW</span>':'')+'</span></span></button>';
+    });
+    if(!list.length) html='<div class="scx-empty">No recordings match. Try another search or filter.</div>';
+    if(theaterFilterMode==='all'&&!theaterSearchTerm) html+='<div class="scx-locked"><b>\uD83D\uDD12 More recordings are on the way</b>They unlock automatically with the course calendar.</div>';
+    side.innerHTML=html; now();
+  };
+  document.getElementById('theaterSide').addEventListener('click',function(e){
+    var b=e.target.closest('.scx-item'); if(!b) return;
+    var v=allScreencasts.find(function(x){ return x.id===b.dataset.screencastId; }); if(!v) return;
+    theaterPlay(v.id,v.label); theaterBeginPlayback(v.id,v.label);
+    if(window.innerWidth<1060){ var st=document.getElementById('theaterStage'); if(st&&st.scrollIntoView) st.scrollIntoView({behavior:'smooth',block:'start'}); }
+  });
+  window.theaterUpdateNav=function(){
+    var rel=order(), idx=rel.findIndex(function(v){ return v.id===theaterCurrentId; });
+    var prev=document.getElementById('theaterPrevBtn'), next=document.getElementById('theaterNextBtn'), ix=document.getElementById('theaterIndex');
+    if(idx<0){ prev.disabled=true; next.disabled=true; ix.textContent='Pick a recording below'; return; }
+    prev.disabled=idx<=0; next.disabled=false;
+    next.querySelector('span').textContent=idx>=rel.length-1?'Finish':'Next'; next.classList.toggle('is-finish',idx>=rel.length-1);
+    ix.textContent='Recording '+(idx+1)+' of '+rel.length;
+  };
+  window.theaterStep=function(delta){
+    var rel=order(), idx=rel.findIndex(function(v){ return v.id===theaterCurrentId; });
+    if(idx<0) return;
+    if(delta>0){
+      theaterClearWatchTracking(false); theaterMarkWatched(theaterCurrentId);
+      if(idx>=rel.length-1){
+        theaterUpdateNav(); theaterRenderSide(); var meta=rel[idx];
+        maybeShowContentQuiz('video',meta.id,screencastQuizPool,'Nice work watching "'+meta.label+'"! Quick 5-question screencast check:');
+        showToast('Recording saved as watched. This is the last released screencast.'); return;
+      }
+    } else { theaterClearWatchTracking(true); }
+    var n=idx+delta; if(n<0||n>=rel.length) return;
+    var v=rel[n]; theaterPlay(v.id,v.label); theaterBeginPlayback(v.id,v.label);
+  };
+  var _play=window.theaterPlay; window.theaterPlay=function(id,label){ _play(id,label); now(); };
+  var _upd=window.theaterUpdateWatchedBtn; window.theaterUpdateWatchedBtn=function(){ _upd(); now(); };
+  theaterUpdateNav(); theaterRenderSide();
+})();
+</script>
 </body>
 </html>
