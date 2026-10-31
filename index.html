@@ -2,7 +2,7 @@
 
 <html lang="en">
 <head>
-<meta name="hm-build" content="2026-10-28-v16">
+<meta name="hm-build" content="2026-10-29-v17">
 <meta http-equiv="Cache-Control" content="no-cache, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0">
 <script id="hm-autoupdate">
 /* Always load the newest version of the site. Student data lives in the browser's localStorage and in the cloud backup,
@@ -2355,6 +2355,149 @@ img,video,canvas,svg,iframe{max-width:100%}
 </footer>
 </div><div class="capture-warning" id="captureWarning" aria-hidden="true"><div class="cw-card"><h3>Assessment Protected</h3><p>Screen capture and printing are disabled while an assessment is active. Your assessment has been ended and recorded according to the course rules.</p></div></div><script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+<script id="hm-content-js">
+/* ===================================================================
+   HM CONTENT ENGINE
+   Applies the course content published from the independent Content Studio.
+   - Content is cached in localStorage and applied BEFORE the main script runs.
+   - With nothing published, the built-in course is used (nothing changes).
+   - Student progress is never touched here.
+   =================================================================== */
+(function(){
+  var KEY='hm_content_v1', HMC=window.HMC={data:null,version:0}, SAFE=/^[A-Za-z0-9_-]{1,100}$/;
+  try{ var c=JSON.parse(localStorage.getItem(KEY)||'null'); if(c&&c.content){ HMC.data=c.content; HMC.version=Number(c.version)||0; } }catch(e){}
+  var D=function(){ return HMC.data||{}; };
+  function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g,function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+  function fmt(s){ return esc(s).replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/\n/g,'<br>'); }
+  function vocabHTML(list){ return (list||[]).map(function(v){ return '<span class="vocab" data-def="'+esc(v.def)+'" tabindex="0">'+esc(v.term)+'</span><span class="vocab-def"> \u2014 '+esc(v.def)+'</span>'; }).join(',\n        '); }
+  function findShot(id){ var it=((D().screencasts||{}).items||[]).filter(function(x){return x.id===id;})[0]; return it; }
+  function findNote(id){ return (D().notes||[]).filter(function(x){return x.id===id;})[0]; }
+  function pill(kind,fn,arg,label,quizType,quizKey,quizLabel){
+    var q=quizType?'<button type="button" class="llq" aria-label="'+esc(quizLabel)+'" title="'+esc(quizLabel)+'" onclick="event.stopPropagation();hmQuiz(\''+quizType+'\',\''+quizKey+'\')">\uD83E\uDDE0</button>':'';
+    return '<span class="llp"><button type="button" class="ll" onclick="event.stopPropagation();'+fn+'(\''+arg+'\')">'+label+'</button>'+q+'</span>';
+  }
+  function linksHTML(links){
+    var out=(links||[]).map(function(l){
+      var ref=String(l.ref||''), label=esc(l.label||'');
+      if(l.kind==='screencast'&&SAFE.test(ref)){ var s=findShot(ref), t=label||esc(s&&s.title?s.title:'Watch the recording'); return pill('s','hmOpenScreencast',ref,'\u25B6 '+t,'video',ref,'Quiz: '+(s&&s.title?s.title:'recording')); }
+      if(l.kind==='note'&&SAFE.test(ref)){ var n=findNote(ref); return pill('n','hmOpenReadMe',ref,'\uD83D\uDCD6 '+(label||'Read Me'),(n&&n.quiz)?'reading':'',ref,'Quiz: Read Me note'); }
+      if(l.kind==='project'){ var key=SAFE.test(ref)?ref:''; var fn=['world','mockup','gojo','elemental'].indexOf(key)>-1?"hmOpenProject('"+key+"')":"goTab('projects')"; return '<span class="llp"><button type="button" class="ll" style="border-radius:9px" onclick="event.stopPropagation();'+fn+'">\uD83D\uDCC1 '+(label||'Open the project')+'</button></span>'; }
+      if(l.kind==='url'&&/^https:\/\//.test(ref)) return '<span class="llp"><a class="ll" style="border-radius:9px;text-decoration:none;display:inline-flex;align-items:center" href="'+esc(ref)+'" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">\uD83D\uDD17 '+(label||'Open link')+'</a></span>';
+      return '';
+    }).join('');
+    return out?'<div class="lesson-links"><span class="ll-label">Open this lesson</span>'+out+'</div>':'';
+  }
+  function ideaHTML(text){
+    var lines=String(text||'').split('\n'), out='', ul=false;
+    lines.forEach(function(l){ var m=/^\s*[-\u2022]\s+(.*)$/.exec(l); if(m){ if(!ul){ out+='<ul>'; ul=true; } out+='<li>'+fmt(m[1])+'</li>'; } else { if(ul){ out+='</ul>'; ul=false; } if(l.trim()) out+='<p>'+fmt(l)+'</p>'; } });
+    return out+(ul?'</ul>':'');
+  }
+  function cardHTML(day,wk,i){
+    var type=day.type||'lesson', id=wk+'-'+(i+1), cls=type==='project'?' project-day':(type==='practice'?' practice-day':'');
+    var label=type==='lesson'?'':'<div class="'+(type==='project'?'project-label':'practice-label')+'">'+esc(day.label||(type==='project'?'PROJECT DAY':'PRACTICE DAY'))+'</div>';
+    var front='<div class="flip-card-front">'+label+'<h4>'+esc(day.title)+'</h4><p>'+fmt(day.front)+'</p><span class="flip-hint">Tap to flip</span></div>';
+    var vocab=(day.vocab&&day.vocab.length)?'<div class="vocab-title">Vocabulary</div><p>'+vocabHTML(day.vocab)+'</p>':'';
+    var back=type==='lesson'?vocab+(day.idea?'<div class="big-ideas">'+fmt(day.idea)+'</div>':'')+linksHTML(day.links):vocab+ideaHTML(day.idea)+linksHTML(day.links);
+    return '<div class="flip-card'+cls+'" data-day="'+id+'"><div class="flip-card-inner">'+front+'<div class="flip-card-back">'+back+'</div></div></div>';
+  }
+  function noteHTML(n){
+    var q=n.quiz, id=n.id, cards=(n.cards||[]).map(function(c,i){ return '<article class="readme-lesson-card"><div class="readme-card-icon">'+(i<9?'0':'')+(i+1)+'</div><div><h4>'+esc(c.title)+'</h4><p>'+fmt(c.text)+'</p>'+linksHTML(c.links).replace('lesson-links','lesson-links')+'</div></article>'; }).join('');
+    return '<div class="note-section collapsed"'+(q?' data-reading="'+id+'"':'')+' data-week="'+n.week+'" id="'+id+'">'
+      +'<div class="note-actions">'+(q?'<button class="note-mark" data-reading-key="'+id+'" onclick="markReadingRead(\''+id+'\', this)"><span aria-hidden="true" class="nm-circle"></span><span class="nm-label">Mark as Read</span></button>':'')+'</div>'
+      +'<h3><span class="week-badge">'+esc(n.badge||('WEEK '+n.week))+'</span> '+esc(n.title)+'</h3><p>'+fmt(n.intro)+'</p>'
+      +(cards?'<div class="readme-grid">'+cards+'</div>':'')
+      +((n.vocab&&n.vocab.length)?'<div class="readme-vocab"><div class="vocab-title">'+esc(n.badge&&/week/i.test(n.badge)?n.badge.replace(/^week\s*/i,'Week ')+' ':'')+'Vocabulary</div><p>\n'+vocabHTML(n.vocab)+'\n</p></div>':'')
+      +(n.tip?'<div class="note-tip">'+fmt(n.tip)+'</div>':'')+'</div>';
+  }
+  HMC.cardHTML=cardHTML; HMC.noteHTML=noteHTML; HMC.esc=esc; HMC.fmt=fmt;
+
+  /* ---- curriculum weeks + Read Me notes: applied to the page before the main script runs ---- */
+  HMC.applyDom=function(){
+    var d=D(), applied=0;
+    Object.keys(d.weeks||{}).forEach(function(k){
+      var w=d.weeks[k], card=document.getElementById('week'+k); if(!card||!w||!(w.days||[]).length) return;
+      var h=card.querySelector('h2.wk'), grid=card.querySelector('.day-grid'); if(!h||!grid) return;
+      if(w.title) h.textContent=w.title; grid.innerHTML=w.days.map(function(day,i){ return cardHTML(day,k,i); }).join(''); applied++;
+    });
+    var notes=(d.notes||[]); if(notes.length){
+      var first=document.querySelector('.note-section'); var parent=first&&first.parentNode;
+      if(parent) notes.forEach(function(n){
+        var old=document.getElementById(n.id);
+        if(n.hidden){ if(old) old.remove(); return; }
+        var t=document.createElement('div'); t.innerHTML=noteHTML(n); var el=t.firstChild;
+        if(old){ old.replaceWith(el); return; }
+        var ref=null; Array.prototype.slice.call(parent.querySelectorAll(':scope > .note-section')).some(function(s){ var m=/week(\d+)/.exec(s.id||''); var wk=Number(s.dataset.week||(m?m[1]:0))||0; if(wk>n.week){ ref=s; return true; } return false; });
+        if(ref) parent.insertBefore(el,ref); else { var last=parent.querySelectorAll(':scope > .note-section'); var ln=last[last.length-1]; if(ln&&ln.nextSibling) parent.insertBefore(el,ln.nextSibling); else parent.appendChild(el); }
+      });
+    }
+    HMC.applied=applied;
+  };
+  HMC.applyMeta=function(meta){ Object.keys(D().weeks||{}).forEach(function(k){ var w=D().weeks[k]; var s=w.short||String(w.title||'').replace(/^week\s*\d+\s*[\u2014\-:]\s*/i,''); if(s) meta[k]=s; }); };
+  HMC.noteWeek=function(key){ var n=findNote(key); return n?n.week:0; };
+  HMC.quizWeeks=function(){
+    if(HMC._qw) return HMC._qw; var base=[1,2,3,4,6], wk=D().weeks||{};
+    Object.keys(wk).forEach(function(k){ var n=Number(k), v=0; (wk[k].days||[]).forEach(function(x){ v+=(x.vocab||[]).length; }); var i=base.indexOf(n); if(v>=2&&i<0) base.push(n); if(v<2&&i>-1) base.splice(i,1); });
+    return (HMC._qw=base.sort(function(a,b){return a-b;}));
+  };
+
+  /* ---- screencasts ---- */
+  var items=function(){ return (D().screencasts||{}).items||[]; };
+  HMC.applyScreencasts=function(list){
+    items().forEach(function(it){
+      var cur=list.filter(function(v){return v.id===it.id;})[0];
+      if(cur){ if(it.title) cur.label=it.title; if(it.desc) cur.desc=it.desc; } else if(!it.removed) list.push({id:it.id,label:it.title||'Recording',desc:it.desc||''});
+    });
+  };
+  HMC.releasedIds=function(all){ var s=new Set(all.map(function(v){return v.id;})); items().forEach(function(it){ if(it.removed||it.released===false) s.delete(it.id); else s.add(it.id); }); return s; };
+  HMC.gradedIds=function(def){ var s=new Set(def); items().forEach(function(it){ if(it.graded&&!it.removed) s.add(it.id); else s.delete(it.id); }); return s; };
+  HMC.phaseOf=function(id){ var it=items().filter(function(x){return x.id===id;})[0]; return it&&it.phase?it.phase:1; };
+  HMC.applyVocab=function(map){ items().forEach(function(it){ if(it.vocab&&it.vocab.length) map[it.id]=it.vocab.map(function(v){return {term:v.term,def:v.def};}); }); };
+  HMC.groups=function(all){
+    var g=(D().screencasts||{}).groups||[]; if(!g.length) return null;
+    var groups=g.map(function(x){ return {title:x.title,sub:x.sub||'',color:x.color||'#2f6fed',badge:x.badge||x.title,bonus:!!x.bonus}; });
+    var idx={}; g.forEach(function(x,i){ idx[x.id]=i; }); var lists=g.map(function(){return [];}), last=g.length-1;
+    var byId={}; items().forEach(function(it){ byId[it.id]=it; });
+    var arr=all.map(function(v,i){ var it=byId[v.id]; return {n:i+1,g:(it&&idx[it.group]!=null)?idx[it.group]:last,o:it?it.order:1000+i}; });
+    arr.sort(function(a,b){ return a.g-b.g||a.o-b.o||a.n-b.n; }).forEach(function(x){ lists[x.g].push(x.n); });
+    return {groups:groups,lists:lists};
+  };
+  HMC.customQuiz=function(type,key){
+    var q=(D().quizzes||[]).filter(function(x){return x.type===type&&x.key===key;})[0]; if(!q||!q.questions||q.questions.length<5) return null;
+    var pick=q.questions.slice().sort(function(){return Math.random()-.5;}).slice(0,5);
+    return pick.map(function(x){ var opts=x.options.map(function(o,i){ return {text:esc(o),correct:i===x.answer}; }); opts.sort(function(){return Math.random()-.5;}); return {prompt:esc(x.q),options:opts}; });
+  };
+  HMC.applyProjects=function(arr){
+    (D().projects||[]).forEach(function(p){
+      var i=-1; arr.forEach(function(a,k){ if(a.id===p.id) i=k; });
+      if(p.hidden){ if(i>-1) arr.splice(i,1); return; }
+      var o={id:p.id,week:p.week,title:p.title,desc:p.desc,skills:p.skills||[],checks:p.checks||[],submissionUrl:p.classroomUrl||'',section:p.section||'',marks:p.marks};
+      if(i>-1) Object.assign(arr[i],o); else arr.push(o);
+    });
+  };
+
+  /* ---- keep the cached copy fresh; reload once when students need new content (their progress is saved first) ---- */
+  function busy(){ return !!document.querySelector('#cqModal.open,#wqModal.open,#phaseAssessmentModal.open'); }
+  var last=0, guard='hm_content_reload';
+  HMC.sync=function(force){
+    var url=(window.hmaCloud&&window.hmaCloud.url)||''; if(!url||location.protocol==='file:'&&!force&&!window.__hmForceSync) return;
+    var now=Date.now(); if(!force&&now-last<60000) return; last=now;
+    fetch(url,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({action:'contentGet',since:HMC.version})}).then(function(r){return r.json();}).then(function(d){
+      if(!d||!d.ok||d.same||typeof d.version!=='number'||d.version===HMC.version) return;
+      try{ if(d.content) localStorage.setItem(KEY,JSON.stringify({version:d.version,content:d.content})); else localStorage.removeItem(KEY); }catch(e){}
+      var seen=''; try{ seen=sessionStorage.getItem(guard)||''; }catch(e){} if(seen===String(d.version)) return;
+      try{ sessionStorage.setItem(guard,String(d.version)); }catch(e){}
+      var go=function(){ if(busy()){ setTimeout(go,30000); return; } var p; try{ p=window.hmaPushNow&&window.hmaPushNow(); }catch(e){} var done=false,fin=function(){ if(done) return; done=true; location.reload(); }; setTimeout(fin,3500); if(p&&p.then) p.then(fin,fin); else fin(); };
+      go();
+    }).catch(function(){});
+  };
+  window.addEventListener('load',function(){ setTimeout(function(){ HMC.sync(true); },1200); });
+  document.addEventListener('visibilitychange',function(){ if(!document.hidden) HMC.sync(false); });
+  setInterval(function(){ if(!document.hidden) HMC.sync(false); },600000);
+
+  try{ HMC.applyDom(); }catch(e){ console.error('content engine',e); }
+})();
+
+</script>
 <script>
 /* ================= TAB NAVIGATION ================= */
 function goTab(name){
@@ -2702,6 +2845,7 @@ function getItemVocabulary(pool, key, type){
   return (map[key] || []).filter(v=>v.term&&v.def);
 }
 function buildItemQuiz(pool, key, type){
+  { const cq = window.HMC && HMC.customQuiz(type,key); if(cq) return cq; }
   const current = pool.find(p=>p.key===key);
   if(!current) return [];
   const vocab = getItemVocabulary(pool,key,type);
@@ -2752,6 +2896,7 @@ function buildItemQuiz(pool, key, type){
   }
   return questions.slice(0,5);
 }
+if(window.HMC) HMC.applyMeta(weekMeta);
 /* Reading pool is read straight off the DOM (title = the section's h3,
    description = its first paragraph) so it always matches what's actually
    in Read Me, including the new-project-menu section added at the top. */
@@ -4746,14 +4891,16 @@ const screencastPlaylist = [
   { id:'10WmX1xYIRWtgzbLgUDJJb3E9fZ8rKh25', label:'Advanced Double Exposure Techniques', desc:'Push your photo manipulation skills by blending complex textures, detailed silhouettes, and multi-layered landscape elements. Master advanced masking and color harmonization for dramatic, artistic compositions.' },
   { id:'1y13t7n5nTN_3oppd_Nx7AJ1Yfd7nSwdE', label:'How to Create Realistic T-Shirt Mockups', desc:'Build custom, fully editable apparel mockups using Smart Objects and Displacement Maps. Learn how to set up reusable template files where graphics instantly conform to garment folds, highlights, and shadow layers with a single click.' }
 ];
+if(window.HMC) HMC.applyScreencasts(screencastPlaylist);
 const allScreencasts = screencastPlaylist;
-const RELEASED_SCREENCAST_IDS = new Set(allScreencasts.map(v=>v.id));   // ALL recordings are released
+const RELEASED_SCREENCAST_IDS = window.HMC ? HMC.releasedIds(allScreencasts) : new Set(allScreencasts.map(v=>v.id));   // every recording is released unless the Content Studio hides it
 function getReleasedScreencasts(){ return allScreencasts.filter(v=>RELEASED_SCREENCAST_IDS.has(v.id)); }
 /* ---- Phase split: Weeks 1-8 = Phase One, Weeks 9-12 = Phase Two ---- */
 const PHASE1_SCREENCAST_IDS = new Set([allScreencasts[0]?.id, allScreencasts[1]?.id, '1GPnPtOIV2Sgb3uyPIpb2wnTt8riCEXTo']);
-const GRADED_SCREENCAST_IDS = new Set([allScreencasts[0]?.id, allScreencasts[1]?.id, '1GPnPtOIV2Sgb3uyPIpb2wnTt8riCEXTo', '1Y1kl-zMa5cMcTAysIrRK-1kwhfe93sW1','1T5-Q5M56LtTljcvAnAjURpwmWguRN80o','1bTuJ8yUYKXAOakIObT6kz_vh8NehMEiD', '1Pc0NNb3xMy_vXsri7keAP28856xXsEP5','1QQA6LEBWIn7iPkLY5Jfk81BVNUzl4qm6','1V0DwbaQaJsRiGsmrPIjk5k4evZ8Xrbmj']);
-function phaseOfScreencast(id){ return GRADED_SCREENCAST_IDS.has(id)?1:0; }   /* marked recordings (Phase One) vs bonus recordings (no marks) */
-function phaseOfReading(key){ const m=/week(\d+)/.exec(String(key||'')); const w=m?Number(m[1]):1; return w<=8?1:2; }
+const __GRADED_DEFAULT = new Set([allScreencasts[0]?.id, allScreencasts[1]?.id, '1GPnPtOIV2Sgb3uyPIpb2wnTt8riCEXTo', '1Y1kl-zMa5cMcTAysIrRK-1kwhfe93sW1','1T5-Q5M56LtTljcvAnAjURpwmWguRN80o','1bTuJ8yUYKXAOakIObT6kz_vh8NehMEiD', '1Pc0NNb3xMy_vXsri7keAP28856xXsEP5','1QQA6LEBWIn7iPkLY5Jfk81BVNUzl4qm6','1V0DwbaQaJsRiGsmrPIjk5k4evZ8Xrbmj']);
+const GRADED_SCREENCAST_IDS = window.HMC ? HMC.gradedIds(__GRADED_DEFAULT) : __GRADED_DEFAULT;
+function phaseOfScreencast(id){ return GRADED_SCREENCAST_IDS.has(id)?(window.HMC?HMC.phaseOf(id):1):0; }   /* marked recordings (Phase One) vs bonus recordings (no marks) */
+function phaseOfReading(key){ const hw=window.HMC&&HMC.noteWeek(key); const m=/week(\d+)/.exec(String(key||'')); const w=hw||(m?Number(m[1]):1); return w<=8?1:2; }
 function phaseReleasedScreencasts(p){ return getReleasedScreencasts().filter(v=>phaseOfScreencast(v.id)===p); }
 function phaseReadingPool(p){ return (typeof readingPool!=='undefined'?readingPool:[]).filter(x=>phaseOfReading(x.key)===p); }
 window.screencastQuizVocabulary = {
@@ -4884,6 +5031,7 @@ window.screencastQuizVocabulary = {
     {term:"Natural Gloss",def:"The soft shine on teeth that makes them look real."}
   ]
 };
+if(window.HMC) HMC.applyVocab(window.screencastQuizVocabulary);
 const screencastQuizPool = allScreencasts.map(v=>({ key:v.id, title:v.label, desc:v.desc }));
 /* Exact runtime for each recording, in seconds — every video in this
    course already has its own slot below, all starting at null. To find a
@@ -5299,6 +5447,7 @@ const HM_ASSIGNMENTS = [
  {id:'w6-phone-mockup',week:9,title:'Phase 2 — Week 9 Phone / iPad Mockup Studio',desc:'Create a polished device mockup using the techniques taught in the released lessons and practice files.',skills:['Layers','Masks','Composition','Export'],checks:['Mockup built','Layers organized','Final export ready'],submissionUrl:SECTION_C_CLASSROOM_URL,section:'Section C',marks:15},
  {id:'w9-gojo-popout',week:10,title:'Phase 3 — Week 10 Gojo Pop-Out Project',desc:'Build the assigned pop-out composition with clean masking, depth, and a presentation-ready final export.',skills:['Selection','Masking','Depth','Export'],checks:['Subject isolated','Depth created','Final export ready'],submissionUrl:SECTION_D_CLASSROOM_URL,section:'Section D',marks:15}
 ];
+if(window.HMC) HMC.applyProjects(HM_ASSIGNMENTS);
 const HM_PROJECTS = HM_ASSIGNMENTS;
 function hmOpenWeek(w){ return typeof isCourseWeekOpen==='function' ? isCourseWeekOpen(w) : w<=1; }
 function hmAssignmentState(id){ return student && student.assignmentStatus ? (student.assignmentStatus[id] || 'Not started') : 'Not started'; }
@@ -5350,8 +5499,8 @@ function hmWorkflowGo(step,project){
    setTimeout(()=>document.getElementById('assessmentBody')?.scrollIntoView({behavior:'smooth',block:'start'}),120);
  }else if(step===5){
    goTab('curriculum');
-   const pendingWeek=[1,2,3,4,6].find(n=>isWeekComplete(n) && !student?.weekQuizzes?.[n]);
-   const nextWeek=[1,2,3,4,6].find(n=>!isWeekComplete(n)) || 1;
+   const pendingWeek=(window.HMC?HMC.quizWeeks():[1,2,3,4,6]).find(n=>isWeekComplete(n) && !student?.weekQuizzes?.[n]);
+   const nextWeek=(window.HMC?HMC.quizWeeks():[1,2,3,4,6]).find(n=>!isWeekComplete(n)) || 1;
    setTimeout(()=>{
      if(pendingWeek) maybeShowWeekQuiz(String(pendingWeek));
      else document.getElementById('week'+nextWeek)?.scrollIntoView({behavior:'smooth',block:'start'});
@@ -5478,7 +5627,7 @@ function updateMarksBars(){
  if(sp) sp.textContent=`${fmtMark(v.earned)}/${fmtMark(v.total)} marks`+(v2.total?` · Phase Two ${fmtMark(v2.earned)}/${fmtMark(v2.total)}`:'');
 }
 function weeklyQuizMarks(){
-  const weeks=[1,2,3,4,6], perQuiz=3; // buildWeekQuiz() asks 3 questions per week
+  const weeks=(window.HMC?HMC.quizWeeks():[1,2,3,4,6]).filter(w=>w<=8), perQuiz=3; // buildWeekQuiz() asks 3 questions per week
   let earned=0, taken=0;
   weeks.forEach(w=>{ const q=student?.weekQuizzes?.[w]; if(q){ earned+=Number(q.score)||0; taken++; } });
   return {earned,total:weeks.length*perQuiz,taken,weeks:weeks.length};
@@ -5522,7 +5671,7 @@ function renderHomeLearning(){
   {n:2,label:'Screencast',sub:'Released recordings',done:!!student && Object.keys(student.videoConfirmed||{}).filter(id=>student.videoConfirmed[id]&&phaseOfScreencast(id)===1).length>=phaseReleasedScreencasts(1).length,tab:'screencasts'},
   {n:3,label:'Practice',sub:'0.7 × 4 days · 2.8 marks',done:!!student && practiceCreditSummary().earned>=practiceCreditSummary().total,tab:'practice'},
   {n:4,label:'Assessment',sub:'Read Me + Screencast checks',done:!!student && (Object.keys(student.contentQuizzes?.reading||{}).length>0 || Object.keys(student.contentQuizzes?.screencasts||{}).length>0),tab:'assessment'},
-  {n:5,label:'Weekly Quiz',sub:`W1 ${wk(1)} · W2 ${wk(2)} · W3 ${wk(3)} · W4 ${wk(4)} · W6 ${wk(6)}`,done:!!student && [1,2,3,4,6].every(w=>student.weekQuizzes?.[w]),tab:'curriculum'},
+  {n:5,label:'Weekly Quiz',sub:`W1 ${wk(1)} · W2 ${wk(2)} · W3 ${wk(3)} · W4 ${wk(4)} · W6 ${wk(6)}`,done:!!student && (window.HMC?HMC.quizWeeks():[1,2,3,4,6]).filter(w=>w<=8).every(w=>student.weekQuizzes?.[w]),tab:'curriculum'},
   {n:6,label:'Phase 1 Assessment',sub:phaseOpen?'15 questions · 20 marks':'Unlocks Week 6',done:phase1Done,tab:'phase-assessment',locked:!phaseOpen},
   {n:7,label:'Phase 1 Project',sub:projectDone?'Submitted':'Individual submission',done:projectDone,tab:'projects'}
  ];
@@ -6947,7 +7096,7 @@ html.hma-hide .app,html.hma-hide .wq-modal,html.hma-hide .phase-modal-backdrop,h
   };
 
   window.hmaPushNow=pushNow;
-  window.hmaCloud={api:api,session:readSession,pushNow:pushNow,pull:maybePull};
+  window.hmaCloud={api:api,session:readSession,pushNow:pushNow,pull:maybePull,url:HMA_CLOUD_URL};
 
   /* ---------- start-up ---------- */
   async function boot(){
@@ -7484,6 +7633,7 @@ html.hc-lock,html.hc-lock body{overflow:hidden!important}
   ];
   /* recording numbers = position in the full list (1-based). The order inside each list is the watch order. */
   var GROUP_LISTS=[[1,2,10],[5,14,13],[6,4,7],[3,8,9,11,12],[15,16,17,19],[18,20,21,22,23]];
+  if(window.HMC){ var _hg=HMC.groups(allScreencasts); if(_hg){ GROUPS=_hg.groups; GROUP_LISTS=_hg.lists; } }
   var GMAP=null;
   function gmap(){ if(GMAP) return GMAP; GMAP={}; GROUP_LISTS.forEach(function(list,g){ list.forEach(function(n,pos){ var v=allScreencasts[n-1]; if(v) GMAP[v.id]={g:g,pos:pos}; }); }); return GMAP; }
   function grp(id){ var m=gmap()[id]; return m?m.g:GROUPS.length-1; }
